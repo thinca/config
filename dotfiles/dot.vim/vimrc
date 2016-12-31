@@ -1621,8 +1621,6 @@ else
     " endfunction
     " inoremap <expr> <Esc>[200~ <SID>XTermPaste(1)
     " inoremap <expr> <Esc>[201~ <SID>XTermPaste(0)
-    "
-    command! Suicide call system('kill -KILL ' . getpid())
   endif
 endif
 
