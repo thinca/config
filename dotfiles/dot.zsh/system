@@ -1,0 +1,21 @@
+# The system detection.
+if [[ -f /etc/redhat-release ]]; then
+	SYSTEM=redhat
+elif [[ -f /etc/SuSE-release ]]; then
+	SYSTEM=suse
+elif [[ -f /etc/debian_version ]]; then
+	SYSTEM=debian
+elif [[ -f /etc/gentoo-release ]]; then
+	SYSTEM=gentoo
+elif [[ -f /etc/arch-release ]]; then
+	SYSTEM=arch
+elif [[ -f /etc/slackware-version ]]; then
+	SYSTEM=slackware
+elif [[ -f /etc/lfs-release ]]; then
+	SYSTEM=lfs
+elif [[ ! -d /proc ]]; then
+	SYSTEM=mac
+else
+	SYSTEM=unknown
+fi
+export SYSTEM

@@ -1,0 +1,6 @@
+add Mod3 = Muhenkan
+
+! Caps_Lock -> Control_L
+!remove Lock = Caps_Lock
+!add Control = Caps_Lock
+!keycode 66 = Control_L Control_L

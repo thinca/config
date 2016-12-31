@@ -1,0 +1,23 @@
+*.o
+*.lo
+*.la
+#*#
+.*.rej
+*.rej
+*~
+.#*
+.DS_Store
+*.sw[po]
+tags
+tags-*
+GPATH
+GRTAGS
+GTAGS
+.*.vimrc
+,
+
+# Ruby
+Gemfile.private
+Gemfile.private.lock
+.bundle
+vendor/bundle

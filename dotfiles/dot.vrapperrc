@@ -1,0 +1,44 @@
+set ignorecase
+set smartcase
+
+noremap ; :
+noremap : ;
+
+noremap Y y$
+
+noremap \w :w<CR>
+noremap <Space>w :w<CR>
+noremap \q :q<CR>
+
+vnoremap = :format<CR>
+
+nnoremap gc  `[v`]
+
+noremap cw ce
+
+" inoremap <C-u>  <C-g>u<C-u>
+" inoremap <C-w>  <C-g>u<C-w>
+
+eclipseaction wordNext     org.eclipse.ui.edit.text.goto.wordNext
+eclipseaction wordPrevious org.eclipse.ui.edit.text.goto.wordPrevious
+noremap gw :wordNext<CR>
+noremap gb :wordPrevious<CR>
+
+eclipseaction pageDown org.eclipse.ui.edit.text.goto.pageDown
+eclipseaction pageUp   org.eclipse.ui.edit.text.goto.pageUp
+noremap K :pageDown<CR>
+noremap L :pageUp<CR>
+" noremap <C-d> :pageDown<CR>
+" noremap <C-u> :pageUp<CR>
+
+eclipseaction GoNextMember org.eclipse.jdt.ui.edit.text.java.goto.next.member
+nnoremap mn :GoNextMember<CR>
+eclipseaction GoPrevMember org.eclipse.jdt.ui.edit.text.java.goto.previous.member
+nnoremap mp :GoPrevMember<CR>
+
+eclipseaction SearchRef  org.eclipse.jdt.ui.edit.text.java.search.references.in.project
+nnoremap mr :SearchRef<CR>
+
+" http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/texteditor/IWorkbenchActionDefinitionIds.html
+" http://help.eclipse.org/help33/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/texteditor/ITextEditorActionDefinitionIds.html
+" http://help.eclipse.org/ganymede/index.jsp?topic=/org.eclipse.jdt.doc.isv/reference/api/org/eclipse/jdt/ui/actions/IJavaEditorActionDefinitionIds.html

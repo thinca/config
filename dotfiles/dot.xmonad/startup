@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# if [ -x $HOME/.xmonad/status ]; then
+	# $HOME/.xmonad/status | dzen2 -ta r -fn 'xft:M+2M+IPAG:size=12:antialias=true' -bg '#2c2c32' -fg 'grey70' -p -e '' &
+# fi
+
+exec xmonad

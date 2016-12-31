@@ -1,0 +1,98 @@
+# main()
+snippet main
+	int main(int argc, const char *argv[]) {
+		${1}
+		return 0;
+	}
+# #include <...>
+snippet inc
+	#include <${1:stdio}.h>${0}
+# #include "..."
+snippet Inc
+	#include "${1:`expand('%:r').'.h'`}"${0}
+# #ifndef ... #define ... #endif
+snippet Def
+	#ifndef $1
+	#define ${1:SYMBOL} ${2:value}
+	#endif${3}
+snippet def
+	#define 
+snippet ifdef
+	#ifdef ${1:MACRO}
+		${2:#define }
+	#endif
+snippet #if
+	#if ${1:MACRO}
+		${2}
+	#endif
+
+snippet once
+	#ifndef ${1:`toupper(expand('%:gs@\W@_@').'__')`}
+	#define $1
+
+	${0}
+
+	#endif  /* #ifndef $1 */
+# If Condition
+snippet if
+	if(${1:/* condition */}) {
+		${2:/* code */}
+	}
+snippet el
+	else {
+		${1}
+	}
+# Ternary conditional
+#snippet t
+#	${1:/* condition */} ? ${2:a} : ${3:b}
+# Do While Loop
+snippet do
+	do {
+		${2:/* code */}
+	} while (${1:/* condition */});
+# While Loop
+snippet wh
+	while (${1:/* condition */}) {
+		${2:/* code */}
+	}
+# For Loop
+snippet for
+	for (${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
+		${4:/* code */}
+	}
+# Custom For Loop
+snippet forr
+	for (${1:i} = ${2:0}; ${3:$1 < 10}; $1${4:++}) {
+		${5:/* code */}
+	}
+# Function
+snippet fun
+	${1:void} ${2:function_name}(${3}) {
+		${4:/* code */}
+	}
+# Function Declaration
+snippet fund
+	${1:void} ${2:function_name}(${3});${0}
+# Typedef
+snippet td
+	typedef ${1:int} ${2:MyCustomType};${0}
+# Struct
+snippet st
+	struct ${1:name} {
+		${2:/* data */}
+	}${3: /* optional variable list */};${4}
+# Typedef struct
+snippet tds
+	typedef struct ${2:_$1 } {
+		${3:/* data */}
+	} ${1:name};
+# Typdef enum
+snippet tde
+	typedef enum {
+		${1:/* data */}
+	} ${2};
+snippet .
+	[${1}]${2}
+snippet un
+	unsigned
+

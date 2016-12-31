@@ -1,0 +1,41 @@
+snippet     target
+abbr        target
+prev_word   '^'
+	<target name="${1:name}">
+		${2}
+	</target>
+
+snippet     targetd
+abbr        target depends="..."
+prev_word   '^'
+	<target name="${1:name}" depends="${2:target}">
+		${3}
+	</target>
+
+snippet     targeti
+abbr        target if="..."
+prev_word   '^'
+	<target name="${1:name}" if="${2:property}">
+		${3}
+	</target>
+
+snippet     targetu
+abbr        target unless="..."
+prev_word   '^'
+	<target name="${1:name}" unless="${2:property}">
+		${3}
+	</target>
+
+snippet     targetdi
+abbr        target idepends="..." f="..."
+prev_word   '^'
+	<target name="${1:name}" depends="${2:target}" if="${3:property}">
+		${4}
+	</target>
+
+snippet     targetdu
+abbr        target depends="..." unless="..."
+prev_word   '^'
+	<target name="${1:name}" depends="${2:target}" unless="${3:property}">
+		${4}
+	</target>

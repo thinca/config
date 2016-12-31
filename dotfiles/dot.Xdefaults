@@ -1,0 +1,5 @@
+urxvt*saveLines:      20000
+urxvt*foreground:     snow
+urxvt*background:     black
+urxvt*font: xft:M+2M+IPAG:size=12:antialias=true
+urxvt*boldFont: xft:M+2M+IPAG:size=12:antialias=true

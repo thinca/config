@@ -1,0 +1,52 @@
+:silent keeppatterns %s/\CPLUGIN/\=expand('%:t:r')/ge
+:setlocal filetype=help
+:GenerateContents
+*PLUGIN.txt*	**Summary**
+
+Version: 1.0
+Author : thinca <thinca+vim@gmail.com>
+License: zlib License
+
+==============================================================================
+INTRODUCTION					*PLUGIN-introduction*
+
+*PLUGIN.vim* is a Vim plugin ...
+
+Requirements:
+- Vim 8.0 or later
+
+Latest version:
+https://github.com/thinca/vim-PLUGIN
+
+
+
+==============================================================================
+INTERFACE					*PLUGIN-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*PLUGIN-commands*
+
+
+------------------------------------------------------------------------------
+FUNCTIONS					*PLUGIN-functions*
+
+
+------------------------------------------------------------------------------
+KEY MAPPINGS					*PLUGIN-key-mappings*
+
+
+
+==============================================================================
+CUSTOMIZING					*PLUGIN-customizing*
+
+
+
+==============================================================================
+CHANGELOG					*PLUGIN-changelog*
+
+1.0	xxxx-xx-xx
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl

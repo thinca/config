@@ -1,0 +1,13 @@
+termtype = xterm-256color
+scrollbar_mode = none
+bg_color = black
+fg_color = white
+fontsize = 15
+#use_anti_alias = true
+not_use_unicode_font = true
+iso88591_font_for_usascii = true
+col_size_of_width_a = 2
+mod_meta_key = alt
+mod_meta_mode = esc
+type_engine = xft
+# vim: ft=conf

@@ -1,0 +1,174 @@
+
+command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
+
+" -----------------------------------------------------------------------------
+" Options.
+" Set the title of the window for "Firefox".
+set titlestring=Mozilla\ Firefox
+" Default Firefox settings.
+"set guioptions+=mT
+" Suggest engine completion enable.
+set complete+=S
+" AweSomeBar enable.
+set complete+=l
+" Don't compete local files.
+set complete-=f
+set complete+=b
+" Open a new tab when using following commands:
+" :addons :downloads :help :javascript! :prefs!
+set newtab=all
+
+set urlseparator=
+
+" Show the link in the command line.
+" set showstatuslinks=2
+
+" set gui=nomenu,nonavigation
+
+set hintchars=QJKLFDSAHGUIOREWTMNPBVCXZ
+
+set focuscontent
+
+" -----------------------------------------------------------------------------
+" Key mappings.
+noremap j 5j
+noremap k 5k
+noremap J <C-d>
+noremap K <C-u>
+nnoremap <silent> y :<C-u>copy %URL%<CR>
+vnoremap <silent> y :<C-u>copy %SEL%<CR>
+noremap <C-c> Y
+noremap <Space><Space> :noh<CR>
+noremap <C-l> <C-v><C-l>
+noremap ; :
+noremap : ;
+nmap <C-@> <ESC>
+
+nnoremap U :undo<Space>
+nnoremap <C-h> :h<Space>
+nnoremap <Leader>b :<C-u>buffer<Space>
+nnoremap <Leader>s :<C-u>panorama switch<Space>
+
+noremap <C-S-n> :tabmove +1<CR>
+noremap <C-S-p> :tabmove -1<CR>
+
+inoremap <C-n> <ESC><C-n>
+inoremap <C-p> <ESC><C-p>
+cnoremap <C-v> <S-Insert>
+
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-a> <S-ESC><C-a><S-ESC>
+inoremap <C-e> <End>
+inoremap <C-m> <CR>
+
+" Commandline mode
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-m> <CR>
+
+cnoremap <C-d> <Tab>
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
+cnoremap <C-i> <Tab>
+cnoremap <S-C-i> <S-Tab>
+
+
+silent qmark m https://mail.google.com/
+silent qmark r http://www.feedly.com/
+silent qmark t http://twitter.com/
+silent qmark l http://lingr.com/
+
+command! messcopy js util.copyToClipboard(commandline._messageHistory._messages.map(function(it) let (v = it.str) (typeof v === 'xml' ? v.textContent : (typeof v === 'object' ? v.stack : v)) ).join("\n\n"))
+
+set! extensions.checkCompatibility.48.0=false
+set! extensions.checkCompatibility.49.0=false
+set! extensions.checkCompatibility.50.0=false
+" For Firefox 49 workaround
+js services.services.autoCompleteSearch.class_="@mozilla.org/autocomplete/search;1?name=unifiedcomplete"
+
+" -----------------------------------------------------------------------------
+" Styles.
+highlight -append Hint font-size: 12px
+style -name commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive;}
+
+" -----------------------------------------------------------------------------
+" Plugin settings.
+" plugin_loader.js
+let g:plugin_loader_roots = '~/vimperator/vimpr ~/.vimperator/vimpr';
+javascript <<EOF
+liberator.globalVariables.plugin_loader_plugins = [
+  "_libly",
+  "_smooziee",
+  "appendAnchor",
+  "copy",
+  "feedSomeKeys_3",
+  "feeder",
+  "ldrize_cooperation",
+  "migemized_find",
+  //"migemo_completion",
+  "migemo_hint",
+  "multi_requester",
+  "opener",
+  "prevent-pseudo-domain",
+  //"readitlater",
+  //"sbmcommentsviewer",
+  //"treeStyleTab",
+  "walk-input",
+];
+EOF
+
+" statusline-toolbar.js
+"lazy set statuslinetoolbars=feed-button
+
+" multi_requester.js
+noremap s :mr<Space>
+" javascript <<EOM
+" liberator.globalVariables.multi_requester_siteinfo = [
+"   {
+"     name:        "google-mybookmark",
+"     description: "google searching my bookmarks",
+"     url:         "https://www.google.com/bookmarks/lookup?q=%s",
+"     xpath:       '//a[contains(@id,"bkmk_href_")]/..',
+"   },
+" ];
+" EOM
+
+javascript <<EOM
+[
+    ['scrapbook', 'ScrapBook', 'chrome://scrapbook/content/scrapbook.xul', 'resizable,width=300,height=700'],
+].forEach(function([name, description, uri, args]) config.dialogs.push([name, description, function() openDialog(uri, "_blank", args)]));
+EOM
+
+
+" encodingSwitcher.js
+command! ja set autodetector=ja
+
+" direct_bookmark.js
+let g:direct_sbm_use_services_by_tag = 'g'
+let g:direct_sbm_use_services_by_post = 'g'
+
+" sbm_incsearch.js
+let sbmincsearch_service_name = 'googlebookmarks'
+
+" feedSomeKeys_3.js
+lazy fmaps -u='mail\.google\.co(\.jp|m)/mail' c / j k n p o u e x s r a # [ ] ? gi gs gt gd ga gc
+lazy fmaps -u='mail\.google\.co(\.jp|m)/mail/.*/[0-9a-f]+$' c / j,n k,p n,j p,k o u e x s r a # [ ] ? gi gs gt gd ga gc
+lazy fmaps -u='www\.google\.co(\.jp|m)/reader' -events=vkeypress j k n p m s v A r S N P X O gh ga gs gt gu u / ? J K
+lazy fmaps -u='www\.google\.co(\.jp|m)/notebook' -events=vkeypress :
+lazy fmaps -u='www\.google\.co(\.jp|m)/search' -events=vkeydown j k
+lazy fmaps -u='github\.com/[^/]+/[^/]+' -e vkeydown a,t
+lazy fmaps -u='github\.com/[^/]+/[^/]+' ?
+lazy fmaps -u='feedly\.com/.*' j k n p r o v gm ga m x s ?
+lazy fmaps -u='lingr\.com/.*' <C-,> <C-.>
+lazy fmaps -u='https://twitter.com/*' j k n f re,r rt,t m ? <CR> c o / . gh gn gr gp gf gl gm gs gu
+
+" appendAnchor.js
+let g:auto_append_anchor = 'true'
+
+" _smooziee.js
+let g:smooziee_scroll_amount = "200"
+
+" vim: ft=vimperator

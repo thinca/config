@@ -1,0 +1,23 @@
+# For multibyte character input and output.
+set input-meta on
+set convert-meta off
+set output-meta on
+
+set bell-style none
+
+# vi like key bind.
+set editing-mode vi
+# Ignore case for filename completion.
+set completion-ignore-case on
+set history-preserve-point on
+
+TAB: menu-complete
+
+# Key bindings.
+"\C- r": re-read-init-file
+"\C- \C-r": re-read-init-file
+
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+
+"\C-l": clear-screen

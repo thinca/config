@@ -1,0 +1,14 @@
+*.a
+*.o
+*.obj
+*.py[co]
+*.so
+*.sw[nop]
+*~
+.*
+[#]*#
+tags
+tags-*
+GPATH
+GRTAGS
+GTAGS

@@ -1,0 +1,32 @@
+keymap "g g" BEGIN
+
+keymap h MOVE_LEFT1
+keymap j MOVE_DOWN1
+keymap k MOVE_UP1
+keymap l MOVE_RIGHT1
+
+keymap b PREV_WORD
+
+keymap C-e UP
+keymap C-y DOWN
+
+keymap C-f NEXT_PAGE
+keymap C-b PREV_PAGE
+
+keymap o GOTO
+keymap t TAB_GOTO
+
+# Navigations.
+keymap H BACK
+keymap L NEXT
+
+# Tabs.
+keymap d CLOSE_TAB
+keymap "g t" NEXT_TAB
+keymap "g T" PREV_TAB
+keymap C-n NEXT_TAB
+keymap C-p PREV_TAB
+
+# Spacials.
+keymap C-h HELP
+keymap "g C-h" HISTORY

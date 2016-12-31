@@ -1,0 +1,16 @@
+syntax: glob
+*.o
+*.lo
+*.la
+#*#
+.*.rej
+*.rej
+.*
+*~
+.#*
+.DS_Store
+*.sw[po]
+tags
+tags-*
+.*.vimrc
+build

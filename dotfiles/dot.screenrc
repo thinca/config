@@ -1,0 +1,41 @@
+logfile $HOME/.log/screen/%y%m%d-%n.log
+# deflog on
+
+escape ^z^z
+
+## http://frexx.de/xterm-256-notes/
+## erase background with current bg color
+defbce "on"
+## do not use 'screen-bce'
+term xterm-256color
+
+defscrollback 10000
+autodetach on
+defutf8 on
+
+ignorecase on
+
+caption always " %`%{= wk}%-w%{=b bw}%n %t%{-}%+w"
+hardstatus alwayslastline " %04Y/%02m/%02d %02c%=%l "
+
+bind ^R  command -c region
+bind -c region +  eval 'resize +1' 'command -c region'
+bind -c region -  eval 'resize -1' 'command -c region'
+
+bind N command -c number
+bind -c number 0 number 0
+bind -c number 1 number 1
+bind -c number 2 number 2
+bind -c number 3 number 3
+bind -c number 4 number 4
+bind -c number 5 number 5
+bind -c number 6 number 6
+bind -c number 7 number 7
+bind -c number 8 number 8
+bind -c number 9 number 9
+
+bind . source $HOME/.screenrc
+
+layout save main
+
+# vim: ft=screen

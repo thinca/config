@@ -1,0 +1,30 @@
+[ui]
+username = thinca <thinca@gmail.com>
+ignore = ~/.hgignore
+editor = vim
+
+[alias]
+h = help
+b = branch
+l = log
+d = diff
+gene = log --template '{rev} {date|isodate} {author}: {desc|firstline}\n' --graph
+
+[extensions]
+rebase =
+color =
+pager =
+fetch =
+purge =
+graphlog =
+mq =
+convert =
+progress =
+transplant =
+
+[color]
+status.ignored = white
+
+[pager]
+attend = help, h, annotate, cat, diff, d, export, glog, log, l, tags, qdiff, gene
+

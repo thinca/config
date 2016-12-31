@@ -1,0 +1,1 @@
+silent! nunmap <buffer> q

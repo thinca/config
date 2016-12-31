@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!--
+     https://pqrs.org/osx/karabiner/xml.html.ja
+-->
+<root>
+  <item>
+    <name>Private settings</name>
+    <item>
+      <name>tmux support in Terminal</name>
+      <identifier>private.tmux</identifier>
+
+      <only>TERMINAL</only>
+      <autogen>
+        __KeyToKey__
+        KeyCode::C, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::C
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::N, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::N
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::P, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::P
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::0, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::0
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::1, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::1
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::2, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::2
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::3, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::3
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::4, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::4
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::5, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::5
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::6, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::6
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::7, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::7
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::8, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::8
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::9, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::9
+      </autogen>
+
+      <autogen>
+        __KeyToKey__
+        KeyCode::BRACKET_RIGHT, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::BRACKET_RIGHT
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::BACKSLASH, ModifierFlag::COMMAND_L,
+        KeyCode::Z, ModifierFlag::CONTROL_L, KeyCode::BACKSLASH
+      </autogen>
+
+      <autogen>
+        __KeyToKey__
+        KeyCode::COMMA, ModifierFlag::COMMAND_L,
+        KeyCode::BRACKET_RIGHT, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::DOT, ModifierFlag::COMMAND_L,
+        KeyCode::BACKSLASH, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L
+      </autogen>
+    </item>
+
+    <item>
+      <name>Slack support</name>
+      <identifier>private.slack</identifier>
+
+      <only>Slack</only>
+      <autogen>
+        __KeyToKey__
+        KeyCode::K, ModifierFlag::CONTROL_L,
+        KeyCode::K, ModifierFlag::COMMAND_L
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::N, ModifierFlag::CONTROL_L,
+        KeyCode::CURSOR_DOWN, ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::P, ModifierFlag::CONTROL_L,
+        KeyCode::CURSOR_UP, ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L
+      </autogen>
+    </item>
+
+    <item>
+      <name>Global Hotkey for Media Player</name>
+      <identifier>private.global.media</identifier>
+
+      <autogen>
+        __KeyToKey__
+        KeyCode::P, ModifierFlag::OPTION_L,
+        KeyCode::VK_IOHIDPOSTEVENT_NX_KEYTYPE_PLAY
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::L, ModifierFlag::OPTION_L,
+        KeyCode::VK_IOHIDPOSTEVENT_NX_KEYTYPE_NEXT
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::H, ModifierFlag::OPTION_L,
+        KeyCode::VK_IOHIDPOSTEVENT_NX_KEYTYPE_PREVIOUS
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::M, ModifierFlag::OPTION_L,
+        KeyCode::VK_IOHIDPOSTEVENT_NX_KEYTYPE_MUTE
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::U, ModifierFlag::OPTION_L,
+        KeyCode::VK_IOHIDPOSTEVENT_NX_KEYTYPE_SOUND_UP
+      </autogen>
+      <autogen>
+        __KeyToKey__
+        KeyCode::D, ModifierFlag::OPTION_L,
+        KeyCode::VK_IOHIDPOSTEVENT_NX_KEYTYPE_SOUND_DOWN
+      </autogen>
+    </item>
+  </item>
+</root>

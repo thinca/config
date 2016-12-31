@@ -1,0 +1,31 @@
+snippet func
+  function! ${1:function_name}(${2}) abort
+    ${3:" code}
+  endfunction
+
+snippet for
+  for ${1:needle} in ${2:haystack}
+    ${3:" code}
+  endfor
+snippet while
+  while ${1:condition}
+    ${2:" code}
+  endwhile
+
+snippet     autoload
+abbr        autoload func endfunc
+alias       afunction afunc
+options     head
+  function! `substitute(matchstr(neosnippet#util#expand('%:p:r'), '/autoload/\zs.*$'), '/', '#', 'g')`#${1:#:func_name}(${2:#:args}) abort
+    ${0}
+  endfunction
+
+snippet main
+  function! s:main() abort
+    ${0:TARGET}
+  endfunction
+
+  call s:main()
+
+snippet mailv
+  thinca+vim@gmail.com

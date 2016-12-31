@@ -1,0 +1,125 @@
+[core]
+	autocrlf = false
+	excludesfile = ~/.gitignore
+	quotepath = false
+[user]
+	name = thinca
+	email = thinca@gmail.com
+[github]
+	user = thinca
+[color]
+	ui = auto
+[pull]
+	rebase = true
+[push]
+	default = current
+	followTags = true
+[fetch]
+	prune = true
+[remote]
+	pushDefault = origin
+[rebase]
+	autoStash = true
+	autoSquash = true
+	instructionFormat = [%ai] %s
+[diff]
+	algorithm = histogram
+	compactionHeuristic = true
+[commit]
+	verbose = true
+[pager]
+	log = diff-highlight | less
+	show = diff-highlight | less
+	diff = diff-highlight | less
+[interactive]
+	diffFilter = diff-highlight
+[alias]
+	h = help
+	a = add -A
+	cl = clone
+	b = branch
+	ba = branch -a
+	br = branch -r
+	ci = commit -a -v
+	cim = commit --amend -m
+	cia = commit --amend -C HEAD
+	cin = !git commit --amend --all -C HEAD \"--date=$(date --rfc-2822)\"
+	tm = "!sh -c 'export GIT_COMMITTER_DATE=\"$(date --date=\"$(git log -1 --format=%aD HEAD) ${1:-0} hours ago\" --rfc-2822)\"; git commit --amend -C HEAD --date=\"${GIT_COMMITTER_DATE}\"' -"
+	rbtm = "!sh -c 'GIT_EDITOR=true git rebase ${2:-master} -i --exec \"git tm ${1:-0}\"' -"
+	rbd = rebase --committer-date-is-author-date
+	rbn = rebase --ignore-date
+	selcommit = "!sh -c 'git log --oneline ${1} | fzf --preview=\"git show --color {1}\" | cut -b 1-7' -"
+	fixcommit = !git commit -a --fixup="$(git selcommit "origin/$(git base-branch)..HEAD")"
+	fixup = !git -c core.editor=true rebase -i --autosquash $(git merge-base ${1:-origin/$(git base-branch)} HEAD)
+	fix = !git fixcommit && git fixup
+	co = checkout
+	cob = !sh -c 'b="$(git current-branch)" && git checkout -b "${1}" && git config "branch.${1}.base" "$b"' -
+	topic = !git checkout "$(git current-remote)/master" -b
+	d = diff HEAD
+	di = diff
+	dl = diff HEAD^
+	ds = diff --cached
+	f = fetch
+	r = remote
+	l = log
+	lp = log -p
+	l1 = log --pretty=oneline
+	newly  = log ORIG_HEAD..HEAD --reverse -C
+	newlyp = log ORIG_HEAD..HEAD --reverse -C -p
+	m = merge --no-ff --no-edit
+	s = show
+	ss = show --stat
+	st = status --short --branch
+	t = tag
+	sh = stash save --include-untracked
+	sp = stash pop
+	stl = stash list
+	sts = stash show
+	stsv = stash show -p
+	cancel = !git commit --all --message='Temporary commit for cancel' && git reset --hard HEAD~
+	return = reset HEAD~
+	rollback = reset --hard HEAD~
+	chp = cherry-pick
+	rb = rebase
+	rbu = !git rebase "origin/$(git base-branch)"
+	rbui = !git rebase -i "origin/$(git base-branch)"
+	rbi = rebase -i
+	rbc = rebase --continue
+	rba = rebase --abort
+	upst = rebase origin/master
+	gene = log --graph --date=iso --pretty=gene
+	genea = log --graph --date=iso --pretty=gene --all
+	gr = log --graph --date=iso --pretty=genegr
+	hist = log -p --reverse --stat --color-words -C
+	recent = log --date=relative --pretty=recent --reverse -10
+	ranking = shortlog -s -n --no-merges
+	wip = commit -a -m '[WIP]'
+	temp = commit -a -m 'Temporary commit'
+	github = push github master --tags
+	dci = svn dcommit
+	sci = svn dcommit
+	sup = svn rebase
+	ignore = update-index --assume-unchanged
+	unignore = update-index --no-assume-unchanged
+	ignored = !git ls-files -v | grep "^[a-z]"
+	pr = "!sh -c 'git fetch --update-head-ok ${2:-origin} pull/$1/head:pr-$1' -"
+	sb = !git sweep-branch
+	sweep-branch = "!f() { b=$(git merged-branches); [[ -z \"$b\" ]] || git branch --delete $b; }; f"
+	merged-branches = "!f() { git branch --merged ${1} | sed 's/^..//' | grep -v \"^${1}$\"; }; f ${1:-$(git current-branch)}"
+	current-branch = symbolic-ref --short HEAD
+	current-remote = !git config "branch.$(git current-branch).remote"
+	base-branch = !git config "branch.$(git current-branch).base"
+	chx = update-index --chmod=+x
+	grev = !git push origin HEAD:refs/for/master/$(git current-branch)
+	grevb = !git push origin HEAD:refs/for/$(git current-branch)
+	grevm = push origin HEAD:refs/for/master
+[pretty]
+	gene = format:%C(yellow)%h%Creset %ad %an: %s%C(yellow)%d%Creset
+	genegr = format:%h %ad %an: %s%d
+	recent = format:%C(yellow)%h%Creset %ad %an: %s
+[rerere]
+	enabled = true
+[include]
+	path = .gitconfig.local
+
+# vim: ft=gitconfig

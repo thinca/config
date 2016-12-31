@@ -1,0 +1,16 @@
+if which tmux &>/dev/null && \
+	[[ -z "${NOTMUX}" && "${EUID}" != "0" && "${USER}" != "root" && \
+	-z "${WINDOW}" && -z "${TMUX}" && -n "${SSH_CLIENT}" ]] then
+	if which keychain &>/dev/null && [[ -f ~/.ssh/id_rsa ]]; then
+		eval $(keychain --eval --ignore-missing --quiet ~/.ssh/id_rsa)
+	fi
+
+	# session=${SSH_CLIENT%% *}
+	session=main
+
+	if tmux has-session -t "${session}" &>/dev/null; then
+		exec tmux -2 -u attach-session -t "${session}"
+	else
+		exec tmux -2 -u new-session -s "${session}"
+	fi
+fi

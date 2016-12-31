@@ -1,0 +1,12 @@
+alias ls=ls -F
+alias ll=ls -l
+alias la=ls -lA
+
+alias sc=iexe scala -Xnojline
+
+alias v=vim
+alias s=svn
+alias b=bzr
+alias g=git
+
+galias G="| grep"

@@ -1,0 +1,44 @@
+# #include <...>
+snippet inc
+	#include <${1:iostream}>${0}
+# #include "..."
+snippet Inc
+	#include "${1:`expand('%:r').'.hpp'`}"${0}
+
+# printf
+snippet pr
+	std::cout << ${1} << std::endl;${0}
+snippet fpr
+	std::cerr << ${1} << std::endl;${0}
+
+# class
+snippet     cl
+prev_word   '^'
+	class ${1:ClassName} {
+		${0}
+	};
+
+snippet     cle
+prev_word   '^'
+	class ${1:ClassName} : public ${2:SuperClass} {
+		${0}
+	};
+
+snippet     ns
+prev_word   '^'
+	namespace ${1:namespace} {
+	${0}
+	}  // namespace $1
+
+snippet     nns
+prev_word   '^'
+	namespace {
+	${0}
+	}  // namespace
+
+
+# boost
+snippet  bfor
+	BOOST_FOREACH(${1:type} ${2:t}, ${3:it}) {
+		${0}
+	}

@@ -1,0 +1,46 @@
+snippet obj
+abbr    object ... {
+prev_word   '^'
+	object ${1:`expand('%:t:r')`} {
+		${2}
+	}
+
+snippet obje
+abbr    object ... extends {
+prev_word   '^'
+	object ${1:`expand('%:t:r')`} extends ${2} {
+		${3}
+	}
+
+snippet objew
+abbr    object ... extends ... with ... {
+prev_word   '^'
+	object ${1:`expand('%:t:r')`} extends ${2} with ${3}{
+		${4}
+	}
+
+snippet     class
+abbr        class
+prev_word   '^'
+	class ${1:`expand('%:t:r')`} {
+		${2}
+	}
+
+snippet main
+prev_word   '^'
+	def main(args: Array[String]) {
+		${1}
+	}
+
+snippet     fory
+abbr        for yield
+prev_word   '^'
+	for(${1}) yield ${2}
+
+
+snippet     match
+abbr        match
+prev_word   '^'
+	match {
+		case ${1} => ${2}
+	}
