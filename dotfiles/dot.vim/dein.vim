@@ -11,7 +11,7 @@ if !isdirectory($DEIN_DIR)
   if !isdirectory(s:base_dir)
     call mkdir(s:base_dir, 'p')
   endif
-  call system('git clone git@github.com:Shougo/dein.vim.git ' .
+  call system('git clone https://github.com/Shougo/dein.vim.git ' .
   \   shellescape($DEIN_DIR))
   if !isdirectory($DEIN_DIR)
     echo 'dein install failed.'
