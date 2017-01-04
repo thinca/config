@@ -1,7 +1,7 @@
 if $VIM_USERDIR ==# ''
   finish
 endif
-let $DEIN_BASE = expand('$VIM_USERDIR/dein')
+let $DEIN_BASE = expand('~/.local/share/vim/dein')
 let $DEIN_REPOS_DIR = expand('$DEIN_BASE/repos/github.com/Shougo/dein.vim')
 if !isdirectory($DEIN_REPOS_DIR)
   if !executable('git')
