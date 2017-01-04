@@ -56,7 +56,6 @@ if $DROPBOX_HOME !=# ''
   call dein#local($DROPBOX_HOME . '/work/vim-plugins/labs', {'frozen': 1})
 endif
 
-" call dein#add($DEIN_DIR)
 call dein#add('Shougo/dein.vim')
 
 if has('lua')
