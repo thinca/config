@@ -1,24 +1,24 @@
 if $VIM_USERDIR ==# ''
   finish
 endif
-let $DEIN_DIR = expand('$VIM_USERDIR/dein/repos/github.com/Shougo/dein.vim')
-if !isdirectory($DEIN_DIR)
+let $DEIN_REPOS_DIR = expand('$VIM_USERDIR/dein/repos/github.com/Shougo/dein.vim')
+if !isdirectory($DEIN_REPOS_DIR)
   if !executable('git')
     echo 'Please install git.'
     finish
   endif
-  let s:base_dir = fnamemodify($DEIN_DIR, ':h')
+  let s:base_dir = fnamemodify($DEIN_REPOS_DIR, ':h')
   if !isdirectory(s:base_dir)
     call mkdir(s:base_dir, 'p')
   endif
   call system('git clone https://github.com/Shougo/dein.vim.git ' .
-  \   shellescape($DEIN_DIR))
-  if !isdirectory($DEIN_DIR)
+  \   shellescape($DEIN_REPOS_DIR))
+  if !isdirectory($DEIN_REPOS_DIR)
     echo 'dein install failed.'
     finish
   endif
 endif
-set runtimepath^=$DEIN_DIR
+set runtimepath^=$DEIN_REPOS_DIR
 let s:log = expand('$VIM_USERDIR/info/dein/')
 if !isdirectory(s:log)
   call mkdir(s:log, 'p')
