@@ -563,6 +563,10 @@ if has('persistent_undo')
 endif
 setglobal backupcopy=yes
 
+call s:mkdir(expand('$VIM_USERDIR/tmp/backup'))
+call s:mkdir(expand('$VIM_USERDIR/tmp/swap'))
+call s:mkdir(expand('$VIM_USERDIR/tmp/undo'))
+
 " Swap
 setglobal swapfile
 augroup vimrc-swapfile
@@ -600,10 +604,6 @@ function! s:swapfile_delete() abort
     edit
   endif
 endfunction
-
-call s:mkdir(expand('$VIM_USERDIR/tmp/backup'))
-call s:mkdir(expand('$VIM_USERDIR/tmp/swap'))
-call s:mkdir(expand('$VIM_USERDIR/tmp/undo'))
 
 if has('viminfo')
   " TELLME: The history is not saved in specified number.
