@@ -546,16 +546,16 @@ endif
 
 " backup.
 setglobal backup
-setglobal backupdir=$VIM_USERDIR/tmp/backup
+setglobal backupdir=~/.cache/vim/backup
 " Paths of swap file and backup file.
 if $TMP !=# ''
   execute 'setglobal backupdir+=' . escape(expand($TMP), ' \')
 elseif has('unix')
   setglobal backupdir+=/tmp
 endif
-setglobal directory=$VIM_USERDIR/tmp/swap
+setglobal directory=~/.cache/vim/swap
 if has('persistent_undo')
-  setglobal undodir=$VIM_USERDIR/tmp/undo
+  setglobal undodir=~/.cache/vim/undo
   augroup vimrc-undofile
     autocmd!
     autocmd BufReadPre ~/* setlocal undofile
@@ -563,9 +563,9 @@ if has('persistent_undo')
 endif
 setglobal backupcopy=yes
 
-call s:mkdir(expand('$VIM_USERDIR/tmp/backup'))
-call s:mkdir(expand('$VIM_USERDIR/tmp/swap'))
-call s:mkdir(expand('$VIM_USERDIR/tmp/undo'))
+call s:mkdir(expand('~/.cache/vim/backup'))
+call s:mkdir(expand('~/.cache/vim/swap'))
+call s:mkdir(expand('~/.cache/vim/undo'))
 
 " Swap
 setglobal swapfile
