@@ -546,14 +546,14 @@ endif
 
 " backup.
 setglobal backup
-setglobal backupdir=./.backup,~/.backup,$VIM_USERDIR/tmp/backup
+setglobal backupdir=$VIM_USERDIR/tmp/backup
 " Paths of swap file and backup file.
 if $TMP !=# ''
   execute 'setglobal backupdir+=' . escape(expand($TMP), ' \')
 elseif has('unix')
   setglobal backupdir+=/tmp
 endif
-setglobal directory=./.backup,~/.backup,$VIM_USERDIR/tmp/swap
+setglobal directory=$VIM_USERDIR/tmp/swap
 if has('persistent_undo')
   setglobal undodir=$VIM_USERDIR/tmp/undo
   augroup vimrc-undofile
