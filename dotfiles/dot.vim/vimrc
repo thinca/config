@@ -1693,8 +1693,7 @@ let g:riv_global_leader = '<LocalLeader>t'
 
 
 " == Plugin settings. == {{{1
-let s:user_rtp = $VIM_USERDIR
-let s:plugin_info = s:user_rtp . '/info'
+let s:plugin_info = $VIM_USERDIR . '/info'
 
 let s:temp_file_pat = join([
 \   '/svn-commit\%(\.\d\+\)\?\.tmp$',
