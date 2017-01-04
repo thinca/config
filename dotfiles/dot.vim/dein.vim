@@ -1,7 +1,8 @@
 if $VIM_USERDIR ==# ''
   finish
 endif
-let $DEIN_REPOS_DIR = expand('$VIM_USERDIR/dein/repos/github.com/Shougo/dein.vim')
+let $DEIN_BASE = expand('$VIM_USERDIR/dein')
+let $DEIN_REPOS_DIR = expand('$DEIN_BASE/repos/github.com/Shougo/dein.vim')
 if !isdirectory($DEIN_REPOS_DIR)
   if !executable('git')
     echo 'Please install git.'
@@ -46,11 +47,11 @@ command! -nargs=+ -complete=customlist,s:source_cmpl DeinSource
 \   call call('dein#source', [<f-args>])
 command! DeinRecache call dein#recache_runtimepath()
 
-if !dein#load_state(expand('$VIM_USERDIR/dein'))
+if !dein#load_state($DEIN_BASE)
   finish
 endif
 
-call dein#begin(expand('$VIM_USERDIR/dein'), [expand('<sfile>')])
+call dein#begin($DEIN_BASE, [expand('<sfile>')])
 
 if $DROPBOX_HOME !=# ''
   call dein#local($DROPBOX_HOME . '/work/vim-plugins/labs', {'frozen': 1})
