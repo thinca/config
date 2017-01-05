@@ -20,10 +20,6 @@ if !isdirectory($DEIN_REPOS_DIR)
   endif
 endif
 set runtimepath^=$DEIN_REPOS_DIR
-let s:log = expand('$VIM_USERDIR/info/dein/')
-if !isdirectory(s:log)
-  call mkdir(s:log, 'p')
-endif
 
 let g:dein#enable_name_conversion = 1
 
