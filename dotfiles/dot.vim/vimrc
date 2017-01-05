@@ -1983,6 +1983,7 @@ if dein#is_sourced('unite')
   call unite#custom#substitute('file', '\C^;b', '$DEIN_BASE/repos/github.com/*/*')
   call unite#custom#substitute('file', '\C^;B', '$DEIN_BASE/.cache/vimrc/.dein/*')
   if $DROPBOX_HOME !=# ''
+    call unite#custom#substitute('file', '^;d', '$DROPBOX_HOME/work/vim-plugins/*')
     call unite#custom#substitute('file', '^;l', '$DROPBOX_HOME/work/vim-plugins/labs/*')
   endif
   call unite#custom#substitute('file', '^;i', '$VIM_USERDIR/info/*')
@@ -1990,9 +1991,6 @@ if dein#is_sourced('unite')
   call unite#custom#substitute('file', '^;f', '$VIM_USERDIR/after/ftplugin/*')
   if has('win32') || has('win64')
     call unite#custom#substitute('file', '^;p', 'C:/Program Files/*')
-  endif
-  if isdirectory(expand('$DROPBOX_HOME/work/vim-plugins'))
-    call unite#custom#substitute('file', '^;d', '$DROPBOX_HOME/work/vim-plugins/*')
   endif
 
   call unite#custom#substitute('file', '\*\*\+', '*', -1)
