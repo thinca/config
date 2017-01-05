@@ -1980,8 +1980,8 @@ if dein#is_sourced('unite')
   call unite#custom#substitute('file', '^!', '\=vcs#root()."/*"', 1)
   call unite#custom#substitute('file', '^\\', '~/*')
   call unite#custom#substitute('file', '^;v', '$VIM_USERDIR/*')
-  call unite#custom#substitute('file', '\C^;b', '$VIM_USERDIR/dein/repos/github.com/*/*')
-  call unite#custom#substitute('file', '\C^;B', '$VIM_USERDIR/dein/.cache/vimrc/.dein/*')
+  call unite#custom#substitute('file', '\C^;b', '$DEIN_BASE/repos/github.com/*/*')
+  call unite#custom#substitute('file', '\C^;B', '$DEIN_BASE/.cache/vimrc/.dein/*')
   if $DROPBOX_HOME !=# ''
     call unite#custom#substitute('file', '^;l', '$DROPBOX_HOME/work/vim-plugins/labs/*')
   endif
