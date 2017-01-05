@@ -104,8 +104,9 @@
 	ignored = !git ls-files -v | grep "^[a-z]"
 	pr = "!sh -c 'git fetch --update-head-ok ${2:-origin} pull/$1/head:pr-$1' -"
 	sb = !git sweep-branch
-	sweep-branch = "!f() { b=$(git merged-branches); [[ -z \"$b\" ]] || git branch --delete $b; }; f"
-	merged-branches = "!f() { git branch --merged ${1} | sed 's/^..//' | grep -v \"^${1}$\"; }; f ${1:-$(git current-branch)}"
+	sweep-branch = "!f() { b=$(git spent-branches); [[ -z \"$b\" ]] || git branch --delete $b; }; f"
+	merged-branches = for-each-ref refs/heads/ --format='%(refname:short)' --merged
+	spent-branches = "!f() { git merged-branches ${1} | grep -v \"^${1}$\"; }; f ${1:-$(git current-branch)}"
 	current-branch = symbolic-ref --short HEAD
 	current-remote = !git config "branch.$(git current-branch).remote"
 	base-branch = !git config "branch.$(git current-branch).base"
