@@ -23,6 +23,7 @@ pushd %HOME%
 
 call :link .vimperatorrc %CONFIG%\firefox\dot.vimperatorrc
 call :dlink vimperator %CONFIG%\firefox\vimperator
+rem TODO git clone https://github.com/vimpr/vimperator-plugins ~/.local/share/vimperator/plugins
 
 call :link _nya %CONFIG%\windows\ckw\_nya
 

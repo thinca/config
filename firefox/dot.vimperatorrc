@@ -97,7 +97,7 @@ style -name commandline-ime chrome://* #liberator-commandline-command input {ime
 " -----------------------------------------------------------------------------
 " Plugin settings.
 " plugin_loader.js
-let g:plugin_loader_roots = '~/vimperator/vimpr ~/.vimperator/vimpr';
+let g:plugin_loader_roots = '~/.local/share/vimperator/plugins';
 javascript <<EOF
 liberator.globalVariables.plugin_loader_plugins = [
   "_libly",
