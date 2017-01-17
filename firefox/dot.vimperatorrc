@@ -159,7 +159,7 @@ lazy fmaps -u='mail\.google\.co(\.jp|m)/mail/.*/[0-9a-f]+$' c / j,n k,p n,j p,k 
 lazy fmaps -u='www\.google\.co(\.jp|m)/reader' -events=vkeypress j k n p m s v A r S N P X O gh ga gs gt gu u / ? J K
 lazy fmaps -u='www\.google\.co(\.jp|m)/notebook' -events=vkeypress :
 lazy fmaps -u='www\.google\.co(\.jp|m)/search' -events=vkeydown j k
-lazy fmaps -u='github\.com/[^/]+/[^/]+' -e vkeydown a,t
+lazy fmaps -u='github\.com/[^/]+/[^/]+' -e vkeydown a,t q,r
 lazy fmaps -u='github\.com/[^/]+/[^/]+' ?
 lazy fmaps -u='feedly\.com/.*' j k n p r o v gm ga m x s ?
 lazy fmaps -u='lingr\.com/.*' <C-,> <C-.>
