@@ -15,6 +15,7 @@ autocmd BufReadPost,BufNewFile *.kt                  setlocal filetype=kotlin
 autocmd BufReadPost,BufNewFile Dockerfile.*          setlocal filetype=dockerfile
 
 autocmd BufReadPost,BufNewFile *.json.jbuilder        setlocal filetype=ruby
+autocmd BufReadPost,BufNewFile .pryrc                 setlocal filetype=ruby
 autocmd BufReadPost,BufNewFile {database,secrets}.yml setlocal filetype=eruby.yaml
 autocmd BufReadPost,BufNewFile */config/*.yml         setlocal filetype=eruby.yaml
 autocmd BufReadPost,BufNewFile .babelrc              setlocal filetype=json
