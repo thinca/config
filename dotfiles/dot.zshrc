@@ -328,7 +328,7 @@ for f in ~/.zsh/scripts/*.zsh(N); do
 done
 
 [[ -r ~/.zsh/"${SYSTEM}".zsh ]] && source ~/.zsh/"${SYSTEM}".zsh
-[[ -r ~/.zsh/local ]] && source ~/.zsh/local
+[[ -r ~/.config/zsh/local.zsh ]] && source ~/.config/zsh/local.zsh
 
 typeset -U path  # Delete the duplicate entry.
 
