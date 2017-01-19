@@ -2998,9 +2998,6 @@ if dein#is_sourced('quickrun')
     \     'command': 'clojure-1.4',
     \     'hook/eval/template': '(prn (do %s))'
     \   },
-    \   'dosbatch': {
-    \     'runner': 'system',
-    \   },
     \   'kotlin': {
     \     'exec': [
     \       'kotlinc-jvm %s -include-runtime -d %s:p:r.jar',
