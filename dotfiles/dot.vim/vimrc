@@ -73,7 +73,7 @@ source <sfile>:h/dein.vim
 
 " localrc.vim
 if dein#is_sourced('localrc')
-  call localrc#load('local.pre.vim', expand('<sfile>:h'))
+  call localrc#load('local.pre.vim', expand('<sfile>:h'), 1)
   if !v:vim_did_enter
     call localrc#load('.init.vimrc', getcwd())
   endif
@@ -3366,7 +3366,7 @@ command! -range=% Tsv2csv
 
 if dein#is_sourced('localrc')
   " Load a setting for machine local.
-  call localrc#load('local.vim', expand('<sfile>:h'))
+  call localrc#load('local.vim', expand('<sfile>:h'), 1)
 
   if !v:vim_did_enter
     call localrc#load('.init.after.vimrc', getcwd())
