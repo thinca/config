@@ -843,7 +843,7 @@ augroup vimrc-misc
   autocmd VimEnter * nested call s:apply_global_option_values()
   function! s:apply_global_option_values() abort
     let c = argc()
-    if c == 0 && bufname('%') ==# ''
+    if c == 0 && bufname('%') ==# '' && line('$') == 1 && getline(1) ==# ''
       enew
     endif
     setlocal list< breakindent<
