@@ -2110,7 +2110,7 @@ if dein#is_sourced('unite')
   \ which, heading_line, matched_line, context)
     return {
     \   'word': a:heading_line,
-    \   'level': (len(matchstr(a:heading_line, '^\s*')) / &l:shiftwidth) + 1,
+    \   'level': (len(matchstr(a:heading_line, '^\s*')) / shiftwidth()) + 1,
     \   'type': a:matched_line =~# '^class' ? 'class' : 'function',
     \ }
   endfunction
