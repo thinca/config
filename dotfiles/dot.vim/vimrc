@@ -487,7 +487,7 @@ endif
 " Tab and indent.
 setglobal shiftround softtabstop=-1 shiftwidth=0 tabstop=2
 setglobal autoindent copyindent preserveindent
-setglobal breakindent breakindentopt& breakindentopt+=sbr
+setglobal breakindent
 setglobal expandtab
 setglobal cinoptions& cinoptions+=b1,l1,g0,N-s,(1s,m1
 setglobal cinkeys& cinkeys+=0=break
