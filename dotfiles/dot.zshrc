@@ -298,28 +298,6 @@ if __is_screen; then
 	}
 fi
 
-function __chpwd_on_gemfile_local() {
-	if [[ -f "Gemfile.private" ]]; then
-		export BUNDLE_GEMFILE="./Gemfile.private"
-	else
-		unset BUNDLE_GEMFILE
-	fi
-}
-chpwd_functions+=__chpwd_on_gemfile_local
-
-function __precmd_update_gemfile_local_lock() {
-	if [[ \
-			-d '.bundle' && \
-			-n "${BUNDLE_GEMFILE}" && \
-			-f "${BUNDLE_GEMFILE}" && \
-			( ! -f "${BUNDLE_GEMFILE}.lock" || \
-				( "Gemfile.lock" -nt "${BUNDLE_GEMFILE}.lock" ) ) ]]; then
-		cp "Gemfile.lock" "${BUNDLE_GEMFILE}.lock"
-		bundle install
-	fi
-}
-precmd_functions+=__precmd_update_gemfile_local_lock
-
 ###########################################################################
 # Load other scripts.
 
