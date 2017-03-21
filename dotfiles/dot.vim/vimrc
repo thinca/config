@@ -3001,14 +3001,6 @@ if dein#is_sourced('quickrun')
     \     'command': 'clojure-1.4',
     \     'hook/eval/template': '(prn (do %s))'
     \   },
-    \   'kotlin': {
-    \     'exec': [
-    \       'kotlinc-jvm %s -include-runtime -d %s:p:r.jar',
-    \       'java -jar %s:p:r.jar %a'
-    \     ],
-    \     'tempfile': '%{tempname()}.kt',
-    \     'hook/sweep/files': ['%S:p:r.jar'],
-    \   },
     \   'msil': {
     \     'command': 'ilasm',
     \   },
