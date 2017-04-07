@@ -1,5 +1,5 @@
-:let s:fname = expand('%:t:r')
-:let s:module = join(map(split(s:fname, '-'), 'substitute(v:val, ''\%(^\|_\)\(\l\)'', ''\U\1'', "g")'), '.')
+:let s:fname = matchstr(expand('%:p:r:gs?\\?/?'), '.*/\zsvital/.*')
+:let s:module = join(map(split(s:fname, '/'), 'substitute(v:val, ''\%(^\|_\)\(\l\)'', ''\U\1'', "g")'), '.')
 :silent keeppatterns %s/\CPLUGIN/\=s:fname/ge
 :silent keeppatterns %s/\CMODULE/\=s:module/ge
 :setlocal filetype=help
