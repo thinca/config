@@ -152,7 +152,9 @@ function! s:jump_to_tag() abort
   let tag = s:get_text_on_cursor('|\zs[^|]\+\ze|')
   if tag !=# ''
     let pat = escape(tag, '\')
-    call search('\V*\zs' . pat . '*', 'w')
+    if !search('\V*\zs' . pat . '*', 'w')
+      execute 'help' tag
+    endif
   endif
 endfunction
 nnoremap <buffer> <silent> <C-]> :<C-u>call <SID>jump_to_tag()<CR>
