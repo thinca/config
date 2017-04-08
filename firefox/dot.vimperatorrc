@@ -49,6 +49,11 @@ nnoremap <C-h> :h<Space>
 nnoremap <Leader>b :<C-u>buffer<Space>
 nnoremap <Leader>s :<C-u>panorama switch<Space>
 
+nnoremap + zI
+nnoremap - zO
+nnoremap zz zZ
+nnoremap zZ zz
+
 noremap <C-S-n> :tabmove +1<CR>
 noremap <C-S-p> :tabmove -1<CR>
 
