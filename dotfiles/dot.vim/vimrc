@@ -2105,6 +2105,26 @@ if dein#is_sourced('unite')
   \   'coffee': {
   \     'heading': '^class\>\|\w\+\s*[:=]\s*\%((.\{-})\s*\)\?[-=]>'
   \   },
+  \   'vimspec': {
+  \     'heading': '^\c\s*\%(Describe\|Context\|Before\|After\|It\)\>',
+  \     'heading_groups': {
+  \       'describe': ['describe', 'context'],
+  \       'hook': ['before', 'after'],
+  \       'example': ['it'],
+  \     },
+  \     'highlight_rules': [
+  \       {
+  \         'name': 'summary',
+  \         'pattern': '/.*/',
+  \         'highlight': 'Constant',
+  \       },
+  \       {
+  \         'name': 'commnd',
+  \         'pattern': '/\<\%(Describe\|Context\|Before\|After\|It\)\>/',
+  \         'highlight': 'Statement',
+  \       },
+  \     ],
+  \   },
   \ }
   function! g:unite_source_outline_info.coffee.create_heading(
   \ which, heading_line, matched_line, context)
@@ -2112,6 +2132,14 @@ if dein#is_sourced('unite')
     \   'word': a:heading_line,
     \   'level': (len(matchstr(a:heading_line, '^\s*')) / shiftwidth()) + 1,
     \   'type': a:matched_line =~# '^class' ? 'class' : 'function',
+    \ }
+  endfunction
+  function! g:unite_source_outline_info.vimspec.create_heading(
+  \ which, heading_line, matched_line, context)
+    return {
+    \   'word': a:heading_line,
+    \   'level': len(matchstr(a:matched_line, '^\s*')) / &l:shiftwidth + 1,
+    \   'type': tolower(matchstr(a:heading_line, '^\w\+')),
     \ }
   endfunction
 endif
