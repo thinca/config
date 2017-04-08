@@ -1065,7 +1065,7 @@ nnoremap <silent> <Space>tn :<C-u>tabnew<CR>
 nnoremap <silent> <Space>tc :<C-u>tabclose<CR>
 
 nnoremap <silent> <Space>.
-\      :if expand('%:p:h') ==# resolve($VIM_USERDIR)
+\      :if expand('%:p:h:gs?\\?/?') ==# resolve($VIM_USERDIR)
 \ <Bar>   source %
 \ <Bar> else
 \ <Bar>   tabnew $VIM_USERDIR/vimrc
