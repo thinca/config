@@ -50,7 +50,7 @@ nnoremap <Leader>b :<C-u>buffer<Space>
 nnoremap <Leader>s :<C-u>panorama switch<Space>
 
 nnoremap + zI
-nnoremap - zO
+nnoremap "-" zO
 nnoremap zz zZ
 nnoremap zZ zz
 
