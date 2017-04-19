@@ -86,6 +86,7 @@
 	rbi = rebase -i
 	rbc = rebase --continue
 	rba = rebase --abort
+	bf = !git diff --name-only "$(git base-branch)..@"
 	upst = rebase origin/master
 	gene = log --graph --date=iso --pretty=gene
 	genea = log --graph --date=iso --pretty=gene --all
