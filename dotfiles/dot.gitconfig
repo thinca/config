@@ -115,6 +115,7 @@
 	grev = !git push origin HEAD:refs/for/master/$(git current-branch)
 	grevb = !git push origin HEAD:refs/for/$(git current-branch)
 	grevm = push origin HEAD:refs/for/master
+	remote-fork = !git remote rename origin upstream && git remote add origin \"$(git config remote.upstream.url | sed 's@:\\w\\+/@:thinca/@')\" && git fetch origin
 [pretty]
 	gene = format:%C(yellow)%h%Creset %ad %an: %s%C(yellow)%d%Creset
 	genegr = format:%h %ad %an: %s%d
