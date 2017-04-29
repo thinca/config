@@ -3054,6 +3054,7 @@ if dein#is_sourced('quickrun')
     \   },
     \   'watchdogs_checker/_': {
     \     'outputter': 'loclist',
+    \     'runner': 'job',
     \   },
     \   'watchdogs_checker/vint': {
     \     'command': 'vint',
