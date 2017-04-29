@@ -3072,7 +3072,7 @@ if dein#is_sourced('quickrun')
     \   'watchdogs_checker/eslint': {
     \     'command': './node_modules/.bin/eslint',
     \     'exec': '%c --format unix %o %s',
-    \     'outputter/loclist/errorformat': '%f:%l:%c: %m',
+    \     'outputter/loclist/errorformat': '%f:%l:%c: %m,%-G%.%#',
     \   },
     \ }
 
