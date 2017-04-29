@@ -3328,7 +3328,7 @@ endfunction
 nnoremap <silent> <Plug>(vimrc-show-current-syntax)
 \ :<C-u>echo join(map(synstack(line('.'), col('.')),
 \ 'synIDattr(v:val, "name")
-\ ."(".synIDattr(synIDtrans(v:val), "name").")"'), ',')<CR>
+\ . "(" . synIDattr(synIDtrans(v:val), "name") . ")"'), ',')<CR>
 nmap <silent> <C-CR> <Plug>(vimrc-show-current-syntax)
 nmap <silent> mx <Plug>(vimrc-show-current-syntax)
 imap <silent> <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
