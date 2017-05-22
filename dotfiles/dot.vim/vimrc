@@ -3301,6 +3301,11 @@ let g:EasyMotion_skipfoldedline = 0
 let g:EasyMotion_use_upper = 1
 map <Leader>f <Plug>(easymotion-overwin-f2)
 
+" open-googletranslate.vim  {{{2
+if executable('electron-open')
+  let g:opengoogletranslate#openbrowsercmd = 'electron-open'
+endif
+
 " ctrlp.vim  {{{2
 let g:ctrlp_map = ''
 
