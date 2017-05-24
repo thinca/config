@@ -418,14 +418,18 @@ function! s:tabpage_label(n)
     endif
   endif
 
-  return '%' . a:n . 'T' . label . '%T%#TabLineFill#'
+  return label
 endfunction
 
 function! MakeTabLine()
-  let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
   let sep = ' | '
-
-  let tabs = join(titles, sep) . sep . '%#TabLineFill#%T'
+  if has('tabsidebar')
+    let tabs = ''
+  else
+    let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+    let titles = map(titles, function('printf', ['%%%dT%s%%T%%#TabLineFill#']))
+    let tabs = join(titles, sep) . sep . '%#TabLineFill#%T'
+  endif
   let info = '%#TabLine#'
   if exists('t:tabline_extra')
     let info .= t:tabline_extra . sep
@@ -456,6 +460,21 @@ function! MakeTabLine()
   return tabs . '%=' . info
 endfunction
 
+if has('tabsidebar')
+  setglobal showtabsidebar=1
+  setglobal tabsidebarcolumns=32
+  let &g:tabsidebar =
+  \   '%!' . get(function('s:tabpage_label'), 'name') .
+  \   '(g:actual_curtabpage)'
+  augroup tabsidebar-highlight
+    autocmd!
+    autocmd ColorScheme * highlight! link TabSideBar TabLine
+    autocmd ColorScheme * highlight! link TabSideBarSel TabLineSel
+    autocmd ColorScheme * highlight! link TabSideBarFill TabLineFill
+  augroup END
+  doautocmd tabsidebar-highlight ColorScheme
+augroup END
+endif
 
 
 " == Behavior settings. == {{{1
