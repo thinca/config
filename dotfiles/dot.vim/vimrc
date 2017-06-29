@@ -2436,7 +2436,7 @@ if dein#is_sourced('altr')
   \   'doc/vital/%.txt',
   \   'test/%.vimspec',
   \   'test/%.vim')
-  call altr#define('vimrc', 'dein.vim', 'bundle.vim')
+  call altr#define('vimrc', 'dein.vim')
 
   " Rails
   call altr#define(
