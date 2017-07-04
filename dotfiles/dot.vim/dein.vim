@@ -322,6 +322,7 @@ call dein#add('cespare/vim-toml')
 " call dein#add('plasticboy/vim-markdown')
 call dein#add('udalov/kotlin-vim')
 call dein#add('rhysd/vim-gfm-syntax')
+call dein#add('jparise/vim-graphql')
 
 " colorscheme
 call dein#add('romainl/Apprentice')
