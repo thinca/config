@@ -1,7 +1,10 @@
-:silent keeppatterns %s/\CPLUGIN/\=expand('%:t:r')/ge
+:let s:fname = matchstr(expand('%:p:r:gs?\\?/?'), '.*/doc/\zs.*')
+:let s:plugin = substitute(s:fname, '/', '-', 'g')
+:silent keeppatterns %s/\CFILENAME/\=s:fname/ge
+:silent keeppatterns %s/\CPLUGIN/\=s:plugin/ge
 :setlocal filetype=help
 :GenerateContents
-*PLUGIN.txt*	**要約**
+*FILENAME.txt*	**要約**
 
 Version: 1.0
 Author : thinca <thinca+vim@gmail.com>
