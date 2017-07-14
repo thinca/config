@@ -91,7 +91,8 @@ command! -buffer -bar GenerateContents call s:generate_contents()
 function! s:generate_contents()
   let cursor = getpos('.')
 
-  let plug_name = expand('%:t:r')
+  let file_name = matchstr(expand('%:p:r:gs?\\?/?'), '.*/doc/\zs.*')
+  let plug_name = substitute(file_name, '/', '-', 'g')
   let ja = expand('%:e') ==? 'jax'
   1
 
