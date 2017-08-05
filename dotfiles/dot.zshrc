@@ -233,7 +233,7 @@ bindkey -a '\C-r' redo
 # Functions for this file.
 
 function __is_screen() {
-	if [[ (-n "${WINDOW}" && -z "${DISPLAY}") || -n "${TMUX}" ]]; then
+	if [[ ((-n "${WINDOW}" && -z "${DISPLAY}") || -n "${TMUX}") && -z "${VIM}" ]]; then
 		return 0
 	fi
 	return 1
