@@ -2460,6 +2460,9 @@ if dein#is_sourced('altr')
   \   'test/%.js',
   \ )
 
+  " Go
+  call altr#define('%.go', '%_test.go')
+
   nmap <silent> <C-Space> <Plug>(altr-forward)
   nmap <silent> <C-S-Space> <Plug>(altr-back)
   nnoremap <silent> <C-w><C-Space> :<C-u>split<CR>:call altr#forward()<CR>
