@@ -83,6 +83,7 @@
 	rb = rebase
 	rbu = !git rebase "origin/$(git base-branch)"
 	rbui = !git rebase -i "origin/$(git base-branch)"
+	move-base = "!f() { [[ -n $1 ]] && git rebase --onto $1 $(git base-branch) && git base-branch $1; }; f"
 	rbi = rebase -i
 	rbc = rebase --continue
 	rba = rebase --abort
