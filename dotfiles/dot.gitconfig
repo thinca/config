@@ -49,7 +49,7 @@
 	rbd = rebase --committer-date-is-author-date
 	rbn = rebase --ignore-date
 	selcommit = "!sh -c 'git log --oneline ${1} | fzf --preview=\"git show --color {1}\" | cut -b 1-7' -"
-	fixcommit = !git commit -a --fixup="$(git selcommit "origin/$(git base-branch)..HEAD")"
+	fixcommit = !git commit --fixup="$(git selcommit "origin/$(git base-branch)..HEAD")"
 	fixup = !git -c core.editor=true rebase -i --autosquash $(git merge-base ${1:-origin/$(git base-branch)} HEAD)
 	fix = !git fixcommit && git fixup
 	co = checkout
