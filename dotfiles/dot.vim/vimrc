@@ -3063,6 +3063,10 @@ if dein#is_sourced('quickrun')
     \   'lhaskell': {'command': 'runghc', 'tempfile': '%{tempname()}.lhs'},
     \   'nilscript': {'exec': 'ng.exe %s %a'},
     \   'ruby': {'hook/ruby_bundle/enable': 1},
+    \   'ruby/rspec': {
+    \     'command': 'rspec',
+    \     'hook/ruby_bundle/enable': 1,
+    \   },
     \   'xmodmap': {},
     \   'mxml': {'exec': ['amxmlc %s', 'adl %s:r-app.xml'],
     \            'output_encode': '&termencoding'},
@@ -3118,8 +3122,7 @@ if dein#is_sourced('quickrun')
     " endif
     let ruby_bundle_hook = {'kind': 'hook', 'name': 'ruby_bundle'}
     function! ruby_bundle_hook.on_normalized(session, context)
-      if getcwd() !=# $HOME && isdirectory('.bundle') &&
-      \   a:session.config.command =~? '^ruby'
+      if getcwd() !=# $HOME && isdirectory('.bundle')
         let a:session.config.exec =
         \   map(copy(a:session.config.exec), 's:bundle_exec(v:val)')
       endif
