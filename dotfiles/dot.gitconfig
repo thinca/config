@@ -48,9 +48,10 @@
 	rbtm = "!sh -c 'GIT_EDITOR=true git rebase ${2:-master} -i --exec \"git tm ${1:-0}\"' -"
 	rbd = rebase --committer-date-is-author-date
 	rbn = rebase --ignore-date
-	selcommit = "!sh -c 'git log --oneline ${1} | fzf --preview=\"git show --color {1}\" | cut -b 1-7' -"
-	fixcommit = !git commit --fixup="$(git selcommit "origin/$(git base-branch)..HEAD")"
-	fixup = !git -c core.editor=true rebase -i --autosquash $(git merge-base ${1:-origin/$(git base-branch)} HEAD)
+	base-commit = !git merge-base origin/$(git base-branch) HEAD
+	select-commit = "!sh -c 'git log --oneline ${1} | fzf --preview=\"git show --color {1}\" | cut -b 1-7' -"
+	fixcommit = !git commit --fixup="$(git select-commit "origin/$(git base-branch)..HEAD")"
+	fixup = !git -c core.editor=true rebase -i --autosquash $(git base-commit)
 	fix = !git fixcommit && git fixup
 	co = checkout
 	cob = !sh -c 'b="$(git current-branch)" && git checkout -b "${1}" && git config "branch.${1}.base" "$b"' -
