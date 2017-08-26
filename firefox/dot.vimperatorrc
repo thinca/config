@@ -88,12 +88,6 @@ silent qmark l http://lingr.com/
 
 command! messcopy js util.copyToClipboard(commandline._messageHistory._messages.map(function(it) let (v = it.str) (typeof v === 'xml' ? v.textContent : (typeof v === 'object' ? v.stack : v)) ).join("\n\n"))
 
-set! extensions.checkCompatibility.48.0=false
-set! extensions.checkCompatibility.49.0=false
-set! extensions.checkCompatibility.50.0=false
-" For Firefox 49 workaround
-js services.services.autoCompleteSearch.class_="@mozilla.org/autocomplete/search;1?name=unifiedcomplete"
-
 " -----------------------------------------------------------------------------
 " Styles.
 highlight -append Hint font-size: 12px
