@@ -308,6 +308,8 @@ done
 [[ -r ~/.zsh/"${SYSTEM}".zsh ]] && source ~/.zsh/"${SYSTEM}".zsh
 [[ -r ~/.config/zsh/local.zsh ]] && source ~/.config/zsh/local.zsh
 
-typeset -U path  # Delete the duplicate entry.
+# Delete the duplicate entry.
+typeset -U path
+typeset -U manpath
 
 # vim: ft=zsh
