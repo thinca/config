@@ -877,9 +877,10 @@ if !v:vim_did_enter
   mapclear!
 endif
 
-function! s:meta_map(key, rhs) abort
-  let mod = g:V.is_mac() ? 'D' : 'M'
-  execute printf('nnoremap <%s-%s> %s', mod, a:key, a:rhs)
+function! s:meta_map(key, rhs, ...) abort
+  let mode = a:0 ? a:1 : 'n'
+  let modifier = g:V.is_mac() ? 'D' : 'M'
+  execute printf('%snoremap <%s-%s> %s', mode, modifier, a:key, a:rhs)
 endfunction
 
 " -- Key mappings.  {{{2
@@ -1081,6 +1082,17 @@ nnoremap <silent> <Space>op :<C-u>set paste! paste?<CR>
 nnoremap <Space>t <Nop>
 nnoremap <silent> <Space>tn :<C-u>tabnew<CR>
 nnoremap <silent> <Space>tc :<C-u>tabclose<CR>
+
+if exists(':tmap')
+  call s:meta_map('h', '<C-w>h', 't')
+  call s:meta_map('j', '<C-w>j', 't')
+  call s:meta_map('k', '<C-w>k', 't')
+  call s:meta_map('l', '<C-w>l', 't')
+  call s:meta_map('H', '<C-w>H', 't')
+  call s:meta_map('J', '<C-w>J', 't')
+  call s:meta_map('K', '<C-w>K', 't')
+  call s:meta_map('L', '<C-w>L', 't')
+endif
 
 nnoremap <silent> <Space>.
 \      :if expand('%:p:h:gs?\\?/?') ==# resolve($VIM_USERDIR)
