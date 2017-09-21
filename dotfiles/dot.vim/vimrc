@@ -473,7 +473,6 @@ if has('tabsidebar')
     autocmd ColorScheme * highlight! link TabSideBarFill TabLineFill
   augroup END
   doautocmd tabsidebar-highlight ColorScheme
-augroup END
 endif
 
 
