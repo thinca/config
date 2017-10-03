@@ -423,7 +423,8 @@ endfunction
 
 function! MakeTabLine()
   let sep = ' | '
-  if has('tabsidebar')
+  let has_tabsidebar = has('tabsidebar')
+  if has_tabsidebar
     let tabs = ''
   else
     let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
@@ -437,7 +438,7 @@ function! MakeTabLine()
   if dein#is_sourced('current-func-info')
     let info .= cfi#format('%s()' . sep, '')
   endif
-  if exists('*Uptime')
+  if exists('*Uptime') && has_tabsidebar
     let info .= Uptime(2) . sep
   endif
   if dein#is_sourced('reanimate')
