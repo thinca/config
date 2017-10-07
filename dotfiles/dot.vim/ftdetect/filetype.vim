@@ -20,6 +20,7 @@ autocmd BufReadPost,BufNewFile {database,secrets}.yml setlocal filetype=eruby.ya
 autocmd BufReadPost,BufNewFile */config/*.yml         setlocal filetype=eruby.yaml
 autocmd BufReadPost,BufNewFile .babelrc               setlocal filetype=json
 autocmd BufReadPost,BufNewFile .flowconfig            setlocal filetype=dosini
+autocmd BufReadPost,BufNewFile .envrc                 setlocal filetype=sh
 
 autocmd BufReadPost,BufNewFile *.csv             setfiletype csv
 autocmd BufReadPost,BufNewFile *.nut             setfiletype squirrel
