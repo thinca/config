@@ -1611,22 +1611,6 @@ if has('gui_running')
   setglobal winaltkeys=no
 else
   " CUI  {{{2
-  if executable('winclip')
-    nnoremap <silent> "+y :<C-u>set operatorfunc=<SID>winclip<CR>g@
-    nnoremap <silent> "*y :<C-u>set operatorfunc=<SID>winclip<CR>g@
-    vnoremap <silent> "+y :<C-u>call <SID>winclip()<CR>
-    vnoremap <silent> "*y :<C-u>call <SID>winclip()<CR>
-    vnoremap <silent> "+Y :w !winclip<CR><CR>
-    vnoremap <silent> "*Y :w !winclip<CR><CR>
-    function! s:winclip(...)
-      let s = s:get_range(a:0 ? a:1 : visualmode(), a:0 ? 'o' : 'v')
-      let temp = tempname()
-      call writefile(split(s, "\n", 1), temp, 'b')
-      silent! execute '!winclip ' . shellescape(temp)
-      call delete(temp)
-    endfunction
-  endif
-
   if has('unix')
     " Use meta keys in console.
     function! s:use_meta_keys()
