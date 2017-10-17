@@ -3164,10 +3164,6 @@ let g:watchdogs_check_BufWritePost_enables = {
 \   'c': 0,
 \ }
 
-" syntastic.vim  {{{2
-let g:loaded_syntastic_plugin = 1
-let g:syntastic_cpp_compiler_options = ' -std=c++0x'
-
 " ref.vim  {{{2
 let g:ref_open = 'vsplit'
 let g:ref_cache_dir = s:plugin_info . '/ref'
