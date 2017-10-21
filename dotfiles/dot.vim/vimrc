@@ -2904,6 +2904,10 @@ endfunction
 " ale.vim  {{{2
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
+nmap q[ <Plug>(ale_previous)
+nmap q] <Plug>(ale_next)
+nmap q{ <Plug>(ale_first)
+nmap q} <Plug>(ale_last)
 
 " incsearch.vim  {{{2
 if dein#is_sourced('incsearch')
