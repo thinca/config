@@ -2901,6 +2901,10 @@ function! g:committia_hooks.edit_open(info)
   endif
 endfunction
 
+" ale.vim  {{{2
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+
 " incsearch.vim  {{{2
 if dein#is_sourced('incsearch')
   let g:incsearch#magic = '\v'
