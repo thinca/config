@@ -3332,6 +3332,9 @@ endif
 " ctrlp.vim  {{{2
 let g:ctrlp_map = ''
 
+" plasticboy/vim-markdown  {{{2
+let g:vim_markdown_new_list_item_indent = 0
+
 " default plugins  {{{2
 let g:loaded_matchparen = 1
 
