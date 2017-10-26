@@ -10,7 +10,7 @@ noremap <buffer> gk gk
 noremap <buffer> p  <CR>zz<C-w>p
 noremap <buffer> J j<CR>zz<C-w>p
 noremap <buffer> K k<CR>zz<C-w>p
-noremap <buffer> q <C-w>c
+noremap <buffer> <nowait> q <C-w>c
 
 nnoremap <silent> <buffer> r :<C-u>Qfreplace<CR>
 nnoremap <silent> <buffer> u :<C-u>Unite qf<CR>
