@@ -1,3 +1,3 @@
 setlocal nolist
 
-nnoremap <buffer> q <C-w>c
+nnoremap <buffer> <nowait> q <C-w>c
