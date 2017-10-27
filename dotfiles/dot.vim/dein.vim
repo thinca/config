@@ -333,7 +333,7 @@ call dein#add('haya14busa/vital-vimlcompiler')
 call dein#add('haya14busa/vital-power-assert')
 
 " Trial use
-call dein#add('w0rp/ale')
+call dein#add('thinca/ale', {'rev': 'do-not-change-rtp'})
 call dein#add('machakann/vim-vimhelplint')
 
 call dein#end()
