@@ -162,7 +162,7 @@ lazy fmaps -u='github\.com/[^/]+/[^/]+' -e vkeydown a,t q,r
 lazy fmaps -u='github\.com/[^/]+/[^/]+' ?
 lazy fmaps -u='feedly\.com/.*' j k n p r o v gm ga m x s ?
 lazy fmaps -u='lingr\.com/.*' <C-,> <C-.>
-lazy fmaps -u='https://twitter.com/*' j k n f re,r rt,t m ? <CR> c o / . gh gn gr gp gf gl gm gs gu
+lazy fmaps -u='https://twitter.com/*' j k n re,r rt,t m ? <CR> c o / . gh gn gr gp gf gl gm gs gu
 
 " appendAnchor.js
 let g:auto_append_anchor = 'true'
