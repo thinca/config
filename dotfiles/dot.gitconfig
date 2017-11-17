@@ -109,7 +109,8 @@
 	sb = !git sweep-branch
 	sweep-branch = "!f() { b=$(git spent-branches); [[ -z \"$b\" ]] || git branch --delete $b; }; f"
 	merged-branches = for-each-ref refs/heads/ --format='%(refname:short)' --merged
-	spent-branches = "!f() { git merged-branches ${1} | grep -v \"^${1}$\"; }; f ${1:-$(git current-branch)}"
+	spent-branches = "!f() { git merged-branches ${1} | grep -Ev \"^${1}\\$|$(git worktree-bases | sed 's/.*/^&$/' | paste -s -d'|' -)\"; }; f ${1:-$(git current-branch)}"
+	worktree-bases = "!git worktree list --porcelain | grep '^worktree' | sed 's/^worktree //' | xargs -IX basename X"
 	current-branch = symbolic-ref --short HEAD
 	current-remote = !git config "branch.$(git current-branch).remote"
 	base-branch = !git config "branch.$(git current-branch).base"
