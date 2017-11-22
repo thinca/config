@@ -35,14 +35,16 @@
 	diffFilter = diff-highlight
 [alias]
 	h = help
-	a = add -A
+	a = add --update
+	aa = add -A
 	cl = clone
 	b = branch
 	ba = branch -a
 	br = branch -r
-	ci = commit -a -v
-	cim = commit --amend -m
-	cia = commit --amend -C HEAD
+	reward = commit --amend
+	ci = commit
+	cia = commit -a
+	cim = commit --amend -C HEAD
 	cin = !git commit --amend --all -C HEAD \"--date=$(date --rfc-2822)\"
 	tm = "!sh -c 'export GIT_COMMITTER_DATE=\"$(date --date=\"$(git log -1 --format=%aD HEAD) ${1:-0} hours ago\" --rfc-2822)\"; git commit --amend -C HEAD --date=\"${GIT_COMMITTER_DATE}\"' -"
 	rbtm = "!sh -c 'GIT_EDITOR=true git rebase ${2:-master} -i --exec \"git tm ${1:-0}\"' -"
