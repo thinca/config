@@ -1,0 +1,117 @@
+defaults:
+  service: 'google'
+  singlebyteLanguage: 'en'
+  multibyteLanguage: 'ja'
+  toLanguageCandidates: ['en', 'ja']
+services:
+  google:
+    url: 'https://translate.google.com/'
+    ajax: true
+    sourceNodeSelector: '#source'
+    resultNodeSelector: '#result_box'
+    ignoreResultXPath: 'id("result_box")[text()="..."]'
+    actions:
+      startup:
+        - click: '#gt-otf-switch'
+      execute:
+        - click: '#gt-submit'
+      from_en:
+        - click: '#gt-sl-gms'
+        - click: '#\:m'
+      from_ja:
+        - click: '#gt-sl-gms'
+        - click: '#\:1a'
+      to_en:
+        - click: '#gt-tl-gms'
+        - click: '#\:3j'
+      to_ja:
+        - click: '#gt-tl-gms'
+        - click: '#\:47'
+
+  bing:
+    url: 'https://www.bing.com/Translator'
+    ajax: true
+    sourceNodeSelector: '#srcText'
+    resultNodeSelector: '#destText'
+    actions:
+      execute:
+        - click: '#TranslateButton'
+      from_en:
+        - click: 'div.sourceText #LS_LangList'
+        - click: 'div.sourceText #LS_LangList td[value=en]'
+      from_ja:
+        - click: 'div.sourceText #LS_LangList'
+        - click: 'div.sourceText #LS_LangList td[value=ja]'
+      to_en:
+        - click: 'div.destinationText #LS_LangList'
+        - click: 'div.destinationText #LS_LangList td[value=en]'
+      to_ja:
+        - click: 'div.destinationText #LS_LangList'
+        - click: 'div.destinationText #LS_LangList td[value=ja]'
+
+  excite:
+    url: 'https://www.excite.co.jp/world/english/'
+    requestFilters:
+      acceptURLPattern: '^https://www\.excite\.co\.jp/world/english/'
+    ajax: false
+    sourceNodeSelector: '#before'
+    resultNodeSelector: '#after'
+    actions:
+      from_en:
+        - click: '#before_en'
+      from_ja:
+        - click: '#before_ja'
+      execute:
+        - click: '#exec_transfer'
+
+  weblio:
+    url: 'https://translate.weblio.jp/'
+    requestFilters:
+      acceptURLPattern: '^https://(translate\.weblio\.jp)/|\.js'
+    ajax: false
+    sourceNodeSelector: '#originalTextArea'
+    resultNodeSelector: '#transResultMainLn li'
+    actions:
+      execute_from_en_to_ja:
+        - click: '#EJH'
+      execute_from_ja_to_en:
+        - click: '#JEH'
+
+  infoseek:
+    url: 'http://translation.infoseek.ne.jp/'
+    ajax: true
+    sourceNodeSelector: '#source'
+    resultNodeSelector: '#rep-layer'
+    ignoreResultXPath: './/img'
+    actions:
+      from_en:
+        - click: '.lf_menu li a[rel=en]'
+      from_ja:
+        - click: '.lf_menu li a[rel=ja]'
+      to_en:
+        - click: '#op1a_1'
+        - click: "#ul-lng-to a[onclick*='en']"
+      to_ja:
+        - click: '#op1a_1'
+        - click: "#ul-lng-to a[onclick*='ja']"
+      execute:
+        - click: '#op1a_3'
+
+  worldlingo:
+    url: 'http://www.worldlingo.com/en/products_services/worldlingo_translator.html'
+    requestFilters:
+      acceptURLPattern: '^http://www\.worldlingo\.com/'
+    ajax: false
+    sourceNodeSelector: '#wl_text'
+    resultNodeSelector: '#wl_text_result'
+    actions:
+      from_en:
+        - select: ['#SelSrcLang', 'EN']
+      from_ja:
+        - select: ['#SelSrcLang', 'JA']
+      to_en:
+        - select: ['#SelTrgLang', 'EN']
+      to_ja:
+        - select: ['#SelTrgLang', 'JA']
+      execute:
+        - click: '#BtnTranslate'
