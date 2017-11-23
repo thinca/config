@@ -1,5 +1,3 @@
-#!/bin/bash
-
 set -eu
 
 if [[ ! -d ~/.local/share/vimperator/plugins ]]; then
