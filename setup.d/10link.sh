@@ -1,9 +1,9 @@
-link () {
+link() {
 	local src=$1
 	local dest=$2
 	if [[ -a "${src}" ]]; then
-		rm -f "${dest}"
-		ln -f -s -v "${src}" "${dest}"
+		[[ -L "${dest}" ]] && rm -f "${dest}"
+		[[ ! -a "${dest}" ]] && ln -f -s -v "${src}" "${dest}"
 	fi
 }
 
