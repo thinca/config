@@ -3264,6 +3264,16 @@ endfunction
 " prettyprint.vim  {{{2
 let g:prettyprint_string = ['split']
 
+" wtrans.vim  {{{2
+let g:wtrans#source_filters = [
+\   'wtrans#filter#remove_help_marks',
+\   'wtrans#filter#remove_commentstring',
+\   'wtrans#filter#split_a_word',
+\   'wtrans#filter#shrink_whitespace',
+\ ]
+map <Space>tt <Plug>(operator-wtrans-echomsg)
+map <Space>ts <Plug>(operator-wtrans-replace)
+
 " threes.vim  {{{2
 let g:threes#data_directory = s:plugin_info . '/threes'
 let g:threes#start_with_higher_tile = 1

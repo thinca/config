@@ -230,6 +230,7 @@ call dein#add('thinca/vim-threes', {'on_cmd': ['ThreesStart', 'ThreesShowRecord'
 call dein#add('thinca/vim-unite-history')
 call dein#add('thinca/vim-visualstar')
 call dein#add('thinca/vim-winenv')
+call dein#add('thinca/vim-wtrans')
 call dein#add('thinca/vim-zenspace')
 call dein#add('tpope/vim-repeat')
 call dein#add('tpope/vim-speeddating')
