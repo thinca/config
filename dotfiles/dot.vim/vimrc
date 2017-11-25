@@ -1217,61 +1217,6 @@ endfunction
 nnoremap <silent> <Space>diff :call <SID>diff_original()<CR>
 " }}}
 
-" Translation interface. {{{
-let g:trans_vimproc = 1
-if executable('trans')
-  nnoremap <silent> <Space>tt :<C-u>set operatorfunc=<SID>echo_translate<CR>g@
-  nnoremap <silent> <Space>ts :<C-u>set operatorfunc=<SID>swap_translate<CR>g@
-  vnoremap <silent> <Space>tt :<C-u>echo <SID>translate(visualmode(), 1)<CR>
-  vnoremap <silent> <Space>ts :<C-u>call <SID>swap_translate(visualmode(), 1)<CR>
-  onoremap <silent> <Space>tt g@
-  onoremap <silent> <Space>ts g@
-
-  command! -nargs=+ Trans echo s:translate(<q-args>, 2)
-
-  function! s:echo_translate(type)
-    echo s:translate(a:type)
-  endfunction
-  function! s:swap_translate(type, ...)
-    let [save_reg, save_reg_type] = [getreg('"'), getregtype('"')]
-    let @" = s:translate(a:type, a:0 && a:1)
-    normal! gvp
-    call setreg('"', save_reg, save_reg_type)
-  endfunction
-
-  function! s:translate(type, ...)
-    if a:0 && a:1 == 2
-      let s = a:type
-    else
-      let s = s:get_range(a:type, a:0 && a:1 ? 'v' : 'o')
-    endif
-    if &filetype ==# 'help'
-      let s = substitute(s, '[*|]', '', 'g')
-    endif
-    if !empty(&l:commentstring)
-      let comment = printf(&l:commentstring, '')
-      let s = substitute(s, '\%(^\|\n\)\zs\s*\V' . comment, '', 'g')
-    endif
-    if s =~# '^\S*$'
-      let s = substitute(s, '\(\l\)\(\u\)', '\1 \2', 'g')
-      let s = substitute(s, '[_-]', ' ', 'g')
-      let s = substitute(s, '\u\{2,}', '\0 ', 'g')
-      let s = substitute(s, '\s\+', ' ', 'g')
-      let s = substitute(tolower(s), '^\s*\|\s*$', '', 'g')
-      let s = substitute(s, '[^.]\zs\n', '', 'g')
-    endif
-    let s = substitute(s, '\_[[:tab:][:return:]]\+', ' ', 'g')
-    echo 'During translation...'
-    let s = dein#is_sourced('vimproc') && g:trans_vimproc
-    \ ? vimproc#system(['trans'], s)
-    \ : system('trans', s)
-    echo ''
-    redraw
-    return substitute(s, '^\_s*\|\_s*$', '', 'g')
-  endfunction
-endif
-" }}}
-
 " -- Commands.  {{{2
 command! -nargs=1 -bang -bar -complete=file Rename
 \        call s:move(<q-args>, <q-bang>, expand('%:h'))
