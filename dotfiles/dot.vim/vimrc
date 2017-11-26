@@ -3326,27 +3326,6 @@ nmap <silent> mx <Plug>(vimrc-show-current-syntax)
 imap <silent> <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
 
 
-" Redirection with nestable.
-function! Redir(cmd)
-  let result = ''
-  let temp = tempname()
-  try
-    let save_vfile = &verbosefile
-    let &verbosefile = temp
-
-    for cmd in type(a:cmd) == type([]) ? a:cmd : [a:cmd]
-      silent execute cmd
-    endfor
-  finally
-    if &verbosefile ==# temp
-      let &verbosefile = save_vfile
-      let result = join(readfile(temp, 'b'), "\n")
-    endif
-    call delete(temp)
-  endtry
-  return result
-endfunction
-
 function! s:time(cmd, log)
   if !has('reltime')
     echo 'Feature +reltime is disabled.' .
@@ -3358,7 +3337,7 @@ function! s:time(cmd, log)
   endif
 
   let time = reltime()
-  let mes = Redir(a:cmd)
+  let mes = execute(a:cmd)
   let result = a:cmd . ': ' . reltimestr(reltime(time))
 
   echo mes

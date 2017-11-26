@@ -5,7 +5,7 @@ function! s:define_abbr(list)
 endfunction
 
 function! s:get_keywords(syn)
-  return filter(split(matchstr(Redir('syntax list ' . a:syn),
+  return filter(split(matchstr(execute('syntax list ' . a:syn),
   \             'xxx \zs\_.*\ze links to')), 'v:val !~# "\\W"')
 endfunction
 
