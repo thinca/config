@@ -1,4 +1,4 @@
-SetUndoFtplugin setl ts< sw< sts< sta< et< ai< kp< tw< fo< ml<
+SetUndoFtplugin setl ts< sw< sts< sta< et< ai< kp< tw< fo< ml< cc<
 
 setlocal tabstop=2 shiftwidth=2 softtabstop=2 smarttab expandtab
 setlocal autoindent keywordprg=:help
@@ -9,5 +9,6 @@ if &modifiable
 endif
 if expand('%:e') ==? 'vim'
   setlocal nomodeline
+  SetUndoFtplugin setl ml<
 endif
 " setlocal foldmethod<
