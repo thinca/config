@@ -964,9 +964,11 @@ nnoremap <C-k> <C-y>gk
 noremap ; :
 noremap : ;
 
-" Speedy :h
-nnoremap <expr> <C-h>
-\        printf(":\<C-u>%s ", (78 * 2 <= winwidth(0) ? 'vert ' : '') . 'h')
+function! s:good_feeling_prefix() abort
+  return printf(":\<C-u>%s", 78 * 2 <= winwidth(0) ? 'vertical ' : '')
+endfunction
+nnoremap <expr> <C-h> <SID>good_feeling_prefix() . 'h '
+nnoremap <expr> <Space>tm <SID>good_feeling_prefix() . "terminal\<CR>"
 
 " Don't move at escaping from insert mode.
 " inoremap <silent> <Esc> <Esc>:keepjumps normal! `^<CR>
