@@ -6,7 +6,7 @@
 :GenerateContents
 *FILENAME.txt*	**Summary**
 
-Version: 1.0
+Version: 1.0.0
 Author : thinca <thinca+vim@gmail.com>
 License: zlib License
 
@@ -47,7 +47,7 @@ CUSTOMIZING					*PLUGIN-customizing*
 ==============================================================================
 CHANGELOG					*PLUGIN-changelog*
 
-1.0	xxxx-xx-xx
+1.0.0	xxxx-xx-xx
 	- Initial version.
 
 

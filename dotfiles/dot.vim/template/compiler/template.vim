@@ -1,7 +1,7 @@
 :keeppatterns % s/COMPILER_NAME/\=expand('%:t:r')/ge
 " Vim compiler file
 " Language: COMPILER_NAME
-" Version:  1.0
+" Version:  1.0.0
 " Author:   thinca <thinca+vim@gmail.com>
 " License: zlib License
 

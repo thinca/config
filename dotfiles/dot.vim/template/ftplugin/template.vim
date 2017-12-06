@@ -1,5 +1,5 @@
 " <%= expand('%:t:r') %> filetype plugin
-" Version: 1.0
+" Version: 1.0.0
 " Author : thinca <thinca+vim@gmail.com>
 " License: zlib License
 
