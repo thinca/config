@@ -205,7 +205,6 @@ alias -s php=php
 alias -s scm=gosh
 alias -s lua=lua
 alias -s io=io
-alias -s sh=sh
 alias -s bash=bash
 alias -s zsh=zsh
 alias -s exe=mono
