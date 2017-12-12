@@ -339,6 +339,11 @@ call dein#add('haya14busa/vital-power-assert')
 call dein#add('thinca/ale', {'rev': 'do-not-change-rtp'})
 call dein#add('machakann/vim-vimhelplint')
 
+let s:local_dein = expand('~/.config/vim/dein.vim')
+if filereadable(s:local_dein)
+  execute 'source' fnameescape(s:local_dein)
+endif
+
 call dein#end()
 
 call dein#save_state()
