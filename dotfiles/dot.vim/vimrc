@@ -88,7 +88,7 @@ endif
 " vital.vim
 if dein#is_sourced('vital')
   " let g:vital_debug = 1
-  let g:V = vital#of('vital').load(
+  let g:V = vital#vital#new().load(
   \  ['Prelude'],
   \  'Vim.Buffer',
   \  ['Vim.Compat', 'Compat'],
