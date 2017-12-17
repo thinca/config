@@ -1,4 +1,4 @@
-nmap <buffer> q <Plug>(unite_all_exit)
+nmap <buffer> <nowait> q <Plug>(unite_all_exit)
 imap <buffer> <C-q> <Plug>(unite_all_exit)
 
 nmap <buffer> s <Plug>(unite_toggle_mark_current_candidate)
