@@ -100,7 +100,6 @@
 	ranking = shortlog -s -n --no-merges
 	wip = commit -a -m '[WIP]'
 	temp = commit -a -m 'Temporary commit'
-	github = push github master --tags
 	dci = svn dcommit
 	sci = svn dcommit
 	sup = svn rebase
