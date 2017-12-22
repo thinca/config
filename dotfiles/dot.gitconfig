@@ -99,7 +99,6 @@
 	recent = log --date=relative --pretty=recent --reverse -10
 	ranking = shortlog -s -n --no-merges
 	wip = commit -a -m '[WIP]'
-	temp = commit -a -m 'Temporary commit'
 	dci = svn dcommit
 	sci = svn dcommit
 	sup = svn rebase
