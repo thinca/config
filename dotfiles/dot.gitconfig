@@ -91,6 +91,7 @@
 	rbc = rebase --continue
 	rba = rebase --abort
 	bf = !git diff --name-only "$(git base-branch)..@"
+	conflicts = diff --name-only --diff-filter=U
 	upst = rebase origin/master
 	gene = log --graph --date=iso --pretty=gene
 	genea = log --graph --date=iso --pretty=gene --all
