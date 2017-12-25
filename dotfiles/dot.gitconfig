@@ -41,7 +41,7 @@
 	b = branch
 	ba = branch -a
 	br = branch -r
-	reward = commit --amend
+	reword = commit --amend
 	ci = commit
 	cia = commit -a
 	cim = commit --amend -C HEAD
