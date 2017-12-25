@@ -10,10 +10,10 @@ endfunction
 
 for s:instruction in [
 \   'from',
-\   'maintainer',
 \   'run',
 \   'cmd',
 \   'label',
+\   'maintainer',
 \   'expose',
 \   'env',
 \   'add',
@@ -25,7 +25,6 @@ for s:instruction in [
 \   'arg',
 \   'onbuild',
 \   'stopsignal',
-\   'arg',
 \   'healthcheck',
 \   'shell',
 \ ]
