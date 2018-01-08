@@ -2902,7 +2902,9 @@ function! s:setup_lexima() abort
   \   'input': '<CR>', 'input_after': '<CR>end',
   \   'filetype': 'elixir',
   \ })
-  call lexima#insmode#map_hook('before', '<CR>', "\<C-r>=neocomplete#close_popup()\<CR>")
+  if dein#is_sourced('neocomplete')
+    call lexima#insmode#map_hook('before', '<CR>', "\<C-r>=neocomplete#close_popup()\<CR>")
+  endif
   " Also use <CR> rule via o
   nmap o A<CR>
 endfunction
