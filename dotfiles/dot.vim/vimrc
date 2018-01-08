@@ -3083,6 +3083,16 @@ if dein#is_sourced('quickrun')
     endfunction
     call quickrun#module#register(ruby_bundle_hook, 1)
 
+    let rust_cargo_hook = {'kind': 'hook', 'name': 'rust_cargo'}
+    function! rust_cargo_hook.on_normalized(session, context)
+      if a:session.config.type ==# 'rust' &&
+      \   fnamemodify(a:session.config.srcfile, ':t') ==# 'main.rs' &&
+      \   findfile('Cargo.toml', '.;') !=# ''
+        let a:session.config.exec = ['cargo run --quiet']
+      endif
+    endfunction
+    call quickrun#module#register(rust_cargo_hook, 1)
+
     map <Leader>or <Plug>(quickrun-op)
   endfunction
   call s:init_quickrun()
