@@ -1746,8 +1746,25 @@ if dein#is_sourced('vimfiler')
   nnoremap <silent> <Leader>sF :<C-u>VimFilerBufferDir -split<CR>
 endif
 
+" deoplete.nvim  {{{2
+if dein#is_sourced('deoplete')
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_camel_case = 1
+
+  call g:V.set_default('g:deoplete#keyword_patterns', {})
+  let g:deoplete#keyword_patterns.javascript = '\v\k+'
+
+  call g:V.set_default('g:deoplete#omni_patterns', {})
+  let g:deoplete#omni_patterns.cs = '[^.]\.\%(\u\{2,}\)\?'
+  let g:deoplete#omni_patterns.csharp = '[^.]\.\%(\u\{2,}\)\?'
+  let g:deoplete#omni_patterns.typescript = '[^.]\.\%(\u\{2,}\)\?'
+
+  inoremap <expr> <C-f> deoplete#manual_complete('file')
+  inoremap <expr> <C-y> pumvisible() ? deoplete#close_popup()  : '<C-y>'
+  inoremap <expr> <C-e> pumvisible() ? deoplete#cancel_popup() : '<C-e>'
+
 " neocomplete.vim  {{{2
-if dein#is_sourced('neocomplete')
+elseif dein#is_sourced('neocomplete')
   let g:neocomplete#enable_at_startup = 1
   " let g:neocomplete_enable_camel_case_completion = 1
   let g:neocomplete#data_directory = s:plugin_info . '/neocomplete'
@@ -1779,6 +1796,12 @@ if dein#is_sourced('neocomplete')
   inoremap <expr> <C-y> pumvisible() ? neocomplete#close_popup()  : '<C-y>'
   inoremap <expr> <C-e> pumvisible() ? neocomplete#cancel_popup() : '<C-e>'
 endif
+
+" context_filetype.vim
+if !exists('g:context_filetype#same_filetypes')
+  let g:context_filetype#same_filetypes = {}
+endif
+let g:context_filetype#same_filetypes.vimspec = 'vim'
 
 " neosnippet.vim
 if dein#is_sourced('neosnippet')

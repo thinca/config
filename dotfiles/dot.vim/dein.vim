@@ -52,6 +52,19 @@ endif
 
 call dein#add('Shougo/dein.vim')
 
+function! s:try(cmd) abort
+  try
+    execute a:cmd
+    return 1
+  catch
+    return 0
+  endtry
+endfunction
+
+let s:use_deoplete = has('python3') && s:try('python3 import neovim')
+call dein#add('Shougo/deoplete.nvim', {'if': s:use_deoplete})
+call dein#add('roxma/nvim-yarp', {'if': s:use_deoplete})
+call dein#add('roxma/vim-hug-neovim-rpc', {'if': s:use_deoplete})
 call dein#add('Shougo/neocomplete.vim', {'if': has('lua')})
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/neosnippet.vim')
