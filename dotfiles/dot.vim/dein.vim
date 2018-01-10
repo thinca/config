@@ -52,9 +52,7 @@ endif
 
 call dein#add('Shougo/dein.vim')
 
-if has('lua')
-  call dein#add('Shougo/neocomplete.vim')
-endif
+call dein#add('Shougo/neocomplete.vim', {'if': has('lua')})
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
