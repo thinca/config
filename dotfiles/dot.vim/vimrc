@@ -1803,6 +1803,7 @@ if dein#is_sourced('neocomplete')
   call g:V.set_default('g:neocomplete#force_omni_input_patterns', {})
   let g:neocomplete#force_omni_input_patterns.cs = '[^.]\.\%(\u\{2,}\)\?'
   let g:neocomplete#force_omni_input_patterns.csharp = '[^.]\.\%(\u\{2,}\)\?'
+  let g:neocomplete#force_omni_input_patterns.typescript = '[^.]\.\%(\u\{2,}\)\?'
 
   let g:neocomplete#auto_completion_start_length = 2
   call neocomplete#custom#source('_', 'sorters',  [])
