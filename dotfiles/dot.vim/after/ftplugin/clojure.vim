@@ -61,7 +61,7 @@ endfunction
 function! s:wrap_tab()
   let tab = TabWrapper()
   if s:is_disable_pare_assist() ||
-  \  tab ==# "\<Plug>(neocomplcache_snippets_jump)"
+  \  tab ==# "\<Plug>(neosnippet_expand_or_jump)"
     return tab
   endif
   let ch = s:next_char()
