@@ -317,11 +317,7 @@ function! StatusLineExtra() abort
       let e = {scope . 'statusline_extra'}
       if e[0] ==# '='
         let r = eval(e[1 :])
-        if g:V.is_string(r)
-          let e = r
-        else
-          let e = string(r)
-        endif
+        let e = type(r) == v:t_string ? r : string(r)
       endif
       let extra .= e
     endif
