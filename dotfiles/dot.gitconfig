@@ -117,6 +117,7 @@
 	current-branch = symbolic-ref --short HEAD
 	current-remote = !git config "branch.$(git current-branch).remote"
 	base-branch = !git config "branch.$(git current-branch).base"
+	features = "!f() { git branch | cut -c3- | while read b; do echo \"$(git config \"branch.${b}.base\") -> ${b}\"; done | grep -v '^ -> ' | grep \"^${1:-$(git current-branch)} ->\" | sort; }; f"
 	chx = update-index --chmod=+x
 	grev = !git push origin HEAD:refs/for/master/$(git current-branch)
 	grevb = !git push origin HEAD:refs/for/$(git current-branch)
