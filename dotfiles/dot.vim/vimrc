@@ -548,6 +548,9 @@ setglobal foldlevelstart=99
 " History number for search and command mode.
 setglobal history=1000
 
+" Toggle Command-line mode and cmdwin with <C-c>
+let &g:cedit = "\<C-c>"
+
 setglobal timeoutlen=5000
 setglobal ttimeout ttimeoutlen=50
 
