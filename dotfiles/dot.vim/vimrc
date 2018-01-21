@@ -200,9 +200,10 @@ endfunction
 " colorscheme.
 if !exists('g:colors_name')
   setglobal background=dark
+  let g:gruvbox_contrast_dark = 'hard'
   if !g:V.is_windows() || has('gui_running')
     " ['candycode', 'wuye', 'freya', 'leo']
-    colorscheme candycode
+    colorscheme gruvbox
   else  "CUI win32
     " ['oceandeep']
     colorscheme default

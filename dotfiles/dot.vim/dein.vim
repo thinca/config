@@ -338,6 +338,7 @@ call dein#add('jparise/vim-graphql')
 " colorscheme
 call dein#add('romainl/Apprentice')
 call dein#add('rhysd/vim-color-splatoon')
+call dein#add('morhetz/gruvbox')
 
 " libray
 call dein#add('haya14busa/vital-vimlcompiler')
