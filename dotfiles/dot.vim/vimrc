@@ -2922,7 +2922,7 @@ function! s:init_cmdwin() abort
   inoremap <buffer> <expr> <C-h> col('.') == 1 ? '<Esc><C-w>c' : '<C-h>'
   nnoremap <buffer> <Esc> <C-w>c
   nnoremap <buffer> <Esc><Esc> <C-w>c
-  nnoremap <buffer> q <C-w>c
+  nnoremap <buffer> <nowait> q <C-w>c
   startinsert!
 endfunction
 
