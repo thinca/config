@@ -2924,6 +2924,7 @@ function! s:init_cmdwin() abort
   inoremap <buffer> <expr> <C-f>   ambicmd#expand('<Right>')
   inoremap <buffer> <expr> !       ambicmd#expand('!')
   inoremap <buffer> <expr> <C-h> col('.') == 1 ? '<Esc><C-w>c' : '<C-h>'
+  inoremap <buffer> <expr> <C-r><C-w> '<C-c><C-r><C-w>' . &g:cedit
   nnoremap <buffer> <Esc> <C-w>c
   nnoremap <buffer> <Esc><Esc> <C-w>c
   nnoremap <buffer> <nowait> q <C-w>c
