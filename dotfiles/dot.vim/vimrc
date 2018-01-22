@@ -391,6 +391,7 @@ function! s:tabpage_label(n) abort
   let hi = n == tabpagenr() ? 'TabLineSel' : 'TabLine'
 
   let label = printf('%%#%sTabNumber#%d:%%#%s# ', hi, n, hi)
+  let label .= '%<'
   if getbufvar(curbufnr, '&filetype') =~# '^lingr-'
     " lingr-vim
     let unread = lingr#unread_count()
