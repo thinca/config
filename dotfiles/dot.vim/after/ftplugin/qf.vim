@@ -17,10 +17,7 @@ nnoremap <silent> <buffer> u :<C-u>Unite qf<CR>
 
 function! s:jk(motion)
   let max = line('$')
-  let list = getloclist(0)
-  if empty(list) || len(list) != max
-    let list = getqflist()
-  endif
+  let list = s:getlist()
   let cur = line('.') - 1
   let pos = g:V.modulo(cur + a:motion, max)
   let m = 0 < a:motion ? 1 : -1
@@ -45,19 +42,39 @@ if exists('*s:undo_entry')
   finish
 endif
 
+function! s:is_loclistwin() abort
+  return win_getid() == getloclist(0, {'winid': 1}).winid
+endfunction
+
+function! s:getlist() abort
+  if s:is_loclistwin()
+    return getloclist(0)
+  else
+    return getqflist()
+  endif
+endfunction
+
+function! s:setlist(list) abort
+  if s:is_loclistwin()
+    call setloclist(0, a:list, 'r')
+  else
+    call setqflist(a:list, 'r')
+  endif
+endfunction
+
 function! s:undo_entry()
   let history = get(w:, 'qf_history', [])
   if !empty(history)
-    call setqflist(remove(history, -1), 'r')
+    call s:setlist(remove(history, -1))
   endif
 endfunction
 
 function! s:del_entry() range
-  let qf = getqflist()
+  let qf = s:getlist()
   let history = get(w:, 'qf_history', [])
   call add(history, copy(qf))
   let w:qf_history = history
   unlet! qf[a:firstline - 1 : a:lastline - 1]
-  call setqflist(qf, 'r')
+  call s:setlist(qf)
   execute a:firstline
 endfunction
