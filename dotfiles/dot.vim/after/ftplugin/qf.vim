@@ -38,9 +38,19 @@ vnoremap <silent> <buffer> d :call <SID>del_entry()<CR>
 vnoremap <silent> <buffer> x :call <SID>del_entry()<CR>
 nnoremap <silent> <buffer> u :<C-u>call <SID>undo_entry()<CR>
 
+command! -nargs=+ -bang -buffer QfGrep call s:grep(<q-args>, <bang>0)
+
 if exists('*s:undo_entry')
   finish
 endif
+
+function! s:grep(pat, invert) abort
+  let qf = s:getlist()
+  call s:add_history(qf)
+  let op = a:invert ? '!~#' : '=~#'
+  call filter(qf, 'v:val.text ' . op . ' a:pat')
+  call s:setlist(qf)
+endfunction
 
 function! s:is_loclistwin() abort
   return win_getid() == getloclist(0, {'winid': 1}).winid
@@ -71,10 +81,14 @@ endfunction
 
 function! s:del_entry() range
   let qf = s:getlist()
-  let history = get(w:, 'qf_history', [])
-  call add(history, copy(qf))
-  let w:qf_history = history
+  call s:add_history(qf)
   unlet! qf[a:firstline - 1 : a:lastline - 1]
   call s:setlist(qf)
   execute a:firstline
+endfunction
+
+function! s:add_history(qf) abort
+  let history = get(w:, 'qf_history', [])
+  call add(history, copy(a:qf))
+  let w:qf_history = history
 endfunction
