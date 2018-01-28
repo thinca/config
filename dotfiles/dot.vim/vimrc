@@ -1594,6 +1594,55 @@ else
   endif
 endif
 
+" :CheckInterface  {{{2
+
+function! s:check_interface() abort
+  try
+    let lua_ver = substitute(luaeval('_VERSION'), '^Lua ', 'v', '')
+  catch
+    let lua_ver = 'no'
+  endtry
+  echo 'Lua ... ' . lua_ver
+
+  try
+    let perl_ver = perleval('"$^V"')
+  catch
+    let perl_ver = 'no'
+  endtry
+  echo 'Perl ... ' . perl_ver
+
+  try
+    python import platform
+    let python_ver = 'v' . pyeval('platform.python_version()')
+  catch
+    let python_ver = 'no'
+  endtry
+  echo 'Python 2 ... ' . python_ver
+
+  try
+    python3 import platform
+    let python3_ver = 'v' . py3eval('platform.python_version()')
+  catch
+    let python3_ver = 'no'
+  endtry
+  echo 'Python 3 ... ' . python3_ver
+
+  try
+    ruby Vim::command("let ruby_ver = 'v#{RUBY_VERSION}'")
+  catch
+    let ruby_ver = 'no'
+  endtry
+  echo 'Ruby ... ' . ruby_ver
+
+  try
+    tcl ::vim::command "let tcl_ver = 'v[info patchlevel]'"
+  catch
+    let tcl_ver = 'no'
+  endtry
+  echo 'Tcl ... ' . tcl_ver
+endfunction
+command! CheckInterface call s:check_interface()
+
 " :VimPluginTest  {{{2
 function! s:vim_plugin_test() abort
   if g:V.all('!isdirectory(g:V.Path.join(getcwd(), v:val))',
