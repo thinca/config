@@ -168,17 +168,6 @@ alias tree='tree -F --dirsfirst'
 # Usage: etime vim
 alias etime='ps -o cmd,etime -C'
 
-function docker-sweep-images() {
-	local images="$(docker images --filter "dangling=true" --quiet --no-trunc)"
-	if [[ -z "${images}" ]] || docker rmi  ${(f)images}
-}
-function docker-sweep-containers() {
-	local created="$(docker ps --all --filter "status=created" --quiet --no-trunc)"
-	[[ -z "${created}" ]] || docker rm -f ${(f)created}
-	local exited="$(docker ps --all --filter "status=exited" --quiet --no-trunc)"
-	[[ -z "${exited}" ]] || docker rm ${(f)exited}
-}
-
 # replace rm
 if which trash-put &>/dev/null; then
 	alias rm=trash-put
