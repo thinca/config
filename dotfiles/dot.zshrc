@@ -48,7 +48,7 @@ if [[ -d ~/share/Dropbox ]]; then
 	path=("${DROPBOX_HOME}"/bin(N-/) $path)
 fi
 
-path=(~/local/bin(N-/) ~/local/app/*(N-/) ~/local/app/*/bin(N-/) $path)
+path=(~/.local/bin(N-/) $path)
 
 if [[ "${TERM}" == "rxvt-unicode" ]]; then
 	TERM=xterm-256color
