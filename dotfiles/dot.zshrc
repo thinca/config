@@ -1,10 +1,10 @@
 ###########################################################################
 # The system detection.
-[ -f ~/.zsh/system ] && source ~/.zsh/system
+[[ -f ~/.zsh/system ]] && source ~/.zsh/system
 
 ###########################################################################
 # Preload.
-[ -f ~/.zsh/tmux ] && source ~/.zsh/tmux
+[[ -f ~/.zsh/tmux ]] && source ~/.zsh/tmux
 
 # Disable ^Q and ^S.
 stty -ixon
