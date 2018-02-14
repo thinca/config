@@ -3312,7 +3312,7 @@ function! s:convert_pattern(pat) abort
     endif
     let i += 1
   endwhile
-  return escape(pat, '\')
+  return escape(pat, '\ ')
 endfunction
 
 " gita.vim  {{{2
