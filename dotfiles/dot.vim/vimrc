@@ -1600,6 +1600,23 @@ else
   endif
 endif
 
+" if_python  {{{2
+if isdirectory($PYENV_ROOT)
+  let s:ext = has('mac') ? 'dylib' : 'so'
+  if exists('+pythondll')
+    let &pythondll =
+    \   get(glob(
+    \     $PYENV_ROOT . '/versions/2.*/lib/libpython2.*m.' . s:ext,
+    \   1, 1), -1, '')
+  endif
+  if exists('+pythonthreedll')
+    let &pythonthreedll =
+    \   get(glob(
+    \     $PYENV_ROOT . '/versions/3.*/lib/libpython3.*m.' . s:ext,
+    \   1, 1), -1, '')
+  endif
+endif
+
 " :CheckInterface  {{{2
 
 function! s:check_interface() abort
