@@ -445,6 +445,12 @@ function! MakeTabLine() abort
       let info .= matchstr(last_point, '/\zs.*') . sep
     endif
   endif
+  if dein#is_sourced('gina')
+    let branch = gina#component#repo#branch()
+    if branch !=# ''
+      let info .= branch . sep
+    endif
+  endif
   let cwd = fnamemodify(getcwd(), ':~')
   " TODO: vcs#root() occurs an error by unknown reason, and can not catch it
   let vcs_root = exists('*vcs#root') ? vcs#root(cwd) : ''
