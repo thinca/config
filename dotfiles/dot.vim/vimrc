@@ -2611,8 +2611,8 @@ if dein#is_sourced('submode')
 endif
 
 " quickhl.vim  {{{2
-map mh <Plug>(quickhl-toggle)
-map mH <Plug>(quickhl-reset)
+map mh <Plug>(quickhl-manual-this)
+map mH <Plug>(quickhl-manual-reset)
 
 " yankround.vim  {{{2
 if dein#is_sourced('yankround')
