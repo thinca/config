@@ -2284,11 +2284,6 @@ let g:eskk#large_dictionary = {
 \   'encoding': 'utf-8',
 \}
 
-let g:eskk#server = {
-\   'host': 'localhost',
-\   'port': 55100,
-\}
-
 let g:eskk#egg_like_newline = 1
 let g:eskk#egg_like_newline_completion = 1
 let g:eskk#map_normal_keys = 0
