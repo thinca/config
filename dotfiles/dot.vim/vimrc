@@ -721,11 +721,21 @@ augroup vimrc-lcd
 
   function! s:lcd_path() abort
     let path = ''
-    let simple = expand('%:p:h')
+    let simple = expand('%:p:h:gs?\\\+?/?')
 
     if &l:buftype ==# 'help'
       return simple
     endif
+
+    for lib_pat in [
+    \   '^.*/vendor/bundle/ruby/[^/]\+/\%(bundler/\)\?gems/[^/]\+/',
+    \   '^.*/node_modules/[^/]\+/',
+    \ ]
+      let lib_base = matchstr(simple, lib_pat)
+      if lib_base !=# ''
+        return lib_base
+      endif
+    endfor
 
     let tf = tagfiles()
     if !empty(tf) && expand('%:p:h:t') !=# 'doc'
