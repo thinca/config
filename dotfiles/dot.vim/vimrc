@@ -1616,13 +1616,13 @@ if isdirectory($PYENV_ROOT)
   if exists('+pythondll')
     let &pythondll =
     \   get(glob(
-    \     $PYENV_ROOT . '/versions/2.*/lib/libpython2.*m.' . s:ext,
+    \     $PYENV_ROOT . '/versions/2.*/lib/libpython2.*.' . s:ext,
     \   1, 1), -1, '')
   endif
   if exists('+pythonthreedll')
     let &pythonthreedll =
     \   get(glob(
-    \     $PYENV_ROOT . '/versions/3.*/lib/libpython3.*m.' . s:ext,
+    \     $PYENV_ROOT . '/versions/3.*/lib/libpython3.*.' . s:ext,
     \   1, 1), -1, '')
   endif
 endif
