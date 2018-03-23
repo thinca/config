@@ -1835,6 +1835,7 @@ endif
 
 " deoplete.nvim  {{{2
 if dein#is_sourced('deoplete')
+  setglobal pyxversion=3
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_camel_case = 1
 
