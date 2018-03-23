@@ -1965,9 +1965,13 @@ if dein#is_sourced('unite')
   nnoremap <silent> <Leader>a<C-f> :<C-u>UniteWithBufferDir -buffer-name=file file<CR>
   nnoremap <silent> <Leader>am :<C-u>Unite -buffer-name=file file_mru<CR>
 
-  let s:rec_cmd = get(filter(['fd', 'files'], 'executable(v:val)'), 0, '')
-  if s:rec_cmd !=# ''
-    let g:unite_source_rec_async_command = [s:rec_cmd]
+  let s:cmds = [
+  \   ['fd', '--hidden', '--no-ignore', '--type', 'file', '--color', 'never', '.'],
+  \   ['files'],
+  \ ]
+  let s:rec_cmd = get(filter(s:cmds, 'executable(v:val[0])'), 0, [])
+  if !empty(s:rec_cmd)
+    let g:unite_source_rec_async_command = s:rec_cmd
     nnoremap <silent> <Leader>ar :<C-u>Unite -buffer-name=file file_rec/async<CR>
     nnoremap <silent> <Leader>aR :<C-u>Unite -buffer-name=file file_rec/async:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
   else
