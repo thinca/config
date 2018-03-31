@@ -2467,6 +2467,12 @@ if dein#is_sourced('altr')
   \   'test/%.js',
   \ )
 
+  " TypeScript
+  call altr#define(
+  \   'src/%.ts',
+  \   'test/%.test.ts',
+  \ )
+
   " Go
   call altr#define('%.go', '%_test.go')
 
