@@ -2926,10 +2926,10 @@ endfunction
 " ale.vim  {{{2
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
-nmap q[ <Plug>(ale_previous)
-nmap q] <Plug>(ale_next)
-nmap q{ <Plug>(ale_first)
-nmap q} <Plug>(ale_last)
+nmap [q <Plug>(ale_previous)
+nmap ]q <Plug>(ale_next)
+nmap [Q <Plug>(ale_first)
+nmap ]Q <Plug>(ale_last)
 
 " incsearch.vim  {{{2
 if dein#is_sourced('incsearch')
@@ -3370,8 +3370,8 @@ let g:EasyMotion_use_upper = 1
 map <Leader>f <Plug>(easymotion-overwin-f2)
 
 " edgemotion.vim  {{{2
-map qj <Plug>(edgemotion-j)
-map qk <Plug>(edgemotion-k)
+map [d <Plug>(edgemotion-k)
+map ]d <Plug>(edgemotion-j)
 
 " open-googletranslate.vim  {{{2
 if executable('electron-open')
