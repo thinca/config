@@ -69,6 +69,8 @@
 	l1 = log --pretty=oneline
 	newly  = log ORIG_HEAD..HEAD --reverse -C
 	newlyp = log ORIG_HEAD..HEAD --reverse -C -p
+	fl = !git log $(git base-commit)..HEAD --reverse
+	flp = !git log $(git base-commit)..HEAD --reverse -p
 	m = merge --no-ff --no-edit
 	s = show
 	ss = show --stat
