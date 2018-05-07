@@ -977,6 +977,11 @@ unlet! s:n
 nnoremap <C-j> <C-e>gj
 nnoremap <C-k> <C-y>gk
 
+nnoremap <expr> <silent> [c &diff ? '[c' : ':cprevious<CR>'
+nnoremap <expr> <silent> ]c &diff ? ']c' : ':cnext<CR>'
+nnoremap <silent> [l :lprevious<CR>
+nnoremap <silent> ]l :lnext<CR>
+
 " Swap ; and :
 noremap ; :
 noremap : ;
