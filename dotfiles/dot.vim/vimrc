@@ -2314,6 +2314,14 @@ if dein#is_sourced('eskk')
     autocmd!
     autocmd CursorHold * silent EskkUpdateDictionary
     autocmd User eskk-initialize-pre call s:init_eskk()
+    autocmd User eskk-enable-pre
+    \   if exists('*deoplete#disable')
+    \ |   call deoplete#disable()
+    \ | endif
+    autocmd User eskk-disable-pre
+    \   if exists('*deoplete#enable')
+    \ |   call deoplete#enable()
+    \ | endif
   augroup END
 endif
 
