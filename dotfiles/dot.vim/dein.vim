@@ -5,10 +5,7 @@ if !isdirectory($DEIN_REPOS_DIR)
     echo 'Please install git.'
     finish
   endif
-  let s:base_dir = fnamemodify($DEIN_REPOS_DIR, ':h')
-  if !isdirectory(s:base_dir)
-    call mkdir(s:base_dir, 'p')
-  endif
+  call mkdir(fnamemodify($DEIN_REPOS_DIR, ':h'), 'p')
   call system('git clone https://github.com/Shougo/dein.vim.git ' .
   \   shellescape($DEIN_REPOS_DIR))
   if !isdirectory($DEIN_REPOS_DIR)

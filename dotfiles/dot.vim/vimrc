@@ -165,13 +165,6 @@ function! s:clamp(value, min, max) abort
   \                        a:value
 endfunction
 
-function! s:mkdir(file, ...) abort
-  let f = a:0 ? fnamemodify(a:file, a:1) : a:file
-  if !isdirectory(f)
-    call mkdir(f, 'p')
-  endif
-endfunction
-
 
 " == Appearance settings. == {{{1
 syntax enable
@@ -566,7 +559,7 @@ setglobal nrformats& nrformats-=octal
 " spelling
 setglobal spelllang& spelllang+=cjk
 setglobal spellfile=~/.local/share/vim/spell/en.utf-8.add
-call s:mkdir(expand('~/.local/share/vim/spell'))
+call mkdir(expand('~/.local/share/vim/spell'), 'p')
 
 " encryption
 if has('crypt-blowfish2')
@@ -592,9 +585,9 @@ if has('persistent_undo')
 endif
 setglobal backupcopy=yes
 
-call s:mkdir(expand('~/.cache/vim/backup'))
-call s:mkdir(expand('~/.cache/vim/swap'))
-call s:mkdir(expand('~/.cache/vim/undo'))
+call mkdir(expand('~/.cache/vim/backup'), 'p')
+call mkdir(expand('~/.cache/vim/swap'), 'p')
+call mkdir(expand('~/.cache/vim/undo'), 'p')
 
 " Swap
 setglobal swapfile
@@ -795,7 +788,7 @@ augroup vimrc-auto-mkdir
     let mes = '"%s" does not exist. Create? [y/N]'
     if !isdirectory(a:dir) && (a:force ||
     \    input(printf(mes, a:dir)) =~? '^y\%[es]$')
-      call s:mkdir(a:dir)
+      call mkdir(a:dir, 'p')
     endif
   endfunction
 augroup END
@@ -1265,7 +1258,7 @@ function! s:move(file, bang, base) abort
       let bang = '!'
     endif
     let dir = fnamemodify(to, ':h')
-    call s:mkdir(dir)
+    call mkdir(dir, 'p')
     execute 'saveas' . bang '`=to`'
     call delete(from)
   finally
@@ -2811,7 +2804,7 @@ let g:lingr_vim_additional_rooms = [
 let g:lingr_vim_sidebar_width = 30
 let g:lingr_vim_rooms_buffer_height = len(g:lingr_vim_additional_rooms) + 1
 let g:lingr_vim_debug_log_file = s:plugin_info . strftime('/lingr/lingr-%Y-%m-%d.log')
-call s:mkdir(g:lingr_vim_debug_log_file, ':h')
+call mkdir(fnamemodify(g:lingr_vim_debug_log_file, ':h'), 'p')
 let g:lingr_vim_count_unread_at_current_room = 1
 
 augroup vimrc-plugin-lingr
@@ -2906,7 +2899,7 @@ let g:J6uil_multi_window = 1
 let g:colorv_no_global_map = 1
 let g:colorv_cache_file = s:plugin_info . '/colorv/cache'
 let g:colorv_cache_fav = s:plugin_info . '/colorv/fav'
-call s:mkdir(s:plugin_info . '/colorv')
+call mkdir(s:plugin_info . '/colorv', 'p')
 
 " clever-f.vim  {{{2
 let g:clever_f_timeout_ms = 2000
