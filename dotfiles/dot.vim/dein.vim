@@ -334,6 +334,9 @@ call dein#add('plasticboy/vim-markdown')
 call dein#add('udalov/kotlin-vim')
 call dein#add('rhysd/vim-gfm-syntax')
 call dein#add('jparise/vim-graphql')
+call dein#add('pocke/iro.vim', {
+\   'build': 'bundle install',
+\ })
 
 " colorscheme
 call dein#add('romainl/Apprentice')
