@@ -712,6 +712,21 @@ augroup vimrc-lcd
     endif
   endfunction
 
+  let g:lcd = [
+  \   ['tags'],
+  \   [
+  \     '.svn/',
+  \     '.git/',
+  \     '.git',
+  \     '.bzr/',
+  \     '.hg/',
+  \     '.bundle/:ruby',
+  \     'doc/:vim,help',
+  \   ],
+  \   ['README.*', 'README'],
+  \   ['src/', 'include/'],
+  \ ]
+
   function! s:lcd_path() abort
     let path = ''
     let simple = expand('%:p:h:gs?\\\+?/?')
@@ -730,52 +745,24 @@ augroup vimrc-lcd
       endif
     endfor
 
-    let tf = tagfiles()
-    if !empty(tf) && expand('%:p:h:t') !=# 'doc'
-      let tagdir = fnamemodify(tf[0], ':p:h')
-      if tagdir !=# '' && simple[ : len(tagdir) - 1] ==# tagdir
-        return tagdir
-      endif
-    endif
-
-    let base = simple
-    let dirs = ['.svn', '.git', '.bzr', '.hg', '.bundle']
-    if &l:filetype =~# '^\%(vim\|help\)$'
-      call add(dirs, 'doc')
-    endif
-    for d in dirs
-      let d = finddir(d, escape(base, ' ?*[]();') . ';')
-      if d !=# ''
-        let p = fnamemodify(d, ':p:h:h')
-        if strlen(path) < strlen(p)
-          let path = p
-        endif
-      endif
+    for targets in g:lcd
+      let dir = expand('%:p:h')
+      let pdir = ''
+      while dir isnot# pdir
+        for target in targets
+          let [name; opts] = split(target, ':')
+          if !empty(opts) && index(split(opts[0], ','), &l:filetype) < 0
+            continue
+          endif
+          let t = dir . '/' . name
+          if name =~# '/$' ? isdirectory(t) : len(glob(t))
+            return dir
+          endif
+        endfor
+        let pdir = dir
+        let dir = fnamemodify(dir, ':h')
+      endwhile
     endfor
-    let files = ['.git']
-    for f in files
-      let f = findfile(f, escape(base, ' ?*[]();') . ';')
-      if f !=# ''
-        let p = fnamemodify(f, ':p:h')
-        if strlen(path) < strlen(p)
-          let path = p
-        endif
-      endif
-    endfor
-    if path !=# ''
-      return path
-    endif
-
-    let base = substitute(expand('%:p'), '\\', '/', 'g')
-    for dir in ['src', 'include']
-      let pat = '/' . dir . '/'
-      if base =~# pat
-        let path = base[: strridx(base, pat) + len(dir)]
-      endif
-    endfor
-    if path !=# ''
-      return path
-    endif
 
     return simple
   endfunction
