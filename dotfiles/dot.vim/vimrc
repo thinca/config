@@ -935,7 +935,7 @@ nnoremap <C-w>*  <C-w>s*
 nnoremap <C-w>#  <C-w>s#
 
 " repeat :substitute with same flag
-nnoremap <silent> & :&&<CR>
+noremap <silent> & :&&<CR>
 
 " Search selected area.
 vnoremap <silent> z/ <Esc>/\v%V
