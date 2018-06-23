@@ -3,28 +3,32 @@ snippet if
 		${2:#statements}
 	fi
 	${3}
+
 snippet elif
 	elif [[ ${1:condition} ]]; then
 		${2:#statements}
+
 snippet for
 	for (( ${2:i} = 0; $2 < ${1:count}; $2++ )); do
 		${3:#statements}
 	done
 	${4}
+
 snippet wh
 	while [[ ${1:condition} ]]; do
 		${2:#statements}
 	done
 	${3}
+
 snippet until
 	[[ ${1:condition} ]]; do
 		${2:#statements}
 	done
 	${3}
+
 snippet case
 	case ${1:word} in
 		${2:pattern})
 			${3};;
 	esac
 	${4}
-

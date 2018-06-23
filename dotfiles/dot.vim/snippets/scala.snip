@@ -1,46 +1,46 @@
 snippet obj
-abbr    object ... {
-prev_word   '^'
+abbr object ... {
+options head
 	object ${1:`expand('%:t:r')`} {
 		${2}
 	}
 
 snippet obje
-abbr    object ... extends {
-prev_word   '^'
+abbr object ... extends {
+options head
 	object ${1:`expand('%:t:r')`} extends ${2} {
 		${3}
 	}
 
 snippet objew
-abbr    object ... extends ... with ... {
-prev_word   '^'
+abbr object ... extends ... with ... {
+options head
 	object ${1:`expand('%:t:r')`} extends ${2} with ${3}{
 		${4}
 	}
 
-snippet     class
-abbr        class
-prev_word   '^'
+snippet class
+abbr class
+options head
 	class ${1:`expand('%:t:r')`} {
 		${2}
 	}
 
 snippet main
-prev_word   '^'
+options head
 	def main(args: Array[String]) {
 		${1}
 	}
 
-snippet     fory
-abbr        for yield
-prev_word   '^'
+snippet fory
+abbr for yield
+options head
 	for(${1}) yield ${2}
 
 
-snippet     match
-abbr        match
-prev_word   '^'
+snippet match
+abbr match
+options head
 	match {
 		case ${1} => ${2}
 	}

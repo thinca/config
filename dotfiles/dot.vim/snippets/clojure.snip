@@ -1,25 +1,25 @@
-snippet     (defn
-abbr        (defn function [...] ...
-prev_word   '^'
+snippet (defn
+abbr (defn function [...] ...
+options head
 	defn ${1:name} [${2}]
 		${3}
 
-snippet     defn
-abbr        (defn function [...] ...
-prev_word   '^'
+snippet defn
+abbr (defn function [...] ...
+options head
 	(defn ${1:name} [${2}]
 		${3})
 
-snippet     try
-abbr        (try ... (catch ...
-prev_word   '^'
+snippet try
+abbr (try ... (catch ...
+options head
 	(try
 		${1}
 		(catch ${2:java.lang.Exception} e ${3:nil}))
 
-snippet     ref-set
-abbr        (dosync (ref-set ...
-prev_word   '^'
+snippet ref-set
+abbr (dosync (ref-set ...
+options head
 	(dosync
 		(ref-set ${1:ref} ${2:value}))
 

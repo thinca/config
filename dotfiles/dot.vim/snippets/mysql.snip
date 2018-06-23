@@ -1,10 +1,10 @@
-snippet     table
-prev_word   '^'
+snippet table
+options head
 	DROP TABLE IF EXISTS $1;
 	CREATE TABLE ${1:table} (
 		${0}
 	) ENGINE=InnoDB, DEFAULT CHARACTER SET utf8;
 
-snippet     key
-prev_word   '^'
+snippet key
+options head
 	${1:id} int PRIMARY KEY AUTO_INCREMENT,${0}
