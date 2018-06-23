@@ -2020,7 +2020,7 @@ if dein#is_sourced('unite')
   call unite#custom#substitute('file', '^;i', s:plugin_info . '/*')
   call unite#custom#substitute('file', '^;s', '$VIM_USERDIR/pack/personal/start/default/after/syntax/*')
   call unite#custom#substitute('file', '^;f', '$VIM_USERDIR/pack/personal/start/default/after/ftplugin/*')
-  if has('win32') || has('win64')
+  if has('win32')
     call unite#custom#substitute('file', '^;p', 'C:/Program Files/*')
   endif
 
