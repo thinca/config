@@ -44,3 +44,11 @@ options head
 	match {
 		case ${1} => ${2}
 	}
+
+snippet hello
+options head
+	object HelloWorld {
+		def main(args: Array[String]) {
+			println("Hello, world!")
+		}
+	}

@@ -44,3 +44,11 @@ snippet bfor
 	BOOST_FOREACH(${1:type} ${2:t}, ${3:it}) {
 		${0}
 	}
+
+snippet hello
+options head
+	#include <iostream>
+
+	int main(int argc, char** argv) {
+		std::cout << "Hello, world!" << std::endl;
+	}
