@@ -240,9 +240,9 @@ function screen-name() {
 
 ###########################################################################
 # hook functions.
-typeset -ga preexec_functions
-typeset -ga precmd_functions
-typeset -ga chpwd_functions
+typeset -ga preexec_functions=()
+typeset -ga precmd_functions=()
+typeset -ga chpwd_functions=()
 
 # on GNU Screen or tmux
 if __is_screen; then
