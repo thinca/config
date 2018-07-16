@@ -28,11 +28,11 @@
 [commit]
 	verbose = true
 [pager]
-	log = diff-highlight | less
-	show = diff-highlight | less
-	diff = diff-highlight | less
+	log = (type diff-highlight >/dev/null && diff-highlight || cat) | less
+	show = (type diff-highlight >/dev/null && diff-highlight || cat) | less
+	diff = (type diff-highlight >/dev/null && diff-highlight || cat) | less
 [interactive]
-	diffFilter = diff-highlight
+	diffFilter = (type diff-highlight >/dev/null && diff-highlight || cat)
 [alias]
 	h = help
 	a = add --update
