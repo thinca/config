@@ -19,10 +19,10 @@ set HOME=%HOMEDRIVE%%HOMEPATH%
 set CONFIG=%~dp0
 set DOTFILES=%CONFIG%dotfiles
 
-if exist %DOTFILES%\dot.config (
-  if not exist %HOME%\.config mkdir %HOME%\.config
-  pushd %HOME%\.config
-  call :dlink wtrans %DOTFILES%\dot.config\wtrans
+if not exist %LOCALAPPDATA%\wtrans\Config\wtrans.yaml (
+  mkdir %LOCALAPPDATA%\wtrans\Config
+  pushd %LOCALAPPDATA%\wtrans\Config
+  call :link wtrans.yaml %DOTFILES%\dot.config\wtrans\wtrans.yaml
   popd
 )
 
