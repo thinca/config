@@ -3163,7 +3163,6 @@ if dein#is_sourced('quickrun')
     let rust_cargo_hook = {'kind': 'hook', 'name': 'rust_cargo'}
     function! rust_cargo_hook.on_normalized(session, context) abort
       if a:session.config.type ==# 'rust' &&
-      \   fnamemodify(a:session.config.srcfile, ':t') ==# 'main.rs' &&
       \   findfile('Cargo.toml', '.;') !=# ''
         let a:session.config.exec = ['cargo run --quiet']
       endif
