@@ -1606,17 +1606,17 @@ endif
 
 " if_python  {{{2
 if isdirectory($PYENV_ROOT)
+  " ['2.7.14', '3.6.4']
+  let [s:py_v2, s:py_v3] = sort(readfile($PYENV_ROOT . '/version'))
   if exists('+pythondll')
     let &pythondll =
-    \   get(glob(
-    \     $PYENV_ROOT . '/versions/2.*/lib/libpython2.*.' . s:ext,
-    \   1, 1), -1, '')
+    \   printf('%s/versions/%s/lib/libpython%s.%s',
+    \     $PYENV_ROOT, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
   endif
   if exists('+pythonthreedll')
     let &pythonthreedll =
-    \   get(glob(
-    \     $PYENV_ROOT . '/versions/3.*/lib/libpython3.*.' . s:ext,
-    \   1, 1), -1, '')
+    \   printf('%s/versions/%s/lib/libpython%sm.%s',
+    \     $PYENV_ROOT, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
   endif
 endif
 
