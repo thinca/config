@@ -2343,6 +2343,7 @@ nmap <Plug>(caw:prefix)<Space> <Plug>(caw:hatpos:toggle)
 vmap <Plug>(caw:prefix)<Space> <Plug>(caw:hatpos:toggle)
 nmap <Plug>(caw:prefix)w <Plug>(caw:wrap:toggle)
 vmap <Plug>(caw:prefix)w <Plug>(caw:wrap:toggle)
+nmap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle:operator)
 
 " open-browser.vim  {{{2
 nmap m<CR> <Plug>(openbrowser-smart-search)
