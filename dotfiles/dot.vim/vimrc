@@ -1269,9 +1269,13 @@ function! s:delete_with_confirm(file, force) abort
 endfunction
 
 " unique lines without sort.
-command! -bar -range=% Unique <line1>,<line2>call s:unique_lines()
-function! s:unique_lines() range abort
-  let lines = g:V.uniq(getline(a:firstline, a:lastline))
+command! -bar -nargs=* -range=% Unique
+\        <line1>,<line2>call s:unique_lines(<q-args>)
+function! s:unique_lines(pat) range abort
+  let lines = g:V.uniq_by(
+  \   getline(a:firstline, a:lastline),
+  \   { val -> a:pat ==# '' ? val : matchstr(val, a:pat) }
+  \ )
   silent execute a:firstline . ',' . a:lastline . 'delete _'
   silent execute (a:firstline - 1) . 'put =lines'
 endfunction
