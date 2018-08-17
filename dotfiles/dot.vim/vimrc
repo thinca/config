@@ -2979,6 +2979,11 @@ function! s:setup_lexima() abort
   \   'filetype': 'vimspec',
   \ })
   call lexima#add_rule({
+  \   'char': 'd', 'at': 'end\%#$',
+  \   'input': '<CR>end',
+  \   'filetype': 'ruby',
+  \ })
+  call lexima#add_rule({
   \   'char': '<CR>', 'at': 'do\%#$',
   \   'input': '<CR>', 'input_after': '<CR>end',
   \   'filetype': 'elixir',
