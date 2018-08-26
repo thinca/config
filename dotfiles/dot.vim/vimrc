@@ -581,6 +581,9 @@ if has('persistent_undo')
   augroup vimrc-undofile
     autocmd!
     autocmd BufReadPre ~/* setlocal undofile
+    if has('win32')
+      autocmd BufReadPre D:/* setlocal undofile
+    endif
   augroup END
 endif
 setglobal backupcopy=yes
