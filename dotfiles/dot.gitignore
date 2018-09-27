@@ -21,3 +21,6 @@ Gemfile.private
 Gemfile.private.lock
 .bundle
 vendor/bundle
+
+# Node.js
+.nyc_output/
