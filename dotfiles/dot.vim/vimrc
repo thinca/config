@@ -1069,7 +1069,8 @@ for [s:key, s:var] in [['n', 'bufnr'], ['c', 'char'],
 \                      ['s', 'filesize'], ['h', 'highlight']]
   for [s:prefix, s:scope] in [['', 'g'], ['b', 'b'], ['w', 'w']]
   execute printf('nnoremap <silent> <Space>s%s%s '
-  \            . ':<C-u>call <SID>toggle_flag("%s:statusline_%s")<CR>',
+  \            . ':<C-u>call <SID>toggle_flag("%s:statusline_%s")<CR>'
+  \            . ':redrawstatus!<CR>',
   \              s:prefix, s:key, s:scope, s:var)
   endfor
 endfor
