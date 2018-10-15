@@ -568,14 +568,14 @@ endif
 
 " backup.
 setglobal backup
-setglobal backupdir=~/.cache/vim/backup
+setglobal backupdir=~/.cache/vim/backup//
 " Paths of swap file and backup file.
 if $TMP !=# ''
   execute 'setglobal backupdir+=' . escape(expand($TMP), ' \')
 elseif has('unix')
   setglobal backupdir+=/tmp
 endif
-setglobal directory=~/.cache/vim/swap
+setglobal directory=~/.cache/vim/swap//
 if has('persistent_undo')
   setglobal undodir=~/.cache/vim/undo
   augroup vimrc-undofile
