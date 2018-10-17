@@ -80,6 +80,12 @@ cnoremap <C-p> <Up>
 cnoremap <C-i> <Tab>
 cnoremap <S-C-i> <S-Tab>
 
+" Compatibility with surfingKeys.js
+" I'm planning migrate to it.
+nnoremap <silent> yy :<C-u>copy %URL%<CR>
+nnoremap x d
+nnoremap d <Nop>
+
 
 silent qmark m https://mail.google.com/
 silent qmark r http://www.feedly.com/
