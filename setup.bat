@@ -13,17 +13,20 @@ mklink /d %1 %2
 goto :EOF
 
 :main
-setlocal
+setlocal enabledelayedexpansion
 
 set HOME=%HOMEDRIVE%%HOMEPATH%
 set CONFIG=%~dp0
 set DOTFILES=%CONFIG%dotfiles
 
-if not exist %LOCALAPPDATA%\wtrans\Config\wtrans.yaml (
-  mkdir %LOCALAPPDATA%\wtrans\Config
-  pushd %LOCALAPPDATA%\wtrans\Config
-  call :link wtrans.yaml %DOTFILES%\dot.config\wtrans\wtrans.yaml
-  popd
+for /D %%D in (%DOTFILES%\dot.config\*) do (
+  set CONFIG_DIR=%LOCALAPPDATA%\%%~nD
+  if not exist !CONFIG_DIR! (
+    mkdir !CONFIG_DIR!
+    pushd !CONFIG_DIR!
+    call :dlink Config %%D
+    popd
+  )
 )
 
 pushd %HOME%
