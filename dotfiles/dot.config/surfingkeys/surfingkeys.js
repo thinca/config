@@ -4,7 +4,7 @@ Hints.characters = "jklfdsahguiorewtymnpbvcxz";
 
 settings.hintAlign = "left";
 // settings.omnibarPosition = "bottom";  // Default: "middle"
-settings.focusFirstCandidate = true;
+// settings.focusFirstCandidate = true;
 settings.scrollStepSize = 140;  // Default: 70
 
 map("<Ctrl-p>", "E");
