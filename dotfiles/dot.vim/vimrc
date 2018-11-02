@@ -461,6 +461,7 @@ endfunction
 if has('tabsidebar')
   setglobal showtabsidebar=1
   setglobal tabsidebarcolumns=32
+  setglobal tabsidebarwrap
   let &g:tabsidebar =
   \   '%!' . get(function('s:tabpage_label'), 'name') .
   \   '(g:actual_curtabpage)'
