@@ -376,6 +376,14 @@ function! MakeStatusLine(...) abort
   return line
 endfunction
 
+function! s:buf_label(bufnr) abort
+  let label = GetBufname(a:bufnr, 1)
+  if getbufvar(a:bufnr, '&modified')
+    let label .= '+'
+  endif
+  return label
+endfunction
+
 function! s:tabpage_label(n) abort
   let n = a:n
   let bufnrs = tabpagebuflist(n)
@@ -396,16 +404,24 @@ function! s:tabpage_label(n) abort
     endif
 
   else
-    let mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
-    let mod = len(mod_bufs) ? '+' : ''
     let title = gettabvar(n, 'title')
-    let text = title !=# '' ? title : GetBufname(curbufnr, 1)
+    if title !=# ''
+      let label .= title
+    elseif get(g:, 'tabsidebar_show_all_window', 0)
+      let n_width = strwidth(n . ': ')
+      let labels = map(copy(bufnrs), { -> s:buf_label(v:val) })
+      let label .= join(labels, "\n" . repeat(' ', n_width))
+    else
+      let text = GetBufname(curbufnr, 1)
+      let mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
+      let mod = len(mod_bufs) ? '+' : ''
 
-    let label .= text . mod
-    let no = len(bufnrs)
-    if 2 <= no
-      let label .= ' %#' . hi . 'Number#' . no
-      let label .= '%#' . hi . '#'
+      let label .= text . mod
+      let no = len(bufnrs)
+      if 2 <= no
+        let label .= ' %#' . hi . 'Number#' . no
+        let label .= '%#' . hi . '#'
+      endif
     endif
   endif
 
@@ -462,6 +478,7 @@ if has('tabsidebar')
   setglobal showtabsidebar=1
   setglobal tabsidebarcolumns=32
   setglobal tabsidebarwrap
+  let g:tabsidebar_show_all_window = 1
   let &g:tabsidebar =
   \   '%!' . get(function('s:tabpage_label'), 'name') .
   \   '(g:actual_curtabpage)'
