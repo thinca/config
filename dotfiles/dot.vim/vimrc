@@ -376,19 +376,21 @@ function! MakeStatusLine(...) abort
   return line
 endfunction
 
-function! s:buf_label(bufnr) abort
+function! s:buf_label(bufnr, i, is_cur) abort
   let label = GetBufname(a:bufnr, 1)
   if getbufvar(a:bufnr, '&modified')
     let label .= '+'
   endif
-  return label
+  let curmark = a:is_cur ? '>' : ' '
+  return printf(' %s%d) %s', curmark, a:i, label)
 endfunction
 
 function! s:tabpage_label(n, ...) abort
   let is_sidebar = a:0 && a:1
   let n = a:n
   let bufnrs = tabpagebuflist(n)
-  let curbufnr = bufnrs[tabpagewinnr(n) - 1]  " first window, first appears
+  let curwinnr = tabpagewinnr(n)
+  let curbufnr = bufnrs[curwinnr - 1]  " first window, first appears
 
   let hi = n == tabpagenr() ? 'TabLineSel' : 'TabLine'
 
@@ -406,12 +408,15 @@ function! s:tabpage_label(n, ...) abort
 
   else
     let title = gettabvar(n, 'title')
-    if title !=# ''
+    if is_sidebar && get(g:, 'tabsidebar_show_all_window', 0)
+      let cwd = getcwd(curwinnr, n)
+      let label .= title !=# '' ? title : fnamemodify(cwd, ':t') . '/'
+      let labels = map(copy(bufnrs), { i, v ->
+      \   s:buf_label(v, i + 1, curwinnr == i + 1)
+      \ })
+      let label .= "\n" . join(labels, "\n")
+    elseif title !=# ''
       let label .= title
-    elseif is_sidebar && get(g:, 'tabsidebar_show_all_window', 0)
-      let n_width = strwidth(n . ': ')
-      let labels = map(copy(bufnrs), { -> s:buf_label(v:val) })
-      let label .= join(labels, "\n" . repeat(' ', n_width))
     else
       let text = GetBufname(curbufnr, 1)
       let mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
