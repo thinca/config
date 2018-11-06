@@ -384,7 +384,8 @@ function! s:buf_label(bufnr) abort
   return label
 endfunction
 
-function! s:tabpage_label(n) abort
+function! s:tabpage_label(n, ...) abort
+  let is_sidebar = a:0 && a:1
   let n = a:n
   let bufnrs = tabpagebuflist(n)
   let curbufnr = bufnrs[tabpagewinnr(n) - 1]  " first window, first appears
@@ -407,7 +408,7 @@ function! s:tabpage_label(n) abort
     let title = gettabvar(n, 'title')
     if title !=# ''
       let label .= title
-    elseif get(g:, 'tabsidebar_show_all_window', 0)
+    elseif is_sidebar && get(g:, 'tabsidebar_show_all_window', 0)
       let n_width = strwidth(n . ': ')
       let labels = map(copy(bufnrs), { -> s:buf_label(v:val) })
       let label .= join(labels, "\n" . repeat(' ', n_width))
@@ -481,7 +482,7 @@ if has('tabsidebar')
   let g:tabsidebar_show_all_window = 1
   let &g:tabsidebar =
   \   '%!' . get(function('s:tabpage_label'), 'name') .
-  \   '(g:actual_curtabpage)'
+  \   '(g:actual_curtabpage, 1)'
   augroup tabsidebar-highlight
     autocmd!
     autocmd ColorScheme * highlight! link TabSideBar TabLine
