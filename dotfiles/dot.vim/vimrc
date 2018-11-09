@@ -1114,7 +1114,7 @@ nnoremap <silent> <Space>op :<C-u>set paste! paste?<CR>
 " Tabpage operation.
 nnoremap <Space>t <Nop>
 nnoremap <silent> <Space>tn :<C-u>tabnew<CR>
-nnoremap <silent> <Space>tc :<C-u>tabclose<CR>
+nnoremap <silent> <Space>tc :<C-u><C-r>=v:count?v:count:''<CR>tabclose<CR>
 
 if exists(':tmap')
   call s:meta_map('h', '<C-w>h', 't')
