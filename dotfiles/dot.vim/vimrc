@@ -3411,6 +3411,9 @@ map <Leader>f <Plug>(easymotion-overwin-f2)
 map [d <Plug>(edgemotion-k)
 map ]d <Plug>(edgemotion-j)
 
+" matchit.vim  {{{2
+let g:matchup_matchparen_status_offscreen = 0
+
 " open-googletranslate.vim  {{{2
 if executable('electron-open')
   let g:opengoogletranslate#openbrowsercmd = 'electron-open'
