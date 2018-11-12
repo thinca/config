@@ -3024,6 +3024,10 @@ function! s:setup_lexima() abort
 endfunction
 call dein#set_hook('lexima', 'hook_post_source', function('s:setup_lexima'))
 
+" sideways.vim  {{{2
+nmap <Leader>< <Plug>SidewaysLeft
+nmap <Leader>> <Plug>SidewaysRight
+
 " previm.vim  {{{2
 let g:previm_enable_realtime = 1
 
