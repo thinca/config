@@ -611,6 +611,7 @@ if has('persistent_undo')
   augroup END
 endif
 setglobal backupcopy=yes
+setglobal viewdir=~/.cache/vim/view
 
 call mkdir(expand('~/.cache/vim/backup'), 'p')
 call mkdir(expand('~/.cache/vim/swap'), 'p')
