@@ -9,16 +9,25 @@ link() {
 	fi
 }
 
-case "${OS}" in
-	Mac) CONFIG_DIR="${HOME}"/Library/Preferences ;;
-	Linux) CONFIG_DIR="${HOME}"/.config ;;
-esac
-mkdir -p "${CONFIG_DIR}"
+mk_links() {
+	local config_dir=$1
 
-if [[ -d "${CONFIG_BASE}"/dotfiles/dot.config ]]; then
+	mkdir -p "${config_dir}"
 	for path in "${CONFIG_BASE}"/dotfiles/dot.config/*
 	do
 		filename="$(basename "${path}")"
-		link "${path}" "${CONFIG_DIR}/${filename}"
+		link "${path}" "${config_dir}/${filename}"
 	done
+}
+
+if [[ -d "${CONFIG_BASE}"/dotfiles/dot.config ]]; then
+	case "${OS}" in
+		Mac)
+			mk_links "${HOME}"/Library/Preferences
+			mk_links "${HOME}"/.config
+			;;
+		Linux)
+			mk_links "${HOME}"/.config
+			;;
+	esac
 fi
