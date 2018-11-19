@@ -1,6 +1,5 @@
 [core]
 	autocrlf = false
-	excludesfile = ~/.gitignore
 	quotepath = false
 [user]
 	name = thinca
