@@ -1,6 +1,7 @@
 [core]
 	autocrlf = false
 	quotepath = false
+	hooksPath = ~/.config/git/hooks
 [user]
 	name = thinca
 	email = thinca@gmail.com

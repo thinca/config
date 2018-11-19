@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eu
+
+hook_name=$(basename "$0")
+basedir=$(dirname "$0")
+
+for script in "${basedir}/${hook_name}.d"/*; do
+	[[ ! -x "${script}" ]] || "${script}" "$@"
+done
+
+repo_hook="${PWD}/.git/hooks/${hook_name}"
+[[ ! -x "${repo_hook}" ]] || "${repo_hook}" "$@"
