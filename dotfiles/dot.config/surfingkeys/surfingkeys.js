@@ -30,3 +30,5 @@ map("<Ctrl-d>", "d");
 mapkey("b", 'Choose a tab with omnibar', () => {
     Front.openOmnibar({type: "Tabs"});
 });
+
+iunmap(":");
