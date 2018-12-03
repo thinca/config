@@ -56,7 +56,7 @@
 	fixup = !git -c core.editor=true rebase -i --autosquash $(git base-commit)
 	fix = "!f() { git fixcommit ${1} && git fixup; }; f"
 	co = checkout
-	cob = !sh -c 'b="$(git current-branch)" && git checkout -b "${1}" && git config "branch.${1}.base" "$b"' -
+	cob = "!f() { b=$(git current-branch) && git checkout -b \"${1}\" && git base-branch \"${b}\"; }; f"
 	topic = !git checkout "$(git current-remote)/master" -b
 	d = diff HEAD
 	di = diff
