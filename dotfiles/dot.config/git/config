@@ -52,7 +52,7 @@
 	rbn = rebase --ignore-date
 	base-commit = !git merge-base origin/$(git base-branch) HEAD
 	select-commit = "!f() { git log --oneline ${1} | fzf --preview='git show --color {1}' | cut -b 1-7; }; f"
-	fixcommit = "!f() { git commit --fixup=\"$(git select-commit \"${1:-origin/$(git base-branch)}..HEAD\")\"; }; f"
+	fixcommit = "!f() { git commit --fixup=\"$(git select-commit \"${1:-$(git base-commit)}..HEAD\")\"; }; f"
 	fixup = !git -c core.editor=true rebase -i --autosquash $(git base-commit)
 	fix = "!f() { git fixcommit ${1} && git fixup; }; f"
 	co = checkout
