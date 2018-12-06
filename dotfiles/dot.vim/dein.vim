@@ -60,7 +60,7 @@ endfunction
 
 let s:use_deoplete = has('python3') && s:try('python3 import neovim')
 call dein#add('Shougo/deoplete.nvim', {'if': s:use_deoplete})
-call dein#add('roxma/nvim-yarp', {'if': s:use_deoplete, 'rev': '622cf3981d85b872a98ff2de055c4e0d520d26ad'})
+call dein#add('roxma/nvim-yarp', {'if': s:use_deoplete})
 call dein#add('roxma/vim-hug-neovim-rpc', {'if': s:use_deoplete})
 call dein#add('Shougo/neocomplete.vim', {'if': has('lua')})
 call dein#add('Shougo/context_filetype.vim')
