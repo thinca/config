@@ -46,12 +46,12 @@
 	cia = commit -a
 	cim = commit --amend -C HEAD
 	cin = !git commit --amend --all -C HEAD \"--date=$(date --rfc-2822)\"
-	tm = "!sh -c 'export GIT_COMMITTER_DATE=\"$(date --date=\"$(git log -1 --format=%aD HEAD) ${1:-0} hours ago\" --rfc-2822)\"; git commit --amend -C HEAD --date=\"${GIT_COMMITTER_DATE}\"' -"
-	rbtm = "!sh -c 'GIT_EDITOR=true git rebase ${2:-master} -i --exec \"git tm ${1:-0}\"' -"
+	tm = "!f() { export GIT_COMMITTER_DATE=\"$(date --date=\"$(git log -1 --format=%aD HEAD) ${1:-0} hours ago\" --rfc-2822)\"; git commit --amend -C HEAD --date=\"${GIT_COMMITTER_DATE}\"; }; f"
+	rbtm = "!f() { GIT_EDITOR=true git rebase ${2:-master} -i --exec \"git tm ${1:-0}\"; }; f"
 	rbd = rebase --committer-date-is-author-date
 	rbn = rebase --ignore-date
 	base-commit = !git merge-base origin/$(git base-branch) HEAD
-	select-commit = "!sh -c 'git log --oneline ${1} | fzf --preview=\"git show --color {1}\" | cut -b 1-7' -"
+	select-commit = "!f() { git log --oneline ${1} | fzf --preview='git show --color {1}' | cut -b 1-7; }; f"
 	fixcommit = "!f() { git commit --fixup=\"$(git select-commit \"${1:-origin/$(git base-branch)}..HEAD\")\"; }; f"
 	fixup = !git -c core.editor=true rebase -i --autosquash $(git base-commit)
 	fix = "!f() { git fixcommit ${1} && git fixup; }; f"
@@ -110,7 +110,7 @@
 	ignore = update-index --assume-unchanged
 	unignore = update-index --no-assume-unchanged
 	ignored = !git ls-files -v | grep "^[a-z]"
-	pr = "!sh -c 'git fetch --update-head-ok ${2:-origin} pull/$1/head:pr-$1' -"
+	pr = "!f() { git fetch --update-head-ok ${2:-origin} pull/$1/head:pr-$1; }; f"
 	sb = !git sweep-branch
 	sweep-branch = "!f() { b=$(git spent-branches); [[ -z \"$b\" ]] || git branch --delete $b; }; f"
 	merged-branches = for-each-ref refs/heads/ --format='%(refname:short)' --merged
