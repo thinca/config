@@ -3431,6 +3431,10 @@ let g:ctrlp_map = ''
 let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_new_list_item_indent = 0
 
+" pocke/iro.vim  {{{2
+let s:iro_ft = g:iro#enabled_filetypes
+let s:iro_ft.yaml = 0
+
 " default plugins  {{{2
 let g:loaded_matchparen = 1
 
