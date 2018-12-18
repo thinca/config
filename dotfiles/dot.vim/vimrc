@@ -1982,6 +1982,8 @@ if dein#is_sourced('unite')
   call unite#custom#profile('default', 'context', s:unite_default_options)
   let g:unite_source_rec_max_cache_files = 100000
 
+  call unite#filters#sorter_default#use(['sorter_selecta'])
+
   nnoremap <silent> <Leader>z :<C-u>Unite -buffer-name=file
   \ window:all:no-current proj_mru file buffer<CR>
   nnoremap <silent> <Leader>a <Nop>
