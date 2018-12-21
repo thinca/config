@@ -173,7 +173,7 @@
 		git remote add origin \"$(git config remote.upstream.url | sed 's;^\\(git@\\|https://\\)github\\.com[/:][^/]\\+/;git@github.com:thinca/;')\" && \
 		git fetch origin; \
 	}; f"
-	gh-repo = "!git remote get-url origin | sed 's/.*:\\(.*\\)\\.git/\\1/'"
+	gh-repo = "!git remote get-url origin | sed 's/.*:\\(.*\\?\\)\\(\\.git\\)\\?/\\1/'"
 	# XXX: `open` is only available on MacOS
 	mkpr = "!open https://github.com/$(git gh-repo)/compare/$(git base-branch)...$(git current-branch)?expand=1"
 [pretty]
