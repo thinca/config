@@ -2719,6 +2719,10 @@ if dein#is_sourced('reanimate')
   function! s:event.load_pre(context) abort
     tabnew
     hide tabonly
+    let point = a:context.point
+    if point =~# '^session/'
+      let g:window_name = 'vim[' . matchstr(point, '/\zs.*') . ']'
+    endif
   endfunction
 
   function! s:event.save_pre(context) abort
