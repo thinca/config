@@ -1524,7 +1524,7 @@ if $WINDOW !=# '' || $TMUX !=# ''
   function! s:auto_window_name() abort
     let varname = 'window_name'
     for scope in ['w:', 'b:', 't:', 'g:']
-      if exists(scope .varname)
+      if exists(scope . varname)
         call s:set_window_name(eval(scope . varname))
         return
       endif
