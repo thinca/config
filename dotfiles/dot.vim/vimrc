@@ -1399,13 +1399,13 @@ function! s:highlight_with(args) range abort
     let syntax = b:current_syntax
     unlet b:current_syntax
   endif
-  let save_isk= &l:isk  " for scheme.
+  let save_isk = &l:isk  " for scheme.
   let hlname = 'highlightWith' . substitute(ft, '^.', '\u\0', '')
   if c != 0
     let hlname .= '_' . c
   endif
   execute printf('syntax include @%s syntax/%s.vim', hlname, ft)
-  let &l:isk= save_isk
+  let &l:isk = save_isk
   execute printf('syntax region %s start=/\%%%dl/ end=/\%%%dl$/ '
   \            . 'contains=@%s containedin=ALL',
   \             hlname, a:firstline, a:lastline, hlname)
