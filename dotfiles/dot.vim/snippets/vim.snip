@@ -1,5 +1,5 @@
 snippet func
-	function! ${1:function_name}(${2}) abort
+	function ${1:function_name}(${2}) abort
 		${3:" code}
 	endfunction
 
@@ -17,12 +17,12 @@ snippet autoload
 abbr autoload func endfunc
 alias afunction afunc
 options head
-	function! `substitute(matchstr(neosnippet#util#expand('%:p:r'), '/autoload/\zs.*$'), '/', '#', 'g')`#${1:#:func_name}(${2:#:args}) abort
+	function `substitute(matchstr(neosnippet#util#expand('%:p:r'), '/autoload/\zs.*$'), '/', '#', 'g')`#${1:#:func_name}(${2:#:args}) abort
 		${0}
 	endfunction
 
 snippet main
-	function! s:main() abort
+	function s:main() abort
 		${0:TARGET}
 	endfunction
 
