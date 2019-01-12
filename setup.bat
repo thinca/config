@@ -31,6 +31,8 @@ for /D %%D in (%DOTFILES%\dot.config\*) do (
 
 pushd %HOME%
 
+call :dlink .config %DOTFILES%\dot.config
+
 call :link .vimperatorrc %CONFIG%\firefox\dot.vimperatorrc
 call :dlink vimperator %CONFIG%\firefox\vimperator
 set VIMPERATOR_PLUGINS=%HOME%\.local\share\vimperator\plugins\
@@ -38,8 +40,6 @@ if not exist %VIMPERATOR_PLUGINS% git clone https://github.com/vimpr/vimperator-
 
 call :link _nya %CONFIG%\windows\ckw\_nya
 
-call :link .gitconfig %DOTFILES%\dot.gitconfig
-call :link .gitignore %DOTFILES%\dot.gitignore
 call :link .hgrc %DOTFILES%\dot.hgrc
 call :link .hgignore %DOTFILES%\dot.hgignore
 call :link .inputrc %DOTFILES%\dot.inputrc
