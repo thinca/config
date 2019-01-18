@@ -16,10 +16,17 @@ INTRODUCTION					*PLUGIN-introduction*
 *PLUGIN.vim* is a Vim plugin ...
 
 Requirements:
-- Vim 8.0 or later
+- Vim 8.1 or later
 
 Latest version:
 https://github.com/thinca/vim-PLUGIN
+
+
+
+==============================================================================
+USAGE						*PLUGIN-usage*
+
+
 
 
 

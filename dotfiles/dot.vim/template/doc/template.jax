@@ -16,10 +16,17 @@ License: zlib License
 *PLUGIN.vim* は ...
 
 要件:
-- Vim 8.0 以降
+- Vim 8.1 以降
 
 最新版:
 https://github.com/thinca/vim-PLUGIN
+
+
+
+==============================================================================
+使い方						*PLUGIN-usage*
+
+
 
 
 
