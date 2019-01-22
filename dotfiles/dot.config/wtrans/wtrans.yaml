@@ -8,46 +8,40 @@ services:
     url: 'https://translate.google.com/'
     ajax: true
     sourceNodeSelector: '#source'
-    resultNodeSelector: '#result_box'
-    ignoreResultXPath: 'id("result_box")[text()="..."]'
+    resultContainerSelector: '.results-container'
+    resultNodeSelector: '.translation'
+    ignoreResultXPath: '//span[contains(@class,"translation") and contains(text(),"...")]'
     actions:
-      startup:
-        - click: '#gt-otf-switch'
-      execute:
-        - click: '#gt-submit'
+      execute: []
       from_en:
-        - click: '#gt-sl-gms'
-        - click: '#\:m'
+        - click: '.tlid-open-source-language-list'
+        - click: '.language_list_sl_list .sl_list_en_checkmark'
       from_ja:
-        - click: '#gt-sl-gms'
-        - click: '#\:1a'
+        - click: '.tlid-open-source-language-list'
+        - click: '.language_list_sl_list .sl_list_ja_checkmark'
       to_en:
-        - click: '#gt-tl-gms'
-        - click: '#\:3j'
+        - click: '.tlid-open-target-language-list'
+        - click: '.language_list_tl_list .tl_list_en_checkmark'
       to_ja:
-        - click: '#gt-tl-gms'
-        - click: '#\:47'
+        - click: '.tlid-open-target-language-list'
+        - click: '.language_list_tl_list .tl_list_ja_checkmark'
 
   bing:
     url: 'https://www.bing.com/Translator'
     ajax: true
-    sourceNodeSelector: '#srcText'
-    resultNodeSelector: '#destText'
+    sourceNodeSelector: '#t_sv'
+    resultNodeSelector: '#t_tv'
+    ignoreResultPattern: ' \.\.\.$'
     actions:
-      execute:
-        - click: '#TranslateButton'
+      execute: []
       from_en:
-        - click: 'div.sourceText #LS_LangList'
-        - click: 'div.sourceText #LS_LangList td[value=en]'
+        - select: ['#t_sl', 'en']
       from_ja:
-        - click: 'div.sourceText #LS_LangList'
-        - click: 'div.sourceText #LS_LangList td[value=ja]'
+        - select: ['#t_sl', 'ja']
       to_en:
-        - click: 'div.destinationText #LS_LangList'
-        - click: 'div.destinationText #LS_LangList td[value=en]'
+        - select: ['#t_tl', 'en']
       to_ja:
-        - click: 'div.destinationText #LS_LangList'
-        - click: 'div.destinationText #LS_LangList td[value=ja]'
+        - select: ['#t_tl', 'ja']
 
   excite:
     url: 'https://www.excite.co.jp/world/english/'
