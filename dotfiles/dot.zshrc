@@ -293,7 +293,7 @@ for f in ~/.zsh/scripts/*.zsh(N); do
 	[[ -r "${f}" ]] && source "${f}"
 done
 
-[[ -r ~/.zsh/"${SYSTEM}".zsh ]] && source ~/.zsh/"${SYSTEM}".zsh
+[[ -r ~/.zsh/"${SYSTEM_NAME}".zsh ]] && source ~/.zsh/"${SYSTEM_NAME}".zsh
 [[ -r ~/.config/zsh/local.zsh ]] && source ~/.config/zsh/local.zsh
 
 # Delete the duplicate entry.
