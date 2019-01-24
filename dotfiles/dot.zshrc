@@ -62,6 +62,9 @@ export LESS='--no-init --LONG-PROMPT --ignore-case --silent --quit-if-one-screen
 
 export EDITOR=vim
 
+# GnuPG
+export GPG_TTY=$(tty)
+
 
 ###########################################################################
 # Options.
