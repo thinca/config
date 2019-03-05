@@ -962,6 +962,8 @@ nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 nnoremap <C-w>*  <C-w>s*
 nnoremap <C-w>#  <C-w>s#
 
+nnoremap <C-w>V <C-w>vgF
+
 " repeat :substitute with same flag
 noremap <silent> & :&&<CR>
 
