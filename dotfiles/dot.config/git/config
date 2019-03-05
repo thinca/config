@@ -25,6 +25,8 @@
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true
+[grep]
+	lineNumber = true
 [commit]
 	verbose = true
 [pager]
