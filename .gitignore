@@ -1,4 +1,6 @@
 /dotfiles/dot.config/git/config.local
+/dotfiles/dot.config/vim/local.pre.vim
+/dotfiles/dot.config/vim/local.vim
 /dotfiles/dot.w3m/history
 /dotfiles/dot.w3m/cookie
 /dotfiles/dot.vim/pack
