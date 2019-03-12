@@ -67,6 +67,31 @@ if !v:vim_did_enter
   endif
 endif
 
+" if_ruby  {{{2
+let s:ext = has('mac') ? 'dylib' : 'so'
+if exists('+rubydll') && isdirectory($RBENV_ROOT)
+  let &rubydll =
+  \   get(glob(
+  \     $RBENV_ROOT . '/versions/*/lib/libruby.' . s:ext,
+  \   1, 1), -1, '')
+endif
+
+" if_python  {{{2
+if isdirectory($PYENV_ROOT)
+  " ['2.7.14', '3.6.4']
+  let [s:py_v2, s:py_v3] = sort(readfile($PYENV_ROOT . '/version'))
+  if exists('+pythondll')
+    let &pythondll =
+    \   printf('%s/versions/%s/lib/libpython%s.%s',
+    \     $PYENV_ROOT, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
+  endif
+  if exists('+pythonthreedll')
+    let &pythonthreedll =
+    \   printf('%s/versions/%s/lib/libpython%sm.%s',
+    \     $PYENV_ROOT, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
+  endif
+endif
+
 " Plugin Manager
 let g:vimproc#download_windows_dll = 1
 source <sfile>:h/dein.vim
@@ -1627,31 +1652,6 @@ else
     " endfunction
     " inoremap <expr> <Esc>[200~ <SID>XTermPaste(1)
     " inoremap <expr> <Esc>[201~ <SID>XTermPaste(0)
-  endif
-endif
-
-" if_ruby  {{{2
-let s:ext = has('mac') ? 'dylib' : 'so'
-if exists('+rubydll') && isdirectory($RBENV_ROOT)
-  let &rubydll =
-  \   get(glob(
-  \     $RBENV_ROOT . '/versions/*/lib/libruby.' . s:ext,
-  \   1, 1), -1, '')
-endif
-
-" if_python  {{{2
-if isdirectory($PYENV_ROOT)
-  " ['2.7.14', '3.6.4']
-  let [s:py_v2, s:py_v3] = sort(readfile($PYENV_ROOT . '/version'))
-  if exists('+pythondll')
-    let &pythondll =
-    \   printf('%s/versions/%s/lib/libpython%s.%s',
-    \     $PYENV_ROOT, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
-  endif
-  if exists('+pythonthreedll')
-    let &pythonthreedll =
-    \   printf('%s/versions/%s/lib/libpython%sm.%s',
-    \     $PYENV_ROOT, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
   endif
 endif
 
