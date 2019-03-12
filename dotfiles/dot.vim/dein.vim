@@ -335,6 +335,7 @@ call dein#add('jparise/vim-graphql')
 call dein#add('slim-template/vim-slim')
 call dein#add('pocke/iro.vim', {
 \   'build': 'bundle install',
+\   'if': has('ruby'),
 \ })
 
 " colorscheme
