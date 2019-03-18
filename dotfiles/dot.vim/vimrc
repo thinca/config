@@ -539,7 +539,7 @@ if has('migemo')
   setglobal nomigemo migemodict=$VIM_USERDIR/dict/migemo/migemo-dict
 endif
 if executable('jvgrep')
-  setglobal grepprg=jvgrep\ -R
+  setglobal grepprg=jvgrep\ -RC
 elseif executable('ag')
   setglobal grepprg=ag\ --nogroup\ --column\ --nocolor
   setglobal grepformat=%f:%l:%c:%m,%l:%c:%m
