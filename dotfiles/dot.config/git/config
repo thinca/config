@@ -108,11 +108,11 @@
 	rollback = reset --hard HEAD~
 	chp = cherry-pick
 	rb = rebase
-	rbu = !git rebase "origin/$(git base-branch)"
-	rbui = !git rebase -i "origin/$(git base-branch)"
+	rbu = !git rebase "$(git base-full)"
+	rbui = !git rebase -i "$(git base-full)"
 	move-base = "!f() { \
 		[[ -n $1 ]] && \
-		git rebase --onto $1 $(git base-branch) && \
+		git rebase --onto $1 $(git base-full) && \
 		git base-branch $1; \
 	}; f"
 	rbi = rebase -i
@@ -153,6 +153,8 @@
 	current-branch = symbolic-ref --short HEAD
 	current-remote = !git config "branch.$(git current-branch).remote"
 	base-branch = !git config "branch.$(git current-branch).base"
+	base-remote = !git config "branch.$(git base-branch).remote"
+	base-full = !echo "$(git base-remote)/$(git base-branch)"
 	features = "!f() { \
 		git branch | \
 			cut -c3- | \
