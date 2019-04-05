@@ -3246,6 +3246,7 @@ if dein#is_sourced('quickrun')
     else
       new
     endif
+    lcd ~
     let &l:filetype = ft
     call template#load('Scratch.' . ft)
   endfunction
