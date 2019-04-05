@@ -118,6 +118,7 @@
 	rbi = rebase -i
 	rbc = rebase --continue
 	rba = rebase --abort
+	df = !git diff "$(git base-commit)..HEAD"
 	bf = !git diff --name-only "$(git base-commit)..HEAD"
 	conflicts = diff --name-only --diff-filter=U
 	upst = rebase origin/master
