@@ -321,10 +321,16 @@ function! GetBufname(...) abort
   if tail
     return fnamemodify(bufname, ':t')
   endif
-  let fullpath = fnamemodify(bufname, ':p')
   if exists('b:lcd') && b:lcd !=# ''
+    let fullpath = fnamemodify(bufname, ':p')
     let bufname = matchstr(fullpath, '^\V\(' . escape(b:lcd, '\')
     \ . '\v)?[/\\]?\zs.*')
+    if exists('g:actual_curbuf')
+      let actual_lcd = getbufvar(g:actual_curbuf - 0, 'lcd', '')
+      if actual_lcd !=# '' && actual_lcd !=# b:lcd
+        let bufname = '*' . bufname
+      endif
+    endif
   endif
   return bufname
 endfunction
