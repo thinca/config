@@ -3262,6 +3262,7 @@ let g:watchdogs_check_BufWritePost_enables = {
 
 " ref.vim  {{{2
 let g:ref_open = 'vsplit'
+let g:ref_use_vimproc = 0
 let g:ref_cache_dir = s:plugin_info . '/ref'
 let g:ref_clojure_cmd = 'clojure-1.4'
 let g:ref_clojure_precode = '(use ''[clojure.repl :only (doc find-doc)])'
