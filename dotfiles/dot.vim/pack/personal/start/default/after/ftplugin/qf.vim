@@ -38,17 +38,18 @@ vnoremap <silent> <buffer> d :call <SID>del_entry()<CR>
 vnoremap <silent> <buffer> x :call <SID>del_entry()<CR>
 nnoremap <silent> <buffer> u :<C-u>call <SID>undo_entry()<CR>
 
-command! -nargs=+ -bang -buffer QfGrep call s:grep(<q-args>, <bang>0)
+command! -nargs=* -bang -buffer QfGrep call s:grep(<q-args>, <bang>0)
 
 if exists('*s:undo_entry')
   finish
 endif
 
 function! s:grep(pat, invert) abort
+  let pat = a:pat =~# '\S' ? a:pat : @/
   let qf = s:getlist()
   call s:add_history(qf)
   let op = a:invert ? '!~#' : '=~#'
-  call filter(qf, 'v:val.text ' . op . ' a:pat')
+  call filter(qf, 'v:val.text ' . op . ' pat')
   call s:setlist(qf)
 endfunction
 
