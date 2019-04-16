@@ -1,10 +1,6 @@
 if which tmux &>/dev/null && \
 	[[ -z "${NOTMUX}" && "${EUID}" != "0" && "${USER}" != "root" && \
 	-z "${WINDOW}" && -z "${TMUX}" && -n "${SSH_CLIENT}" ]] then
-	if which keychain &>/dev/null && [[ -f ~/.ssh/id_rsa ]]; then
-		eval $(keychain --eval --ignore-missing --quiet ~/.ssh/id_rsa)
-	fi
-
 	# session=${SSH_CLIENT%% *}
 	session=main
 
