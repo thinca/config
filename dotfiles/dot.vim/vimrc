@@ -3156,6 +3156,11 @@ if dein#is_sourced('quickrun')
     \   'xmodmap': {},
     \   'mxml': {'exec': ['amxmlc %s', 'adl %s:r-app.xml'],
     \            'output_encode': '&termencoding'},
+    \   'vimspec': {
+    \     'command': 'themis',
+    \     'hook/output_encode/encoding': '&termencoding',
+    \     'hook/output_encode/fileformat': 'unix',
+    \   },
     \ }
 
     let g:quickrun_config['csharp'] = {'type': 'cs'}
