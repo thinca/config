@@ -336,6 +336,7 @@ call dein#add('slim-template/vim-slim')
 call dein#add('pocke/iro.vim', {
 \   'build': 'bundle install',
 \   'if': has('ruby'),
+\   'rev': 'iro-with-vim-syntax',
 \ })
 
 " colorscheme
