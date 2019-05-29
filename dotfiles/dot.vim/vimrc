@@ -3295,7 +3295,7 @@ let g:ref_source_webdict_sites = {
 \   'weblio' : {'url' : 'http://ejje.weblio.jp/content/%s'},
 \ }
 function! g:ref_source_webdict_sites.alc.filter(output) abort
-  return substitute(a:output, '^.\{-}\ze検索文字列', '', '')
+  return substitute(a:output, '^.\{-}\n\ze[^\n]\{-}とは\n', '', '')
 endfunction
 function! g:ref_source_webdict_sites.wikipedia.filter(output) abort
   return join(split(a:output, "\n")[18 :], "\n")
