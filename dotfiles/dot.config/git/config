@@ -89,8 +89,9 @@
 	l = log
 	lp = log -p
 	l1 = log --pretty=oneline
-	newly  = log ORIG_HEAD..HEAD --reverse -C
-	newlyp = log ORIG_HEAD..HEAD --reverse -C -p
+	newly  = !git log $(git prev-commit)..HEAD --reverse -C
+	newlyp = !git newly -p
+	prev-commit = !git reflog show --format=%H | uniq | head -n 2 | tail -n 1
 	fl = !git log $(git base-commit)..HEAD --reverse
 	flp = !git log $(git base-commit)..HEAD --reverse -p
 	m = merge --no-ff --no-edit
