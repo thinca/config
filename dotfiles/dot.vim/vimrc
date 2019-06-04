@@ -3300,7 +3300,7 @@ let g:ref_source_webdict_sites = {
 \   'weblio' : {'url' : 'http://ejje.weblio.jp/content/%s'},
 \ }
 function! g:ref_source_webdict_sites.alc.filter(output) abort
-  return substitute(a:output, '^.\{-}\n\ze[^\n]\{-}とは\n', '', '')
+  return substitute(a:output, '^.\{-}\n\ze[^\n]\{-}\%(とは\|を英語で\)\n', '', '')
 endfunction
 function! g:ref_source_webdict_sites.wikipedia.filter(output) abort
   return join(split(a:output, "\n")[18 :], "\n")
