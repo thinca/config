@@ -132,6 +132,7 @@
 	wip = commit -a -m '[WIP]'
 	pl = pull
 	ph = push
+	phf = push --force-with-lease
 	dci = svn dcommit
 	sci = svn dcommit
 	sup = svn rebase
