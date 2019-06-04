@@ -2595,8 +2595,10 @@ if dein#is_sourced('operator-user')
   vmap p <Plug>(operator-replace)
 
   "   operator-camelize  {{{3
-  map <Leader>oc <Plug>(operator-camelize)iw
-  map <Leader>oC <Plug>(operator-decamelize)iw
+  nmap <Leader>oc <Plug>(operator-camelize)iw
+  vmap <Leader>oc <Plug>(operator-camelize)
+  nmap <Leader>oC <Plug>(operator-decamelize)iw
+  vmap <Leader>oC <Plug>(operator-decamelize)
 
   "   operator-sequence  {{{3
   noremap <expr> <Leader>oU
