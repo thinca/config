@@ -5,13 +5,13 @@ function! s:update_code()
   let mx = '^```\zs.\+$'
   for curline in getline(1, '$')
     let ft = matchstr(curline, mx)
-    if ft != '' && !has_key(b:markdown_syntax_code_loaded, ft)
-    \ && globpath(&rtp, 'syntax/' . ft . '.vim') != ''
+    if ft !=# '' && !has_key(b:markdown_syntax_code_loaded, ft)
+    \ && globpath(&runtimepath, 'syntax/' . ft . '.vim') !=# ''
       unlet! b:current_syntax
-      let save_isk= &l:isk  " For scheme.
+      let save_isk = &l:iskeyword  " For scheme.
       execute printf('syntax include @markdownCode_%s syntax/%s.vim',
       \ ft, ft)
-      let &l:isk= save_isk
+      let &l:iskeyword = save_isk
 
       execute printf('syntax region markdownCodePre '
       \ . 'matchgroup=markdownBlockDelimiter start="^```%s$" end="^```$" '
@@ -20,7 +20,7 @@ function! s:update_code()
       let b:markdown_syntax_code_loaded[ft] = 1
     end
   endfor
-" workaround for perl
+  " workaround for perl
   syntax cluster MarkdownCode_perl remove=perlFunctionName
   syntax sync fromstart
 endfunction
