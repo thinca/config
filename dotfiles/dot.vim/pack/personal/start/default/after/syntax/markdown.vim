@@ -1,3 +1,8 @@
+let s:current_syntax = get(b:, 'current_syntax', '')
+unlet! b:current_syntax
+syntax include @markdownYAML syntax/yaml.vim
+syntax region markdownYAMLHeader matchgroup=PreProc start='\%1l\%1c---\n' end='\n---$' contains=@markdownYAML
+
 syn region markdownCode matchgroup=markdownBlockDelimiter start=+^```$+ end=+^```$+
 
 let b:markdown_syntax_code_loaded = {}  " Reset when load.
@@ -34,3 +39,7 @@ highlight link markdownBlockDelimiter Delimiter
 highlight link markdownURL Underlined
 
 syntax sync fromstart
+
+if s:current_syntax !=# ''
+  let b:current_syntax = s:current_syntax
+endif
