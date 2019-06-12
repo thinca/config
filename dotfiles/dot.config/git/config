@@ -133,6 +133,7 @@
 	pl = pull
 	ph = push
 	phf = push --force-with-lease
+	release = push origin master --tags
 	dci = svn dcommit
 	sci = svn dcommit
 	sup = svn rebase
