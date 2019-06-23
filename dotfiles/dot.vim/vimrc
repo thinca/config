@@ -22,7 +22,7 @@ if !v:vim_did_enter && has('reltime')
   augroup vimrc-startuptime
     autocmd! VimEnter * let g:startuptime = reltime(g:startuptime)
     \                 | redraw
-    \                 | echomsg 'startuptime: ' . reltimestr(g:startuptime)
+    \                 | echomsg 'startuptime: ' .. reltimestr(g:startuptime)
   augroup END
 endif
 
@@ -63,7 +63,7 @@ if !v:vim_did_enter
   if !isdirectory(expand('~/vimfiles'))
     " Even Windows uses "$HOME/.vim".
     let &runtimepath = substitute(&runtimepath,
-      \ escape($HOME, '\') . '/vimfiles', escape($HOME, '\') . '/.vim', 'g')
+      \ escape($HOME, '\') .. '/vimfiles', escape($HOME, '\') .. '/.vim', 'g')
   endif
 endif
 
@@ -72,14 +72,14 @@ let s:ext = has('mac') ? 'dylib' : 'so'
 if exists('+rubydll') && isdirectory($RBENV_ROOT)
   let &rubydll =
   \   get(glob(
-  \     $RBENV_ROOT . '/versions/*/lib/libruby.' . s:ext,
+  \     $RBENV_ROOT .. '/versions/*/lib/libruby.' .. s:ext,
   \   1, 1), -1, '')
 endif
 
 " if_python  {{{2
 if isdirectory($PYENV_ROOT)
   " ['2.7.14', '3.6.4']
-  let [s:py_v2, s:py_v3] = sort(readfile($PYENV_ROOT . '/version'))
+  let [s:py_v2, s:py_v3] = sort(readfile($PYENV_ROOT .. '/version'))
   if exists('+pythondll')
     let &pythondll =
     \   printf('%s/versions/%s/lib/libpython%s.%s',
@@ -138,14 +138,14 @@ function! s:SID() abort
 endfunction
 
 function! s:SIDP() abort
-  return '<SNR>' . s:SID() . '_'
+  return '<SNR>' .. s:SID() .. '_'
 endfunction
 
 function! s:check_flag(flag) abort
-  if exists('b:' . a:flag)
+  if exists('b:' .. a:flag)
     return b:{a:flag}
   endif
-  if exists('g:' . a:flag)
+  if exists('g:' .. a:flag)
     return g:{a:flag}
   endif
   return 0
@@ -175,7 +175,7 @@ function! s:get_range(type, mode) abort
   end
 
   let save_reg = @"
-  execute 'silent normal! `' . sm . vm . '`' . em . 'y'
+  execute 'silent normal! `' .. sm .. vm .. '`' .. em .. 'y'
   let selected = @"
   let @" = save_reg
   if exists('save_sel')
@@ -205,13 +205,13 @@ function! s:highlight_additional() abort
   for hl in ['TabLine', 'TabLineSel']
     let id = synIDtrans(hlID(hl))
     let bg = synIDattr(id, 'bg', env)
-    let bg = bg =~# '^#\?\w\+$' ? env . 'bg=' . bg : ''
+    let bg = bg =~# '^#\?\w\+$' ? env .. 'bg=' .. bg : ''
     let attrs = filter(['bold', 'italic', 'reverse', 'inverse',
     \                   'standout', 'underline', 'undercurl'],
     \                  'synIDattr(id, v:val, env)')
-    let attr = empty(attrs) ? '' : env . '=' . join(attrs, ',')
-    execute 'highlight' hl . 'Number' env . 'fg=Red' bg attr
-    execute 'highlight' hl . 'TabNumber' env . 'fg=DarkCyan' bg attr
+    let attr = empty(attrs) ? '' : env .. '=' .. join(attrs, ',')
+    execute 'highlight' hl .. 'Number' env .. 'fg=Red' bg attr
+    execute 'highlight' hl .. 'TabNumber' env .. 'fg=DarkCyan' bg attr
   endfor
 endfunction
 
@@ -264,10 +264,10 @@ function! GetCharacterCode() abort
   let str = iconv(str, &encoding, &fileencoding)
   let out = '0x'
   if str ==# ''
-    return out . '00'
+    return out .. '00'
   endif
   for i in range(strlen(str))
-    let out .= printf('%02X', char2nr(str[i]))
+    let out ..= printf('%02X', char2nr(str[i]))
   endfor
   return out
 endfunction
@@ -288,11 +288,11 @@ function! GetFileSize() abort
   endif
   for unit in ['B', 'KB', 'MB']
     if size < 1024
-      return size . unit
+      return size .. unit
     endif
     let size = size / 1024
   endfor
-  return size . 'GB'
+  return size .. 'GB'
 endfunction
 
 function! GetBufname(...) abort
@@ -312,7 +312,7 @@ function! GetBufname(...) abort
   if tail && bufname =~# '^[[:alnum:].+-]\+://'
     let head = matchstr(bufname, '^[[:alnum:].+-]\+://[^/]\+')
     let file = matchstr(bufname, '[^/]\+$')
-    let short_path = head . '/../' . file
+    let short_path = head .. '/../' .. file
     return g:V.min_by([bufname, short_path], 'strwidth(v:val)')
   endif
   if buftype ==# 'nofile' || buftype ==# 'acwrite'
@@ -323,12 +323,12 @@ function! GetBufname(...) abort
   endif
   if exists('b:lcd') && b:lcd !=# ''
     let fullpath = fnamemodify(bufname, ':p')
-    let bufname = matchstr(fullpath, '^\V\(' . escape(b:lcd, '\')
-    \ . '\v)?[/\\]?\zs.*')
+    let bufname = matchstr(fullpath, '^\V\(' .. escape(b:lcd, '\')
+    \ .. '\v)?[/\\]?\zs.*')
     if exists('g:actual_curbuf')
       let actual_lcd = getbufvar(g:actual_curbuf - 0, 'lcd', '')
       if actual_lcd !=# '' && actual_lcd !=# b:lcd
-        let bufname = '*' . bufname
+        let bufname = '*' .. bufname
       endif
     endif
   endif
@@ -338,13 +338,13 @@ endfunction
 function! StatusLineExtra() abort
   let extra = ''
   for scope in ['w:', 'b:', 't:', 'g:']
-    if exists(scope . 'statusline_extra')
-      let e = {scope . 'statusline_extra'}
+    if exists(scope .. 'statusline_extra')
+      let e = {scope .. 'statusline_extra'}
       if e[0] ==# '='
         let r = eval(e[1 :])
         let e = type(r) == v:t_string ? r : string(r)
       endif
-      let extra .= e
+      let extra ..= e
     endif
   endfor
   return extra
@@ -354,55 +354,55 @@ function! MakeStatusLine(...) abort
   let multi = a:0 && a:1
   let line = ''
   if s:check_flag('statusline_bufnr')
-    let line .= '[%n] '  " Buffer number.
+    let line ..= '[%n] '  " Buffer number.
   endif
-  let line .= '%<'       " Truncate point.
+  let line ..= '%<'       " Truncate point.
   " Buffer name.
-  let line .= '%{GetBufname()}'
+  let line ..= '%{GetBufname()}'
   if multi
-    let line .= '%@'
+    let line ..= '%@'
   else
-    let line .= ' '
+    let line ..= ' '
   endif
   " Character encoding
-  let line .= '[%{(&fenc!=#""?&fenc:&enc).(&bomb?"(BOM)":"")}:'
+  let line ..= '[%{(&fenc!=#"" ? &fenc : &enc) .. (&bomb ? "(BOM)" : "")}:'
   " File format (+ &binary and &endofline)
   if exists('+fixendofline')
-    let line .= '%{&ff.(&bin?":bin":"").(&eol?"":":noeol")}]'
+    let line ..= '%{&ff .. (&bin?":bin":"") .. (&eol?"":":noeol")}]'
   else
-    let line .= '%{&ff.(&bin?"(BIN".(&eol?"":"-noeol").")":"")}]'
+    let line ..= '%{&ff .. (&bin?"(BIN" .. (&eol?"":"-noeol") .. ")":"")}]'
   endif
-  let line .= '%y'       " Filetype.
-  let line .= '%m'       " Modified flag.
-  let line .= '%r'       " Readonly flag.
-  let line .= '%{get(b:, "swapfile_exists", 0) ? "[swp]" : ""}'
-  let line .= '%h'       " Help buffer hlag.
-  let line .= '%w'       " Preview window flag.
+  let line ..= '%y'       " Filetype.
+  let line ..= '%m'       " Modified flag.
+  let line ..= '%r'       " Readonly flag.
+  let line ..= '%{get(b:, "swapfile_exists", 0) ? "[swp]" : ""}'
+  let line ..= '%h'       " Help buffer hlag.
+  let line ..= '%w'       " Preview window flag.
   " The state of SKK.
-  let line .= '%{get(b:, "skk_on", 0) ? SkkGetModeStr() : ""}'
+  let line ..= '%{get(b:, "skk_on", 0) ? SkkGetModeStr() : ""}'
   if exists('*eskk#statusline')
-    let line .= '%{eskk#statusline()}'
+    let line ..= '%{eskk#statusline()}'
   endif
   if exists('*SyntasticStatuslineFlag')
-    let line .= '%{SyntasticStatuslineFlag()}'
+    let line ..= '%{SyntasticStatuslineFlag()}'
   endif
   if s:check_flag('statusline_highlight')
-    let line .= '[' . join(map(synstack(line('.'), col('.')),
-    \           'synIDattr(v:val, "name")'.
-    \           '."(".synIDattr(synIDtrans(v:val), "name").")"'), ',') . ']'
+    let line ..= '[' .. join(map(synstack(line('.'), col('.')),
+    \           'synIDattr(v:val, "name")' ..
+    \           ' .. "(" .. synIDattr(synIDtrans(v:val), "name") .. ")"'), ',') .. ']'
   endif
-  let line .= '%{StatusLineExtra()}'
-  " let line .= StatusLineExtra()
-  let line .= '%='       " Separation point.
+  let line ..= '%{StatusLineExtra()}'
+  " let line ..= StatusLineExtra()
+  let line ..= '%='       " Separation point.
   if s:check_flag('statusline_filesize')
-    let line .= '[%{GetFileSize()}]' " Rough file size.
+    let line ..= '[%{GetFileSize()}]' " Rough file size.
   endif
   if s:check_flag('statusline_char')
-    let line .= '[%{GetCharacterCode()}]' " Character code under the cursor.
+    let line ..= '[%{GetCharacterCode()}]' " Character code under the cursor.
   endif
-  let line .= $LANG =~# '^ja' ? ' %l/%L行 %3v桁'
-  \                           : ' %l/%LL %2vC'   " Line and column.
-  let line .= ' %3p%%'         " Percentage through file in lines.
+  let line ..= $LANG =~# '^ja' ? ' %l/%L行 %3v桁'
+  \                            : ' %l/%LL %2vC'   " Line and column.
+  let line ..= ' %3p%%'         " Percentage through file in lines.
 
   return line
 endfunction
@@ -410,7 +410,7 @@ endfunction
 function! s:buf_label(bufnr, i, is_cur) abort
   let label = GetBufname(a:bufnr, 1)
   if getbufvar(a:bufnr, '&modified')
-    let label .= '+'
+    let label ..= '+'
   endif
   let curmark = a:is_cur ? '>' : ' '
   return printf(' %s%d) %s', curmark, a:i, label)
@@ -426,38 +426,38 @@ function! s:tabpage_label(n, ...) abort
   let hi = n == tabpagenr() ? 'TabLineSel' : 'TabLine'
 
   let label = printf('%%#%sTabNumber#%d:%%#%s# ', hi, n, hi)
-  let label .= '%<'
+  let label ..= '%<'
   if getbufvar(curbufnr, '&filetype') =~# '^lingr-'
     " lingr-vim
     let unread = lingr#unread_count()
     let status = lingr#status()
 
-    let label .= 'lingr - ' . status
+    let label ..= 'lingr - ' .. status
     if unread != 0
-      let label .= '(' . unread . ')'
+      let label ..= '(' .. unread .. ')'
     endif
 
   else
     let title = gettabvar(n, 'title')
     if is_sidebar && get(g:, 'tabsidebar_show_all_window', 0)
       let cwd = getcwd(curwinnr, n)
-      let label .= title !=# '' ? title : fnamemodify(cwd, ':t') . '/'
+      let label ..= title !=# '' ? title : fnamemodify(cwd, ':t') .. '/'
       let labels = map(copy(bufnrs), { i, v ->
       \   s:buf_label(v, i + 1, curwinnr == i + 1)
       \ })
-      let label .= "\n" . join(labels, "\n")
+      let label ..= "\n" .. join(labels, "\n")
     elseif title !=# ''
-      let label .= title
+      let label ..= title
     else
       let text = GetBufname(curbufnr, 1)
       let mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
       let mod = len(mod_bufs) ? '+' : ''
 
-      let label .= text . mod
+      let label ..= text .. mod
       let no = len(bufnrs)
       if 2 <= no
-        let label .= ' %#' . hi . 'Number#' . no
-        let label .= '%#' . hi . '#'
+        let label ..= ' %#' .. hi .. 'Number#' .. no
+        let label ..= '%#' .. hi .. '#'
       endif
     endif
   endif
@@ -473,28 +473,28 @@ function! MakeTabLine() abort
   else
     let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
     let titles = map(titles, function('printf', ['%%%dT%s%%T%%#TabLineFill#']))
-    let tabs = join(titles, sep) . sep . '%#TabLineFill#%T'
+    let tabs = join(titles, sep) .. sep .. '%#TabLineFill#%T'
   endif
   let info = '%#TabLine#'
   if exists('t:tabline_extra')
-    let info .= t:tabline_extra . sep
+    let info ..= t:tabline_extra .. sep
   endif
   if dein#is_sourced('current-func-info')
-    let info .= cfi#format('%s()' . sep, '')
+    let info ..= cfi#format('%s()' .. sep, '')
   endif
   if exists('*Uptime') && has_tabsidebar
-    let info .= Uptime(2) . sep
+    let info ..= Uptime(2) .. sep
   endif
   if dein#is_sourced('reanimate')
     let last_point = reanimate#last_point()
     if last_point =~# '^session/'
-      let info .= matchstr(last_point, '/\zs.*') . sep
+      let info ..= matchstr(last_point, '/\zs.*') .. sep
     endif
   endif
   if dein#is_sourced('gina')
     let branch = gina#component#repo#branch()
     if branch !=# ''
-      let info .= branch . sep
+      let info ..= branch .. sep
     endif
   endif
   let cwd = fnamemodify(getcwd(), ':~')
@@ -504,11 +504,11 @@ function! MakeTabLine() abort
     let vcs_root = fnamemodify(vcs_root, ':~')
     if len(vcs_root) < len(cwd)
       let cwd = substitute(vcs_root, '\([/\\][^/\\]\)[^/\\]*', '\1', 'g')
-      \         . cwd[len(vcs_root) :]
+      \         .. cwd[len(vcs_root) :]
     endif
   endif
-  let info .= cwd . ' '
-  return tabs . '%=' . info
+  let info ..= cwd .. ' '
+  return tabs .. '%=' .. info
 endfunction
 
 if has('tabsidebar')
@@ -517,7 +517,7 @@ if has('tabsidebar')
   setglobal tabsidebarwrap
   let g:tabsidebar_show_all_window = 1
   let &g:tabsidebar =
-  \   '%!' . get(function('s:tabpage_label'), 'name') .
+  \   '%!' .. get(function('s:tabpage_label'), 'name') ..
   \   '(g:actual_curtabpage, 1)'
   augroup tabsidebar-highlight
     autocmd!
@@ -626,7 +626,7 @@ setglobal backup
 setglobal backupdir=~/.cache/vim/backup//
 " Paths of swap file and backup file.
 if $TMP !=# ''
-  execute 'setglobal backupdir+=' . escape(expand($TMP), ' \')
+  execute 'setglobal backupdir+=' .. escape(expand($TMP), ' \')
 elseif has('unix')
   setglobal backupdir+=/tmp
 endif
@@ -813,7 +813,7 @@ augroup vimrc-lcd
           if !empty(opts) && index(split(opts[0], ','), &l:filetype) < 0
             continue
           endif
-          let t = dir . '/' . name
+          let t = dir .. '/' .. name
           if name =~# '/$' ? isdirectory(t) : len(glob(t))
             return dir
           endif
@@ -851,7 +851,7 @@ if executable('chmod')
   function! s:add_permission_x() abort
     let file = expand('%:p')
     if getline(1) =~# '^#!' && !executable(file)
-      silent! call system('chmod a+x ' . shellescape(file))
+      silent! call system('chmod a+x ' .. shellescape(file))
     endif
   endfunction
 endif
@@ -876,8 +876,8 @@ augroup vimrc-misc
 
   " Set 'dictionary'.
   autocmd FileType
-  \ * if filereadable(expand('$VIM_USERDIR/dict/' . &l:filetype . '.dict'))
-  \ |   let &l:dict = '$VIM_USERDIR/dict/' . &l:filetype . '.dict'
+  \ * if filereadable(expand('$VIM_USERDIR/dict/' .. &l:filetype .. '.dict'))
+  \ |   let &l:dict = '$VIM_USERDIR/dict/' .. &l:filetype .. '.dict'
   \ | endif
 
   autocmd FileType
@@ -1013,7 +1013,7 @@ vnoremap <silent> @q :normal @q<CR>
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 for s:n in range(1, 9)
-  call s:meta_map(s:n, s:n . 'gt')
+  call s:meta_map(s:n, s:n .. 'gt')
 endfor
 unlet! s:n
 
@@ -1033,8 +1033,8 @@ noremap : ;
 function! s:good_feeling_prefix() abort
   return printf(":\<C-u>%s", 78 * 2 <= winwidth(0) ? 'vertical ' : '')
 endfunction
-nnoremap <expr> <C-h> <SID>good_feeling_prefix() . 'h '
-nnoremap <expr> <Space>tm <SID>good_feeling_prefix() . "terminal\<CR>"
+nnoremap <expr> <C-h> <SID>good_feeling_prefix() .. 'h '
+nnoremap <expr> <Space>tm <SID>good_feeling_prefix() .. "terminal\<CR>"
 
 " Don't move at escaping from insert mode.
 " inoremap <silent> <Esc> <Esc>:keepjumps normal! `^<CR>
@@ -1044,7 +1044,7 @@ inoremap <C-]> <C-x><C-]>
 
 " Create an undo point before <C-u> and <C-w>.
 " XXX: <C-u> doesn't work on <C-x><C-u>
-inoremap <expr> <C-u> (pumvisible() ? '<C-y>' : '') . '<C-g>u<C-u>'
+inoremap <expr> <C-u> (pumvisible() ? '<C-y>' : '') .. '<C-g>u<C-u>'
 inoremap <C-w> <C-g>u<C-w>
 
 " inoremap <expr> <CR> pumvisible() ? '<C-y><CR>' : '<CR>'
@@ -1056,7 +1056,7 @@ inoremap <C-g><C-u> <Esc>gUvbgi
 inoremap <C-g><C-l> <Esc>guvbgi
 
 " Select the last changed.
-nnoremap <expr> gc '`[' . getregtype()[0] . '`]'
+nnoremap <expr> gc '`[' .. getregtype()[0] .. '`]'
 onoremap <silent> gc :normal gc<CR>
 onoremap <silent> gv :normal gv<CR>
 
@@ -1130,8 +1130,8 @@ for [s:key, s:var] in [['n', 'bufnr'], ['c', 'char'],
 \                      ['s', 'filesize'], ['h', 'highlight']]
   for [s:prefix, s:scope] in [['', 'g'], ['b', 'b'], ['w', 'w']]
   execute printf('nnoremap <silent> <Space>s%s%s '
-  \            . ':<C-u>call <SID>toggle_flag("%s:statusline_%s")<CR>'
-  \            . ':redrawstatus!<CR>',
+  \            .. ':<C-u>call <SID>toggle_flag("%s:statusline_%s")<CR>'
+  \            .. ':redrawstatus!<CR>',
   \              s:prefix, s:key, s:scope, s:var)
   endfor
 endfor
@@ -1176,11 +1176,11 @@ function! s:grep_same_ext(pat) abort
   \   'c': ['c', 'h'],
   \   'cpp': ['cpp', 'h', 'hpp', 'cc', 'cxx'],
   \ }, &l:filetype, [expand('%:e')])
-  let files = join(map(exts, '"**/*." . v:val'), ' ')
-  silent! execute 'vimgrep /' . a:pat . '/j ' . files
+  let files = join(map(exts, '"**/*." .. v:val'), ' ')
+  silent! execute 'vimgrep /' .. a:pat .. '/j ' .. files
 endfunction
-nnoremap <silent> <Space>grep :<C-u>call <SID>grep_same_ext('\C' . @/)<CR>
-nnoremap <silent> <Space>Grep :<C-u>call <SID>grep_same_ext('\c' . @/)<CR>
+nnoremap <silent> <Space>grep :<C-u>call <SID>grep_same_ext('\C' .. @/)<CR>
+nnoremap <silent> <Space>Grep :<C-u>call <SID>grep_same_ext('\c' .. @/)<CR>
 nnoremap <silent> <Space><C-g> :<C-u>vimgrep /<C-r>//gj %<CR>
 
 noremap! <expr> <C-r>/  <SID>strip_magic()
@@ -1203,12 +1203,12 @@ function! s:grep(...) abort
     return
   endif
   if &grepprg ==# 'internal'
-    execute 'vimgrep' '/' . escape(pat, '/') . '/j' files
+    execute 'vimgrep' '/' .. escape(pat, '/') .. '/j' files
   else
     if !g:V.Compat.has_version('7.4.122')
       let pat = iconv(pat, &encoding, &termencoding)
     endif
-    execute 'grep!' '"' . escape(pat, ' /%#') . '"' files
+    execute 'grep!' '"' .. escape(pat, ' /%#') .. '"' files
   endif
 endfunction
 command! -nargs=+ G call s:grep(<f-args>)
@@ -1222,9 +1222,9 @@ function! s:swap_window(n) abort
   let target = g:V.modulo(winnr() + a:n - 1, winnr('$')) + 1
 
   " 'hide' is necessary to keep the undo history.
-  execute 'hide' winbufnr(target) . 'buffer'
-  execute target . 'wincmd w'
-  execute curbuf . 'buffer'
+  execute 'hide' winbufnr(target) .. 'buffer'
+  execute target .. 'wincmd w'
+  execute curbuf .. 'buffer'
 endfunction
 " }}}
 
@@ -1259,7 +1259,7 @@ function! s:diff_original() abort
   let fenc = &l:fileencoding
 
   if &modified
-    let source = '#' . bufnr
+    let source = '#' .. bufnr
     let file = '[last save]'
   else
     echo 'There is not the diff.'
@@ -1273,7 +1273,7 @@ function! s:diff_original() abort
   setlocal buftype=nofile
   let &l:filetype = ft
   let &l:fileencoding = fenc
-  file `=file . fnamemodify(bufname(b:diff_current), ':.')`
+  file `=file .. fnamemodify(bufname(b:diff_current), ':.')`
 
   silent! execute 'read' source
 
@@ -1299,10 +1299,10 @@ function! s:move(file, bang, base) abort
     let to = simplify(expand(a:file))
     let bang = a:bang
     if isdirectory(to)
-      let to .= '/' . fnamemodify(from, ':t')
+      let to ..= '/' .. fnamemodify(from, ':t')
     endif
     if filereadable(to) && !bang
-      echo '"' . to . '" is exists. Overwrite? [yN]'
+      echo '"' .. to .. '" is exists. Overwrite? [yN]'
       if nr2char(getchar()) !=? 'y'
         echo 'Cancelled.'
         return
@@ -1311,7 +1311,7 @@ function! s:move(file, bang, base) abort
     endif
     let dir = fnamemodify(to, ':h')
     call mkdir(dir, 'p')
-    execute 'saveas' . bang '`=to`'
+    execute 'saveas' .. bang '`=to`'
     call delete(from)
   finally
     cd `=pwd`
@@ -1323,11 +1323,11 @@ command! -nargs=? -bang -bar -complete=file Delete
 function! s:delete_with_confirm(file, force) abort
   let file = a:file ==# '' ? expand('%') : a:file
   if !a:force
-    echo 'Delete "' . file . '"? [y/N]:'
+    echo 'Delete "' .. file .. '"? [y/N]:'
   endif
   if a:force || nr2char(getchar()) ==? 'y'
     call delete(file)
-    echo 'Deleted "' . file . '"!'
+    echo 'Deleted "' .. file .. '"!'
   else
     echo 'Cancelled.'
   endif
@@ -1341,8 +1341,8 @@ function! s:unique_lines(pat) range abort
   \   getline(a:firstline, a:lastline),
   \   { val -> a:pat ==# '' ? val : matchstr(val, a:pat) }
   \ )
-  silent execute a:firstline . ',' . a:lastline . 'delete _'
-  silent execute (a:firstline - 1) . 'put =lines'
+  silent execute a:firstline .. ',' .. a:lastline .. 'delete _'
+  silent execute (a:firstline - 1) .. 'put =lines'
 endfunction
 
 " FIXME: :diffoff make 'foldmethod' to "manual" (not restored).
@@ -1363,7 +1363,7 @@ if executable('ctags')
     endif
 
     if !empty(args) && args[0] !~# '^-'
-      echoerr 'Invalid options: ' . join(args)
+      echoerr 'Invalid options: ' .. join(args)
       return
     endif
 
@@ -1380,7 +1380,7 @@ if executable('ctags')
       \   'euc-jp': 'euc',
       \ }, &l:fileencoding ==# '' ? &encoding : &l:fileencoding, '')
       if enc !=# ''
-        let args += ['--jcode=' . enc]
+        let args += ['--jcode=' .. enc]
       endif
     endif
     let lang = get({
@@ -1389,18 +1389,18 @@ if executable('ctags')
     \   'java': 'Java',
     \ }, &l:filetype, '')
     if lang !=# ''
-      let args += ['--languages=' . lang]
+      let args += ['--languages=' .. lang]
     endif
 
     call map(add(args, dir), 'shellescape(v:val)')
 
     let cmd = printf('ctags -R --tag-relative=yes %s', join(args))
     if g:V.is_windows()
-      let cmd = 'start /b ' . cmd
+      let cmd = 'start /b ' .. cmd
     else
-      let cmd .= ' &'
+      let cmd ..= ' &'
     endif
-    silent execute '!' . cmd
+    silent execute '!' .. cmd
   endfunction
 
   function! s:tagfile() abort
@@ -1413,7 +1413,7 @@ endif
 
 
 command! -bar Tasks execute 'vimgrep /\C\v<(TODO|FIXME|XXX)>/ **/*.'
-\                           . expand('%:e')
+\                           .. expand('%:e')
 
 " Show 'runtimepath'.
 command! -bar RTP echo substitute(&runtimepath, ',', "\n", 'g')
@@ -1428,7 +1428,7 @@ function! s:highlight_with(args) range abort
   endif
   let c = get(b:, 'highlight_count', 0)
   let ft = matchstr(a:args, '^\w\+')
-  if globpath(&runtimepath, 'syntax/' . ft . '.vim') ==# ''
+  if globpath(&runtimepath, 'syntax/' .. ft .. '.vim') ==# ''
     return
   endif
   if exists('b:current_syntax')
@@ -1436,14 +1436,14 @@ function! s:highlight_with(args) range abort
     unlet b:current_syntax
   endif
   let save_isk = &l:isk  " for scheme.
-  let hlname = 'highlightWith' . substitute(ft, '^.', '\u\0', '')
+  let hlname = 'highlightWith' .. substitute(ft, '^.', '\u\0', '')
   if c != 0
-    let hlname .= '_' . c
+    let hlname ..= '_' .. c
   endif
   execute printf('syntax include @%s syntax/%s.vim', hlname, ft)
   let &l:isk = save_isk
   execute printf('syntax region %s start=/\%%%dl/ end=/\%%%dl$/ '
-  \            . 'contains=@%s containedin=ALL',
+  \            .. 'contains=@%s containedin=ALL',
   \             hlname, a:firstline, a:lastline, hlname)
   let b:highlight_count = c + 1
   if exists('syntax')
@@ -1455,7 +1455,7 @@ endfunction
 " Grep({text}, {pat} [, invert])
 function! Grep(text, pat, ...) abort
   let op = a:0 && a:1 ? '!~#' : '=~#'
-  return join(filter(split(a:text, "\n"), 'v:val' . op . 'a:pat'), "\n")
+  return join(filter(split(a:text, "\n"), 'v:val' .. op .. 'a:pat'), "\n")
 endfunction
 
 command! -nargs=+ Vars PP filter(copy(g:), 'v:key =~# "^<args>"')
@@ -1489,7 +1489,7 @@ function! s:opener(cmdline, ...) abort
       silent execute 'edit' opt
     endif
   else
-    return 'tabnew ' . a:cmdline
+    return 'tabnew ' .. a:cmdline
   endif
   return ''
 endfunction
@@ -1518,15 +1518,15 @@ function! GeneratePassword(len, ...) abort
   \   'space': ' ',
   \ }
   let char_types.all = join(values(char_types), '')
-  let char_types.alpha = char_types.upper . char_types.lower
-  let char_types.alnum = char_types.alpha . char_types.num
+  let char_types.alpha = char_types.upper .. char_types.lower
+  let char_types.alnum = char_types.alpha .. char_types.num
 
   let use_types = a:0 ? a:1 : 'alpha'
   let types = split(use_types, ',')
 
   let chars = ''
   for type in types
-    let chars .= get(char_types, type, '')
+    let chars ..= get(char_types, type, '')
   endfor
 
   let list = split(chars, '.\zs')
@@ -1552,27 +1552,27 @@ if $WINDOW !=# '' || $TMUX !=# ''
   endif
   function! s:set_window_name(name) abort
     let esc = "\<Esc>"
-    silent! execute '!echo -n "' . esc . 'k' . escape(a:name, '%#!')
-      \ . esc . '\\"'
+    silent! execute '!echo -n "' .. esc .. 'k' .. escape(a:name, '%#!')
+      \ .. esc .. '\\"'
     " redraw!
   endfunction
   command! -nargs=? WindowName call s:set_window_name(<q-args>)
   function! s:auto_window_name() abort
     let varname = 'window_name'
     for scope in ['w:', 'b:', 't:', 'g:']
-      if exists(scope . varname)
-        call s:set_window_name(eval(scope . varname))
+      if exists(scope .. varname)
+        call s:set_window_name(eval(scope .. varname))
         return
       endif
     endfor
     if bufname('%') !~# '^\[A-Za-z0-9\]*:/'
-      call s:set_window_name('v:' . expand('%:t'))
+      call s:set_window_name('v:' .. expand('%:t'))
     endif
   endfunction
   augroup vimrc-screen
     autocmd!
     autocmd VimEnter * call s:set_window_name(0 < argc() ?
-      \ 'v:' . fnamemodify(argv(0), ':t') : 'vim')
+      \ 'v:' .. fnamemodify(argv(0), ':t') : 'vim')
     autocmd BufEnter,WinEnter,BufFilePost * call s:auto_window_name()
     autocmd VimLeave * call s:set_window_name(len($SHELL) ?
       \ fnamemodify($SHELL, ':t') : 'shell')
@@ -1653,8 +1653,8 @@ else
     map <NUL> <C-Space>
     map! <NUL> <C-Space>
 
-    " let &t_ti .= "\e[?2004h"
-    " let &t_te .= "\e[?2004l"
+    " let &t_ti ..= "\e[?2004h"
+    " let &t_te ..= "\e[?2004l"
     " function! s:XTermPaste(on) abort
     "   let &paste = a:on
     "   return ''
@@ -1672,44 +1672,44 @@ function! s:check_interface() abort
   catch
     let lua_ver = 'no'
   endtry
-  echo 'Lua ... ' . lua_ver
+  echo 'Lua ... ' .. lua_ver
 
   try
     let perl_ver = perleval('"$^V"')
   catch
     let perl_ver = 'no'
   endtry
-  echo 'Perl ... ' . perl_ver
+  echo 'Perl ... ' .. perl_ver
 
   try
     python import platform
-    let python_ver = 'v' . pyeval('platform.python_version()')
+    let python_ver = 'v' .. pyeval('platform.python_version()')
   catch
     let python_ver = 'no'
   endtry
-  echo 'Python 2 ... ' . python_ver
+  echo 'Python 2 ... ' .. python_ver
 
   try
     python3 import platform
-    let python3_ver = 'v' . py3eval('platform.python_version()')
+    let python3_ver = 'v' .. py3eval('platform.python_version()')
   catch
     let python3_ver = 'no'
   endtry
-  echo 'Python 3 ... ' . python3_ver
+  echo 'Python 3 ... ' .. python3_ver
 
   try
     ruby Vim::command("let ruby_ver = 'v#{RUBY_VERSION}'")
   catch
     let ruby_ver = 'no'
   endtry
-  echo 'Ruby ... ' . ruby_ver
+  echo 'Ruby ... ' .. ruby_ver
 
   try
     tcl ::vim::command "let tcl_ver = 'v[info patchlevel]'"
   catch
     let tcl_ver = 'no'
   endtry
-  echo 'Tcl ... ' . tcl_ver
+  echo 'Tcl ... ' .. tcl_ver
 endfunction
 command! CheckInterface call s:check_interface()
 
@@ -1718,7 +1718,7 @@ function! s:vim_plugin_test() abort
   if g:V.all('!isdirectory(g:V.Path.join(getcwd(), v:val))',
   \          ['autoload', 'doc', 'plugin']) ||
   \ !filereadable(g:V.Path.join(fnamemodify(getcwd(), ':h'), '.init.vimrc'))
-    call g:V.Message.error('Not in vim plugin: ' . getcwd())
+    call g:V.Message.error('Not in vim plugin: ' .. getcwd())
     return
   endif
   call s:start_vim_plugin_test(g:V.Path.unify_separator(getcwd()))
@@ -1790,25 +1790,25 @@ let s:temp_file_pat = join([
 \   '/bzr_log\..\{6}$',
 \ ], '\|')
 if $TMP !=# ''
-  let s:temp_file_pat .=
-  \  '\|^' . substitute(expand($TMP), '\', '[/\\\\]', 'g')
+  let s:temp_file_pat ..=
+  \  '\|^' .. substitute(expand($TMP), '\', '[/\\\\]', 'g')
 elseif has('unix')
-  let s:temp_file_pat .= '\|^/tmp/\|^/var/tmp/'
+  let s:temp_file_pat ..= '\|^/tmp/\|^/var/tmp/'
 endif
 
 " netrw.vim  {{{2
-let g:netrw_home = s:plugin_info . '/netrw'
+let g:netrw_home = s:plugin_info .. '/netrw'
 
 " vimshell.vim  {{{2
 if dein#is_sourced('vimshell')
-  let g:vimshell_vimshrc_path = $VIM_USERDIR . '/vimshrc'
+  let g:vimshell_vimshrc_path = $VIM_USERDIR .. '/vimshrc'
   let g:vimshell_enable_interactive = 1
-  let g:vimshell_temporary_directory = s:plugin_info . '/vimshell'
+  let g:vimshell_temporary_directory = s:plugin_info .. '/vimshell'
   let g:vimshell_scrollback_limit = 100000
   let g:vimshell_editor_command = $EDITOR
   let g:vimshell_prompt = '% '
   let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-  " let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~") . " " .' .
+  " let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~") .. " " .' .
   " \                            'vimshell#vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
   let g:vimshell_ignore_case = 1
   let g:vimshell_smart_case = 1
@@ -1864,7 +1864,7 @@ endif
 if dein#is_sourced('vimfiler')
   let g:vimfiler_as_default_explorer = 1
   let g:vimfiler_safe_mode_by_default = 0
-  let g:vimfiler_data_directory = s:plugin_info . '/vimfiler'
+  let g:vimfiler_data_directory = s:plugin_info .. '/vimfiler'
   let g:vimfiler_split_rule = 'botright'
   nnoremap <silent> <Leader>sf :<C-u>VimFilerSplit<CR>
   nnoremap <silent> <Leader>sF :<C-u>VimFilerBufferDir -split<CR>
@@ -1892,9 +1892,9 @@ if dein#is_sourced('deoplete')
 elseif dein#is_sourced('neocomplete')
   let g:neocomplete#enable_at_startup = 1
   " let g:neocomplete_enable_camel_case_completion = 1
-  let g:neocomplete#data_directory = s:plugin_info . '/neocomplete'
+  let g:neocomplete#data_directory = s:plugin_info .. '/neocomplete'
   let g:neocomplete_disable_caching_file_path_pattern =
-  \   s:temp_file_pat . '\m\|\[.*\]$'
+  \   s:temp_file_pat .. '\m\|\[.*\]$'
 
   call g:V.set_default('g:neocomplete#keyword_patterns', {})
   let g:neocomplete#keyword_patterns.javascript = '\v\k+'
@@ -1930,7 +1930,7 @@ let g:context_filetype#same_filetypes.vimspec = 'vim'
 
 " neosnippet.vim
 if dein#is_sourced('neosnippet')
-  let g:neosnippet#snippets_directory = $VIM_USERDIR . '/snippets'
+  let g:neosnippet#snippets_directory = $VIM_USERDIR .. '/snippets'
   function! TabWrapper() abort
     if neosnippet#expandable() || neosnippet#jumpable()
       " return "\<Plug>(neosnippet_jump_or_expand)"
@@ -1963,9 +1963,9 @@ endif
 
 " unite.vim  {{{2
 if dein#is_sourced('unite')
-  let g:unite_data_directory = s:plugin_info . '/unite'
+  let g:unite_data_directory = s:plugin_info .. '/unite'
   let g:unite_source_history_yank_enable = 1
-  let s:pat = '\v' . join([
+  let s:pat = '\v' .. join([
   \   '\~$',
   \   '\.%(o|exe|dll|bak|DS_Store|zwc|pyc|sw[po]|class|meta)$',
   \   '%(^|[/\\])%(\.|\.hg|\.git|\.bzr|\.svn|tags%(-.*)?)%($|[/\\])$',
@@ -2063,7 +2063,7 @@ if dein#is_sourced('unite')
     call unite#custom#substitute('file', '^;d', '$DROPBOX_HOME/work/vim-plugins/*')
     call unite#custom#substitute('file', '^;l', '$DROPBOX_HOME/work/vim-plugins/labs/*')
   endif
-  call unite#custom#substitute('file', '^;i', s:plugin_info . '/*')
+  call unite#custom#substitute('file', '^;i', s:plugin_info .. '/*')
   call unite#custom#substitute('file', '^;s', '$VIM_USERDIR/pack/personal/start/default/after/syntax/*')
   call unite#custom#substitute('file', '^;f', '$VIM_USERDIR/pack/personal/start/default/after/ftplugin/*')
   if has('win32')
@@ -2224,8 +2224,8 @@ if g:V.is_windows() && executable('es')
 endif
 
 " neomru.vim  {{{2
-let g:neomru#file_mru_path = s:plugin_info . '/neomru/file'
-let g:neomru#directory_mru_path = s:plugin_info . '/neomru/directory'
+let g:neomru#file_mru_path = s:plugin_info .. '/neomru/file'
+let g:neomru#directory_mru_path = s:plugin_info .. '/neomru/directory'
 let g:neomru#file_mru_limit = 1000
 let g:neomru#file_mru_ignore_pattern = s:temp_file_pat
 
@@ -2298,7 +2298,7 @@ nmap caL <Plug>CalendarH
 
 " itchyny-calendar.vim  {{{2
 let g:calendar_google_calendar = 1
-let g:calendar_cache_directory = s:plugin_info . '/itchyny-calendar'
+let g:calendar_cache_directory = s:plugin_info .. '/itchyny-calendar'
 
 
 " gist.vim  {{{2
@@ -2339,7 +2339,7 @@ let g:eskk#keep_state = 0
 if g:V.is_windows() && !has('gui_running')
   let g:eskk#enable_completion = 0
 endif
-let g:eskk#directory = s:plugin_info . '/eskk'
+let g:eskk#directory = s:plugin_info .. '/eskk'
 let g:eskk#log_cmdline_level = 2
 let g:eskk#log_file_level = 4
 
@@ -2453,7 +2453,7 @@ if dein#is_sourced('submode')
     let pos += tabpagenr() <= pos ? 1 : 0
     execute 'tabmove' pos
   endfunction
-  let s:movetab = ':<C-u>call ' . s:SIDP() . 'movetab(%d)<CR>'
+  let s:movetab = ':<C-u>call ' .. s:SIDP() .. 'movetab(%d)<CR>'
   call submode#enter_with('movetab', 'n', '', '<Space>gt', printf(s:movetab, 1))
   call submode#enter_with('movetab', 'n', '', '<Space>gT', printf(s:movetab, -1))
   call submode#map('movetab', 'n', '', 't', printf(s:movetab, 1))
@@ -2602,9 +2602,9 @@ if dein#is_sourced('operator-user')
 
   "   operator-sequence  {{{3
   noremap <expr> <Leader>oU
-  \       operator#sequence#map("\<Plug>(operator-decamelize)", 'gU') . 'iw'
+  \       operator#sequence#map("\<Plug>(operator-decamelize)", 'gU') .. 'iw'
   noremap <expr> <Leader>ou
-  \       operator#sequence#map("\<Plug>(operator-camelize)", ['b~']) . 'iw'
+  \       operator#sequence#map("\<Plug>(operator-camelize)", ['b~']) .. 'iw'
   noremap <expr> moU
   \       operator#sequence#map("\<Plug>(operator-decamelize)", 'gU')
 
@@ -2627,7 +2627,7 @@ if dein#is_sourced('gf-user')
       let line = matchstr(path, '\d\+:\?$')
       let path = matchstr(path, '.*\ze:\d\+:\?$')
     endif
-    let path = findfile(path, getcwd() . ';')
+    let path = findfile(path, getcwd() .. ';')
     if !filereadable(path)
       return 0
     endif
@@ -2649,7 +2649,7 @@ if dein#is_sourced('gf-user')
 endif
 
 " ProjectEuler.vim  {{{2
-let g:projecteuler_dir = s:plugin_info . '/projecteuler/'
+let g:projecteuler_dir = s:plugin_info .. '/projecteuler/'
 let g:projecteuler_user = 'thinca'
 let g:projecteuler_problem_lang = 'ja'
 
@@ -2672,7 +2672,7 @@ map mH <Plug>(quickhl-manual-reset)
 
 " yankround.vim  {{{2
 if dein#is_sourced('yankround')
-  let g:yankround_dir = s:plugin_info . '/yankround/'
+  let g:yankround_dir = s:plugin_info .. '/yankround/'
   let g:yankround_max_history = 100
   let g:yankround_use_region_hl = 1
   nmap <expr> p yankround#is_active() ?
@@ -2696,7 +2696,7 @@ map mv <Plug>(smalls)
 if dein#is_sourced('reanimate')
   let g:reanimate_default_save_name = ''
   let g:reanimate_default_category = 'session'
-  let g:reanimate_save_dir = s:plugin_info . '/reanimate'
+  let g:reanimate_save_dir = s:plugin_info .. '/reanimate'
   let g:reanimate_enable_force_load = 1
   let g:reanimate_event_disables = {
   \   '_': {
@@ -2734,7 +2734,7 @@ if dein#is_sourced('reanimate')
     hide tabonly
     let point = a:context.point
     if point =~# '^session/'
-      let g:window_name = 'vim[' . matchstr(point, '/\zs.*') . ']'
+      let g:window_name = 'vim[' .. matchstr(point, '/\zs.*') .. ']'
     endif
   endfunction
 
@@ -2754,19 +2754,19 @@ if dein#is_sourced('reanimate')
   " This must run before reanimate_window
   " Because this canges guifont
   function! s:event.load_pre(context) abort
-    let file = a:context.path . '/gui.vim'
+    let file = a:context.path .. '/gui.vim'
     if filereadable(file) && has('gui_running')
       source `=file`
     endif
   endfunction
 
   function! s:event.save(context) abort
-    let file = a:context.path . '/gui.vim'
+    let file = a:context.path .. '/gui.vim'
     if !filereadable(file) || filewritable(file)
       if has('gui')
         let options = [
-        \ 'set guioptions=' . &guioptions,
-        \ 'set guifont=' . escape(&guifont, '\ '),
+        \ 'set guioptions=' .. &guioptions,
+        \ 'set guifont=' .. escape(&guifont, '\ '),
         \ ]
         call writefile(options, file)
       endif
@@ -2796,7 +2796,7 @@ let g:brightest#highlight_in_cursorline = {
 let g:brightest#ignore_syntax_list = ['Statement']
 
 " tweetvim.vim  {{{2
-let g:tweetvim_config_dir = s:plugin_info . '/tweetvim/'
+let g:tweetvim_config_dir = s:plugin_info .. '/tweetvim/'
 let g:tweetvim_open_buffer_cmd = ' split'
 let g:tweetvim_display_username = 1
 let g:tweetvim_display_separator = 1
@@ -2851,7 +2851,7 @@ let g:lingr_vim_additional_rooms = [
 
 let g:lingr_vim_sidebar_width = 30
 let g:lingr_vim_rooms_buffer_height = len(g:lingr_vim_additional_rooms) + 1
-let g:lingr_vim_debug_log_file = s:plugin_info . strftime('/lingr/lingr-%Y-%m-%d.log')
+let g:lingr_vim_debug_log_file = s:plugin_info .. strftime('/lingr/lingr-%Y-%m-%d.log')
 call mkdir(fnamemodify(g:lingr_vim_debug_log_file, ':h'), 'p')
 let g:lingr_vim_count_unread_at_current_room = 1
 
@@ -2872,20 +2872,20 @@ function! s:init_lingr(ft) abort
     inoreabbrev <buffer> koron KoRoN
     setlocal statusline=%f\ %m
     if exists('*eskk#statusline')
-      let &l:statusline .= '%{eskk#statusline()}'
+      let &l:statusline ..= '%{eskk#statusline()}'
     endif
   elseif a:ft ==# 'lingr-members'
     setlocal nowinfixheight
   elseif a:ft ==# 'lingr-messages'
-    let b:statusline_extra = '=" " . g:V.now(-8).to_string()'
+    let b:statusline_extra = '=" " .. g:V.now(-8).to_string()'
     setlocal nolist
     nmap <buffer> C vi)*
     nnoremap <expr> <buffer> <C-j> winnr() == winnr('$')
     \ ? "\<C-e>gj"
-    \ : winnr('$') . "\<C-w>w\<C-e>gj\<C-w>p"
+    \ : winnr('$') .. "\<C-w>w\<C-e>gj\<C-w>p"
     nnoremap <expr> <buffer> <C-k> winnr() == winnr('$')
     \ ? "\<C-y>gk"
-    \ : winnr('$') . "\<C-w>w\<C-y>gk\<C-w>p"
+    \ : winnr('$') .. "\<C-w>w\<C-y>gk\<C-w>p"
     augroup vimrc-plugin-lingr-messages
       autocmd! BufEnter <buffer> call s:lingr_update_unread({})
     augroup END
@@ -2897,7 +2897,7 @@ function! s:init_lingr(ft) abort
 endfunction
 function! s:lingr_event(event) abort
   let g:lingr_vim_debug_log_file =
-  \     s:plugin_info . strftime('/lingr/lingr-%Y-%m-%d.log')
+  \     s:plugin_info .. strftime('/lingr/lingr-%Y-%m-%d.log')
   if a:event ==# 'message'
     call s:lingr_update_unread(lingr#get_last_message())
   endif
@@ -2912,10 +2912,10 @@ function! s:lingr_update_unread(last) abort
   if exists(':WindowName')
     let window_name = 'lingr-vim'
     if unread_count != 0
-      let window_name .= '(' . unread_count . ')'
+      let window_name ..= '(' .. unread_count .. ')'
     endif
     if s:lingr_notified
-      let window_name .= '!'
+      let window_name ..= '!'
     endif
     execute printf('WindowName %s', window_name)
   endif
@@ -2938,16 +2938,16 @@ function! s:lingr_update_unread(last) abort
 endfunction
 
 " J6uil.vim  {{{2
-let g:J6uil_config_dir = s:plugin_info . '/J6uil'
+let g:J6uil_config_dir = s:plugin_info .. '/J6uil'
 let g:J6uil_display_icon = 1
 let g:J6uil_empty_separator = 1
 let g:J6uil_multi_window = 1
 
 " colorv.vim  {{{2
 let g:colorv_no_global_map = 1
-let g:colorv_cache_file = s:plugin_info . '/colorv/cache'
-let g:colorv_cache_fav = s:plugin_info . '/colorv/fav'
-call mkdir(s:plugin_info . '/colorv', 'p')
+let g:colorv_cache_file = s:plugin_info .. '/colorv/cache'
+let g:colorv_cache_fav = s:plugin_info .. '/colorv/fav'
+call mkdir(s:plugin_info .. '/colorv', 'p')
 
 " clever-f.vim  {{{2
 let g:clever_f_timeout_ms = 2000
@@ -3059,12 +3059,12 @@ if dein#is_sourced('operator-insert')
 endif
 
 " rogue.vim  {{{2
-let g:rogue#directory = s:plugin_info . '/rogue/'
+let g:rogue#directory = s:plugin_info .. '/rogue/'
 
 " ambicmd.vim  {{{2
 if dein#is_sourced('ambicmd')
-  cnoremap <expr> <Space> '<C-]>' . ambicmd#expand('<Space>')
-  cnoremap <expr> <CR>    '<C-]>' . ambicmd#expand('<CR>')
+  cnoremap <expr> <Space> '<C-]>' .. ambicmd#expand('<Space>')
+  cnoremap <expr> <CR>    '<C-]>' .. ambicmd#expand('<CR>')
   cnoremap <expr> <C-f>   ambicmd#expand('<Right>')
   cnoremap <expr> !       ambicmd#expand('!')
   augroup vimrc-plugin-ambicmd
@@ -3073,12 +3073,12 @@ if dein#is_sourced('ambicmd')
 endif
 
 function! s:init_cmdwin() abort
-  inoremap <buffer> <expr> <Space> '<C-]>' . ambicmd#expand('<Space>')
-  inoremap <buffer> <expr> <CR>    '<C-]>' . ambicmd#expand('<CR>')
+  inoremap <buffer> <expr> <Space> '<C-]>' .. ambicmd#expand('<Space>')
+  inoremap <buffer> <expr> <CR>    '<C-]>' .. ambicmd#expand('<CR>')
   inoremap <buffer> <expr> <C-f>   ambicmd#expand('<Right>')
   inoremap <buffer> <expr> !       ambicmd#expand('!')
   inoremap <buffer> <expr> <C-h> col('.') == 1 ? '<Esc><C-w>c' : '<C-h>'
-  inoremap <buffer> <expr> <C-r><C-w> '<C-c><C-r><C-w>' . &g:cedit
+  inoremap <buffer> <expr> <C-r><C-w> '<C-c><C-r><C-w>' .. &g:cedit
   nnoremap <buffer> <Esc> <C-w>c
   nnoremap <buffer> <Esc><Esc> <C-w>c
   nnoremap <buffer> <nowait> q <C-w>c
@@ -3094,8 +3094,8 @@ let g:singleton#opener = 'Opener'
 
 " github.vim  {{{2
 let g:github#debug = 1
-let g:github#info_directory = s:plugin_info . '/github/'
-let g:github#debug_file = s:plugin_info . '/github/log/debug-%Y-%m-%d.log'
+let g:github#info_directory = s:plugin_info .. '/github/'
+let g:github#debug_file = s:plugin_info .. '/github/log/debug-%Y-%m-%d.log'
 
 " poslist.vim  {{{2
 if dein#is_sourced('poslist')
@@ -3252,8 +3252,8 @@ if dein#is_sourced('quickrun')
     \           g:quickrun_config)), 'v:val !~# "[*_/]" && v:val =~# "^".a:a'))
   endfunction
   function! s:open_scratch() abort
-    let ft = input('type?', '', 'customlist,' . s:SIDP()
-      \ . 'complete_open_scratch')
+    let ft = input('type?', '', 'customlist,' .. s:SIDP()
+      \ .. 'complete_open_scratch')
     if ft ==# ''
       return
     endif
@@ -3264,7 +3264,7 @@ if dein#is_sourced('quickrun')
     endif
     lcd ~
     let &l:filetype = ft
-    call template#load('Scratch.' . ft)
+    call template#load('Scratch.' .. ft)
   endfunction
   nnoremap <silent> <Leader><Leader>s :<C-u>call <SID>open_scratch()<CR>
 endif
@@ -3279,10 +3279,10 @@ let g:watchdogs_check_BufWritePost_enables = {
 " ref.vim  {{{2
 let g:ref_open = 'vsplit'
 let g:ref_use_vimproc = 0
-let g:ref_cache_dir = s:plugin_info . '/ref'
+let g:ref_cache_dir = s:plugin_info .. '/ref'
 let g:ref_clojure_cmd = 'clojure-1.4'
 let g:ref_clojure_precode = '(use ''[clojure.repl :only (doc find-doc)])'
-let g:ref_phpmanual_path = $HOME . '/local/share/doc/php'
+let g:ref_phpmanual_path = $HOME .. '/local/share/doc/php'
 if executable('perlfind')
   let g:ref_perldoc_cmd = 'perlfind'
 endif
@@ -3343,7 +3343,7 @@ let g:scall_function_name = 'S'
 augroup vimrc-plugin-template
   autocmd!
   autocmd FileType * if exists('*template#load')
-  \                |   call template#load('/filetype/' . &l:filetype)
+  \                |   call template#load('/filetype/' .. &l:filetype)
   \                | endif
   autocmd User plugin-template-loaded call s:template_loaded()
   autocmd BufEnter $VIM_USERDIR/template/* setlocal makeprg=
@@ -3380,7 +3380,7 @@ map <Space>tt <Plug>(operator-wtrans-echomsg)
 map <Space>ts <Plug>(operator-wtrans-replace)
 
 " threes.vim  {{{2
-let g:threes#data_directory = s:plugin_info . '/threes'
+let g:threes#data_directory = s:plugin_info .. '/threes'
 let g:threes#start_with_higher_tile = 1
 
 " vcs.vim  {{{2
@@ -3413,12 +3413,12 @@ function! s:convert_pattern(pat) abort
         let i += 2
       elseif nch ==# '%'
         let i += 2
-        let pat .= chars[i]
+        let pat ..= chars[i]
       else
-        let pat .= ch
+        let pat ..= ch
       endif
     else
-      let pat .= ch
+      let pat ..= ch
     endif
     let i += 1
   endwhile
@@ -3472,9 +3472,9 @@ let g:loaded_matchparen = 1
 " == Misc. == {{{1
 " Assist b:undo_ftplugin
 function! SetUndoFtplugin(com) abort
-  let command = 'execute ' . string(a:com)
+  let command = 'execute ' .. string(a:com)
   if exists('b:undo_ftplugin')
-    let command .= ' | ' . b:undo_ftplugin
+    let command ..= ' | ' .. b:undo_ftplugin
   endif
   let b:undo_ftplugin = command
 endfunction
@@ -3489,7 +3489,7 @@ endfunction
 nnoremap <silent> <Plug>(vimrc-show-current-syntax)
 \ :<C-u>echo join(map(synstack(line('.'), col('.')),
 \ 'synIDattr(v:val, "name")
-\ . "(" . synIDattr(synIDtrans(v:val), "name") . ")"'), ',')<CR>
+\ .. "(" .. synIDattr(synIDtrans(v:val), "name") .. ")"'), ',')<CR>
 nmap <silent> <C-CR> <Plug>(vimrc-show-current-syntax)
 nmap <silent> mx <Plug>(vimrc-show-current-syntax)
 imap <silent> <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
@@ -3507,7 +3507,7 @@ function! s:time(cmd, log) abort
 
   let time = reltime()
   let mes = execute(a:cmd)
-  let result = a:cmd . ': ' . reltimestr(reltime(time))
+  let result = a:cmd .. ': ' .. reltimestr(reltime(time))
 
   echo mes
 
