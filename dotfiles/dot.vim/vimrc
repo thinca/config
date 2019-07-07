@@ -3142,6 +3142,7 @@ if dein#is_sourced('quickrun')
     \     'debug': 'ss',
     \     'input': '=%{b:input}', 'cmdopt': '%{b:cmdopt}', 'args': '%{b:args}',
     \     'runner': 'job',
+    \     'runner/job/pty': 1,
     \   },
     \   'c/tcc': {'command': 'tcc', 'exec': '%c -run %o %s %a',
     \             'hook/eval/template': 'int main(int argc, char *argv[]){%s;}'},
