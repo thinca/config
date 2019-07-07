@@ -44,7 +44,10 @@ call :link .hgrc %DOTFILES%\dot.hgrc
 call :link .hgignore %DOTFILES%\dot.hgignore
 call :link .inputrc %DOTFILES%\dot.inputrc
 call :link .irbrc %DOTFILES%\dot.irbrc
+call :dlink .vim %DOTFILES%\dot.vim
 call :dlink vimfiles %DOTFILES%\dot.vim
+call :link .zshrc %DOTFILES%\dot.zshrc
+call :dlink .zsh %DOTFILES%\dot.zsh
 
 popd
 
