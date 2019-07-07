@@ -1,0 +1,14 @@
+BoldAsFont=-1
+Scrollbar=none
+Language=ja
+Font=Cica
+CursorType=block
+Columns=164
+Rows=40
+Window=full
+Term=xterm-256color
+Locale=ja_JP
+Charset=UTF-8
+KeyFunctions=*A+Enter:fullscreen;A+v:paste
+CursorColour=0,255,0
+IMECursorColour=255,0,0
