@@ -12,3 +12,4 @@ Charset=UTF-8
 KeyFunctions=*A+Enter:fullscreen;A+v:paste
 CursorColour=0,255,0
 IMECursorColour=255,0,0
+FontHeight=11
