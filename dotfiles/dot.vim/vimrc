@@ -467,7 +467,10 @@ endfunction
 
 function! MakeTabLine() abort
   let sep = ' | '
-  let has_tabsidebar = has('tabsidebar')
+  let has_tabsidebar = has('tabsidebar') &&
+  \   (&g:showtabsidebar == 2 ||
+  \    &g:showtabsidebar == 1 && 2 <= tabpagenr('$'))
+
   if has_tabsidebar
     let tabs = ''
   else
@@ -524,6 +527,11 @@ if has('tabsidebar')
     autocmd ColorScheme * highlight! link TabSideBar TabLine
     autocmd ColorScheme * highlight! link TabSideBarSel TabLineSel
     autocmd ColorScheme * highlight! link TabSideBarFill TabLineFill
+  augroup END
+  augroup tabsidebar-size
+    autocmd!
+    autocmd VimResized *
+    \   let &g:showtabsidebar = 80 * 2 + &g:tabsidebarcolumns <= &columns
   augroup END
   doautocmd tabsidebar-highlight ColorScheme
 endif
