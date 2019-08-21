@@ -276,9 +276,6 @@ endfunction
 function! GetFileSize() abort
   if &encoding ==# &fileencoding || &fileencoding ==# ''
     let size = line2byte(line('$') + 1) - 1
-    if !&endofline
-      let size -= 1
-    endif
   else
     let size = getfsize(expand('%'))
   endif
