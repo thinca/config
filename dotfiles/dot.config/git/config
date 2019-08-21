@@ -57,7 +57,6 @@
 	}; f"
 	rbd = rebase --committer-date-is-author-date
 	rbn = rebase --ignore-date
-	base-commit = !git merge-base origin/$(git base-branch) HEAD
 	select-commit = "!f() { \
 		git log --oneline ${1} | \
 			fzf --preview='git show --color {1}' | \
@@ -77,7 +76,7 @@
 	cob = "!f() { \
 		b=$(git current-branch) && \
 		git checkout -b \"${1}\" && \
-		git base-branch \"${b}\"; \
+		git set-base-branch \"${b}\"; \
 	}; f"
 	topic = !git checkout "$(git current-remote)/master" -b
 	d = diff HEAD
@@ -109,12 +108,12 @@
 	rollback = reset --hard HEAD~
 	chp = cherry-pick
 	rb = rebase
-	rbu = !git rebase "$(git base-full)"
-	rbui = !git rebase -i "$(git base-full)"
+	rbu = !git rebase --onto="$(git base-head)" "$(git base-commit)"
+	rbui = !git rebase -i --onto="$(git base-head)" "$(git base-commit)"
 	move-base = "!f() { \
 		[[ -n $1 ]] && \
-		git rebase --onto $1 $(git base-full) && \
-		git base-branch $1; \
+		git rebase --onto $1 $(git base-commit) && \
+		git set-base-branch $1; \
 	}; f"
 	rbi = rebase -i
 	rbc = rebase --continue
@@ -155,10 +154,38 @@
 	}; f ${1:-$(git current-branch)}"
 	worktree-bases = "!git worktree list --porcelain | grep '^worktree' | sed 's/^worktree //' | xargs -IX basename X"
 	current-branch = symbolic-ref --short HEAD
-	current-remote = !git config "branch.$(git current-branch).remote"
-	base-branch = !git config "branch.$(git current-branch).base"
-	base-remote = !git config "branch.$(git base-branch).remote"
-	base-full = !echo "$(git base-remote)/$(git base-branch)"
+	current-remote = !git branch-remote "$(git current-branch)"
+	branch-remote = "!f() { \
+		local b=\"${1:?Branch anme required.}\" && \
+		local r=$(git config \"branch.${b}.remote\") && \
+		echo \"${r:-$(git branch-remote \"$(git base-branch)\")}\"; \
+	}; f"
+	remote-branch = "!f() { \
+		echo \"$(git branch-remote \"${1}\")/${1}\"; \
+	}; f"
+	branch-head = "!f() { \
+		local b=\"${1:-$(git current-branch)}\" && \
+		local r=\"$(git remote-branch \"${b}\")\" && \
+		git show-ref --verify --quiet \"refs/heads/${b}\" \"refs/remotes/${r}\" && \
+		(git merge-base --is-ancestor \"${b}\" \"${r}\" && \
+			echo \"${r}\" || echo \"${b}\"); \
+	}; f"
+	base-branch = "!f() { \
+		git config \"branch.${1:-$(git current-branch)}.base\"; \
+	}; f"
+	set-base-branch = "!f() { \
+		git config \"branch.${2:-$(git current-branch)}.base\" \"${1}\"; \
+	}; f"
+	base-remote = "!f() { \
+		git branch-remote \"$(git base-branch \"${1}\")\"; \
+	}; f"
+	base-full = "!f() { \
+		git remote-branch \"$(git base-branch \"${1}\")\"; \
+	}; f"
+	base-head = "!f() { \
+		git branch-head \"$(git base-branch \"${1}\")\"; \
+	}; f"
+	base-commit = !git merge-base origin/$(git base-branch) HEAD
 	features = "!f() { \
 		git branch | \
 			cut -c3- | \
