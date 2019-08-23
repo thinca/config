@@ -3176,6 +3176,15 @@ if dein#is_sourced('quickrun')
     \   'xmodmap': {},
     \   'mxml': {'exec': ['amxmlc %s', 'adl %s:r-app.xml'],
     \            'output_encode': '&termencoding'},
+    \   'vimgolf': {
+    \     'command': 'vi',
+    \     'exec': [
+    \       '(cat > /tmp/out)',
+    \       '(TERM=dumb %c -u NONE -i NONE -n -C -s %s /tmp/out >/dev/null 2>\&1)',
+    \       '(cat /tmp/out)',
+    \     ],
+    \     'hook/sweep/files': '/tmp/out',
+    \   },
     \   'vimspec': {
     \     'command': 'themis',
     \     'hook/output_encode/encoding': '&termencoding',
