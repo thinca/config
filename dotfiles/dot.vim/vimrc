@@ -923,7 +923,7 @@ augroup vimrc-misc
   autocmd InsertLeave * if &diff | diffupdate | endif
 
   " Create a new buffer to apply the new global options from vimrc
-  autocmd VimEnter * nested call s:apply_global_option_values()
+  autocmd VimEnter * ++nested call s:apply_global_option_values()
   function! s:apply_global_option_values() abort
     let c = argc()
     if c == 0 && bufname('%') ==# '' && line('$') == 1 && getline(1) ==# ''
@@ -2736,7 +2736,7 @@ if dein#is_sourced('reanimate')
   augroup vimrc-plugin-reanimate
     autocmd!
     if has('gui_running')
-      autocmd GUIEnter * nested silent! ReanimateLoad window/default
+      autocmd GUIEnter * ++nested silent! ReanimateLoad window/default
       autocmd VimLeavePre * ReanimateSave window/default
     endif
     autocmd CursorHold,VimLeavePre * ReanimateSaveCursorHold
