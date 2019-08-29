@@ -1667,6 +1667,13 @@ else
       let &t_te ..= "\e[0 q"
     endif
 
+    " Change the shape of the cursor at Command-line mode.
+    augroup vimrc-cursor-shape
+      autocmd!
+      autocmd CmdlineEnter * silent! execute "!echo -n '\e[5 q'"
+      autocmd CmdlineLeave * silent! execute "!echo -n '\e[1 q'"
+    augroup END
+
     " let &t_ti ..= "\e[?2004h"
     " let &t_te ..= "\e[?2004l"
     " function! s:XTermPaste(on) abort
