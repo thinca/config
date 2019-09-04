@@ -1556,9 +1556,13 @@ if $WINDOW !=# '' || $TMUX !=# ''
     setglobal ttymouse=xterm2
   endif
   function! s:set_window_name(name) abort
+    if get(g:, 'before_window_name', '') is# a:name
+      return
+    endif
     let esc = "\<Esc>"
     silent! execute '!echo -n "' .. esc .. 'k' .. escape(a:name, '%#!')
       \ .. esc .. '\\"'
+    let g:before_window_name = a:name
     " redraw!
   endfunction
   command! -nargs=? WindowName call s:set_window_name(<q-args>)
