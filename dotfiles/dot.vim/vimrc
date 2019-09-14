@@ -2373,14 +2373,8 @@ if dein#is_sourced('eskk')
     autocmd!
     autocmd CursorHold * silent EskkUpdateDictionary
     autocmd User eskk-initialize-pre call s:init_eskk()
-    autocmd User eskk-enable-pre
-    \   if exists('*deoplete#disable')
-    \ |   call deoplete#disable()
-    \ | endif
-    autocmd User eskk-disable-pre
-    \   if exists('*deoplete#enable')
-    \ |   call deoplete#enable()
-    \ | endif
+    autocmd User eskk-enable-pre call s:eskk_enable_pre()
+    autocmd User eskk-disable-pre call s:eskk_disable_pre()
   augroup END
 endif
 
@@ -2404,6 +2398,28 @@ function! s:init_eskk() abort
   call t.add_map('h)', ')')
   call eskk#register_mode_table('hira', t)
   unlet t
+endfunction
+
+function s:eskk_enable_pre() abort
+  if exists('*deoplete#disable')
+    call deoplete#disable()
+  endif
+
+  " For mintty
+  if has('unix')
+    silent !echo -ne '\e]12;\#FFA500\a'
+  endif
+endfunction
+
+function s:eskk_disable_pre() abort
+  if exists('*deoplete#enable')
+    call deoplete#enable()
+  endif
+
+  " For mintty
+  if has('unix')
+    silent !echo -ne '\e]12;\#00FF00\a'
+  endif
 endfunction
 
 
