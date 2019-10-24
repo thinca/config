@@ -1041,6 +1041,9 @@ endfunction
 nnoremap <expr> <C-h> <SID>good_feeling_prefix() .. 'h '
 nnoremap <expr> <Space>tm <SID>good_feeling_prefix() .. "terminal\<CR>"
 
+" Show :messages quickly.
+nnoremap <expr> <lt> v:count ? ':<C-u>' .. v:count .. 'messages<CR>' : '<lt>'
+
 " Don't move at escaping from insert mode.
 " inoremap <silent> <Esc> <Esc>:keepjumps normal! `^<CR>
 
