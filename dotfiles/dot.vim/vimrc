@@ -20,7 +20,8 @@
 if !v:vim_did_enter && has('reltime')
   let g:startuptime = reltime()
   augroup vimrc-startuptime
-    autocmd! VimEnter * let g:startuptime = reltime(g:startuptime)
+    autocmd! VimEnter * ++once
+    \                   let g:startuptime = reltime(g:startuptime)
     \                 | redraw
     \                 | echomsg 'startuptime: ' .. reltimestr(g:startuptime)
   augroup END
@@ -923,7 +924,7 @@ augroup vimrc-misc
   autocmd InsertLeave * if &diff | diffupdate | endif
 
   " Create a new buffer to apply the new global options from vimrc
-  autocmd VimEnter * ++nested call s:apply_global_option_values()
+  autocmd VimEnter * ++nested ++once call s:apply_global_option_values()
   function! s:apply_global_option_values() abort
     let c = argc()
     if c == 0 && bufname('%') ==# '' && line('$') == 1 && getline(1) ==# ''
@@ -1583,7 +1584,7 @@ if $WINDOW !=# '' || $TMUX !=# ''
   endfunction
   augroup vimrc-screen
     autocmd!
-    autocmd VimEnter * call s:set_window_name(0 < argc() ?
+    autocmd VimEnter * ++once call s:set_window_name(0 < argc() ?
       \ 'v:' .. fnamemodify(argv(0), ':t') : 'vim')
     autocmd BufEnter,WinEnter,BufFilePost * call s:auto_window_name()
     autocmd VimLeave * call s:set_window_name(len($SHELL) ?
