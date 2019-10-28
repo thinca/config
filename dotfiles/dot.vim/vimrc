@@ -1814,6 +1814,13 @@ let g:riv_global_leader = '<LocalLeader>t'
 
 " == Plugin settings. == {{{1
 let s:plugin_info = expand('~/.local/share/vim/info')
+function s:plugin_info_dir(plugin_name) abort
+  let dir = s:plugin_info .. '/' .. a:plugin_name
+  if !isdirectory(dir)
+    call mkdir(dir, 'p')
+  endif
+  return dir .. '/'
+endfunction
 
 let s:temp_file_pat = join([
 \   '/svn-commit\%(\.\d\+\)\?\.tmp$',
@@ -1828,13 +1835,13 @@ elseif has('unix')
 endif
 
 " netrw.vim  {{{2
-let g:netrw_home = s:plugin_info .. '/netrw'
+let g:netrw_home = s:plugin_info_dir('netrw')
 
 " vimshell.vim  {{{2
 if dein#is_sourced('vimshell')
   let g:vimshell_vimshrc_path = $VIM_USERDIR .. '/vimshrc'
   let g:vimshell_enable_interactive = 1
-  let g:vimshell_temporary_directory = s:plugin_info .. '/vimshell'
+  let g:vimshell_temporary_directory = s:plugin_info_dir('vimshell')
   let g:vimshell_scrollback_limit = 100000
   let g:vimshell_editor_command = $EDITOR
   let g:vimshell_prompt = '% '
@@ -1895,7 +1902,7 @@ endif
 if dein#is_sourced('vimfiler')
   let g:vimfiler_as_default_explorer = 1
   let g:vimfiler_safe_mode_by_default = 0
-  let g:vimfiler_data_directory = s:plugin_info .. '/vimfiler'
+  let g:vimfiler_data_directory = s:plugin_info_dir('vimfiler')
   let g:vimfiler_split_rule = 'botright'
   nnoremap <silent> <Leader>sf :<C-u>VimFilerSplit<CR>
   nnoremap <silent> <Leader>sF :<C-u>VimFilerBufferDir -split<CR>
@@ -1923,7 +1930,7 @@ if dein#is_sourced('deoplete')
 elseif dein#is_sourced('neocomplete')
   let g:neocomplete#enable_at_startup = 1
   " let g:neocomplete_enable_camel_case_completion = 1
-  let g:neocomplete#data_directory = s:plugin_info .. '/neocomplete'
+  let g:neocomplete#data_directory = s:plugin_info_dir('neocomplete')
   let g:neocomplete_disable_caching_file_path_pattern =
   \   s:temp_file_pat .. '\m\|\[.*\]$'
 
@@ -1994,7 +2001,7 @@ endif
 
 " unite.vim  {{{2
 if dein#is_sourced('unite')
-  let g:unite_data_directory = s:plugin_info .. '/unite'
+  let g:unite_data_directory = s:plugin_info_dir('unite')
   let g:unite_source_history_yank_enable = 1
   let s:pat = '\v' .. join([
   \   '\~$',
@@ -2255,8 +2262,8 @@ if g:V.is_windows() && executable('es')
 endif
 
 " neomru.vim  {{{2
-let g:neomru#file_mru_path = s:plugin_info .. '/neomru/file'
-let g:neomru#directory_mru_path = s:plugin_info .. '/neomru/directory'
+let g:neomru#file_mru_path = s:plugin_info_dir('neomru') .. 'file'
+let g:neomru#directory_mru_path = s:plugin_info_dir('neomru') .. 'directory'
 let g:neomru#file_mru_limit = 1000
 let g:neomru#file_mru_ignore_pattern = s:temp_file_pat
 
@@ -2329,7 +2336,7 @@ nmap caL <Plug>CalendarH
 
 " itchyny-calendar.vim  {{{2
 let g:calendar_google_calendar = 1
-let g:calendar_cache_directory = s:plugin_info .. '/itchyny-calendar'
+let g:calendar_cache_directory = s:plugin_info_dir('itchyny-calendar')
 
 
 " gist.vim  {{{2
@@ -2370,7 +2377,7 @@ let g:eskk#keep_state = 0
 if g:V.is_windows() && !has('gui_running')
   let g:eskk#enable_completion = 0
 endif
-let g:eskk#directory = s:plugin_info .. '/eskk'
+let g:eskk#directory = s:plugin_info_dir('eskk')
 let g:eskk#log_cmdline_level = 2
 let g:eskk#log_file_level = 4
 
@@ -2696,7 +2703,7 @@ if dein#is_sourced('gf-user')
 endif
 
 " ProjectEuler.vim  {{{2
-let g:projecteuler_dir = s:plugin_info .. '/projecteuler/'
+let g:projecteuler_dir = s:plugin_info_dir('projecteuler')
 let g:projecteuler_user = 'thinca'
 let g:projecteuler_problem_lang = 'ja'
 
@@ -2719,7 +2726,7 @@ map mH <Plug>(quickhl-manual-reset)
 
 " yankround.vim  {{{2
 if dein#is_sourced('yankround')
-  let g:yankround_dir = s:plugin_info .. '/yankround/'
+  let g:yankround_dir = s:plugin_info_dir('yankround')
   let g:yankround_max_history = 100
   let g:yankround_use_region_hl = 1
   nmap <expr> p yankround#is_active() ?
@@ -2743,7 +2750,7 @@ map mv <Plug>(smalls)
 if dein#is_sourced('reanimate')
   let g:reanimate_default_save_name = ''
   let g:reanimate_default_category = 'session'
-  let g:reanimate_save_dir = s:plugin_info .. '/reanimate'
+  let g:reanimate_save_dir = s:plugin_info_dir('reanimate')
   let g:reanimate_enable_force_load = 1
   let g:reanimate_event_disables = {
   \   '_': {
@@ -2843,7 +2850,7 @@ let g:brightest#highlight_in_cursorline = {
 let g:brightest#ignore_syntax_list = ['Statement']
 
 " tweetvim.vim  {{{2
-let g:tweetvim_config_dir = s:plugin_info .. '/tweetvim/'
+let g:tweetvim_config_dir = s:plugin_info_dir('tweetvim')
 let g:tweetvim_open_buffer_cmd = ' split'
 let g:tweetvim_display_username = 1
 let g:tweetvim_display_separator = 1
@@ -2898,8 +2905,7 @@ let g:lingr_vim_additional_rooms = [
 
 let g:lingr_vim_sidebar_width = 30
 let g:lingr_vim_rooms_buffer_height = len(g:lingr_vim_additional_rooms) + 1
-let g:lingr_vim_debug_log_file = s:plugin_info .. strftime('/lingr/lingr-%Y-%m-%d.log')
-call mkdir(fnamemodify(g:lingr_vim_debug_log_file, ':h'), 'p')
+let g:lingr_vim_debug_log_file = s:plugin_info_dir('lingr') .. strftime('lingr-%Y-%m-%d.log')
 let g:lingr_vim_count_unread_at_current_room = 1
 
 augroup vimrc-plugin-lingr
@@ -2944,7 +2950,7 @@ function! s:init_lingr(ft) abort
 endfunction
 function! s:lingr_event(event) abort
   let g:lingr_vim_debug_log_file =
-  \     s:plugin_info .. strftime('/lingr/lingr-%Y-%m-%d.log')
+  \     s:plugin_info_dir('lingr') .. strftime('lingr-%Y-%m-%d.log')
   if a:event ==# 'message'
     call s:lingr_update_unread(lingr#get_last_message())
   endif
@@ -2985,16 +2991,15 @@ function! s:lingr_update_unread(last) abort
 endfunction
 
 " J6uil.vim  {{{2
-let g:J6uil_config_dir = s:plugin_info .. '/J6uil'
+let g:J6uil_config_dir = s:plugin_info_dir('J6uil')
 let g:J6uil_display_icon = 1
 let g:J6uil_empty_separator = 1
 let g:J6uil_multi_window = 1
 
 " colorv.vim  {{{2
 let g:colorv_no_global_map = 1
-let g:colorv_cache_file = s:plugin_info .. '/colorv/cache'
-let g:colorv_cache_fav = s:plugin_info .. '/colorv/fav'
-call mkdir(s:plugin_info .. '/colorv', 'p')
+let g:colorv_cache_file = s:plugin_info_dir('colorv') .. 'cache'
+let g:colorv_cache_fav = s:plugin_info_dir('colorv') .. 'fav'
 
 " clever-f.vim  {{{2
 let g:clever_f_timeout_ms = 2000
@@ -3106,7 +3111,7 @@ if dein#is_sourced('operator-insert')
 endif
 
 " rogue.vim  {{{2
-let g:rogue#directory = s:plugin_info .. '/rogue/'
+let g:rogue#directory = s:plugin_info_dir('rogue')
 
 " ambicmd.vim  {{{2
 if dein#is_sourced('ambicmd')
@@ -3141,8 +3146,8 @@ let g:singleton#opener = 'Opener'
 
 " github.vim  {{{2
 let g:github#debug = 1
-let g:github#info_directory = s:plugin_info .. '/github/'
-let g:github#debug_file = s:plugin_info .. '/github/log/debug-%Y-%m-%d.log'
+let g:github#info_directory = s:plugin_info_dir('github')
+let g:github#debug_file = s:plugin_info_dir('github') .. 'log/debug-%Y-%m-%d.log'
 
 " poslist.vim  {{{2
 if dein#is_sourced('poslist')
@@ -3335,7 +3340,7 @@ let g:watchdogs_check_BufWritePost_enables = {
 " ref.vim  {{{2
 let g:ref_open = 'vsplit'
 let g:ref_use_vimproc = 0
-let g:ref_cache_dir = s:plugin_info .. '/ref'
+let g:ref_cache_dir = s:plugin_info_dir('ref')
 let g:ref_clojure_cmd = 'clojure-1.4'
 let g:ref_clojure_precode = '(use ''[clojure.repl :only (doc find-doc)])'
 let g:ref_phpmanual_path = $HOME .. '/local/share/doc/php'
@@ -3436,7 +3441,7 @@ map <Space>tt <Plug>(operator-wtrans-echomsg)
 map <Space>ts <Plug>(operator-wtrans-replace)
 
 " threes.vim  {{{2
-let g:threes#data_directory = s:plugin_info .. '/threes'
+let g:threes#data_directory = s:plugin_info_dir('threes')
 let g:threes#start_with_higher_tile = 1
 
 " vcs.vim  {{{2
