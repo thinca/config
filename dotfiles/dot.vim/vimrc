@@ -513,7 +513,10 @@ function! MakeTabLine() abort
 endfunction
 
 if has('tabsidebar')
-  setglobal showtabsidebar=1
+  function s:update_showtabsidebar() abort
+    let &g:showtabsidebar = 80 * 2 + &g:tabsidebarcolumns <= &columns
+  endfunction
+  call s:update_showtabsidebar()
   setglobal tabsidebarcolumns=32
   setglobal tabsidebarwrap
   let g:tabsidebar_show_all_window = 1
@@ -528,8 +531,7 @@ if has('tabsidebar')
   augroup END
   augroup tabsidebar-size
     autocmd!
-    autocmd VimResized *
-    \   let &g:showtabsidebar = 80 * 2 + &g:tabsidebarcolumns <= &columns
+    autocmd VimResized * call s:update_showtabsidebar()
   augroup END
   doautocmd tabsidebar-highlight ColorScheme
 endif
