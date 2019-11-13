@@ -97,6 +97,7 @@
 	m = merge --no-ff --no-edit
 	s = show
 	ss = show --stat
+	raw = show --format=raw
 	st = status --short --branch
 	t = tag
 	sh = stash save --include-untracked
