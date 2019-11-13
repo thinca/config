@@ -72,6 +72,7 @@
 		git fixcommit ${1} && \
 		git fixup; \
 	}; f"
+	sw = checkout
 	co = checkout
 	cob = "!f() { \
 		b=$(git current-branch) && \
