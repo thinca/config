@@ -470,7 +470,7 @@ function! MakeTabLine() abort
   \    &g:showtabsidebar == 1 && 2 <= tabpagenr('$'))
 
   if has_tabsidebar
-    let tabs = ''
+    let tabs = '%{GetBufname()}'
   else
     let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
     let titles = map(titles, function('printf', ['%%%dT%s%%T%%#TabLineFill#']))
