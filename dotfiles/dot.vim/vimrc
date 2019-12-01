@@ -787,7 +787,6 @@ augroup vimrc-lcd
   \     '.git',
   \     '.bzr/',
   \     '.hg/',
-  \     '.bundle/:ruby',
   \     'doc/:vim,help',
   \   ],
   \   ['README.*', 'README'],
