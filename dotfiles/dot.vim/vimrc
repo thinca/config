@@ -782,6 +782,11 @@ augroup vimrc-lcd
   let g:lcd = [
   \   ['tags'],
   \   [
+  \     'Gemfile',
+  \     'package.json',
+  \     'Cargo.toml',
+  \   ],
+  \   [
   \     '.svn/',
   \     '.git/',
   \     '.git',
