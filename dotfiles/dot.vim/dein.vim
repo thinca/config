@@ -296,6 +296,7 @@ call dein#add('junegunn/vader.vim', {'on_cmd': 'Vader'})
 
 " Games
 call dein#add('katono/rogue.vim', {'on_cmd': ['Rogue', 'RogueScores', 'RogueRestore', 'RogueResume']})
+call dein#add('vim/killersheep', {'on_cmd': ['KillKillKill']})
 
 " filetype
 call dein#add('othree/html5.vim')
