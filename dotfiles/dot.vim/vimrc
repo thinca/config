@@ -3532,29 +3532,35 @@ let g:lsp_log_file =
 \   s:plugin_info_dir('lsp') .. strftime('vim-lsp-%Y-%m-%d.log')
 let g:lsp_log_verbose = 1
 
-if executable('solargraph')
-  augroup vimrc-lsp-solargraph
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
+function! s:on_lsp_setup() abort
+  if executable('solargraph')
+    call lsp#register_server({
     \   'name': 'solargraph',
     \   'cmd': { server_info -> ['solargraph', 'stdio'] },
     \   'whitelist': ['ruby'],
     \ })
-    autocmd FileType ruby setlocal omnifunc=lsp#complete
-  augroup END
-endif
-
-if executable('typescript-language-server')
-  augroup vimrc-lsp-typescript-language-server
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
+  endif
+  if executable('typescript-language-server')
+    call lsp#register_server({
     \   'name': 'typescript-language-server',
     \   'cmd': { server_info -> ['typescript-language-server', '--stdio'] },
     \   'whitelist': ['typescript'],
     \ })
-    autocmd FileType typescript setlocal omnifunc=lsp#complete
-  augroup END
-endif
+  endif
+endfunction
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> <f2> <plug>(lsp-rename)
+endfunction
+
+augroup vimrc-plugin-lsp
+  autocmd!
+  autocmd User lsp_setup call s:on_lsp_setup()
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 " plasticboy/vim-markdown  {{{2
 let g:vim_markdown_no_default_key_mappings = 1
