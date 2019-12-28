@@ -88,9 +88,10 @@ if isdirectory($PYENV_ROOT)
   endif
   if exists('+pythonthreedll')
     let &pythonthreedll =
-    \   printf('%s/versions/%s/lib/libpython%sm.%s',
-    \     $PYENV_ROOT, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
+    \   printf('%s/versions/%s/lib/libpython3.%s',
+    \     $PYENV_ROOT, s:py_v3, s:ext)
   endif
+  unlet s:py_v2 s:py_v3
 endif
 
 " Plugin Manager
