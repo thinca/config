@@ -1137,6 +1137,7 @@ nnoremap <silent> <Space>w :<C-u>update<CR>
 nnoremap <silent> <Space>W :<C-u>update!<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 nnoremap <silent> <Space>Q :<C-u>quit!<CR>
+nnoremap <silent> q<Space> :<C-u>quit<CR>
 
 " Change encodings and formats.
 nnoremap <Space>e <Nop>
