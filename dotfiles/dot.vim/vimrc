@@ -1047,7 +1047,7 @@ function! s:good_feeling_prefix() abort
   return printf(":\<C-u>%s", 78 * 2 <= winwidth(0) ? 'vertical ' : '')
 endfunction
 nnoremap <expr> <C-h> <SID>good_feeling_prefix() .. 'h '
-nnoremap <expr> <Space>tm <SID>good_feeling_prefix() .. "terminal\<CR>"
+nnoremap <expr> <Space>tm <SID>good_feeling_prefix() .. 'terminal<CR>'
 
 " Show :messages quickly.
 nnoremap <expr> <lt> v:count ? ':<C-u>' .. v:count .. 'messages<CR>' : '<lt>'
