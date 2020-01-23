@@ -286,6 +286,8 @@ call dein#add('yomi322/neco-tweetvim')
 call dein#add('yomi322/unite-tweetvim')
 call dein#add('yomi322/vim-operator-suddendeath')
 
+call dein#add('tweekmonster/helpful.vim')
+
 call dein#add('itchyny/calendar.vim', {'lazy': 1, 'name': 'itchyny-calendar'})
 
 " For OmniSharp
