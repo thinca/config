@@ -1,5 +1,7 @@
 unset RUBYOPT
 
+path=(./.bundle/bin $path)
+
 alias -s rb=ruby
 alias bi='bundle install'
 
