@@ -5,5 +5,6 @@
 /dotfiles/dot.config/vim/local.vim
 /dotfiles/dot.w3m/history
 /dotfiles/dot.w3m/cookie
-/dotfiles/dot.vim/pack
+/dotfiles/dot.vim/pack/*
+!/dotfiles/dot.vim/pack/personal/
 /firefox/vimperator/info
