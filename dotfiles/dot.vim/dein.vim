@@ -301,6 +301,7 @@ call dein#add('katono/rogue.vim', {'on_cmd': ['Rogue', 'RogueScores', 'RogueRest
 call dein#add('vim/killersheep', {'on_cmd': ['KillKillKill']})
 
 " filetype
+call dein#add('vim-python/python-syntax')
 call dein#add('othree/html5.vim')
 " My ghc-mod is broken...
 " call dein#add('eagletmt/ghcmod-vim', {'on_ft': 'haskell'})
