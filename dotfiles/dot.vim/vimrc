@@ -68,31 +68,62 @@ if !v:vim_did_enter
   endif
 endif
 
-" if_ruby  {{{2
-let s:ext = has('mac') ? 'dylib' : 'so'
-if exists('+rubydll') && isdirectory($RBENV_ROOT)
-  let &rubydll =
-  \   get(glob(
-  \     $RBENV_ROOT .. '/versions/*/lib/libruby.' .. s:ext,
-  \   1, 1), -1, '')
-endif
+" Interface dll  {{{2
+if isdirectory($ASDF_DIR)
+  let s:ext = has('mac') ? 'dylib' : 'so'
+  let s:tool_versions = '~/.tool-versions'->expand()->readfile()
+  let g:tool_versions = s:tool_versions
 
-" if_python  {{{2
-if isdirectory($PYENV_ROOT)
-  " ['2.7.14', '3.6.4']
-  let [s:py_v2, s:py_v3] = sort(readfile($PYENV_ROOT .. '/version'))
-  if exists('+pythondll')
-    let &pythondll =
-    \   printf('%s/versions/%s/lib/libpython%s.%s',
-    \     $PYENV_ROOT, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
+  " if_perl
+  if exists('+perldll')
+    let s:perl_ver = s:tool_versions->copy()
+    \ ->filter({ _, line -> line =~# '^perl '})->get(0)
+    \ ->substitute('^perl ', '', '')
+    if s:perl_ver isnot# ''
+      let &perldll =
+      \   printf('%s/installs/perl/%s/lib/%s/x86_64-linux/CORE/libperl.%s',
+      \     $ASDF_DIR, s:perl_ver, s:perl_ver, s:ext)
+    endif
+    unlet s:perl_ver
   endif
-  if exists('+pythonthreedll')
-    let &pythonthreedll =
-    \   printf('%s/versions/%s/lib/libpython3.%s',
-    \     $PYENV_ROOT, s:py_v3, s:ext)
+
+  " if_ruby
+  if exists('+rubydll')
+    let s:ruby_ver = s:tool_versions->copy()
+    \ ->filter({ _, line -> line =~# '^ruby '})->get(0)
+    \ ->substitute('^ruby ', '', '')
+    if s:ruby_ver isnot# ''
+      let &rubydll =
+      \   printf('%s/installs/ruby/%s/lib/libruby.%s',
+      \     $ASDF_DIR, s:ruby_ver, s:ext)
+    endif
+    unlet s:ruby_ver
   endif
-  unlet s:py_v2 s:py_v3
+
+  " if_python
+  let s:python_ver = s:tool_versions->copy()
+  \ ->filter({ _, line -> line =~# '^python '})->get(0)
+  \ ->substitute('^python ', '', '')
+  if s:python_ver isnot# ''
+    " ['2.7.14', '3.6.4']
+    let [s:py_v2, s:py_v3] = s:python_ver->split('\s\+')->sort()
+    if exists('+pythondll')
+      let &pythondll =
+      \   printf('%s/installs/python/%s/lib/libpython%s.%s',
+      \     $ASDF_DIR, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
+    endif
+    if exists('+pythonthreedll')
+      let &pythonthreedll =
+      \   printf('%s/installs/python/%s/lib/libpython%s.%s',
+      \     $ASDF_DIR, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
+    endif
+    unlet s:py_v2 s:py_v3
+  endif
+  unlet s:python_ver
+
+  unlet s:ext
 endif
+" }}}2
 
 " Plugin Manager
 let g:vimproc#download_windows_dll = 1
