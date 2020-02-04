@@ -14,5 +14,3 @@ for f in "${CONFIG_BASE}"/setup.d/*.sh; do
 	[[ -r "${f}" ]] && bash "${f}"
 done
 [[ "${OS}" == "Mac" ]] && "${CONFIG_BASE}/mac/setup.sh"
-
-exec "${SHELL}" -l
