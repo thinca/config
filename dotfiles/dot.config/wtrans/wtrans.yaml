@@ -29,24 +29,24 @@ services:
   bing:
     url: 'https://www.bing.com/Translator'
     ajax: true
-    sourceNodeSelector: '#t_sv'
-    resultNodeSelector: '#t_tv'
+    sourceNodeSelector: '#tta_input_ta'
+    resultNodeSelector: '#tta_output_ta'
     ignoreResultPattern: ' \.\.\.$'
     actions:
       execute: []
       from_en:
-        - select: ['#t_sl', 'en']
+        - select: ['#tta_srcsl', 'en']
       from_ja:
-        - select: ['#t_sl', 'ja']
+        - select: ['#tta_srcsl', 'ja']
       to_en:
-        - select: ['#t_tl', 'en']
+        - select: ['#tta_tgtsl', 'en']
       to_ja:
-        - select: ['#t_tl', 'ja']
+        - select: ['#tta_tgtsl', 'ja']
 
   excite:
     url: 'https://www.excite.co.jp/world/english/'
     requestFilters:
-      acceptURLPattern: '^https://www\.excite\.co\.jp/world/english/'
+      acceptURLPattern: '^https://www\.excite\.co\.jp/world/english/|^https://s\.eximg\.jp/world/jsmin/live/two_column_web\.min\.js'
     ajax: false
     sourceNodeSelector: '#before'
     resultNodeSelector: '#after'
@@ -92,7 +92,7 @@ services:
         - click: '#op1a_3'
 
   worldlingo:
-    url: 'http://www.worldlingo.com/en/products_services/worldlingo_translator.html'
+    url: 'http://www.worldlingo.com/en/products/text_translator.html'
     requestFilters:
       acceptURLPattern: '^http://www\.worldlingo\.com/'
     ajax: false
