@@ -1,3 +1,4 @@
-path=(~/.npm/bin(N-/) ~/.nodebrew/current/bin(N-/) $path)
 path=(./node_modules/.bin $path)
-manpath=(~/.npm/share/man(N-/) $manpath)
+if [[ -d "${ASDF_DIR}" ]]; then
+	manpath=($(asdf where nodejs)/.npm/share/man(N-/) $manpath)
+fi
