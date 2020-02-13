@@ -2817,7 +2817,6 @@ if dein#is_sourced('reanimate')
   \ }
   let g:reanimate_sessionoptions =
   \     'blank,curdir,folds,help,localoptions,tabpages,unix'
-  let g:reanimate#events#session#enable_force_source = 1
   augroup vimrc-plugin-reanimate
     autocmd!
     if has('gui_running')
