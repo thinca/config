@@ -72,7 +72,6 @@ endif
 if isdirectory($ASDF_DIR)
   let s:ext = has('mac') ? 'dylib' : 'so'
   let s:tool_versions = '~/.tool-versions'->expand()->readfile()
-  let g:tool_versions = s:tool_versions
 
   " if_perl
   if exists('+perldll')
