@@ -4,9 +4,5 @@ if which tmux &>/dev/null && \
 	# session=${SSH_CLIENT%% *}
 	session=main
 
-	if tmux has-session -t "${session}" &>/dev/null; then
-		exec tmux -2 -u attach-session -t "${session}"
-	else
-		exec tmux -2 -u new-session -s "${session}"
-	fi
+	exec tmux -2 -u new-session -s "${session}" -A
 fi
