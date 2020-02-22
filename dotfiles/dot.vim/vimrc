@@ -3045,6 +3045,7 @@ let g:colorv_cache_file = s:plugin_info_dir('colorv') .. 'cache'
 let g:colorv_cache_fav = s:plugin_info_dir('colorv') .. 'fav'
 
 " clever-f.vim  {{{2
+let g:clever_f_across_no_line = 1
 let g:clever_f_timeout_ms = 2000
 let g:clever_f_use_migemo = 1
 
