@@ -3073,15 +3073,6 @@ function! g:committia_hooks.edit_open(info) abort
   endif
 endfunction
 
-" ale.vim  {{{2
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-let g:ale_echo_msg_format = '[%linter%] %severity%: %s'
-nmap [q <Plug>(ale_previous)
-nmap ]q <Plug>(ale_next)
-nmap [Q <Plug>(ale_first)
-nmap ]Q <Plug>(ale_last)
-
 " incsearch.vim  {{{2
 if dein#is_sourced('incsearch')
   let g:incsearch#magic = '\v'
@@ -3560,37 +3551,31 @@ endif
 let g:ctrlp_map = ''
 
 " lsp.vim  {{{2
-let g:lsp_log_file =
-\   s:plugin_info_dir('lsp') .. strftime('vim-lsp-%Y-%m-%d.log')
+let s:lsp_log_dir = s:plugin_info_dir('lsp') .. 'log/'
+call mkdir(s:lsp_log_dir, 'p')
+let g:lsp_log_file = s:lsp_log_dir .. strftime('%Y-%m-%d.log')
 let g:lsp_log_verbose = 1
 
-function! s:on_lsp_setup() abort
-  if executable('solargraph')
-    call lsp#register_server({
-    \   'name': 'solargraph',
-    \   'cmd': { server_info -> ['solargraph', 'stdio'] },
-    \   'whitelist': ['ruby'],
-    \ })
-  endif
-  if executable('typescript-language-server')
-    call lsp#register_server({
-    \   'name': 'typescript-language-server',
-    \   'cmd': { server_info -> ['typescript-language-server', '--stdio'] },
-    \   'whitelist': ['typescript'],
-    \ })
-  endif
-endfunction
+let g:lsp_diagnostics_float_cursor = 1
+
+let g:lsp_settings = {
+\   'efm-langserver': {
+\     'disabled': 0,
+\   },
+\ }
+let g:lsp_settings_servers_dir = s:plugin_info_dir('lsp') .. 'servers'
 
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
   nmap <buffer> gd <plug>(lsp-definition)
   nmap <buffer> <f2> <plug>(lsp-rename)
+  nmap <buffer> [q <Plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]q <Plug>(lsp-next-diagnostic)
 endfunction
 
 augroup vimrc-plugin-lsp
   autocmd!
-  autocmd User lsp_setup call s:on_lsp_setup()
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 

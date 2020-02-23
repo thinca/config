@@ -21,6 +21,7 @@ Gemfile.private
 Gemfile.private.lock
 .bundle
 vendor/bundle
+.solargraph.yml
 
 # Node.js
 .nyc_output/
