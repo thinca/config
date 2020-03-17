@@ -960,6 +960,8 @@ augroup vimrc-misc
   autocmd InsertLeave * if &paste | set nopaste | endif
   autocmd InsertLeave * if &diff | diffupdate | endif
 
+  autocmd VimResized * wincmd =
+
   " Create a new buffer to apply the new global options from vimrc
   autocmd VimEnter * ++nested ++once call s:apply_global_option_values()
   function! s:apply_global_option_values() abort
