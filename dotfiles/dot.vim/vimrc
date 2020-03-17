@@ -3565,7 +3565,6 @@ let g:lsp_settings = {
 \     'disabled': 0,
 \   },
 \ }
-let g:lsp_settings_servers_dir = s:plugin_info_dir('lsp') .. 'servers'
 
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
