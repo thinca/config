@@ -2690,11 +2690,11 @@ if dein#is_sourced('operator-user')
 
   "   operator-sequence  {{{3
   noremap <expr> <Leader>oU
-  \       operator#sequence#map("\<Plug>(operator-decamelize)", 'gU') .. 'iw'
+  \       operator#sequence#map('<Plug>(operator-decamelize)', 'gU') .. 'iw'
   noremap <expr> <Leader>ou
-  \       operator#sequence#map("\<Plug>(operator-camelize)", ['b~']) .. 'iw'
+  \       operator#sequence#map('<Plug>(operator-camelize)', ['b~']) .. 'iw'
   noremap <expr> moU
-  \       operator#sequence#map("\<Plug>(operator-decamelize)", 'gU')
+  \       operator#sequence#map('<Plug>(operator-decamelize)', 'gU')
 
   "   operator-suddendeath  {{{3
   map X <Plug>(operator-suddendeath)
