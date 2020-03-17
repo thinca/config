@@ -456,38 +456,26 @@ function! s:tabpage_label(n, ...) abort
 
   let label = printf('%%#%sTabNumber#%d:%%#%s# ', hi, n, hi)
   let label ..= '%<'
-  if getbufvar(curbufnr, '&filetype') =~# '^lingr-'
-    " lingr-vim
-    let unread = lingr#unread_count()
-    let status = lingr#status()
-
-    let label ..= 'lingr - ' .. status
-    if unread != 0
-      let label ..= '(' .. unread .. ')'
-    endif
-
+  let title = gettabvar(n, 'title')
+  if is_sidebar && get(g:, 'tabsidebar_show_all_window', 0)
+    let cwd = getcwd(curwinnr, n)
+    let label ..= title !=# '' ? title : fnamemodify(cwd, ':t') .. '/'
+    let labels = map(copy(bufnrs), { i, v ->
+    \   s:buf_label(v, i + 1, curwinnr == i + 1)
+    \ })
+    let label ..= "\n" .. join(labels, "\n")
+  elseif title !=# ''
+    let label ..= title
   else
-    let title = gettabvar(n, 'title')
-    if is_sidebar && get(g:, 'tabsidebar_show_all_window', 0)
-      let cwd = getcwd(curwinnr, n)
-      let label ..= title !=# '' ? title : fnamemodify(cwd, ':t') .. '/'
-      let labels = map(copy(bufnrs), { i, v ->
-      \   s:buf_label(v, i + 1, curwinnr == i + 1)
-      \ })
-      let label ..= "\n" .. join(labels, "\n")
-    elseif title !=# ''
-      let label ..= title
-    else
-      let text = GetBufname(curbufnr, 1)
-      let mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
-      let mod = len(mod_bufs) ? '+' : ''
+    let text = GetBufname(curbufnr, 1)
+    let mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
+    let mod = len(mod_bufs) ? '+' : ''
 
-      let label ..= text .. mod
-      let no = len(bufnrs)
-      if 2 <= no
-        let label ..= ' %#' .. hi .. 'Number#' .. no
-        let label ..= '%#' .. hi .. '#'
-      endif
+    let label ..= text .. mod
+    let no = len(bufnrs)
+    if 2 <= no
+      let label ..= ' %#' .. hi .. 'Number#' .. no
+      let label ..= '%#' .. hi .. '#'
     endif
   endif
 
@@ -1993,7 +1981,7 @@ elseif dein#is_sourced('neocomplete')
 
   let g:neocomplete#text_mode_filetypes = g:V.Dict.make_index([
   \   'gitcommit', 'help', 'hybrid', 'markdown', 'tex', 'text',
-  \   'vcs-commit', 'lingr-say'
+  \   'vcs-commit',
   \ ])
 
   if !exists('g:neocomplete#same_filetypes')
@@ -2906,134 +2894,6 @@ if has('gui_running')
   let g:tweetvim_original_hi = 1
 endif
 nnoremap <silent> <Leader><Leader>v :<C-u>TweetVimSay<CR>
-
-" lingr.vim  {{{2
-if !exists('g:lingr') && !g:V.is_windows()
-  " Only when started by the 'lingr' command(alias), lingr.vim is used.
-  "     alias lingr="vim --cmd 'let g:lingr = 1' -c LingrLaunch"
-  let g:loaded_lingr_vim = 1
-else
-  let g:auto_source#exclude = ['.*']
-endif
-let g:lingr_vim_user = 'thinca'
-
-let g:lingr_vim_additional_rooms = [
-\   'vim',
-\   'splatoon',
-\   'computer_science',
-\   'momonga',
-\   'mcujm',
-\   'plugdj',
-\   'gentoo',
-\   'editor',
-\   'csharp',
-\   'lua',
-\   'vimperator',
-\   'bazaar',
-\   'filer',
-\   'git',
-\   'completion',
-\   'java_ja',
-\   'perl_jp',
-\   'shell',
-\   'scala',
-\   'lingr',
-\   'lowlevel',
-\   'haskell',
-\   'ruby',
-\   'emacs',
-\   'site_dev',
-\   '_',
-\   'onsg',
-\   'yokohamavim',
-\ ]
-
-let g:lingr_vim_sidebar_width = 30
-let g:lingr_vim_rooms_buffer_height = len(g:lingr_vim_additional_rooms) + 1
-let g:lingr_vim_debug_log_file = s:plugin_info_dir('lingr') .. strftime('lingr-%Y-%m-%d.log')
-let g:lingr_vim_count_unread_at_current_room = 1
-
-augroup vimrc-plugin-lingr
-  autocmd!
-  autocmd User plugin-lingr-* call s:lingr_event(
-  \            matchstr(expand('<amatch>'), 'plugin-lingr-\zs\w*'))
-  autocmd FileType lingr-* call s:init_lingr(expand('<amatch>'))
-augroup END
-function! s:init_lingr(ft) abort
-  if exists('s:window')
-    nnoremap <buffer> <silent> <C-l>
-    \                          :<C-u>call <SID>lingr_update_unread({})<CR><C-l>
-    let b:window_name = 'lingr-vim'
-  endif
-  setlocal nomodeline
-  if a:ft ==# 'lingr-say'
-    inoreabbrev <buffer> koron KoRoN
-    setlocal statusline=%f\ %m
-    if exists('*eskk#statusline')
-      let &l:statusline ..= '%{eskk#statusline()}'
-    endif
-  elseif a:ft ==# 'lingr-members'
-    setlocal nowinfixheight
-  elseif a:ft ==# 'lingr-messages'
-    let b:statusline_extra = '=" " .. g:V.now(-8).to_string()'
-    setlocal nolist
-    nmap <buffer> C vi)*
-    nnoremap <expr> <buffer> <C-j> winnr() == winnr('$')
-    \ ? "\<C-e>gj"
-    \ : winnr('$') .. "\<C-w>w\<C-e>gj\<C-w>p"
-    nnoremap <expr> <buffer> <C-k> winnr() == winnr('$')
-    \ ? "\<C-y>gk"
-    \ : winnr('$') .. "\<C-w>w\<C-y>gk\<C-w>p"
-    augroup vimrc-plugin-lingr-messages
-      autocmd! BufEnter <buffer> call s:lingr_update_unread({})
-    augroup END
-  elseif a:ft ==# 'lingr-rooms'
-    augroup vimrc-plugin-lingr-rooms
-      autocmd! BufEnter <buffer> execute line('$') + 1 'wincmd _'
-    augroup END
-  endif
-endfunction
-function! s:lingr_event(event) abort
-  let g:lingr_vim_debug_log_file =
-  \     s:plugin_info_dir('lingr') .. strftime('lingr-%Y-%m-%d.log')
-  if a:event ==# 'message'
-    call s:lingr_update_unread(lingr#get_last_message())
-  endif
-endfunction
-let s:lingr_notified = 0
-function! s:lingr_update_unread(last) abort
-  let unread_count = lingr#unread_count()
-  if !s:lingr_notified && unread_count && !empty(a:last)
-    let s:lingr_notified = a:last.text =~? 'thinca'
-  endif
-
-  if exists(':WindowName')
-    let window_name = 'lingr-vim'
-    if unread_count != 0
-      let window_name ..= '(' .. unread_count .. ')'
-    endif
-    if s:lingr_notified
-      let window_name ..= '!'
-    endif
-    execute printf('WindowName %s', window_name)
-  endif
-  try
-    if dein#is_sourced('blink1')
-      if unread_count == 0
-        call blink1#off()
-        let s:lingr_notified = 0
-      elseif s:lingr_notified
-        call blink1#green()
-      else
-        let read_max = 200
-        let rgb_max = 0xFF
-        let v = s:clamp(unread_count * rgb_max / read_max, 0, rgb_max)
-        call blink1#rgb(v, 0, rgb_max - v)
-      endif
-    endif
-  catch
-  endtry
-endfunction
 
 " J6uil.vim  {{{2
 let g:J6uil_config_dir = s:plugin_info_dir('J6uil')
