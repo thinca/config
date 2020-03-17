@@ -33,10 +33,7 @@ endfunction
 command! -buffer -bar MarkdownCodeUpdate call s:update_code()
 " MarkdownCodeUpdate
 
-syntax match markdownURL "\<https\?://\S\+"
-
 highlight link markdownBlockDelimiter Delimiter
-highlight link markdownURL Underlined
 
 syntax sync fromstart
 
