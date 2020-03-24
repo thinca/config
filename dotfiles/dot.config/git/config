@@ -155,7 +155,7 @@
 			grep -Ev \"^${1}\\$|$(git worktree-bases | sed 's/.*/^&$/' | paste -s -d'|' -)\"; \
 	}; f ${1:-$(git current-branch)}"
 	worktree-bases = "!git worktree list --porcelain | grep '^worktree' | sed 's/^worktree //' | xargs -IX basename X"
-	current-branch = symbolic-ref --short HEAD
+	current-branch = branch --show-current
 	current-remote = !git branch-remote "$(git current-branch)"
 	branch-remote = "!f() { \
 		local b=\"${1:?Branch anme required.}\" && \
