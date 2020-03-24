@@ -67,7 +67,7 @@
 			git select-commit \"${1:-$(git base-commit)}..HEAD\"\
 		)\"; \
 	}; f"
-	fixup = !git -c core.editor=true rebase -i --autosquash $(git base-commit)
+	fixup = !git -c core.editor=true rebase --rebase-merges --interactive --autosquash $(git base-commit)
 	fix = "!f() { \
 		git fixcommit ${1} && \
 		git fixup; \
