@@ -826,7 +826,7 @@ augroup vimrc-lcd
     endif
 
     for lib_pat in [
-    \   '^.*/vendor/bundle/ruby/[^/]\+/\%(bundler/\)\?gems/[^/]\+/',
+    \   '^.*/vendor/bundle/\%(ruby/[^/]\+/\)\?\%(bundler/\)\?gems/[^/]\+/',
     \   '^.*/node_modules/[^/]\+/',
     \ ]
       let lib_base = matchstr(simple, lib_pat)
@@ -2593,7 +2593,7 @@ if dein#is_sourced('altr')
   call altr#define(
   \   'app/controllers/%_controller.rb',
   \   'spec/controllers/%_controller_spec.rb',
-  \   'app/views/%/*.json.jbuilder',
+  \   'app/views/%/*.*',
   \   'spec/requests/%_spec.rb')
   call altr#define('app/%/%.rb', 'spec/%/%_spec.rb')
   call altr#define('lib/%.rb', 'spec/lib/%_spec.rb')
