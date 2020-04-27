@@ -9,10 +9,6 @@
 # Disable ^Q and ^S.
 stty -ixon
 
-fpath=(~/.zsh/functions/Completion(N-/) $fpath)
-autoload -U compinit
-compinit
-
 autoload -U colors
 colors
 
@@ -302,5 +298,9 @@ done
 # Delete the duplicate entry.
 typeset -U path
 typeset -U manpath
+
+fpath=(~/.zsh/functions/Completion(N-/) $fpath)
+autoload -U compinit
+compinit
 
 # vim: ft=zsh

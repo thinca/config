@@ -1,6 +1,6 @@
 if [[ -d ~/.asdf ]]; then
 	source ~/.asdf/asdf.sh
-	source ~/.asdf/completions/asdf.bash
+	fpath=(${ASDF_DIR}/completions $fpath)
 fi
 export RUBY_CONFIGURE_OPTS="--enable-shared"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
