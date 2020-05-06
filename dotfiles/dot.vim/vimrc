@@ -1158,7 +1158,6 @@ nnoremap <silent> <Space>w :<C-u>update<CR>
 nnoremap <silent> <Space>W :<C-u>update!<CR>
 nnoremap <silent> <Space>q :<C-u>quit<CR>
 nnoremap <silent> <Space>Q :<C-u>quit!<CR>
-nnoremap <silent> q<Space> :<C-u>quit<CR>
 
 " Change encodings and formats.
 nnoremap <Space>e <Nop>
@@ -1197,6 +1196,12 @@ nnoremap <silent> <Space>op :<C-u>set paste! paste?<CR>
 nnoremap <Space>t <Nop>
 nnoremap <silent> <Space>tn :<C-u>tabnew<CR>
 nnoremap <silent> <Space>tc :<C-u><C-r>=v:count?v:count:''<CR>tabclose<CR>
+
+" q as prefix
+nnoremap <script> <expr> q reg_recording() is# '' ? '<SID>(q)' : 'q'
+
+nnoremap <silent> <SID>(q) q
+nnoremap <silent> <SID>(q)<Space> :<C-u>quit<CR>
 
 if exists(':tmap')
   call s:meta_map('h', '<C-w>h', 't')
