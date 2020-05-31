@@ -637,6 +637,9 @@ setglobal timeoutlen=5000
 setglobal ttimeout ttimeoutlen=50
 
 setglobal nrformats& nrformats-=octal
+if has('patch-8.2.0860')
+  setglobal nrformats+=unsigned
+endif
 
 " spelling
 setglobal spelllang& spelllang+=cjk
