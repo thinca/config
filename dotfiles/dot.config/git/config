@@ -160,7 +160,10 @@
 	branch-remote = "!f() { \
 		local b=\"${1:?Branch anme required.}\" && \
 		local r=$(git config \"branch.${b}.remote\") && \
-		echo \"${r:-$(git branch-remote \"$(git base-branch)\")}\"; \
+		([[ ${b} == ${2} ]] && \
+			echo origin || \
+			echo \"${r:-$(git branch-remote \"$(git base-branch)\" \"${b}\")}\" \
+		); \
 	}; f"
 	remote-branch = "!f() { \
 		echo \"$(git branch-remote \"${1}\")/${1}\"; \
@@ -187,7 +190,7 @@
 	base-head = "!f() { \
 		git branch-head \"$(git base-branch \"${1}\")\"; \
 	}; f"
-	base-commit = !git merge-base origin/$(git base-branch) HEAD
+	base-commit = !git merge-base "$(git base-head)" HEAD
 	features = "!f() { \
 		git branch | \
 			cut -c3- | \
