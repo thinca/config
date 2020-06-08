@@ -1,5 +1,5 @@
 /dotfiles/dot.bundle/cache/
-/dotfiles/dot.config/git/config.local
+/dotfiles/dot.config/git/*.local
 /dotfiles/dot.config/vim/local.dein.vim
 /dotfiles/dot.config/vim/local.pre.vim
 /dotfiles/dot.config/vim/local.vim
