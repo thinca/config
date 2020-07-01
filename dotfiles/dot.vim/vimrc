@@ -3443,6 +3443,9 @@ let g:lsp_settings = {
 \ }
 
 function! s:on_lsp_buffer_enabled() abort
+  if &l:buftype isnot# '' || win_gettype() isnot# ''
+    return
+  endif
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
   nmap <buffer> gd <plug>(lsp-definition)
