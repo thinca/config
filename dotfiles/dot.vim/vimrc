@@ -2306,7 +2306,7 @@ endif
 " neomru.vim  {{{2
 let g:neomru#file_mru_path = s:plugin_info_dir('neomru') .. 'file'
 let g:neomru#directory_mru_path = s:plugin_info_dir('neomru') .. 'directory'
-let g:neomru#file_mru_limit = 1000
+let g:neomru#file_mru_limit = 10000
 let g:neomru#file_mru_ignore_pattern = s:temp_file_pat
 
 " alignta.vim  {{{2
