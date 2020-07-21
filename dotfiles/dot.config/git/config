@@ -2,6 +2,7 @@
 	autocrlf = false
 	quotepath = false
 	hooksPath = ~/.config/git/hooks
+	pager = (type diff-highlight &>/dev/null && diff-highlight || cat) | less
 [user]
 	name = thinca
 	email = thinca@gmail.com
@@ -29,10 +30,6 @@
 	lineNumber = true
 [commit]
 	verbose = true
-[pager]
-	log = (type diff-highlight &>/dev/null && diff-highlight || cat) | less
-	show = (type diff-highlight &>/dev/null && diff-highlight || cat) | less
-	diff = (type diff-highlight &>/dev/null && diff-highlight || cat) | less
 [interactive]
 	diffFilter = (type diff-highlight &>/dev/null && diff-highlight || cat)
 [alias]
