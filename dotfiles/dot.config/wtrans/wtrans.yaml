@@ -3,6 +3,12 @@ defaults:
   singlebyteLanguage: 'en'
   multibyteLanguage: 'ja'
   toLanguageCandidates: ['en', 'ja']
+
+puppeteerOptions:
+  defaultViewport:
+    width: 1920
+    height: 1080
+
 services:
   google:
     url: 'https://translate.google.com/'
@@ -15,16 +21,16 @@ services:
       execute: []
       from_en:
         - click: '.tlid-open-source-language-list'
-        - click: '.language_list_sl_list .sl_list_en_checkmark'
+        - click: '.language-list:not([style*="display: none"]) .language_list_section:last-child .language_list_item_wrapper-en'
       from_ja:
         - click: '.tlid-open-source-language-list'
-        - click: '.language_list_sl_list .sl_list_ja_checkmark'
+        - click: '.language-list:not([style*="display: none"]) .language_list_section:last-child .language_list_item_wrapper-ja'
       to_en:
         - click: '.tlid-open-target-language-list'
-        - click: '.language_list_tl_list .tl_list_en_checkmark'
+        - click: '.language-list:not([style*="display: none"]) .language_list_section:last-child .language_list_item_wrapper-en'
       to_ja:
         - click: '.tlid-open-target-language-list'
-        - click: '.language_list_tl_list .tl_list_ja_checkmark'
+        - click: '.language-list:not([style*="display: none"]) .language_list_section:last-child .language_list_item_wrapper-ja'
 
   bing:
     url: 'https://www.bing.com/Translator'
