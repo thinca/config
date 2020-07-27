@@ -2,7 +2,7 @@
 	autocrlf = false
 	quotepath = false
 	hooksPath = ~/.config/git/hooks
-	pager = (type diff-highlight &>/dev/null && diff-highlight || cat) | less
+	pager = (type delta &>/dev/null && delta || (type diff-highlight &>/dev/null && diff-highlight || cat) | less)
 [user]
 	name = thinca
 	email = thinca@gmail.com
@@ -219,6 +219,7 @@
 [rerere]
 	enabled = true
 [include]
+	path = delta.config
 	path = ~/.gitconfig.local
 	path = config.local
 
