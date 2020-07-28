@@ -10,7 +10,7 @@ if is-at-least 4.3.10; then
 	zstyle ':vcs_info:git:*' check-for-changes true
 	zstyle ':vcs_info:git:*' stagedstr "+"
 	zstyle ':vcs_info:git:*' unstagedstr "-"
-	zstyle ':vcs_info:git:*' formats '(%s)-[%b] %c%u'
+	zstyle ':vcs_info:git:*' formats '%s:[%b] %c%u'
 fi
 
 
