@@ -64,10 +64,12 @@
 			git select-commit \"${1:-$(git base-commit)}..HEAD\"\
 		)\"; \
 	}; f"
-	fixup = !git -c core.editor=true rebase --rebase-merges --interactive --autosquash $(git base-commit)
+	fixup = "!f() { \
+		git -c core.editor=true rebase --rebase-merges --interactive --autosquash ${1:-$(git base-commit)}; \
+	}; f"
 	fix = "!f() { \
 		git fixcommit ${1} && \
-		git fixup; \
+		git fixup ${1}; \
 	}; f"
 	sw = checkout
 	co = checkout
