@@ -1719,6 +1719,14 @@ else
       let &t_te ..= "\e[0 q"
     endif
 
+    " Tmux will send xterm-style keys when its xterm-keys option is on
+    if &term =~? '^screen'
+      execute "set <xUp>=\e[1;*A"
+      execute "set <xDown>=\e[1;*B"
+      execute "set <xRight>=\e[1;*C"
+      execute "set <xLeft>=\e[1;*D"
+    endif
+
     " Change the shape of the cursor at Command-line mode.
     augroup vimrc-cursor-shape
       autocmd!
