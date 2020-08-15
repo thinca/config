@@ -124,7 +124,7 @@
 	conflicts = diff --name-only --diff-filter=U
 	upst = rebase origin/master
 	gene = log --graph --date=iso --pretty=gene
-	genea = log --graph --date=iso --pretty=gene --all
+	genea = log --graph --date=iso --pretty=gene --exclude='refs/notes/*' --all
 	gr = log --graph --date=iso --pretty=genegr
 	hist = log -p --reverse --stat --color-words -C
 	recent = log --date=relative --pretty=recent --reverse -10
