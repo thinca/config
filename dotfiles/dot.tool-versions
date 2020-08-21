@@ -1,11 +1,12 @@
 lua 5.4.0
-nodejs 14.6.0
+nodejs 14.8.0
 perl 5.32.0
 python 3.8.5 2.7.18
-racket 7.7
+racket 7.8
 ruby 2.7.1
-golang 1.14.6
-rclone 1.52.2
-julia 1.4.2
+golang 1.15
+rclone 1.52.3
+julia 1.5.0
 php 7.4.8
-rust 1.45.0
+rust 1.45.2
+haskell 8.10.2
