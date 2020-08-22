@@ -218,6 +218,9 @@
 	gene = format:%C(yellow)%h%Creset %ad %an: %s%C(yellow)%d%Creset
 	genegr = format:%h %ad %an: %s%d
 	recent = format:%C(yellow)%h%Creset %ad %an: %s
+[diff "json"]
+	textconv = "f() { awk 'NR==2{exit 1}' $1 && jq . $1 || cat $1; }; f"
+	cachetextconv = true
 [rerere]
 	enabled = true
 [include]
