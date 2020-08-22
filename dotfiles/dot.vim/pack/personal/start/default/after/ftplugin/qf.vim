@@ -15,7 +15,7 @@ noremap <buffer> <nowait> q <C-w>c
 nnoremap <silent> <buffer> r :<C-u>Qfreplace<CR>
 nnoremap <silent> <buffer> u :<C-u>Unite qf<CR>
 
-function! s:jk(motion)
+function s:jk(motion)
   let max = line('$')
   let list = s:getlist()
   let cur = line('.') - 1
@@ -44,7 +44,7 @@ if exists('*s:undo_entry')
   finish
 endif
 
-function! s:grep(pat, invert) abort
+function s:grep(pat, invert) abort
   let pat = a:pat =~# '\S' ? a:pat : @/
   let qf = s:getlist()
   call s:add_history(qf)
@@ -53,11 +53,11 @@ function! s:grep(pat, invert) abort
   call s:setlist(qf)
 endfunction
 
-function! s:is_loclistwin() abort
+function s:is_loclistwin() abort
   return win_getid() == getloclist(0, {'winid': 1}).winid
 endfunction
 
-function! s:getlist() abort
+function s:getlist() abort
   if s:is_loclistwin()
     return getloclist(0)
   else
@@ -65,7 +65,7 @@ function! s:getlist() abort
   endif
 endfunction
 
-function! s:setlist(list) abort
+function s:setlist(list) abort
   if s:is_loclistwin()
     call setloclist(0, a:list, 'r')
   else
@@ -73,14 +73,14 @@ function! s:setlist(list) abort
   endif
 endfunction
 
-function! s:undo_entry()
+function s:undo_entry()
   let history = get(w:, 'qf_history', [])
   if !empty(history)
     call s:setlist(remove(history, -1))
   endif
 endfunction
 
-function! s:del_entry() range
+function s:del_entry() range
   let qf = s:getlist()
   call s:add_history(qf)
   unlet! qf[a:firstline - 1 : a:lastline - 1]
@@ -88,7 +88,7 @@ function! s:del_entry() range
   execute a:firstline
 endfunction
 
-function! s:add_history(qf) abort
+function s:add_history(qf) abort
   let history = get(w:, 'qf_history', [])
   call add(history, copy(a:qf))
   let w:qf_history = history

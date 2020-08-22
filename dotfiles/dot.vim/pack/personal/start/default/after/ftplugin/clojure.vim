@@ -9,7 +9,7 @@ setlocal shiftwidth=2
 setlocal nocindent expandtab commentstring=;\ %s
 setlocal omnifunc=neoclojure#complete
 
-function! s:get_syntax_name()
+function s:get_syntax_name()
   let col = col('.')
   if col == col('$')
     let col -= 1
@@ -17,27 +17,27 @@ function! s:get_syntax_name()
   return synIDattr(synIDtrans(synID(line("."), col, 1)), 'name')
 endfunction
 
-function! s:is_disable_pare_assist()
+function s:is_disable_pare_assist()
   let synname = s:get_syntax_name()
   return synname ==? 'Constant' || synname ==? 'Comment'
 endfunction
 
-function! s:pair_char(char)
+function s:pair_char(char)
   return get({
   \   '(': ')', '{': '}', '[': ']',
   \   ')': '(', '}': '{', ']': '[',
   \ }, a:char, '')
 endfunction
 
-function! s:prev_char()
+function s:prev_char()
   return getline('.')[col('.') - 2]
 endfunction
 
-function! s:next_char()
+function s:next_char()
   return getline('.')[col('.') - 1]
 endfunction
 
-function! s:overwrap_pare(left, right)
+function s:overwrap_pare(left, right)
   let next = s:next_char()
   let g:next = next
   let g:disable = s:is_disable_pare_assist()
@@ -51,14 +51,14 @@ function! s:overwrap_pare(left, right)
   return a:left . a:right . "\<Left>"
 endfunction
 
-function! s:skip_close_pare(defkey, altkey, char)
+function s:skip_close_pare(defkey, altkey, char)
   if !s:is_disable_pare_assist() && s:next_char() ==# a:char
     return a:altkey
   endif
   return a:defkey
 endfunction
 
-function! s:wrap_tab()
+function s:wrap_tab()
   let tab = TabWrapper()
   if s:is_disable_pare_assist() ||
   \  tab ==# "\<Plug>(neosnippet_expand_or_jump)"
@@ -73,7 +73,7 @@ function! s:wrap_tab()
   return tab
 endfunction
 
-function! s:del_pare(defkey)
+function s:del_pare(defkey)
   let prev = s:prev_char()
   if !s:is_disable_pare_assist()
     if prev =~# '^[({[]$'
@@ -85,7 +85,7 @@ function! s:del_pare(defkey)
   return a:defkey
 endfunction
 
-function! s:smart_space(key)
+function s:smart_space(key)
   let prev = s:prev_char()
   let next = s:next_char()
   if prev ==# ' ' && next !=# ' '

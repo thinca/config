@@ -5,29 +5,29 @@ SetUndoFtplugin setl bin< eol<
 SetUndoFtplugin au! custom-ftplugin-xxd * <buffer>
 SetUndoFtplugin call XxdRestore()
 
-function! s:to_xxd()
+function s:to_xxd()
   silent %!xxd -g 1
   silent! %substitute/\r$//e
   let b:xxd = 1
 endfunction
 
 " FIXME
-function! XxdRestore()
+function XxdRestore()
   call s:restore()
 endfunction
-function! s:restore()
+function s:restore()
   if exists('b:xxd')
     silent %!xxd -r
     unlet! b:xxd
   endif
 endfunction
 
-function! s:write_pre()
+function s:write_pre()
   let b:xxd_cursor = getpos('.')
   call s:restore()
 endfunction
 
-function! s:write_post()
+function s:write_post()
   call s:to_xxd()
   setlocal nomodified
   if exists('b:xxd_cursor')
@@ -56,7 +56,7 @@ augroup custom-ftplugin-xxd
 augroup END
 
 
-function! s:complete()
+function s:complete()
   if getline('.') != ''
     return
   endif

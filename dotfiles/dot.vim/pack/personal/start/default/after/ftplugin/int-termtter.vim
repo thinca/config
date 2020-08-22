@@ -7,7 +7,7 @@ augroup custom-int-termtter
 augroup END
 
 let s:pat =  '^>\s\+u\%(pdate\)\?\>\s*\zs.*$'
-function! s:count()
+function s:count()
   let l = getline('$')
   if l !~# s:pat
     return ''

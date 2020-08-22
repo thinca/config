@@ -25,7 +25,7 @@ nnoremap <buffer> <expr> <silent>
 " \        <C-q> unite#sources#vimshell_history#start_complete()
 imap <buffer> <C-l> <Plug>(vimshell_clear)
 
-function! s:complete_history()
+function s:complete_history()
   call complete(len(vimshell#get_prompt()) + 1, g:vimshell#hist_buffer)
   return ''
 endfunction

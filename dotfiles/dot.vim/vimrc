@@ -165,15 +165,15 @@ endif
 
 
 " == Utilities for vimrc. == {{{1
-function! s:SID() abort
+function s:SID() abort
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
 endfunction
 
-function! s:SIDP() abort
+function s:SIDP() abort
   return '<SNR>' .. s:SID() .. '_'
 endfunction
 
-function! s:check_flag(flag) abort
+function s:check_flag(flag) abort
   if exists('b:' .. a:flag)
     return b:{a:flag}
   endif
@@ -183,7 +183,7 @@ function! s:check_flag(flag) abort
   return 0
 endfunction
 
-function! s:toggle_flag(flag) abort
+function s:toggle_flag(flag) abort
   if !exists(a:flag)
     let {a:flag} = 1
   else
@@ -191,7 +191,7 @@ function! s:toggle_flag(flag) abort
   endif
 endfunction
 
-function! s:get_range(type, mode) abort
+function s:get_range(type, mode) abort
   if a:mode ==# 'o'
     let vm = {
         \ 'line' : 'V',
@@ -216,7 +216,7 @@ function! s:get_range(type, mode) abort
   return selected
 endfunction
 
-function! s:clamp(value, min, max) abort
+function s:clamp(value, min, max) abort
   return a:value < a:min ? a:min :
   \      a:max < a:value ? a:max :
   \                        a:value
@@ -231,7 +231,7 @@ augroup vimrc-highlight
   autocmd ColorScheme * call s:highlight_additional()
 augroup END
 
-function! s:highlight_additional() abort
+function s:highlight_additional() abort
   highlight CursorIM guibg=Red guifg=NONE
   let env = has('gui_running') ? 'gui' : 'cterm'
   for hl in ['TabLine', 'TabLineSel']
@@ -291,7 +291,7 @@ endif
 setglobal helplang=ja,en
 
 " Get character code on cursor with 'fileencoding'.
-function! GetCharacterCode() abort
+function GetCharacterCode() abort
   let str = matchstr(getline('.'), '.', col('.') - 1)
   let str = iconv(str, &encoding, &fileencoding)
   let out = '0x'
@@ -305,7 +305,7 @@ function! GetCharacterCode() abort
 endfunction
 
 " Return the current file size in human readable format.
-function! GetFileSize() abort
+function GetFileSize() abort
   if &encoding ==# &fileencoding || &fileencoding ==# ''
     let size = line2byte(line('$') + 1) - 1
   else
@@ -324,7 +324,7 @@ function! GetFileSize() abort
   return size .. 'GB'
 endfunction
 
-function! GetBufname(...) abort
+function GetBufname(...) abort
   let bufnr = get(a:000, 0, '')
   let tail = get(a:000, 1, 0)
   let bufname = bufname(bufnr)
@@ -364,7 +364,7 @@ function! GetBufname(...) abort
   return bufname
 endfunction
 
-function! StatusLineExtra() abort
+function StatusLineExtra() abort
   let extra = ''
   for scope in ['w:', 'b:', 't:', 'g:']
     if exists(scope .. 'statusline_extra')
@@ -379,7 +379,7 @@ function! StatusLineExtra() abort
   return extra
 endfunction
 
-function! MakeStatusLine(...) abort
+function MakeStatusLine(...) abort
   let multi = a:0 && a:1
   let line = ''
   if s:check_flag('statusline_bufnr')
@@ -436,7 +436,7 @@ function! MakeStatusLine(...) abort
   return line
 endfunction
 
-function! s:buf_label(bufnr, i, is_cur) abort
+function s:buf_label(bufnr, i, is_cur) abort
   let label = GetBufname(a:bufnr, 1)
   if getbufvar(a:bufnr, '&modified')
     let label ..= '+'
@@ -445,7 +445,7 @@ function! s:buf_label(bufnr, i, is_cur) abort
   return printf(' %s%d) %s', curmark, a:i, label)
 endfunction
 
-function! s:tabpage_label(n, ...) abort
+function s:tabpage_label(n, ...) abort
   let is_sidebar = a:0 && a:1
   let n = a:n
   let bufnrs = tabpagebuflist(n)
@@ -482,7 +482,7 @@ function! s:tabpage_label(n, ...) abort
   return label
 endfunction
 
-function! MakeTabLine() abort
+function MakeTabLine() abort
   let sep = ' | '
   let has_tabsidebar = has('tabsidebar') &&
   \   (&g:showtabsidebar == 2 ||
@@ -685,7 +685,7 @@ augroup vimrc-swapfile
   autocmd SwapExists * call s:on_SwapExists()
 augroup END
 
-function! s:on_SwapExists() abort
+function s:on_SwapExists() abort
   if !filereadable(expand('<afile>'))
     let v:swapchoice = 'd'
     return
@@ -700,7 +700,7 @@ endfunction
 command! SwapfileRecovery call s:swapfile_recovery()
 command! SwapfileDelete call s:swapfile_delete()
 
-function! s:swapfile_recovery() abort
+function s:swapfile_recovery() abort
   if get(b:, 'swapfile_exists', 0)
     let b:swapfile_choice = 'r'
     unlet b:swapfile_exists
@@ -708,7 +708,7 @@ function! s:swapfile_recovery() abort
   endif
 endfunction
 
-function! s:swapfile_delete() abort
+function s:swapfile_delete() abort
   if get(b:, 'swapfile_exists', 0)
     let b:swapfile_choice = 'd'
     unlet b:swapfile_exists
@@ -749,7 +749,7 @@ augroup vimrc-auto-cursorline
   autocmd WinLeave * call s:auto_cursorline('WinLeave')
 
   let s:cursorline_lock = 0
-  function! s:auto_cursorline(event) abort
+  function s:auto_cursorline(event) abort
     if get(b:, 'cursorline_disable', 0)
       return
     endif
@@ -779,7 +779,7 @@ augroup vimrc-lcd
   autocmd BufReadPre,BufFilePre * unlet! b:lcd
   autocmd BufReadPost,BufFilePost,FileType * call s:lcd()
 
-  function! s:lcd() abort
+  function s:lcd() abort
     if &l:buftype !=# '' && &l:buftype !=# 'help'
       if exists('b:lcd_original')
         lcd `=b:lcd_original`
@@ -820,7 +820,7 @@ augroup vimrc-lcd
   \   ['src/', 'include/'],
   \ ]
 
-  function! s:lcd_path() abort
+  function s:lcd_path() abort
     let path = ''
     let simple = expand('%:p:h:gs?\\\+?/?')
 
@@ -864,7 +864,7 @@ augroup END
 augroup vimrc-auto-mkdir
   autocmd!
   autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
-  function! s:auto_mkdir(dir, force) abort
+  function s:auto_mkdir(dir, force) abort
     if &l:buftype !=# ''
       return
     endif
@@ -882,7 +882,7 @@ if executable('chmod')
     autocmd BufWritePost * call s:add_permission_x()
   augroup END
 
-  function! s:add_permission_x() abort
+  function s:add_permission_x() abort
     let file = expand('%:p')
     if getline(1) =~# '^#!' && !executable(file)
       silent! call system('chmod a+x ' .. shellescape(file))
@@ -955,7 +955,7 @@ augroup vimrc-misc
 
   " Create a new buffer to apply the new global options from vimrc
   autocmd VimEnter * ++nested ++once call s:apply_global_option_values()
-  function! s:apply_global_option_values() abort
+  function s:apply_global_option_values() abort
     let c = argc()
     if c == 0 && bufname('%') ==# '' && line('$') == 1 && getline(1) ==# ''
       enew
@@ -973,7 +973,7 @@ if !v:vim_did_enter
   mapclear!
 endif
 
-function! s:meta_map(key, rhs, ...) abort
+function s:meta_map(key, rhs, ...) abort
   let mode = a:0 ? a:1 : 'n'
   let modifier = g:V.is_mac() ? 'D' : 'M'
   execute printf('%snoremap <%s-%s> %s', mode, modifier, a:key, a:rhs)
@@ -1066,7 +1066,7 @@ nnoremap <silent> ]l :lnext<CR>
 noremap ; :
 noremap : ;
 
-function! s:good_feeling_prefix() abort
+function s:good_feeling_prefix() abort
   return printf(":\<C-u>%s", 78 * 2 <= winwidth(0) ? 'vertical ' : '')
 endfunction
 nnoremap <expr> <C-h> <SID>good_feeling_prefix() .. 'h '
@@ -1224,7 +1224,7 @@ nnoremap <silent> <Space>.
 \ <Bar>   tabnew $VIM_USERDIR/vimrc
 \ <Bar> endif<CR>
 
-function! s:grep_same_ext(pat) abort
+function s:grep_same_ext(pat) abort
   let exts = get({
   \   'c': ['c', 'h'],
   \   'cpp': ['cpp', 'h', 'hpp', 'cc', 'cxx'],
@@ -1237,7 +1237,7 @@ nnoremap <silent> <Space>Grep :<C-u>call <SID>grep_same_ext('\c' .. @/)<CR>
 nnoremap <silent> <Space><C-g> :<C-u>vimgrep /<C-r>//gj %<CR>
 
 noremap! <expr> <C-r>/  <SID>strip_magic()
-function! s:strip_magic() abort
+function s:strip_magic() abort
   let search_pat = getreg('/')
   return getcmdtype() =~# '[/?]'
         \ ? search_pat
@@ -1245,7 +1245,7 @@ function! s:strip_magic() abort
 endfunction
 
 let s:prev_file_pat = '.'
-function! s:grep(...) abort
+function s:grep(...) abort
   if 2 <= a:0
     let files = a:1
     let pat = join(a:000[1 :], ' ')
@@ -1270,7 +1270,7 @@ command! -nargs=+ G call s:grep(<f-args>)
 nnoremap <silent> <Space><C-n> :<C-u>call <SID>swap_window(v:count1)<CR>
 nnoremap <silent> <Space><C-p> :<C-u>call <SID>swap_window(-v:count1)<CR>
 
-function! s:swap_window(n) abort
+function s:swap_window(n) abort
   let curbuf = bufnr('%')
   let target = g:V.modulo(winnr() + a:n - 1, winnr('$')) + 1
 
@@ -1296,7 +1296,7 @@ cnoreabbrev ++m ++ff=mac
 
 " Show the diff between the current buffer and the last saved file. {{{
 " TODO: Become plugin.
-function! s:diff_original() abort
+function s:diff_original() abort
   if exists('b:diff_current')
     execute bufwinnr(b:diff_current) 'wincmd w'
   endif
@@ -1344,7 +1344,7 @@ command! -nargs=1 -bang -bar -complete=file Rename
 \        call s:move(<q-args>, <q-bang>, expand('%:h'))
 command! -nargs=1 -bang -bar -complete=file Move
 \        call s:move(<q-args>, <q-bang>, getcwd())
-function! s:move(file, bang, base) abort
+function s:move(file, bang, base) abort
   let pwd = getcwd()
   cd `=a:base`
   try
@@ -1373,7 +1373,7 @@ endfunction
 
 command! -nargs=? -bang -bar -complete=file Delete
 \ call s:delete_with_confirm(<q-args>, <bang>0)
-function! s:delete_with_confirm(file, force) abort
+function s:delete_with_confirm(file, force) abort
   let file = a:file ==# '' ? expand('%') : a:file
   if !a:force
     echo 'Delete "' .. file .. '"? [y/N]:'
@@ -1389,7 +1389,7 @@ endfunction
 " unique lines without sort.
 command! -bar -nargs=* -range=% Unique
 \        <line1>,<line2>call s:unique_lines(<q-args>)
-function! s:unique_lines(pat) range abort
+function s:unique_lines(pat) range abort
   let lines = g:V.uniq_by(
   \   getline(a:firstline, a:lastline),
   \   { val -> a:pat ==# '' ? val : matchstr(val, a:pat) }
@@ -1407,7 +1407,7 @@ if executable('ctags')
   " Execute ctags command. And echo for error.
   command! -nargs=? -complete=file -bar CtagsR call CtagsR([<f-args>])
 
-  function! CtagsR(args) abort
+  function CtagsR(args) abort
     let args = a:args
     let dir = '.'
     if !empty(args) && isdirectory(args[0])
@@ -1456,7 +1456,7 @@ if executable('ctags')
     silent execute '!' .. cmd
   endfunction
 
-  function! s:tagfile() abort
+  function s:tagfile() abort
     let files = tagfiles()
     return empty(files) ? '' : files[0]
   endfunction
@@ -1475,7 +1475,7 @@ command! -bar RTP echo substitute(&runtimepath, ',', "\n", 'g')
 command! -nargs=+ -range=% HighlightWith
 \                          <line1>,<line2>call s:highlight_with(<q-args>)
 
-function! s:highlight_with(args) range abort
+function s:highlight_with(args) range abort
   if a:firstline == 1 && a:lastline == line('$')
     return
   endif
@@ -1506,7 +1506,7 @@ endfunction
 
 
 " Grep({text}, {pat} [, invert])
-function! Grep(text, pat, ...) abort
+function Grep(text, pat, ...) abort
   let op = a:0 && a:1 ? '!~#' : '=~#'
   return join(filter(split(a:text, "\n"), 'v:val' .. op .. 'a:pat'), "\n")
 endfunction
@@ -1523,7 +1523,7 @@ command! -nargs=+ -bang -bar -complete=file Opener
 \  |   execute s:opener(<q-args>)
 \  | endif
 
-function! s:opener(cmdline, ...) abort
+function s:opener(cmdline, ...) abort
   if a:0
     let file = a:1
   else
@@ -1546,7 +1546,7 @@ function! s:opener(cmdline, ...) abort
   endif
   return ''
 endfunction
-function! s:bufopened(file) abort
+function s:bufopened(file) abort
   let f = fnamemodify(a:file, ':p')
   for tabnr in range(1, tabpagenr('$'))
     let winnr = 1
@@ -1562,7 +1562,7 @@ endfunction
 
 
 " -- Functions.  {{{2
-function! GeneratePassword(len, ...) abort
+function GeneratePassword(len, ...) abort
   let char_types = {
   \   'upper': repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 2),
   \   'lower': repeat('abcdefghijklmnopqrstuvwxyz', 2),
@@ -1603,7 +1603,7 @@ if $WINDOW !=# '' || $TMUX !=# ''
   if has('mouse')
     setglobal ttymouse=xterm2
   endif
-  function! s:set_window_name(name) abort
+  function s:set_window_name(name) abort
     if get(g:, 'before_window_name', '') is# a:name
       return
     endif
@@ -1614,7 +1614,7 @@ if $WINDOW !=# '' || $TMUX !=# ''
     " redraw!
   endfunction
   command! -nargs=? WindowName call s:set_window_name(<q-args>)
-  function! s:auto_window_name() abort
+  function s:auto_window_name() abort
     let varname = 'window_name'
     for scope in ['w:', 'b:', 't:', 'g:']
       if exists(scope .. varname)
@@ -1636,7 +1636,7 @@ if $WINDOW !=# '' || $TMUX !=# ''
   augroup END
 
   if $TMUX !=# ''
-    function! s:start_vim_plugin_test(dir) abort
+    function s:start_vim_plugin_test(dir) abort
       call system(printf('tmux new-window "zsh -i -c \"cd %s; DISPLAY= vim\""',
       \                  a:dir))
     endfunction
@@ -1655,7 +1655,7 @@ endif
 " GUI  {{{2
 if has('gui_running')
   " My default gui settings.
-  function! s:init_guioptions() abort
+  function s:init_guioptions() abort
     " GUI option to use by default.
     winpos 0 0
     " Disable Toolbar and menu, and use non-GUI tab pages line.
@@ -1677,7 +1677,7 @@ if has('gui_running')
   endfunction
   command! -nargs=0 -bar InitGuioptions call s:init_guioptions()
 
-  function! s:start_vim_plugin_test(dir) abort
+  function s:start_vim_plugin_test(dir) abort
     call vimproc#system_bg(printf('gvim --cmd "cd %s"', a:dir))
   endfunction
 
@@ -1688,7 +1688,7 @@ else
   " CUI  {{{2
   if has('unix')
     " Use meta keys in console.
-    function! s:use_meta_keys() abort
+    function s:use_meta_keys() abort
       let mod = g:V.is_mac() ? 'D' : 'M'
       let t = exists(':tmap')
       for i in map(
@@ -1736,7 +1736,7 @@ else
 
     " let &t_ti ..= "\e[?2004h"
     " let &t_te ..= "\e[?2004l"
-    " function! s:XTermPaste(on) abort
+    " function s:XTermPaste(on) abort
     "   let &paste = a:on
     "   return ''
     " endfunction
@@ -1747,7 +1747,7 @@ endif
 
 " :CheckInterface  {{{2
 
-function! s:check_interface() abort
+function s:check_interface() abort
   try
     let lua_ver = substitute(luaeval('_VERSION'), '^Lua ', 'v', '')
   catch
@@ -1795,7 +1795,7 @@ endfunction
 command! CheckInterface call s:check_interface()
 
 " :VimPluginTest  {{{2
-function! s:vim_plugin_test() abort
+function s:vim_plugin_test() abort
   if g:V.all('!isdirectory(g:V.Path.join(getcwd(), v:val))',
   \          ['autoload', 'doc', 'plugin']) ||
   \ !filereadable(g:V.Path.join(fnamemodify(getcwd(), ':h'), '.init.vimrc'))
@@ -1921,14 +1921,14 @@ if dein#is_sourced('vimshell')
     autocmd FileType term-* call s:init_vimshell_term()
   augroup END
 
-  function! s:vimshell_complete_history() abort
+  function s:vimshell_complete_history() abort
     if exists('b:interactive') && has_key(b:interactive, 'command_history')
       call complete(len(vimshell#get_prompt()) + 1, b:interactive.command_history)
     endif
     return ''
   endfunction
 
-  function! s:init_vimshell_int() abort
+  function s:init_vimshell_int() abort
     silent! iunmap <buffer> <C-l>
     inoremap <silent> <buffer> <SID>(vimshell_complete_history)
     \                          <C-r>=<SID>vimshell_complete_history()<CR><C-p>
@@ -1942,7 +1942,7 @@ if dein#is_sourced('vimshell')
     nnoremap <buffer> <C-p> gT
   endfunction
 
-  function! s:init_vimshell_term() abort
+  function s:init_vimshell_term() abort
     imap <buffer> <Esc> <Plug>(vimshell_term_send_escape)
     inoremap <buffer> <Esc><Esc> <Esc>
   endfunction
@@ -2019,7 +2019,7 @@ let g:context_filetype#same_filetypes.vimspec = 'vim'
 " neosnippet.vim
 if dein#is_sourced('neosnippet')
   let g:neosnippet#snippets_directory = $VIM_USERDIR .. '/snippets'
-  function! TabWrapper() abort
+  function TabWrapper() abort
     if neosnippet#expandable() || neosnippet#jumpable()
       " return "\<Plug>(neosnippet_jump_or_expand)"
       return "\<Plug>(neosnippet_expand_or_jump)"
@@ -2041,7 +2041,7 @@ if dein#is_sourced('neosnippet')
     autocmd VimEnter,BufEnter * call s:snippets_remap()
     autocmd InsertLeave * NeoSnippetClearMarkers
   augroup END
-  function! s:snippets_remap() abort
+  function s:snippets_remap() abort
     smapclear
     smapclear <buffer>
     smap <silent> <Tab> <Esc>a<Plug>(neosnippet_jump_or_expand)
@@ -2165,7 +2165,7 @@ if dein#is_sourced('unite')
 
   call unite#custom#profile('file', 'context', {'ignorecase': 1, 'smartcase': 0})
 
-  function! s:unite_status_highlight() abort
+  function s:unite_status_highlight() abort
     highlight link uniteStatusNormal StatusLine
     highlight link uniteStatusHead StatusLine
     highlight link uniteStatusSourceNames StatusLine
@@ -2185,7 +2185,7 @@ if dein#is_sourced('unite')
   \   'is_selectable': 1,
   \ }
 
-  function! s:unite_action.func(candidates) abort
+  function s:unite_action.func(candidates) abort
     PP a:candidates
   endfunction
 
@@ -2198,7 +2198,7 @@ if dein#is_sourced('unite')
   \   'is_selectable': 1,
   \ }
 
-  function! s:unite_action.func(candidates) abort
+  function s:unite_action.func(candidates) abort
     tabnew `=a:candidates[0].action__path`
     for c in a:candidates[1 :]
       vsplit `=c.action__path`
@@ -2214,7 +2214,7 @@ if dein#is_sourced('unite')
   \   'is_selectable': 1,
   \ }
 
-  function! s:unite_action.func(candidates) abort
+  function s:unite_action.func(candidates) abort
     for c in a:candidates
       source `=c.action__path`
     endfor
@@ -2231,7 +2231,7 @@ if dein#is_sourced('unite')
   \   'is_selectable': 1,
   \ }
 
-  function! s:unite_action.func(candidates) abort
+  function s:unite_action.func(candidates) abort
     call map(filter(copy(a:candidates), 'filewritable(v:val.action__path)'),
     \        'delete(v:val.action__path)')
   endfunction
@@ -2288,7 +2288,7 @@ if dein#is_sourced('unite')
   \     ],
   \   },
   \ }
-  function! g:unite_source_outline_info.coffee.create_heading(
+  function g:unite_source_outline_info.coffee.create_heading(
   \ which, heading_line, matched_line, context)
     return {
     \   'word': a:heading_line,
@@ -2296,7 +2296,7 @@ if dein#is_sourced('unite')
     \   'type': a:matched_line =~# '^class' ? 'class' : 'function',
     \ }
   endfunction
-  function! g:unite_source_outline_info.vimspec.create_heading(
+  function g:unite_source_outline_info.vimspec.create_heading(
   \ which, heading_line, matched_line, context)
     return {
     \   'word': a:heading_line,
@@ -2333,7 +2333,7 @@ let g:OmniSharp_server_type = 'roslyn'
 let g:OmniSharp_autoselect_existing_sln = 0
 command! -nargs=1 -complete=customlist,s:omnisharp_api OmniSharpAPI
 \     PP g:V.J.decode(pyeval(printf('getResponse("/%s")', <q-args>)))
-function! s:omnisharp_api(lead, line, pos) abort
+function s:omnisharp_api(lead, line, pos) abort
   let cand = [
   \   'gotodefinition',
   \   'findsymbols',
@@ -2441,7 +2441,7 @@ if dein#is_sourced('eskk')
   augroup END
 endif
 
-function! s:init_eskk() abort
+function s:init_eskk() abort
   let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
   call t.add_map('va', 'ゔぁ')
   call t.add_map('vi', 'ゔぃ')
@@ -2519,7 +2519,7 @@ let g:nf_map_previous = ''
 let g:nf_include_dotfiles = 1
 let g:nf_loop_files = 1
 let g:nf_loop_hook_fn = 'NextFileLoop'
-function! NextFileLoop(file) abort
+function NextFileLoop(file) abort
   return g:V.input_safe('nextfile: loop?[Y/n]: ', 'y') =~? '^y\%[es]$'
 endfunction
 if dein#is_sourced('submode')
@@ -2552,7 +2552,7 @@ if dein#is_sourced('submode')
   call submode#map('changetab', 'n', '', 't', 'gt')
   call submode#map('changetab', 'n', '', 'T', 'gT')
 
-  function! s:movetab(nr) abort
+  function s:movetab(nr) abort
     let pos = g:V.modulo(tabpagenr() - 1 + a:nr, tabpagenr('$'))
     let pos += tabpagenr() <= pos ? 1 : 0
     execute 'tabmove' pos
@@ -2724,7 +2724,7 @@ endif
 if dein#is_sourced('gf-user')
   "   gf-file  {{{3
   " On MS Windows, 'isfname' contains ':', so "foo.c:30" can not open by gF
-  function! GfFile() abort
+  function GfFile() abort
     let path = expand('<cfile>')
     let line = 0
     if path =~# ':\d\+:\?$'
@@ -2744,7 +2744,7 @@ if dein#is_sourced('gf-user')
   call gf#user#extend('GfFile', 0)
 
   "   gf-rails  {{{3
-  function! GfRails() abort
+  function GfRails() abort
     if &l:filetype !=# 'ruby'
       return 0
     endif
@@ -2832,7 +2832,7 @@ if dein#is_sourced('reanimate')
   augroup END
 
   let s:event = {'name': 'session_clean'}
-  function! s:event.load_pre(context) abort
+  function s:event.load_pre(context) abort
     tabnew
     hide tabonly
     let point = a:context.point
@@ -2841,12 +2841,12 @@ if dein#is_sourced('reanimate')
     endif
   endfunction
 
-  function! s:event.save_pre(context) abort
+  function s:event.save_pre(context) abort
     arglocal
     silent! argdelete *
   endfunction
 
-  function! s:event.save_post(context) abort
+  function s:event.save_post(context) abort
     argglobal
   endfunction
 
@@ -2856,14 +2856,14 @@ if dein#is_sourced('reanimate')
   let s:event = {'name': 'gui'}
   " This must run before reanimate_window
   " Because this canges guifont
-  function! s:event.load_pre(context) abort
+  function s:event.load_pre(context) abort
     let file = a:context.path .. '/gui.vim'
     if filereadable(file) && has('gui_running')
       source `=file`
     endif
   endfunction
 
-  function! s:event.save(context) abort
+  function s:event.save(context) abort
     let file = a:context.path .. '/gui.vim'
     if !filereadable(file) || filewritable(file)
       if has('gui')
@@ -2940,7 +2940,7 @@ endif
 
 " committia.vim  {{{2
 let g:committia_hooks = {}
-function! g:committia_hooks.edit_open(info) abort
+function g:committia_hooks.edit_open(info) abort
   setlocal spell
 
   imap <buffer> <C-e> <Plug>(committia-scroll-diff-down-half)
@@ -2961,7 +2961,7 @@ if dein#is_sourced('incsearch')
 endif
 
 " lexima.vim  {{{2
-function! s:setup_lexima() abort
+function s:setup_lexima() abort
   let g:lexima_no_default_rules = 1
   let g:lexima_enable_basic_rules = 0
   call lexima#set_default_rules()
@@ -3045,7 +3045,7 @@ if dein#is_sourced('ambicmd')
   augroup END
 endif
 
-function! s:init_cmdwin() abort
+function s:init_cmdwin() abort
   inoremap <buffer> <expr> <Space> '<C-]>' .. ambicmd#expand('<Space>')
   inoremap <buffer> <expr> <CR>    '<C-]>' .. ambicmd#expand('<CR>')
   inoremap <buffer> <expr> <C-f>   ambicmd#expand('<Right>')
@@ -3083,7 +3083,7 @@ endif
 
 " quickrun.vim  {{{2
 if dein#is_sourced('quickrun')
-  function! s:init_quickrun() abort
+  function s:init_quickrun() abort
     for [key, c] in items({
     \   '<Leader>x': '>message',
     \   '<Leader>p': '-runner shell',
@@ -3199,19 +3199,19 @@ if dein#is_sourced('quickrun')
     "   let g:quickrun_config.c = {'type': 'c/tcc'}
     " endif
     let ruby_bundle_hook = {'kind': 'hook', 'name': 'ruby_bundle'}
-    function! ruby_bundle_hook.on_normalized(session, context) abort
+    function ruby_bundle_hook.on_normalized(session, context) abort
       if getcwd() !=# $HOME && isdirectory('.bundle')
         let a:session.config.exec =
         \   map(copy(a:session.config.exec), 's:bundle_exec(v:val)')
       endif
     endfunction
-    function! s:bundle_exec(cmd) abort
+    function s:bundle_exec(cmd) abort
       return substitute(a:cmd, '\ze%c', 'bundle exec ', '')
     endfunction
     call quickrun#module#register(ruby_bundle_hook, 1)
 
     let rust_cargo_hook = {'kind': 'hook', 'name': 'rust_cargo'}
-    function! rust_cargo_hook.on_normalized(session, context) abort
+    function rust_cargo_hook.on_normalized(session, context) abort
       if a:session.config.type ==# 'rust' &&
       \   findfile('Cargo.toml', '.;') !=# ''
         let a:session.config.exec = ['cargo run --quiet']
@@ -3229,11 +3229,11 @@ if dein#is_sourced('quickrun')
     \ let b:quickrun_config = {'exec': 'rake -f %s'}
   augroup END
 
-  function! s:complete_open_scratch(a, c, p) abort
+  function s:complete_open_scratch(a, c, p) abort
     return sort(filter(keys(extend(copy(g:quickrun#default_config),
     \           g:quickrun_config)), 'v:val !~# "[*_/]" && v:val =~# "^".a:a'))
   endfunction
-  function! s:open_scratch() abort
+  function s:open_scratch() abort
     let ft = input('type?', '', 'customlist,' .. s:SIDP()
       \ .. 'complete_open_scratch')
     if ft ==# ''
@@ -3281,13 +3281,13 @@ let g:ref_source_webdict_sites = {
 \   },
 \   'weblio' : {'url' : 'http://ejje.weblio.jp/content/%s'},
 \ }
-function! g:ref_source_webdict_sites.alc.filter(output) abort
+function g:ref_source_webdict_sites.alc.filter(output) abort
   return substitute(a:output, '^.\{-}\n\ze・該当件数', '', '')
 endfunction
-function! g:ref_source_webdict_sites.wikipedia.filter(output) abort
+function g:ref_source_webdict_sites.wikipedia.filter(output) abort
   return join(split(a:output, "\n")[18 :], "\n")
 endfunction
-function! g:ref_source_webdict_sites.weblio.filter(output) abort
+function g:ref_source_webdict_sites.weblio.filter(output) abort
   let lines = split(a:output, "\n")
   call map(lines, 'substitute(v:val, "\\v(発音記号|音声を聞く|ダウンロード再生)", "", "g")')
   return join(lines[60 : ], "\n")
@@ -3314,7 +3314,7 @@ nnoremap <Space><C-h> :<C-u>Ref <C-r>=ref#detect()<CR><Space>
 if !exists('g:ref_detect_filetype')
   let g:ref_detect_filetype = {}
 endif
-function! g:ref_detect_filetype._(ft) abort
+function g:ref_detect_filetype._(ft) abort
   return &keywordprg ==# ':help' ? '' : 'man'
 endfunction
 
@@ -3330,7 +3330,7 @@ augroup vimrc-plugin-template
   autocmd User plugin-template-loaded call s:template_loaded()
   autocmd BufEnter $VIM_USERDIR/template/* setlocal makeprg=
 augroup END
-function! s:template_loaded() abort
+function s:template_loaded() abort
   silent keeppatterns %substitute/<%=\(.\{-}\)%>/\=eval(submatch(1))/ge
   if exists('b:template_loaded')
     unlet b:template_loaded
@@ -3380,7 +3380,7 @@ nnoremap <silent> <Leader>vzc :<C-u>Vcs commit %<CR>
 nnoremap <silent> <Leader>vzd :<C-u>Vcs diff %<CR>
 nnoremap <silent> <Leader>vg
 \        :<C-u>Vcs grep '<C-r>=<SID>convert_pattern(@/)<CR>'<CR>
-function! s:convert_pattern(pat) abort
+function s:convert_pattern(pat) abort
   let chars = split(a:pat, '\zs')
   let len = len(chars)
   let pat = ''
@@ -3450,7 +3450,7 @@ let g:lsp_settings = {
 \   },
 \ }
 
-function! s:on_lsp_buffer_enabled() abort
+function s:on_lsp_buffer_enabled() abort
   if &l:buftype isnot# '' || win_gettype() isnot# ''
     return
   endif
@@ -3487,7 +3487,7 @@ let g:loaded_matchparen = 1
 
 " == Misc. == {{{1
 " Assist b:undo_ftplugin
-function! SetUndoFtplugin(com) abort
+function SetUndoFtplugin(com) abort
   let command = 'execute ' .. string(a:com)
   if exists('b:undo_ftplugin')
     let command ..= ' | ' .. b:undo_ftplugin
@@ -3498,7 +3498,7 @@ command! -nargs=1 -bang -complete=command SetUndoFtplugin
   \ call SetUndoFtplugin(<q-args>)
 
 " syntax test
-function! CurrentSyntax() abort
+function CurrentSyntax() abort
   let syntax = synstack(line('.'), col('.'))
   return empty(syntax) ? '' : synIDattr(syntax[-1], 'name')
 endfunction
@@ -3511,7 +3511,7 @@ nmap <silent> mx <Plug>(vimrc-show-current-syntax)
 imap <silent> <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
 
 
-function! s:time(cmd, log) abort
+function s:time(cmd, log) abort
   if !has('reltime')
     echo 'Feature +reltime is disabled.' .
     \    '  Do you run the command in normally?[y/N]'

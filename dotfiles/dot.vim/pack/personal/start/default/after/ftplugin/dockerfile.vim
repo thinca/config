@@ -1,4 +1,4 @@
-function! s:head(str)
+function s:head(str)
   let col = col('.')
   let head = matchstr(getline('.'), '\c^\s*\%(ONBUILD\s\+\)\?')
   let col -= len(head)

@@ -6,12 +6,12 @@ SetUndoFtplugin unlet! b:irb_pos b:irb_eval b:popup_close
 runtime! syntax/ruby.vim indent/ruby.vim ftplugin/ruby.vim ftplugin/ruby_*.vim ftplugin/ruby/*.vim
 setl buftype=nofile indentexpr=GetRubyIndent()
 
-function! s:closePopup()
+function s:closePopup()
   let b:popup_close = pumvisible()
   return "\<CR>"
 endfunction
 
-function! s:evalRuby()
+function s:evalRuby()
   if b:popup_close
     return ''
   endif

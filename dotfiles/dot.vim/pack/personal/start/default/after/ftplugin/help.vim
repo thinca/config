@@ -12,7 +12,7 @@ vnoremap <buffer> <C-]> <C-]>zv
 nnoremap <buffer> <C-w><C-]> <C-w><C-]>
 vnoremap <buffer> <C-w><C-]> <C-w><C-]>
 
-function! s:option_to_view()
+function s:option_to_view()
   setlocal buftype=help nomodifiable readonly
   setlocal nolist
   if exists('+colorcolumn')
@@ -23,7 +23,7 @@ function! s:option_to_view()
   endif
 endfunction
 
-function! s:option_to_edit()
+function s:option_to_edit()
   setlocal buftype= modifiable noreadonly
   setlocal list tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab textwidth=78
   if exists('+colorcolumn')
@@ -88,7 +88,7 @@ SetUndoFtplugin unlet! b:smart_expandtab
 call s:option_to_edit()
 
 command! -buffer -bar GenerateContents call s:generate_contents()
-function! s:generate_contents()
+function s:generate_contents()
   let cursor = getpos('.')
 
   let file_name = matchstr(expand('%:p:r:gs?\\?/?'), '.*/doc/\zs.*')
@@ -133,7 +133,7 @@ function! s:generate_contents()
   call setpos('.', cursor)
 endfunction
 
-function! s:get_text_on_cursor(pat)
+function s:get_text_on_cursor(pat)
   let line = getline('.')
   let pos = col('.')
   let s = 0
@@ -149,7 +149,7 @@ function! s:get_text_on_cursor(pat)
   return ''
 endfunction
 
-function! s:jump_to_tag() abort
+function s:jump_to_tag() abort
   let tag = s:get_text_on_cursor('|\zs[^|]\+\ze|')
   if tag !=# ''
     let pat = escape(tag, '\')

@@ -8,7 +8,7 @@ if &l:filetype == 'java'
   compiler javac
 endif
 
-function! s:makeOption()
+function s:makeOption()
   let opt = ' '
   if exists('b:classpath')
     let opt .= '-classpath ' . b:classpath . ' '
@@ -20,7 +20,7 @@ function! s:makeOption()
   return opt
 endfunction
 
-function! s:quickfixEncode()
+function s:quickfixEncode()
   if &termencoding == '' || &termencoding ==# &encoding
     return
   endif
@@ -43,7 +43,7 @@ augroup END
 " setlocal omnifunc=javacomplete#Complete
 
 " Search "package", and :lcd.
-function! s:cd_to_package()
+function s:cd_to_package()
   for i in range(1, line('$'))
     let line = getline(i)
     if line =~# '^\s*\%(import\|public\|class\)'

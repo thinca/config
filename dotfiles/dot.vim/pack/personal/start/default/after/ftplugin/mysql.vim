@@ -1,10 +1,10 @@
-function! s:define_abbr(list)
+function s:define_abbr(list)
   for word in a:list
     execute printf('inoreabbrev <buffer> %s %s', word, toupper(word))
   endfor
 endfunction
 
-function! s:get_keywords(syn)
+function s:get_keywords(syn)
   return filter(split(matchstr(execute('syntax list ' . a:syn),
   \             'xxx \zs\_.*\ze links to')), 'v:val !~# "\\W"')
 endfunction

@@ -12,7 +12,7 @@ if executable('php')
   let &l:path = s:path
 endif
 
-function! s:at()
+function s:at()
   return CurrentSyntax() =~# 'String\|Comment\|None' ? '@' : '$this->'
 endfunction
 inoremap <expr> <buffer> @ <SID>at()

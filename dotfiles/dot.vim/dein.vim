@@ -17,10 +17,10 @@ set runtimepath^=$DEIN_REPOS_DIR
 
 let g:dein#enable_name_conversion = 1
 
-function! s:update_cmpl(lead, line, pos) abort
+function s:update_cmpl(lead, line, pos) abort
   return filter(keys(dein#get()), 'v:val =~# "^" . a:lead')
 endfunction
-function! s:source_cmpl(lead, line, pos) abort
+function s:source_cmpl(lead, line, pos) abort
   return keys(filter(dein#get(), 'v:key =~# "^" . a:lead && !v:val.sourced'))
 endfunction
 command! -nargs=* -complete=customlist,s:update_cmpl DeinUpdate
@@ -49,7 +49,7 @@ endif
 
 call dein#add('Shougo/dein.vim')
 
-function! s:try(cmd) abort
+function s:try(cmd) abort
   try
     execute a:cmd
     return 1

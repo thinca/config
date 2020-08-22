@@ -30,7 +30,7 @@ autocmd BufReadPost,BufNewFile *.vi,*.vimgolf    setfiletype vimgolf
 autocmd BufReadPost,BufNewFile *.txt,README call s:structured_text()
 autocmd BufReadPost,BufNewFile *.class call s:detect_javaclass()
 
-function! s:detect_javaclass()
+function s:detect_javaclass()
   let file = expand('<afile>')
   if !filereadable(file)
     return
@@ -41,7 +41,7 @@ function! s:detect_javaclass()
   endif
 endfunction
 
-function! s:structured_text()
+function s:structured_text()
   if &l:filetype !=# '' && &l:filetype !=# 'text'
     return
   endif

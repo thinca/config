@@ -1,5 +1,5 @@
 vim -u NONE -i NONE -N -n -e -s -S <(cat <<EOF
-function! s:main(input) abort
+function s:main(input) abort
 endfunction
 
 let s:input = getline(1, '$')

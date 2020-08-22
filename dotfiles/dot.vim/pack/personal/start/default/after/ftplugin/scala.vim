@@ -1,7 +1,7 @@
 finish
 let b:ftdetect = 1
 
-function! s:SID()
+function s:SID()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID$')
 endfunction
 
@@ -12,11 +12,11 @@ if !exists('s:config')
   \   'delete': 1,
   \ }
 
-  function! s:config.getfiles(f)
+  function s:config.getfiles(f)
     return [a:f]
   endfunction
 
-  function! s:config.dir()
+  function s:config.dir()
     return tempname()
   endfunction
 
@@ -32,14 +32,14 @@ endif
 
 let s:rmdir = split(has('win32') || has('win64') ? 'rmdir /S /Q' : 'rmdir -fr')
 
-function! s:class(self)
+function s:class(self)
   let src = a:self.config.src
   return type(src) == type(0) ? fnamemodify(bufname(src), ':t:r')
   \                           : matchstr(src, '\(^\|\n\)\s*\<object\>\s\+\zs\w\+')
 endfunction
 
 
-function! s:execute_scala(file, self)
+function s:execute_scala(file, self)
   let class = s:class(a:self)
   let dir = a:self.config.dir()
   if !isdirectory(dir)

@@ -6,7 +6,7 @@ syntax region markdownYAMLHeader matchgroup=PreProc start='\%1l\%1c---\n' end='\
 syn region markdownCode matchgroup=markdownBlockDelimiter start=+^```$+ end=+^```$+
 
 let b:markdown_syntax_code_loaded = {}  " Reset when load.
-function! s:update_code()
+function s:update_code()
   let mx = '^```\zs.\+$'
   for curline in getline(1, '$')
     let ft = matchstr(curline, mx)

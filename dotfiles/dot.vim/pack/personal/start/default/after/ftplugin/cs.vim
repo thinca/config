@@ -1,4 +1,4 @@
-function! GetCsFold(lnum)
+function GetCsFold(lnum)
   let line = getline(v:lnum)
   if line =~# '^\s*#region'
     return 'a1'

@@ -7,7 +7,7 @@ SetUndoFtplugin iunmap <buffer> <C-h>
 setlocal nocindent expandtab commentstring=;\ %s
 
 " 現在位置の構文グループの名前。リンクは解決済み
-function! s:get_syntax_name()
+function s:get_syntax_name()
   let col = col('.')
   if col == col('$')
     let col -= 1
@@ -15,7 +15,7 @@ function! s:get_syntax_name()
   return synIDattr(synIDtrans(synID(line("."), col, 1)), 'name')
 endfunction
 
-function! s:is_disable_pare_assist()
+function s:is_disable_pare_assist()
   let synname = s:get_syntax_name()
   return synname ==? 'Constant' || synname ==? 'Comment'
 endfunction
@@ -23,7 +23,7 @@ endfunction
 " 開き括弧の直前で(を押した時、既にある括弧全体を囲む
 " そうでなければ()にして間にカーソルを置く
 " ただし文字列中やコメント中は何もしない
-function! s:overwrap_pare()
+function s:overwrap_pare()
   let ch = getline('.')[col('.') - 1]
   if s:is_disable_pare_assist()
     return '('
@@ -36,14 +36,14 @@ function! s:overwrap_pare()
 endfunction
 
 " 次の文字が ')' だった時指定したキーを押す
-function! s:skip_close_pare(defkey, altkey)
+function s:skip_close_pare(defkey, altkey)
   if !s:is_disable_pare_assist() && getline('.')[col('.') - 1] == ')'
     return a:altkey
   endif
   return a:defkey
 endfunction
 
-function! s:wrap_tab()
+function s:wrap_tab()
   let tab = "\<Tab>"
   if s:is_disable_pare_assist()
     return tab
@@ -58,7 +58,7 @@ function! s:wrap_tab()
 endfunction
 
 " ()の真ん中で指定キーを押した時)を消す
-function! s:del_pare(defkey)
+function s:del_pare(defkey)
   if !s:is_disable_pare_assist() && getline('.')[col('.') - 2] == '('
     return a:defkey . s:skip_close_pare('', "\<Del>")
   endif
