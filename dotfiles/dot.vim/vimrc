@@ -174,11 +174,13 @@ function s:SIDP() abort
 endfunction
 
 function s:check_flag(flag) abort
-  if exists('b:' .. a:flag)
-    return b:{a:flag}
+  let f = get(b:, a:flag, v:null)
+  if f isnot v:null
+    return f
   endif
-  if exists('g:' .. a:flag)
-    return g:{a:flag}
+  let f = get(g:, a:flag, v:null)
+  if f isnot v:null
+    return f
   endif
   return 0
 endfunction
@@ -324,6 +326,32 @@ function GetFileSize() abort
   return size .. 'GB'
 endfunction
 
+function GetSyntaxInfo() abort
+  let line = synstack(line('.'), col('.'))->map(
+  \  'printf("%s (%s)", synIDattr(v:val, "name"), synIDattr(synIDtrans(v:val), "name"))'
+  \ )->join(',')
+endfunction
+
+function STLBufnr() abort
+  return s:check_flag('statusline_bufnr')
+  \   ? printf('[%d] ', bufnr('%')) : ''
+endfunction
+
+function STLHighLight() abort
+  return s:check_flag('statusline_highlight')
+  \   ? printf('[%s]', GetSyntaxInfo()) : ''
+endfunction
+
+function STLCharacterCode() abort
+  return s:check_flag('statusline_char')
+  \   ? printf('[%s]', GetCharacterCode()) : ''
+endfunction
+
+function STLFileSize() abort
+  return s:check_flag('statusline_filesize')
+  \   ? printf('[%s]', GetFileSize()) : ''
+endfunction
+
 function GetBufname(...) abort
   let bufnr = get(a:000, 0, '')
   let tail = get(a:000, 1, 0)
@@ -382,9 +410,7 @@ endfunction
 function MakeStatusLine(...) abort
   let multi = a:0 && a:1
   let line = ''
-  if s:check_flag('statusline_bufnr')
-    let line ..= '[%n] '  " Buffer number.
-  endif
+  let line ..= '%{STLBufnr()}'  " Buffer number.
   let line ..= '%<'       " Truncate point.
   " Buffer name.
   let line ..= '%{GetBufname()}'
@@ -415,20 +441,12 @@ function MakeStatusLine(...) abort
   if exists('*SyntasticStatuslineFlag')
     let line ..= '%{SyntasticStatuslineFlag()}'
   endif
-  if s:check_flag('statusline_highlight')
-    let line ..= '[' .. join(map(synstack(line('.'), col('.')),
-    \           'synIDattr(v:val, "name")' ..
-    \           ' .. "(" .. synIDattr(synIDtrans(v:val), "name") .. ")"'), ',') .. ']'
-  endif
+  let line ..= '%{STLHighLight()}'
   let line ..= '%{StatusLineExtra()}'
   " let line ..= StatusLineExtra()
   let line ..= '%='       " Separation point.
-  if s:check_flag('statusline_filesize')
-    let line ..= '[%{GetFileSize()}]' " Rough file size.
-  endif
-  if s:check_flag('statusline_char')
-    let line ..= '[%{GetCharacterCode()}]' " Character code under the cursor.
-  endif
+  let line ..= '%{STLFileSize()}' " Rough file size.
+  let line ..= '%{STLCharacterCode()}' " Character code under the cursor.
   let line ..= $LANG =~# '^ja' ? ' %l/%L行 %3v桁'
   \                            : ' %l/%LL %2vC'   " Line and column.
   let line ..= ' %3p%%'         " Percentage through file in lines.
