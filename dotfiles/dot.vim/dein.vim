@@ -27,13 +27,7 @@ function s:call_with_non_empty(func, list) abort
   call call(a:func, empty(a:list) ? [] : [a:list])
 endfunction
 command! -nargs=* -complete=customlist,s:update_cmpl DeinUpdate
-\   try
-\ |   let s:updatetime = &updatetime
-\ |   let &updatetime = 50
-\ |   call s:call_with_non_empty('dein#update', [<f-args>])
-\ | finally
-\ |   let &updatetime = s:updatetime
-\ | endtry
+\   call s:call_with_non_empty('dein#update', [<f-args>])
 command! -nargs=+ -complete=customlist,s:update_cmpl DeinReinstall
 \   call dein#reinstall([<f-args>])
 command! -nargs=* -complete=customlist,s:source_cmpl DeinSource
