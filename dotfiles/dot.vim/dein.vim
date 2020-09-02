@@ -23,18 +23,21 @@ endfunction
 function s:source_cmpl(lead, line, pos) abort
   return keys(filter(dein#get(), 'v:key =~# "^" . a:lead && !v:val.sourced'))
 endfunction
+function s:call_with_non_empty(func, list) abort
+  call call(a:func, empty(a:list) ? [] : [a:list])
+endfunction
 command! -nargs=* -complete=customlist,s:update_cmpl DeinUpdate
 \   try
 \ |   let s:updatetime = &updatetime
 \ |   let &updatetime = 50
-\ |   call call('dein#update', [<f-args>])
+\ |   call s:call_with_non_empty('dein#update', [<f-args>])
 \ | finally
 \ |   let &updatetime = s:updatetime
 \ | endtry
-command! -nargs=* -complete=customlist,s:update_cmpl DeinReinstall
-\   call call('dein#reinstall', [<f-args>])
-command! -nargs=+ -complete=customlist,s:source_cmpl DeinSource
-\   call call('dein#source', [<f-args>])
+command! -nargs=+ -complete=customlist,s:update_cmpl DeinReinstall
+\   call dein#reinstall([<f-args>])
+command! -nargs=* -complete=customlist,s:source_cmpl DeinSource
+\   call s:call_with_non_empty('dein#source', [<f-args>])
 command! DeinRecache call dein#recache_runtimepath()
 
 if !dein#load_state($DEIN_BASE)
