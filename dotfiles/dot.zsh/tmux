@@ -1,4 +1,4 @@
-if which tmux &>/dev/null && \
+if type tmux &>/dev/null && \
 	[[ -z "${NOTMUX}" && "${EUID}" != "0" && "${USER}" != "root" && \
 	-z "${WINDOW}" && -z "${TMUX}" && -n "${SSH_CLIENT}" ]] then
 	# session=${SSH_CLIENT%% *}

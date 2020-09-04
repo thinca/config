@@ -168,7 +168,7 @@ alias tree='tree -F --dirsfirst'
 alias etime='ps -o cmd,etime -C'
 
 # replace rm
-if which trash-put &>/dev/null; then
+if type trash-put &>/dev/null; then
 	alias rm=trash-put
 fi
 alias del=/bin/rm
