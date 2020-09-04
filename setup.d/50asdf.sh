@@ -1,4 +1,4 @@
-if which git >/dev/null; then
+if type git >/dev/null; then
 	if [[ ! -d ~/.asdf ]]; then
 		git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 		(
