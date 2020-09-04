@@ -71,13 +71,14 @@ endif
 " Interface dll  {{{2
 if isdirectory($ASDF_DIR)
   let s:ext = has('mac') ? 'dylib' : 'so'
-  let s:tool_versions = '~/.tool-versions'->expand()->readfile()
+  let s:tool_versions = {}
+  eval '~/.tool-versions'->expand()->readfile()
+  \   ->map({ _, v -> split(v, '\s\+')->filter({ _, v -> v isnot# 'system' }) })
+  \   ->map({ _, v -> extend(s:tool_versions, {v[0]: v[1 :]}) })
 
   " if_perl
   if exists('+perldll')
-    let s:perl_ver = s:tool_versions->copy()
-    \ ->filter({ _, line -> line =~# '^perl '})->get(0)
-    \ ->substitute('^perl ', '', '')
+    let s:perl_ver = s:tool_versions->get('perl')->get(0)
     if s:perl_ver isnot# ''
       let &perldll =
       \   printf('%s/installs/perl/%s/lib/%s/x86_64-linux/CORE/libperl.%s',
@@ -88,9 +89,7 @@ if isdirectory($ASDF_DIR)
 
   " if_ruby
   if exists('+rubydll')
-    let s:ruby_ver = s:tool_versions->copy()
-    \ ->filter({ _, line -> line =~# '^ruby '})->get(0)
-    \ ->substitute('^ruby ', '', '')
+    let s:ruby_ver = s:tool_versions->get('ruby')->get(0)
     if s:ruby_ver isnot# ''
       let &rubydll =
       \   printf('%s/installs/ruby/%s/lib/libruby.%s',
@@ -100,27 +99,28 @@ if isdirectory($ASDF_DIR)
   endif
 
   " if_python
-  let s:python_ver = s:tool_versions->copy()
-  \ ->filter({ _, line -> line =~# '^python '})->get(0)
-  \ ->substitute('^python ', '', '')
-  if s:python_ver isnot# ''
-    " ['2.7.14', '3.6.4']
-    let [s:py_v2, s:py_v3] = s:python_ver->split('\s\+')->sort()
-    if exists('+pythondll')
+  let s:python_ver = s:tool_versions->get('python')
+  if exists('+pythondll')
+    let s:py_v2 = s:python_ver->copy()->filter({ _, v -> v =~# '^2' })->get(0)
+    if s:py_v2 isnot# ''
       let &pythondll =
       \   printf('%s/installs/python/%s/lib/libpython%s.%s',
       \     $ASDF_DIR, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
     endif
-    if exists('+pythonthreedll')
+    unlet s:py_v2
+  endif
+  if exists('+pythonthreedll')
+    let s:py_v3 = s:python_ver->copy()->filter({ _, v -> v =~# '^3' })->get(0)
+    if s:py_v3 isnot# ''
       let &pythonthreedll =
       \   printf('%s/installs/python/%s/lib/libpython%s.%s',
       \     $ASDF_DIR, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
     endif
-    unlet s:py_v2 s:py_v3
+    unlet s:py_v3
   endif
   unlet s:python_ver
 
-  unlet s:ext
+  unlet s:ext s:tool_versions
 endif
 " }}}2
 

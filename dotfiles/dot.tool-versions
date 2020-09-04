@@ -1,12 +1,12 @@
-golang 1.15
-haskell 8.10.2
-julia 1.5.0
-lua 5.4.0
-nodejs 14.8.0
-perl 5.32.0
-php 7.4.8
-python 3.8.5 2.7.18
-racket 7.8
-rclone 1.52.3
-ruby 2.7.1
-rust 1.45.2
+golang 1.15 system
+haskell 8.10.2 system
+julia 1.5.0 system
+lua 5.4.0 system
+nodejs 14.8.0 system
+perl 5.32.0 system
+php 7.4.8 system
+python 3.8.5 2.7.18 system
+racket 7.8 system
+rclone 1.52.3 system
+ruby 2.7.1 system
+rust 1.45.2 system
