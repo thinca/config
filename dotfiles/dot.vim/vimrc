@@ -27,24 +27,30 @@ if !v:vim_did_enter && has('reltime')
   augroup END
 endif
 
+if v:vim_did_enter
+  command! -nargs=+ -bar Set setglobal <args>
+else
+  command! -nargs=+ -bar Set set <args>
+endif
+
 " == Encoding settings. == {{{1
 " Use utf-8.
 if &encoding !=? 'utf-8'
   let &termencoding = &encoding
-  setglobal encoding=utf-8
+  Set encoding=utf-8
 endif
 
 " Must after set of 'encoding'.
 scriptencoding utf-8
 
 if has('guess_encode')
-  setglobal fileencodings=ucs-bom,utf-8,iso-2022-jp,guess,euc-jp,cp932,latin1
+  Set fileencodings=ucs-bom,utf-8,iso-2022-jp,guess,euc-jp,cp932,latin1
 else
-  setglobal fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,latin1
+  Set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,latin1
 endif
-setglobal fileformats=unix,dos
+Set fileformats=unix,dos
 
-setglobal guioptions+=M
+Set guioptions+=M
 
 " runtimepath.
 if $VIM_USERDIR ==# ''
@@ -60,7 +66,7 @@ if $VIM_USERDIR ==# ''
 endif
 
 if !v:vim_did_enter
-  setglobal runtimepath&
+  Set runtimepath&
   if !isdirectory(expand('~/vimfiles'))
     " Even Windows uses "$HOME/.vim".
     let &runtimepath = substitute(&runtimepath,
@@ -251,7 +257,7 @@ endfunction
 
 " colorscheme.
 if !exists('g:colors_name')
-  setglobal background=dark
+  Set background=dark
   let g:gruvbox_contrast_dark = 'hard'
   if !g:V.is_windows() || has('gui_running')
     " ['candycode', 'wuye', 'freya', 'leo']
@@ -264,33 +270,33 @@ endif
 
 
 " Show (partial) command in the last line of the screen.
-setglobal showcmd
+Set showcmd
 " Show invisible characters.
-setglobal list listchars=tab:^\ ,trail:_,extends:>,precedes:<
-" setglobal list listchars=tab:^\ ,trail:␣,extends:>,precedes:<
-setglobal nolinebreak showbreak=>
+Set list listchars=tab:^\ ,trail:_,extends:>,precedes:<
+" Set list listchars=tab:^\ ,trail:␣,extends:>,precedes:<
+Set nolinebreak showbreak=>
 " Display the last line as much as possible in a window.
-setglobal display=lastline
+Set display=lastline
 
 if has('directx') && &encoding ==# 'utf-8'
-  setglobal renderoptions=type:directx
+  Set renderoptions=type:directx
 endif
 
-setglobal matchpairs& matchpairs+=<:>
+Set matchpairs& matchpairs+=<:>
 
-setglobal laststatus=2 statusline=%!MakeStatusLine()
-setglobal showtabline=2 tabline=%!MakeTabLine()
+Set laststatus=2 statusline=%!MakeStatusLine()
+Set showtabline=2 tabline=%!MakeTabLine()
 
 " Don't show :intro when startup.
-setglobal shortmess& shortmess+=I
+Set shortmess& shortmess+=I
 
 if has('kaoriya') && g:V.is_windows() && has('gui_running')
-  setglobal ambiwidth=auto
+  Set ambiwidth=auto
 else
-  setglobal ambiwidth=double
+  Set ambiwidth=double
 endif
 
-setglobal helplang=ja,en
+Set helplang=ja,en
 
 " Get character code on cursor with 'fileencoding'.
 function GetCharacterCode() abort
@@ -554,8 +560,8 @@ if has('tabsidebar')
     let &g:showtabsidebar = 80 * 2 + &g:tabsidebarcolumns <= &columns
   endfunction
   call s:update_showtabsidebar()
-  setglobal tabsidebarcolumns=32
-  setglobal tabsidebarwrap
+  Set tabsidebarcolumns=32
+  Set tabsidebarwrap
   let g:tabsidebar_show_all_window = 1
   let &g:tabsidebar =
   \   '%!' .. get(function('s:tabpage_label'), 'name') ..
@@ -583,104 +589,104 @@ endif
 filetype plugin indent on
 
 " Search.
-setglobal ignorecase smartcase incsearch hlsearch
+Set ignorecase smartcase incsearch hlsearch
 if has('migemo')
   " 'migemo' option changes the behavior of "g?".
   " NOTE: 'migemo' option is local to buffer.
-  setglobal nomigemo migemodict=$VIM_USERDIR/dict/migemo/migemo-dict
+  Set nomigemo migemodict=$VIM_USERDIR/dict/migemo/migemo-dict
 endif
 if executable('jvgrep')
-  setglobal grepprg=jvgrep\ -RC
+  Set grepprg=jvgrep\ -RC
 elseif executable('ag')
-  setglobal grepprg=ag\ --nogroup\ --column\ --nocolor
-  setglobal grepformat=%f:%l:%c:%m,%l:%c:%m
+  Set grepprg=ag\ --nogroup\ --column\ --nocolor
+  Set grepformat=%f:%l:%c:%m,%l:%c:%m
 elseif executable('ack')
-  setglobal grepprg=ack\ --nogroup\ --column\ --nocolor
+  Set grepprg=ack\ --nogroup\ --column\ --nocolor
 else
-  setglobal grepprg=internal
+  Set grepprg=internal
 endif
 
 " Tab and indent.
-setglobal shiftround softtabstop=-1 shiftwidth=0 tabstop=2
-setglobal autoindent copyindent preserveindent
-setglobal breakindent
-setglobal expandtab
-setglobal cinoptions& cinoptions+=b1,l1,g0,N-s,(1s,m1
-setglobal cinkeys& cinkeys+=0=break
+Set shiftround softtabstop=-1 shiftwidth=0 tabstop=2
+Set autoindent copyindent preserveindent
+Set breakindent
+Set expandtab
+Set cinoptions& cinoptions+=b1,l1,g0,N-s,(1s,m1
+Set cinkeys& cinkeys+=0=break
 
 " Auto reload when changed by external.
-setglobal autoread
+Set autoread
 " Enable backspace.
-setglobal backspace=indent,eol,start
+Set backspace=indent,eol,start
 " Allow move between line end and next line head.
-setglobal whichwrap=b,s,<,>,[,]
+Set whichwrap=b,s,<,>,[,]
 
 if exists('+fixendofline')
-  setglobal nofixendofline
+  Set nofixendofline
 endif
 
 " Format settings for multi byte character.
-setglobal formatoptions& formatoptions+=mM
-setglobal formatoptions-=r formatoptions-=o formatoptions+=j formatoptions+=n
+Set formatoptions& formatoptions+=mM
+Set formatoptions-=r formatoptions-=o formatoptions+=j formatoptions+=n
 " The following needs autofmt plugin.
 let g:plugin_format_disable = 1
-setglobal formatexpr=autofmt#japanese#formatexpr()
+Set formatexpr=autofmt#japanese#formatexpr()
 " Minimal number of screen lines to keep above and below the cursor.
-setglobal scrolloff=3
-setglobal nostartofline
-setglobal sidescroll=1 sidescrolloff=1
-setglobal modeline
+Set scrolloff=3
+Set nostartofline
+Set sidescroll=1 sidescrolloff=1
+Set modeline
 
 " Open a window.
-setglobal splitbelow splitright
-setglobal switchbuf& switchbuf+=useopen
+Set splitbelow splitright
+Set switchbuf& switchbuf+=useopen
 
 " Completion.
-setglobal complete& complete+=k
-setglobal completeopt& completeopt+=menuone completeopt-=preview
-setglobal infercase
+Set complete& complete+=k
+Set completeopt& completeopt+=menuone completeopt-=preview
+Set infercase
 " Command-line completion.
-setglobal wildmenu wildmode=list:longest,full wildignorecase
+Set wildmenu wildmode=list:longest,full wildignorecase
 
 " Foldings.
-setglobal foldlevelstart=99
+Set foldlevelstart=99
 
 " History number for search and command mode.
-setglobal history=1000
+Set history=1000
 
 " Toggle Command-line mode and cmdwin with <C-c>
 let &g:cedit = "\<C-c>"
 
-setglobal timeoutlen=5000
-setglobal ttimeout ttimeoutlen=50
+Set timeoutlen=5000
+Set ttimeout ttimeoutlen=50
 
-setglobal nrformats& nrformats-=octal
+Set nrformats& nrformats-=octal
 if has('patch-8.2.0860')
-  setglobal nrformats+=unsigned
+  Set nrformats+=unsigned
 endif
 
 " spelling
-setglobal spelllang& spelllang+=cjk
-setglobal spellfile=~/.local/share/vim/spell/en.utf-8.add
+Set spelllang& spelllang+=cjk
+Set spellfile=~/.local/share/vim/spell/en.utf-8.add
 call mkdir(expand('~/.local/share/vim/spell'), 'p')
 
 " encryption
 if has('crypt-blowfish2')
-  setglobal cryptmethod=blowfish2
+  Set cryptmethod=blowfish2
 endif
 
 " backup.
-setglobal backup
-setglobal backupdir=~/.cache/vim/backup//
+Set backup
+Set backupdir=~/.cache/vim/backup//
 " Paths of swap file and backup file.
 if $TMP !=# ''
-  execute 'setglobal backupdir+=' .. escape(expand($TMP), ' \')
+  execute 'Set backupdir+=' .. escape(expand($TMP), ' \')
 elseif has('unix')
-  setglobal backupdir+=/tmp
+  Set backupdir+=/tmp
 endif
-setglobal directory=~/.cache/vim/swap//
+Set directory=~/.cache/vim/swap//
 if has('persistent_undo')
-  setglobal undodir=~/.cache/vim/undo
+  Set undodir=~/.cache/vim/undo
   augroup vimrc-undofile
     autocmd!
     autocmd BufReadPre ~/* setlocal undofile
@@ -689,15 +695,15 @@ if has('persistent_undo')
     endif
   augroup END
 endif
-setglobal backupcopy=yes
-setglobal viewdir=~/.cache/vim/view
+Set backupcopy=yes
+Set viewdir=~/.cache/vim/view
 
 call mkdir(expand('~/.cache/vim/backup'), 'p')
 call mkdir(expand('~/.cache/vim/swap'), 'p')
 call mkdir(expand('~/.cache/vim/undo'), 'p')
 
 " Swap
-setglobal swapfile
+Set swapfile
 augroup vimrc-swapfile
   autocmd!
   autocmd SwapExists * call s:on_SwapExists()
@@ -736,15 +742,15 @@ endfunction
 
 if has('viminfo')
   " TELLME: The history is not saved in specified number.
-  setglobal viminfo='500,<500,s50,h,rA:,rB:
+  Set viminfo='500,<500,s50,h,rA:,rB:
 end
 
 " Free move in Visual mode blockwise.
-setglobal virtualedit& virtualedit+=block
+Set virtualedit& virtualedit+=block
 
 " Don't search tags file in current directory. And search upward.
-setglobal tags& tags-=tags tags+=./tags;
-setglobal tagcase=match
+Set tags& tags-=tags tags+=./tags;
+Set tagcase=match
 
 
 " autocmd
@@ -970,16 +976,6 @@ augroup vimrc-misc
   autocmd InsertLeave * if &diff | diffupdate | endif
 
   autocmd VimResized * wincmd =
-
-  " Create a new buffer to apply the new global options from vimrc
-  autocmd VimEnter * ++nested ++once call s:apply_global_option_values()
-  function s:apply_global_option_values() abort
-    let c = argc()
-    if c == 0 && bufname('%') ==# '' && line('$') == 1 && getline(1) ==# ''
-      enew
-    endif
-    setlocal list< breakindent<
-  endfunction
 augroup END
 
 
@@ -1608,18 +1604,18 @@ endfunction
 " == Setting according to environments. == {{{1
 " cygwin (UTF-8)  {{{2
 if has('win32unix')
-  setglobal termencoding=
+  Set termencoding=
 endif
 
 " Use a mouse in terminal.  {{{2
-setglobal mouse=a
+Set mouse=a
 
 " For GNU Screen or tmux.  {{{2
 if $WINDOW !=# '' || $TMUX !=# ''
   let s:window = 1
   " Use a mouse in screen.
   if has('mouse')
-    setglobal ttymouse=xterm2
+    Set ttymouse=xterm2
   endif
   function s:set_window_name(name) abort
     if get(g:, 'before_window_name', '') is# a:name
@@ -1677,20 +1673,20 @@ if has('gui_running')
     " GUI option to use by default.
     winpos 0 0
     " Disable Toolbar and menu, and use non-GUI tab pages line.
-    setglobal guioptions-=T guioptions-=m guioptions-=e
+    Set guioptions-=T guioptions-=m guioptions-=e
     " Hide any scrollbar.
-    setglobal guioptions-=l guioptions-=r guioptions-=L guioptions-=R
+    Set guioptions-=l guioptions-=r guioptions-=L guioptions-=R
     if has('kaoriya') && g:V.is_windows()
       " Remove caption (title) bar. Support Windows only.
-      setglobal guioptions+=C
+      Set guioptions+=C
     endif
 
     if g:V.is_windows()
-      setglobal guifont=Migu_1M:h11:cSHIFTJIS,MS_Gothic:h9:cDEFAULT
+      Set guifont=Migu_1M:h11:cSHIFTJIS,MS_Gothic:h9:cDEFAULT
     elseif has('x11')
-      setglobal guifont=
+      Set guifont=
     elseif has('unix')
-      setglobal guifont=M+2M+IPAG\ 9
+      Set guifont=M+2M+IPAG\ 9
     endif
   endfunction
   command! -nargs=0 -bar InitGuioptions call s:init_guioptions()
@@ -1700,8 +1696,8 @@ if has('gui_running')
   endfunction
 
   " Does not use IM by default.
-  setglobal iminsert=0 imsearch=0
-  setglobal winaltkeys=no
+  Set iminsert=0 imsearch=0
+  Set winaltkeys=no
 else
   " CUI  {{{2
   if has('unix')
@@ -1978,7 +1974,7 @@ endif
 
 " deoplete.nvim  {{{2
 if dein#is_sourced('deoplete')
-  setglobal pyxversion=3
+  Set pyxversion=3
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_camel_case = 1
 
@@ -3570,4 +3566,4 @@ if dein#is_sourced('localrc')
   endif
 endif
 
-setglobal secure
+Set secure
