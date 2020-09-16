@@ -3321,7 +3321,7 @@ nnoremap <Space><C-h> :<C-u>Ref <C-r>=ref#detect()<CR><Space>
 if !exists('g:ref_detect_filetype')
   let g:ref_detect_filetype = {}
 endif
-function g:ref_detect_filetype._(ft) abort
+function! g:ref_detect_filetype._(ft) abort
   return &keywordprg ==# ':help' ? '' : 'man'
 endfunction
 
