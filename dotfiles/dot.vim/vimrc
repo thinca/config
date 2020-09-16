@@ -2757,14 +2757,6 @@ if dein#is_sourced('gf-user')
     \ }
   endfunction
   call gf#user#extend('GfFile', 0)
-
-  "   gf-rails  {{{3
-  function GfRails() abort
-    if &l:filetype !=# 'ruby'
-      return 0
-    endif
-  endfunction
-  call gf#user#extend('GfRails', 2000)
 endif
 
 " ProjectEuler.vim  {{{2
