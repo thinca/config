@@ -46,7 +46,7 @@
 	cim = commit --amend -C HEAD
 	cin = !git commit --amend --all -C HEAD \"--date=$(date --rfc-2822)\"
 	tm = "!f() { \
-		export GIT_COMMITTER_DATE=\"$(date --date=\"$(git log -1 --format=%aD HEAD) ${1:-0} hours ago\" --rfc-2822)\"; \
+		export GIT_COMMITTER_DATE=\"$(date --date=\"$(git log -1 --format=%aD HEAD) ${1:-0} minutes ago\" --rfc-2822)\"; \
 		git commit --amend -C HEAD --date=\"${GIT_COMMITTER_DATE}\"; \
 	}; f"
 	rbtm = "!f() { \
