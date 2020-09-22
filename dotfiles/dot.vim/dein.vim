@@ -343,6 +343,7 @@ call dein#add('pocke/iro.vim', {
 \   'if': has('ruby'),
 \   'rev': 'iro-with-vim-syntax',
 \ })
+call dein#add('chr4/nginx.vim')
 call dein#add('nfnty/vim-nftables')
 
 " colorscheme
