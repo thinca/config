@@ -15,9 +15,6 @@ do
 	link "${path}" ~/"${filename#dot}"
 done
 
-link "${CONFIG_BASE}/firefox/dot.vimperatorrc" ~/.vimperatorrc
-link "${CONFIG_BASE}/firefox/vimperator" ~/.vimperator
-
 mkdir -p ~/share
 link "${CONFIG_BASE}/bin" ~/share/bin
 

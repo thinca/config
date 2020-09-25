@@ -314,7 +314,6 @@ call dein#add('OmniSharp/omnisharp-vim', {
 \     has('win32') ? 'omnisharp-roslyn/build.cmd'
 \                  : 'bash omnisharp-roslyn/build.sh || true',
 \ })
-call dein#add('superbrothers/vim-vimperator')
 call dein#add('kchmck/vim-coffee-script')
 call dein#add('elzr/vim-json')
 call dein#add('leafo/moonscript-vim')
