@@ -9,13 +9,15 @@ link() {
 
 pushd "${HOME}"
 
-for path in "${CONFIG_BASE}"/dotfiles/dot.*
+relative_base=${CONFIG_BASE#${HOME}/}
+
+for path in "${relative_base}"/dotfiles/dot.*
 do
 	filename="$(basename "${path}")"
 	link "${path}" ~/"${filename#dot}"
 done
 
 mkdir -p ~/share
-link "${CONFIG_BASE}/bin" ~/share/bin
+link "${relative_base}/bin" ~/share/bin
 
 popd
