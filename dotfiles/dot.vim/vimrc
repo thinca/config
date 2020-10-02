@@ -1806,6 +1806,13 @@ function s:check_interface() abort
     let tcl_ver = 'no'
   endtry
   echo 'Tcl ... ' .. tcl_ver
+
+  try
+    let mzscheme_ver = 'v' .. mzeval('(version)')
+  catch
+    let mzscheme_ver = 'no'
+  endtry
+  echo 'MzScheme ... ' .. mzscheme_ver
 endfunction
 command! CheckInterface call s:check_interface()
 
