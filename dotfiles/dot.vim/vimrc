@@ -839,7 +839,7 @@ augroup vimrc-lcd
   \     '.git',
   \     '.bzr/',
   \     '.hg/',
-  \     'doc/:vim,help',
+  \     'doc/:vim,help,vimspec',
   \   ],
   \   ['README.*', 'README'],
   \   ['src/', 'include/'],
