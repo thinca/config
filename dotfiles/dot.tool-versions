@@ -1,23 +1,23 @@
 clojure 1.10.1 system
 elixir 1.10.4-otp-23 system
-erlang 23.0.4 system
+erlang 23.1.1 system
 gauche 0.9.9 system
 golang 1.15.2 system
-groovy apache-groovy-binary-3.0.5 system
+groovy 3.0.6 system
 haskell 8.10.2 system
 java openjdk-15 system
-julia 1.5.1 system
+julia 1.5.2 system
 kotlin 1.4.10 system
 lua 5.4.0 system
 luaJIT 2.0.5--2.4.4 system
-nodejs 14.11.0 system
+nodejs 14.13.0 system
 ocaml 4.11.1 system
 perl 5.32.0 system
 php 7.4.10 system
-python 3.8.5 2.7.18 system
+python 3.9.0 2.7.18 system
 racket 7.8 system
 rclone 1.53.1 system
-ruby 2.7.1 system
+ruby 2.7.2 system
 rust 1.46.0 system
 scala 2.13.3 system
 zig 0.6.0 system
