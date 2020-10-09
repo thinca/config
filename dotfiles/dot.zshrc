@@ -246,9 +246,10 @@ typeset -ga chpwd_functions=()
 # on GNU Screen or tmux
 if __is_screen; then
 	function __preexec_on_screen() {
-		line="$3"
-		args="${(z)line}"
-		if [[ "${(t)args}" == "array" ]]; then
+		local line="$3"
+		local args=("${(z)line}")
+		local cmd
+		if [[ "${(t)args}" == "array-local" ]]; then
 			while __is_prefix_cmd "${args[1]}"
 			do
 				shift args
@@ -257,7 +258,7 @@ if __is_screen; then
 		else
 			cmd="${args}"
 		fi
-		shift args 2>/dev/null
+		shift 1 args 2>/dev/null
 		case "${cmd}" in
 			man|ssh)
 				screen-name "${cmd}:${args[*]}"
