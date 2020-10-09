@@ -890,7 +890,7 @@ augroup vimrc-auto-mkdir
   autocmd!
   autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
   function s:auto_mkdir(dir, force) abort
-    if &l:buftype !=# ''
+    if &l:buftype !=# '' || bufname('%') =~# '^[^:]\+://'
       return
     endif
     let mes = '"%s" does not exist. Create? [y/N]'
