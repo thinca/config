@@ -199,9 +199,12 @@ alias -s exe=mono
 alias -s jar='java -jar'
 
 # A script language may be executed.
-for ext in java c h cpp html xhtml xml yaml; do
-	alias -s $ext='$EDITOR'
-done
+() {
+	local ext
+	for ext in java c h cpp html xhtml xml yaml; do
+		alias -s $ext='$EDITOR'
+	done
+}
 
 
 ###########################################################################
@@ -289,9 +292,12 @@ fi
 ###########################################################################
 # Load other scripts.
 
-for f in ~/.zsh/scripts/*.zsh(N); do
-	[[ -r "${f}" ]] && source "${f}"
-done
+() {
+	local f
+	for f in ~/.zsh/scripts/*.zsh(N); do
+		[[ -r "${f}" ]] && source "${f}"
+	done
+}
 
 [[ -r ~/.zsh/"${SYSTEM_NAME}".zsh ]] && source ~/.zsh/"${SYSTEM_NAME}".zsh
 [[ -r ~/.config/zsh/local.zsh ]] && source ~/.config/zsh/local.zsh
