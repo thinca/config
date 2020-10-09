@@ -12,7 +12,7 @@ function __chpwd_on_gemfile_local() {
 		unset BUNDLE_GEMFILE
 	fi
 }
-chpwd_functions+=__chpwd_on_gemfile_local
+add-zsh-hook chpwd __chpwd_on_gemfile_local
 
 function __precmd_update_gemfile_local_lock() {
 	if [[ \
@@ -25,4 +25,4 @@ function __precmd_update_gemfile_local_lock() {
 		bundle install
 	fi
 }
-precmd_functions+=__precmd_update_gemfile_local_lock
+add-zsh-hook precmd __precmd_update_gemfile_local_lock

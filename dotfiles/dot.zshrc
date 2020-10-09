@@ -242,9 +242,7 @@ function screen-name() {
 
 ###########################################################################
 # hook functions.
-typeset -ga preexec_functions=()
-typeset -ga precmd_functions=()
-typeset -ga chpwd_functions=()
+autoload -Uz add-zsh-hook
 
 # on GNU Screen or tmux
 if __is_screen; then
@@ -280,8 +278,8 @@ if __is_screen; then
 		fi
 		screen-name "${d}/"
 	}
-	preexec_functions+=__preexec_on_screen
-	precmd_functions+=__precmd_on_screen
+	add-zsh-hook preexec __preexec_on_screen
+	add-zsh-hook precmd __precmd_on_screen
 
 	function tmux-session-refresh() {
 		unset $(tmux show-env | sed -n 's/^-//p')

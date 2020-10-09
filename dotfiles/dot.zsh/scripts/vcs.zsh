@@ -25,7 +25,7 @@ function update_vcs_info() {
 		alias x=$vcs_info_msg_1_
 	fi
 }
-precmd_functions+=update_vcs_info
+add-zsh-hook precmd update_vcs_info
 
 alias s=svn
 alias g=git
