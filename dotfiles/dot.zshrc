@@ -168,7 +168,27 @@ alias tree='tree -F --dirsfirst'
 alias etime='ps -o cmd,etime -C'
 
 # replace rm
-if type trash-put &>/dev/null; then
+if [[ -e /etc/bsnap/home-rm ]]; then
+	rm() {
+		local arg snap=no will_err=no paths=()
+		for arg in "$@"; do
+			if [[ "${arg[1]}" != "-" ]]; then
+				paths+=("${arg}")
+				if [[ ! -e "${arg}" ]]; then
+					will_err=yes
+				elif [[ "$(realpath ${arg})" =~ ^"${HOME}" ]]; then
+					snap=yes
+				fi
+			fi
+		done
+		if [[ "${snap}" == "yes" && "${will_err}" == "no" ]]; then
+			bsnap -c home-rm create "$(basename "${paths[1]}")"
+			command rm -fr "${paths[@]}"
+		else
+			command rm "$@"
+		fi
+	}
+elif type trash-put &>/dev/null; then
 	alias rm=trash-put
 fi
 alias del=/bin/rm
