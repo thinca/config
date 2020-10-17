@@ -2,10 +2,6 @@
 # The system detection.
 [[ -f ~/.zsh/system ]] && source ~/.zsh/system
 
-###########################################################################
-# Preload.
-[[ -f ~/.zsh/tmux ]] && source ~/.zsh/tmux
-
 # Disable ^Q and ^S.
 stty -ixon
 
@@ -323,6 +319,9 @@ fi
 # Delete the duplicate entry.
 typeset -U path
 typeset -U manpath
+
+# Automatically start Tmux session
+[[ -f ~/.zsh/tmux ]] && source ~/.zsh/tmux
 
 fpath=(~/.zsh/functions/Completion(N-/) $fpath)
 autoload -U compinit
