@@ -158,11 +158,18 @@ fi
 
 ###########################################################################
 # aliases.
-alias ls='ls -F   --color=auto'
-alias ll='ls -Fl  --color=auto'
-alias la='ls -FlA --color=auto'
-
-alias tree='tree -F --dirsfirst'
+if type exa >/dev/null; then
+	alias ls='exa -F   --group-directories-first --git'
+	alias ll='exa -Fl  --group-directories-first --git'
+	alias la='exa -Fla --group-directories-first --git'
+	alias tree='exa -F --group-directories-first --tree --git'
+	alias treel='exa -Fl --group-directories-first --tree --git'
+else
+	alias ls='ls -F   --color=auto'
+	alias ll='ls -Fl  --color=auto'
+	alias la='ls -FlA --color=auto'
+	alias tree='tree -F --dirsfirst'
+fi
 
 # Usage: etime vim
 alias etime='ps -o cmd,etime -C'
