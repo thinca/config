@@ -157,7 +157,7 @@
 	current-branch = branch --show-current
 	current-remote = !git branch-remote "$(git current-branch)"
 	branch-remote = "!f() { \
-		local b=\"${1:?Branch anme required.}\" && \
+		local b=\"${1:?Branch name required.}\" && \
 		local r=$(git config \"branch.${b}.remote\") && \
 		([[ ${b} == ${2} ]] && \
 			echo origin || \
