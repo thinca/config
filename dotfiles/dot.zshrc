@@ -147,9 +147,13 @@ zstyle ':completion:*:(processes|jobs)' menu yes select=2
 setopt prompt_subst
 
 # Normal prompt.
-PROMPT="
+if type starship >/dev/null; then
+	eval "$(starship init zsh)"
+else
+	PROMPT="
 %B%(#.${fg[yellow]}.${fg[green]})[%n@%m]%~ ${fg[magenta]}%1v%(?.. ${fg[red]}%?${reset_color})${reset_color}%b
 %# "
+fi
 
 
 ###########################################################################
