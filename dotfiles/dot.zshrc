@@ -151,6 +151,14 @@ PROMPT="
 %B%(#.${fg[yellow]}.${fg[green]})[%n@%m]%~ ${fg[magenta]}%1v%(?.. ${fg[red]}%?${reset_color})${reset_color}%b
 %# "
 
+if [[ ! -f ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme ]] && type git >/dev/null; then
+	git clone git@github.com:romkatv/powerlevel10k ~/.local/share/powerlevel10k
+fi
+if [[ -f ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+	[[ ! -f ~/.zsh/p10k.zsh ]] || source ~/.zsh/p10k.zsh
+	source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
+fi
+
 
 ###########################################################################
 # aliases.
