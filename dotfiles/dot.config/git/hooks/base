@@ -5,9 +5,20 @@ set -eu
 hook_name=$(basename "$0")
 basedir=$(dirname "$0")
 
+# Invoke global hooks
 for script in "${basedir}/${hook_name}.d"/*; do
 	[[ ! -x "${script}" ]] || "${script}" "$@"
 done
 
-repo_hook="${PWD}/.git/hooks/${hook_name}"
+# Invoke repository local hooks
+gitdir="${PWD}/.git"
+if [[ -f "${gitdir}" ]]; then
+	gitdir=$(sed 's/^gitdir: //' < "${gitdir}")
+fi
+
+repo_hook="${gitdir}/hooks/${hook_name}"
 [[ ! -x "${repo_hook}" ]] || "${repo_hook}" "$@"
+
+for script in "${gitdir}/hooks/${hook_name}.d"/*; do
+	[[ ! -x "${script}" ]] || "${script}" "$@"
+done
