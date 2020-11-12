@@ -286,6 +286,7 @@ call dein#add('yomi322/neco-tweetvim')
 call dein#add('yomi322/unite-tweetvim')
 call dein#add('yomi322/vim-operator-suddendeath')
 call dein#add('obcat/vim-hitspop')
+call dein#add('junegunn/vim-easy-align', {'on_cmd': 'EasyAlign'})
 
 call dein#add('tweekmonster/helpful.vim')
 
