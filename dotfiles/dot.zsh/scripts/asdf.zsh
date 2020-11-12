@@ -10,5 +10,6 @@ export ASDF_RACKET_CONFIG_FLAGS="--disable-futures --disable-places --disable-gr
 if [[ "${SYSTEM_NAME}" != "mac" ]]; then
 	ASDF_RACKET_CONFIG_FLAGS="--enable-dynlib ${ASDF_RACKET_CONFIG_FLAGS}"
 fi
+export NODEJS_CHECK_SIGNATURES="no"
 
 export ASDF_SKIP_RESHIM=1
