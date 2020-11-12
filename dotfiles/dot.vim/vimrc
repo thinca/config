@@ -3042,15 +3042,7 @@ let g:rogue#directory = s:plugin_info_dir('rogue')
 
 " ambicmd.vim  {{{2
 if dein#is_sourced('ambicmd')
-  " Type <Space> in cmdline means do complex things, so migrate to cmdwin.
-  function s:expand_space() abort
-    if getcmdtype() isnot# ':'
-      return "\<Space>"
-    endif
-    let expanded = "\<C-]>" .. ambicmd#expand("\<Space>")
-    return expanded =~# '\s$' ? expanded .. &g:cedit : expanded
-  endfunction
-  cnoremap <expr> <Space> <SID>expand_space()
+  cnoremap <expr> <Space> '<C-]>' .. ambicmd#expand('<Space>')
   cnoremap <expr> <CR>    '<C-]>' .. ambicmd#expand('<CR>')
   cnoremap <expr> <C-f>   ambicmd#expand('<Right>')
   cnoremap <expr> !       ambicmd#expand('!')
