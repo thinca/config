@@ -3,7 +3,7 @@ unset RUBYOPT
 path=(./.bundle/bin $path)
 
 alias -s rb=ruby
-alias bi='bundle install'
+alias bi='bundle install --jobs=$(nproc)'
 
 function __chpwd_on_gemfile_local() {
 	if [[ -f "Gemfile.private" ]]; then
