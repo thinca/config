@@ -180,14 +180,12 @@ function s:SIDP() abort
 endfunction
 
 function s:check_flag(flag) abort
-  let f = get(b:, a:flag, v:null)
-  if f isnot v:null
-    return f
-  endif
-  let f = get(g:, a:flag, v:null)
-  if f isnot v:null
-    return f
-  endif
+  for scope in [w:, b:, g:]
+    let f = get(scope, a:flag, v:null)
+    if f isnot v:null
+      return f
+    endif
+  endfor
   return 0
 endfunction
 
