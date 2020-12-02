@@ -191,12 +191,8 @@ function s:check_flag(flag) abort
   return 0
 endfunction
 
-function s:toggle_flag(flag) abort
-  if !exists(a:flag)
-    let {a:flag} = 1
-  else
-    let {a:flag} = !{a:flag}
-  endif
+function s:toggle_flag(scope, name) abort
+  let a:scope[a:name] = !get(a:scope, a:name, 0)
 endfunction
 
 function s:get_range(type, mode) abort
@@ -1192,7 +1188,7 @@ for [s:key, s:var] in [['n', 'bufnr'], ['c', 'char'],
 \                      ['s', 'filesize'], ['h', 'highlight']]
   for [s:prefix, s:scope] in [['', 'g'], ['b', 'b'], ['w', 'w']]
   execute printf('nnoremap <silent> <Space>s%s%s '
-  \            .. ':<C-u>call <SID>toggle_flag("%s:statusline_%s")<CR>'
+  \            .. ':<C-u>call <SID>toggle_flag(%s:, "statusline_%s")<CR>'
   \            .. ':redrawstatus!<CR>',
   \              s:prefix, s:key, s:scope, s:var)
   endfor
