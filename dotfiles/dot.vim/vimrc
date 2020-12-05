@@ -1810,20 +1810,6 @@ function s:check_interface() abort
 endfunction
 command! CheckInterface call s:check_interface()
 
-" :VimPluginTest  {{{2
-function s:vim_plugin_test() abort
-  if g:V.all('!isdirectory(g:V.Path.join(getcwd(), v:val))',
-  \          ['autoload', 'doc', 'plugin']) ||
-  \ !filereadable(g:V.Path.join(fnamemodify(getcwd(), ':h'), '.init.vimrc'))
-    call g:V.Message.error('Not in vim plugin: ' .. getcwd())
-    return
-  endif
-  call s:start_vim_plugin_test(g:V.Path.unify_separator(getcwd()))
-endfunction
-if exists('*s:start_vim_plugin_test')
-  command! PluginTest call s:vim_plugin_test()
-endif
-
 
 
 " == Filetype settings. == {{{1
