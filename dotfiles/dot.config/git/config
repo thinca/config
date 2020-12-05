@@ -26,6 +26,8 @@
 [diff]
 	algorithm = histogram
 	compactionHeuristic = true
+	colorMoved = dimmed-zebra
+	colorMovedWS = allow-indentation-change
 [grep]
 	lineNumber = true
 [commit]
