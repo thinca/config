@@ -1511,19 +1511,12 @@ else
     " Use meta keys in console.
     function s:use_meta_keys() abort
       let mod = g:V.is_mac() ? 'D' : 'M'
-      let t = exists(':tmap')
       for i in map(
       \   range(char2nr('a'), char2nr('z'))
       \ + range(char2nr('A'), char2nr('Z'))
       \ + range(char2nr('0'), char2nr('9'))
       \ , 'nr2char(v:val)')
-        " <Esc>O do not map because used by arrow keys.
-        if i !~# '[O]'
-          execute printf('nmap <Esc>%s <%s-%s>', i, mod, i)
-          if t
-            execute printf('tmap <Esc>%s <%s-%s>', i, mod, i)
-          endif
-        endif
+        execute printf("set <%s-%s>=\e%s", mod, i, i)
       endfor
     endfunction
 
