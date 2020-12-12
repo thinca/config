@@ -1559,6 +1559,31 @@ else
   endif
 endif
 
+" :terminal  {{{2
+function s:on_terminal_win_open() abort
+  augroup vimrc-terminal-window
+    autocmd! * <buffer>
+    autocmd WinEnter <buffer> call s:on_terminal_win_enter()
+    autocmd WinLeave <buffer> call s:on_terminal_win_leave()
+  augroup END
+endfunction
+function s:on_terminal_win_enter() abort
+  if get(b:, 'term_normal', 0)
+    call feedkeys("\<C-\>\<C-n>", 'nt')
+    unlet b:term_normal
+  endif
+endfunction
+function s:on_terminal_win_leave() abort
+  if term_getstatus('%') is# 'running,normal'
+    let b:term_normal = 1
+    normal! i
+  endif
+endfunction
+augroup vimrc-terminal
+  autocmd!
+  autocmd TerminalWinOpen * call s:on_terminal_win_open()
+augroup END
+
 " :CheckInterface  {{{2
 command! CheckInterface call vimrc#check_interface()
 
