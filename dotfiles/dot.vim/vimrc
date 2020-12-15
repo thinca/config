@@ -1510,13 +1510,12 @@ else
   if has('unix')
     " Use meta keys in console.
     function s:use_meta_keys() abort
-      let mod = g:V.is_mac() ? 'D' : 'M'
       for i in map(
       \   range(char2nr('a'), char2nr('z'))
       \ + range(char2nr('A'), char2nr('Z'))
       \ + range(char2nr('0'), char2nr('9'))
       \ , 'nr2char(v:val)')
-        execute printf("set <%s-%s>=\e%s", mod, i, i)
+        execute printf("set <M-%s>=\e%s", i, i)
       endfor
     endfunction
 
