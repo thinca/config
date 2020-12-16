@@ -372,3 +372,7 @@ call dein#save_state()
 if dein#check_install()
   call dein#install()
 endif
+
+if !empty(map(dein#check_clean(), 'delete(v:val, "rf")'))
+  call dein#recache_runtimepath()
+endif
