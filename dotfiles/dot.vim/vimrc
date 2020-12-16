@@ -2653,21 +2653,6 @@ if dein#is_sourced('reanimate')
   \                 :<C-u>Unite reanimate:session -default-action=reanimate_switch<CR>
 endif
 
-" anzu.vim  {{{2
-let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus = 1
-let g:anzu_no_match_word = ''
-
-" brightest.vim  {{{2
-let g:brightest#pattern = '\k\+'
-let g:brightest#highlight = {
-\   'group'    : 'BrightestUnderline',
-\   'priority' : -1
-\ }
-let g:brightest#highlight_in_cursorline = {
-\   'group' : 'BrightestCursorLineBg'
-\ }
-let g:brightest#ignore_syntax_list = ['Statement']
-
 " tweetvim.vim  {{{2
 let g:tweetvim_config_dir = s:plugin_info_dir('tweetvim')
 let g:tweetvim_open_buffer_cmd = ' split'
@@ -2720,15 +2705,6 @@ function g:committia_hooks.edit_open(info) abort
     startinsert
   endif
 endfunction
-
-" incsearch.vim  {{{2
-if dein#is_sourced('incsearch')
-  let g:incsearch#magic = '\v'
-  let g:incsearch#emacs_like_keymap = 1
-  map / <Plug>(incsearch-forward)
-  map ? <Plug>(incsearch-backward)
-  map g/ <Plug>(incsearch-stay)
-endif
 
 " lexima.vim  {{{2
 function s:setup_lexima() abort
@@ -2819,10 +2795,6 @@ function s:init_cmdwin() abort
   nnoremap <buffer> <nowait> q <C-w>c
   startinsert!
 endfunction
-
-" auto_source.vim  {{{2
-let g:auto_source#exclude = ['\.gvimrc', '/\%(\(dot\)\?\.vim\|vimfiles\)/info/']
-let g:auto_source#include = ['vimrc', '/plugin/.*.vim', '/autoload/.*.vim']
 
 " singleton.vim  {{{2
 let g:singleton#opener = 'Opener'
@@ -3012,13 +2984,6 @@ if dein#is_sourced('quickrun')
   endfunction
   nnoremap <silent> <Leader><Leader>s :<C-u>call <SID>open_scratch()<CR>
 endif
-
-" watchdogs.vim  {{{2
-let g:watchdogs_check_BufWritePost_enable = 1
-let g:watchdogs_check_BufWritePost_enables = {
-\   'vim': 0,
-\   'c': 0,
-\ }
 
 " ref.vim  {{{2
 let g:ref_open = 'vsplit'
