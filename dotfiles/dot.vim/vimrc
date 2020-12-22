@@ -2653,6 +2653,11 @@ if dein#is_sourced('reanimate')
   \                 :<C-u>Unite reanimate:session -default-action=reanimate_switch<CR>
 endif
 
+" hitspop.vim  {{{2
+let g:hitspop_popup_position = {
+\   'line': 'winbot',
+\ }
+
 " tweetvim.vim  {{{2
 let g:tweetvim_config_dir = s:plugin_info_dir('tweetvim')
 let g:tweetvim_open_buffer_cmd = ' split'
