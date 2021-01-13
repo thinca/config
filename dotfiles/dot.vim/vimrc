@@ -3004,14 +3004,14 @@ if executable('refe2')
   let g:ref_refe_cmd = 'refe2'
 endif
 let g:ref_source_webdict_sites = {
-\   'alc': {'url': 'http://eow.alc.co.jp/%s/UTF-8/'},
-\   'wikipedia': {'url': 'http://ja.wikipedia.org/wiki/%s', 'line': 19},
+\   'alc': {'url': 'https://eow.alc.co.jp/search?q=%s'},
+\   'wikipedia': {'url': 'https://ja.wikipedia.org/wiki/%s', 'line': 19},
 \   'wiktionary': {
-\     'url': 'http://ja.wiktionary.org/wiki/%s',
+\     'url': 'https://ja.wiktionary.org/wiki/%s',
 \     'keyword_encoding': 'utf-8',
 \     'cache': 1,
 \   },
-\   'weblio' : {'url' : 'http://ejje.weblio.jp/content/%s'},
+\   'weblio' : {'url' : 'https://ejje.weblio.jp/content/%s'},
 \ }
 function g:ref_source_webdict_sites.alc.filter(output) abort
   return substitute(a:output, '^.\{-}\n\ze・該当件数', '', '')
