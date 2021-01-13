@@ -2654,9 +2654,7 @@ if dein#is_sourced('reanimate')
 endif
 
 " hitspop.vim  {{{2
-let g:hitspop_popup_position = {
-\   'line': 'winbot',
-\ }
+let g:hitspop_line = 'winbot'
 
 " tweetvim.vim  {{{2
 let g:tweetvim_config_dir = s:plugin_info_dir('tweetvim')
