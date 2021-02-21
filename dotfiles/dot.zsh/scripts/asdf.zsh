@@ -27,8 +27,9 @@ asdf-update-global() {
 		current_ver=$(asdf current "${plugin_name}" | sed -e 's/^\S\+\s*//' -e 's/ .*//')
 		if [[ ${latest_ver} != ${current_ver} ]]; then
 			echo "${plugin_name} ${current_ver} -> ${latest_ver}"
-			asdf install "${plugin_name}" "${latest_ver}"
-			asdf global "${plugin_name}" "${latest_ver}" $(asdf current "${plugin_name}" | sed -e 's/^\S\+\s*\S\+\s*//' -e 's/\s*\S\+$//')
+			asdf install "${plugin_name}" "${latest_ver}" && \
+				asdf global "${plugin_name}" "${latest_ver}" $(asdf current "${plugin_name}" | sed -e 's/^\S\+\s*\S\+\s*//' -e 's/\s*\S\+$//') && \
+				asdf uninstall "${plugin_name}" "${current_ver}"
 		fi
 	done
 }
