@@ -3180,6 +3180,11 @@ let g:lsp_settings = {
 \   },
 \ }
 
+function s:lsp_format() abort
+  silent LspDocumentFormatSync
+  silent LspCodeActionSync source.organizeImports
+endfunction
+
 function s:on_lsp_buffer_enabled() abort
   if &l:buftype isnot# '' || win_gettype() isnot# ''
     return
@@ -3193,6 +3198,13 @@ function s:on_lsp_buffer_enabled() abort
   nmap <buffer> ]q <Plug>(lsp-next-diagnostic)
   nmap <buffer> mt <plug>(lsp-hover)
   nmap <buffer> mz <plug>(lsp-code-action)
+
+  if &filetype is# 'go'
+    augroup vimrc-plugin-lsp-ft-go
+      autocmd! * <buffer>
+      autocmd BufWritePre <buffer> call s:lsp_format()
+    augroup END
+  endif
 endfunction
 
 augroup vimrc-plugin-lsp
