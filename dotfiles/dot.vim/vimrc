@@ -1822,7 +1822,7 @@ if dein#is_sourced('neosnippet')
   function s:snippets_remap() abort
     smapclear
     smapclear <buffer>
-    smap <silent> <Tab> <Esc>a<Plug>(neosnippet_jump_or_expand)
+    smap <silent> <Tab> <C-\><C-n>a<Plug>(neosnippet_jump_or_expand)
     snoremap <C-h> _<C-h>
   endfunction
 endif
