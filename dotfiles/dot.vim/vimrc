@@ -1118,6 +1118,11 @@ onoremap <silent> gv :normal gv<CR>
 
 onoremap q /["',.{}()[\]<>]<CR>
 
+" Do not select whitespace of outer of quotes.  :help v_iquote
+onoremap a" 2i"
+onoremap a' 2i'
+onoremap a` 2i`
+
 " Prevent a typing error.
 nmap <C-@> <Esc>
 imap <C-@> <Esc>
