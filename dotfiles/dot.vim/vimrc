@@ -1111,6 +1111,13 @@ inoremap <C-l> <C-o><C-l>
 inoremap <C-g><C-u> <Esc>gUvbgi
 inoremap <C-g><C-l> <Esc>guvbgi
 
+" Make inputting a character by code easily.
+inoremap <Plug>(vimrc-input-char-by-code)
+\ <C-r>=nr2char(eval(input('char? ', '0x')))<CR>
+imap <C-v>x <Plug>(vimrc-input-char-by-code)
+imap <C-v>u <Plug>(vimrc-input-char-by-code)
+imap <C-v>U <Plug>(vimrc-input-char-by-code)
+
 " Select the last changed.
 nnoremap <expr> gc '`[' .. getregtype()[0] .. '`]'
 onoremap <silent> gc :normal gc<CR>
