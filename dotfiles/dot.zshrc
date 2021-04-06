@@ -213,31 +213,6 @@ alias -g NL='>/dev/null'
 alias -g NLL='&>/dev/null'
 
 
-# Suffix aliases.
-alias -s txt=cat
-alias -s log='tail -F'
-
-alias -s gz=zcat
-alias -s bz2=bzcat
-
-alias -s php=php
-alias -s scm=gosh
-alias -s lua=lua
-alias -s io=io
-alias -s bash=bash
-alias -s zsh=zsh
-alias -s exe=mono
-alias -s jar='java -jar'
-
-# A script language may be executed.
-() {
-	local ext
-	for ext in java c h cpp html xhtml xml yaml; do
-		alias -s $ext='$EDITOR'
-	done
-}
-
-
 ###########################################################################
 # key bindings.
 bindkey -v '^n' history-beginning-search-forward-end
