@@ -1,0 +1,13 @@
+cargo:bat
+cargo:exa
+cargo:fd-find
+cargo:git-delta
+cargo:procs
+cargo:ripgrep
+go:github.com/client9/misspell/cmd/misspell
+go:github.com/junegunn/fzf
+go:github.com/lemonade-command/lemonade
+go:github.com/mattn/jvgrep/v5
+npm:fixpack
+npm:wtrans
+npm:npm-check-updates
