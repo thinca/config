@@ -26,8 +26,9 @@ endfunction
 function s:call_with_non_empty(func, list) abort
   call call(a:func, empty(a:list) ? [] : [a:list])
 endfunction
-command! -nargs=* -complete=customlist,s:update_cmpl DeinUpdate
+command! -nargs=* -complete=customlist,s:update_cmpl -bang DeinUpdate
 \   call s:call_with_non_empty(
+\     (<bang>0 && !empty([<f-args>])) ||
 \     get(g:, 'dein#install_github_api_token', '') is# '' ?
 \     'dein#update' : funcref('dein#check_update', [v:true]), [<f-args>])
 command! -nargs=+ -complete=customlist,s:update_cmpl DeinReinstall
