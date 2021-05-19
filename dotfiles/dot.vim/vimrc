@@ -1226,6 +1226,19 @@ nnoremap <script> <expr> q reg_recording() is# '' ? '<SID>(q)' : 'q'
 
 nnoremap <silent> <SID>(q) q
 nnoremap <silent> <SID>(q)<Space> :<C-u>quit<CR>
+nnoremap <silent> <SID>(q)@
+\ <Cmd>call <SID>make_macro_recursive(nr2char(getchar()))<CR>
+
+function s:make_macro_recursive(reg) abort
+  if a:reg !~# '^[a-z]$'
+    return
+  endif
+  let contents = getreg(a:reg)
+  if contents !~# '@' .. a:reg .. '$'
+    let contents ..= '@' .. a:reg
+    call setreg(a:reg, contents)
+  endif
+endfunction
 
 if exists(':tmap')
   call s:meta_map('h', '<C-w>h', 't')
