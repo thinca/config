@@ -1,7 +1,8 @@
-if [[ -d ~/.asdf ]]; then
-	source ~/.asdf/asdf.sh
-	fpath=(${ASDF_DIR}/completions $fpath)
+if [[ ! -d ~/.asdf ]]; then
+	return
 fi
+source ~/.asdf/asdf.sh
+fpath=(${ASDF_DIR}/completions $fpath)
 export RUBY_CONFIGURE_OPTS="--enable-shared"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
 # Need patch to asdf-perl
