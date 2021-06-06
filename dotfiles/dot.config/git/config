@@ -49,7 +49,7 @@
 	cin = !git commit --amend --all -C HEAD \"--date=$(date --rfc-2822)\"
 	tm = "!f() { \
 		export GIT_COMMITTER_DATE=\"$(date --date=\"$(git log -1 --format=%aD HEAD) ${1:-0} minutes ago\" --rfc-2822)\"; \
-		git commit --amend -C HEAD --date=\"${GIT_COMMITTER_DATE}\"; \
+		git -c user.email=\"$(git log -1 --format=%ae HEAD)\" -c user.name=\"$(git log -1 --format=%an HEAD)\" commit --amend -C HEAD --date=\"${GIT_COMMITTER_DATE}\"; \
 	}; f"
 	rbtm = "!f() { \
 		git -c core.editor=true rebase ${2:-master} -i --exec \"git tm ${1:-0}\"; \
