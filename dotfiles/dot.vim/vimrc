@@ -769,7 +769,7 @@ augroup vimrc-auto-cursorline
 
   let s:cursorline_lock = 0
   function s:auto_cursorline(event) abort
-    if get(b:, 'cursorline_disable', 0)
+    if &l:buftype isnot# '' || get(b:, 'cursorline_disable', 0)
       return
     endif
     if a:event ==# 'WinEnter'
