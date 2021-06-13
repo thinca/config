@@ -51,6 +51,7 @@ fi
 # export LV='-c'
 export PAGER=less
 export LESS='--no-init --LONG-PROMPT --ignore-case --silent --quit-if-one-screen --RAW-CONTROL-CHARS'
+export LESSHISTFILE=-
 
 export EDITOR=vim
 
