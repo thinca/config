@@ -35,5 +35,6 @@ asdf-update-global() {
 	done
 }
 
-# FIXME: When there is no Java environment
-export JAVA_HOME="$(asdf where java)"
+if [[ -n $(asdf current java 2>/dev/null) ]]; then
+	export JAVA_HOME="$(asdf where java)"
+fi
