@@ -333,6 +333,7 @@ call dein#add('pocke/iro.vim', {
 \ })
 call dein#add('chr4/nginx.vim')
 call dein#add('nfnty/vim-nftables')
+call dein#add('rbtnn/vim-vimscript_indentexpr')
 
 " colorscheme
 call dein#add('romainl/Apprentice')
