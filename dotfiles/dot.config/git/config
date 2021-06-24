@@ -177,7 +177,7 @@
 			echo \"${r}\" || echo \"${b}\"); \
 	}; f"
 	base-branch = "!f() { \
-		git config \"branch.${1:-$(git current-branch)}.base\"; \
+		git config \"branch.${1:-$(git current-branch)}.base\" || git config branch.default; \
 	}; f"
 	set-base-branch = "!f() { \
 		git config \"branch.${2:-$(git current-branch)}.base\" \"${1}\"; \
