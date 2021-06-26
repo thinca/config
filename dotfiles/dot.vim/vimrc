@@ -1162,6 +1162,8 @@ noremap ZQ <Nop>
 noremap <C-z> <Nop>
 noremap <F1> <Nop>
 
+nnoremap =ae <Cmd>KeepCursor normal! gg=G<CR>
+
 
 " Mappings for command-line mode.
 cnoremap <C-a> <C-b>
