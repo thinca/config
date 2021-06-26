@@ -151,6 +151,18 @@ function vimrc#highlight_with(args) range abort
   endif
 endfunction
 
+function vimrc#keep_cursor(cmd) abort
+  let curwin_id = win_getid()
+  let view = winsaveview()
+  try
+    execute a:cmd
+  finally
+    if win_getid() == curwin_id
+      call winrestview(view)
+    endif
+  endtry
+endfunction
+
 function vimrc#opener(cmdline, ...) abort
   if a:0
     let file = a:1

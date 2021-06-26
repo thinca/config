@@ -1387,6 +1387,9 @@ command! -bar RTP echo substitute(&runtimepath, ',', "\n", 'g')
 command! -nargs=+ -range=% HighlightWith
 \                          <line1>,<line2>call vimrc#highlight_with(<q-args>)
 
+" :KeepCursor {excmd}
+command -nargs=+ KeepCursor call vimrc#keep_cursor(<q-args>)
+
 
 " Grep({text}, {pat} [, invert])
 function Grep(text, pat, ...) abort
