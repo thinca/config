@@ -70,7 +70,7 @@ if !v:vim_did_enter
   if !isdirectory(expand('~/vimfiles'))
     " Even Windows uses "$HOME/.vim".
     let &runtimepath = substitute(&runtimepath,
-      \ escape($HOME, '\') .. '/vimfiles', escape($HOME, '\') .. '/.vim', 'g')
+    \ escape($HOME, '\') .. '/vimfiles', escape($HOME, '\') .. '/.vim', 'g')
   endif
 endif
 
@@ -196,9 +196,9 @@ endfunction
 function s:get_range(type, mode) abort
   if a:mode ==# 'o'
     let vm = {
-        \ 'line' : 'V',
-        \ 'char' : 'v',
-        \ 'block' : "\<C-v>" }[a:type]
+    \ 'line' : 'V',
+    \ 'char' : 'v',
+    \ 'block' : "\<C-v>" }[a:type]
     let [sm, em] = ['[', ']']
     let save_sel = &selection
     set selection=inclusive
@@ -1200,10 +1200,10 @@ nnoremap <Space>s <Nop>
 for [s:key, s:var] in [['n', 'bufnr'], ['c', 'char'],
 \                      ['s', 'filesize'], ['h', 'highlight']]
   for [s:prefix, s:scope] in [['', 'g'], ['b', 'b'], ['w', 'w']]
-  execute printf('nnoremap <silent> <Space>s%s%s '
-  \            .. ':<C-u>call <SID>toggle_flag(%s:, "statusline_%s")<CR>'
-  \            .. ':redrawstatus!<CR>',
-  \              s:prefix, s:key, s:scope, s:var)
+    execute printf('nnoremap <silent> <Space>s%s%s '
+    \            .. ':<C-u>call <SID>toggle_flag(%s:, "statusline_%s")<CR>'
+    \            .. ':redrawstatus!<CR>',
+    \              s:prefix, s:key, s:scope, s:var)
   endfor
 endfor
 unlet! s:key s:var s:prefix s:scope
@@ -1211,8 +1211,8 @@ unlet! s:key s:var s:prefix s:scope
 " Quick toggle options.
 nnoremap <Space>o <Nop>
 nnoremap <silent> <Space>oe :<C-u>setlocal expandtab! expandtab?<CR>
-nnoremap <silent> <Space>of :<C-u>let &l:foldcolumn=1-&l:foldcolumn<CR>
-                           \:setlocal foldcolumn?<CR>
+nnoremap <silent> <Space>of
+\ :<C-u>let &l:foldcolumn=1-&l:foldcolumn<CR>:setlocal foldcolumn?<CR>
 nnoremap <silent> <Space>on :<C-u>setlocal number! number?<CR>
 nnoremap <silent> <Space>ol :<C-u>setlocal list! list?<CR>
 nnoremap <silent> <Space>ow :<C-u>setlocal wrap! wrap?<CR>
@@ -1277,8 +1277,8 @@ noremap! <expr> <C-r>/  <SID>strip_magic()
 function s:strip_magic() abort
   let search_pat = getreg('/')
   return getcmdtype() =~# '[/?]'
-        \ ? search_pat
-        \ : substitute(search_pat, '\(^\\V\|\\[<>]\)', '', 'g')
+  \ ? search_pat
+  \ : substitute(search_pat, '\(^\\V\|\\[<>]\)', '', 'g')
 endfunction
 
 command! -nargs=+ G call vimrc#grep(<f-args>)
@@ -1460,8 +1460,8 @@ if $WINDOW !=# '' || $TMUX !=# ''
       return
     endif
     let esc = "\<Esc>"
-    silent! execute '!echo -n "' .. esc .. 'k' .. escape(a:name, '%#!')
-      \ .. esc .. '\\"'
+    let cmd = printf('!echo -n "%sk%s%s\\"', esc, escape(a:name, '%#!'), esc)
+    silent! execute cmd
     let g:before_window_name = a:name
     " redraw!
   endfunction
@@ -1481,10 +1481,10 @@ if $WINDOW !=# '' || $TMUX !=# ''
   augroup vimrc-screen
     autocmd!
     autocmd VimEnter * ++once call s:set_window_name(0 < argc() ?
-      \ 'v:' .. fnamemodify(argv(0), ':t') : 'vim')
+    \ 'v:' .. fnamemodify(argv(0), ':t') : 'vim')
     autocmd BufEnter,WinEnter,BufFilePost * call s:auto_window_name()
     autocmd VimLeave * call s:set_window_name(len($SHELL) ?
-      \ fnamemodify($SHELL, ':t') : 'shell')
+    \ fnamemodify($SHELL, ':t') : 'shell')
   augroup END
 
   if $TMUX !=# ''
@@ -1714,16 +1714,16 @@ if dein#is_sourced('vimshell')
   let g:vimshell_ignore_case = 1
   let g:vimshell_smart_case = 1
   if !exists('g:vimshell_execute_file_list')
-      let g:vimshell_execute_file_list = {
-      \   'rb': 'ruby',
-      \   'pl': 'perl',
-      \   'py': 'python',
-      \   'scm': 'gosh',
-      \   'hs': 'runghc',
-      \   'scala': 'scala',
-      \   'lua': 'lua',
-      \   'jar': 'java -jar',
-      \ }
+    let g:vimshell_execute_file_list = {
+    \   'rb': 'ruby',
+    \   'pl': 'perl',
+    \   'py': 'python',
+    \   'scm': 'gosh',
+    \   'hs': 'runghc',
+    \   'scala': 'scala',
+    \   'lua': 'lua',
+    \   'jar': 'java -jar',
+    \ }
   endif
   nmap <Leader>sh <Plug>(vimshell_split_switch)
   nmap <Leader>sH <Plug>(vimshell_split_create)
@@ -1789,8 +1789,7 @@ if dein#is_sourced('deoplete')
   inoremap <expr> <C-y> pumvisible() ? deoplete#close_popup()  : '<C-y>'
   inoremap <expr> <C-e> pumvisible() ? deoplete#cancel_popup() : '<C-e>'
 
-" neocomplete.vim  {{{2
-elseif dein#is_sourced('neocomplete')
+elseif dein#is_sourced('neocomplete')  " neocomplete.vim  {{{2
   let g:neocomplete#enable_at_startup = 1
   " let g:neocomplete_enable_camel_case_completion = 1
   let g:neocomplete#data_directory = s:plugin_info_dir('neocomplete')
@@ -2192,7 +2191,7 @@ endfunction
 " calendar.vim  {{{2
 let g:calendar_navi_label = '前月,今月,次月'
 let g:calendar_mruler =
-  \ '睦月,如月,弥生,卯月,皐月,水無月,文月,葉月,長月,神無月,霜月,師走'
+\ '睦月,如月,弥生,卯月,皐月,水無月,文月,葉月,長月,神無月,霜月,師走'
 let g:calendar_wruler = '日 月 火 水 木 金 土'
 nmap cal <Plug>CalendarV
 nmap caL <Plug>CalendarH
@@ -3007,7 +3006,7 @@ if dein#is_sourced('quickrun')
   endfunction
   function s:open_scratch() abort
     let ft = input('type?', '', 'customlist,' .. s:SIDP()
-      \ .. 'complete_open_scratch')
+    \ .. 'complete_open_scratch')
     if ft ==# ''
       return
     endif
@@ -3272,7 +3271,7 @@ function SetUndoFtplugin(com) abort
   let b:undo_ftplugin = command
 endfunction
 command! -nargs=1 -bang -complete=command SetUndoFtplugin
-  \ call SetUndoFtplugin(<q-args>)
+\ call SetUndoFtplugin(<q-args>)
 
 " syntax test
 function CurrentSyntax() abort
