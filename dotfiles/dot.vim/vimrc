@@ -2587,12 +2587,6 @@ if has('gui_running')
 endif
 nnoremap <Leader><Leader>v <Cmd>TweetVimSay<CR>
 
-" J6uil.vim  {{{2
-let g:J6uil_config_dir = s:plugin_info_dir('J6uil')
-let g:J6uil_display_icon = 1
-let g:J6uil_empty_separator = 1
-let g:J6uil_multi_window = 1
-
 " colorv.vim  {{{2
 let g:colorv_no_global_map = 1
 let g:colorv_cache_file = s:plugin_info_dir('colorv') .. 'cache'
