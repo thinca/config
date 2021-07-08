@@ -1744,7 +1744,6 @@ if dein#is_sourced('neosnippet')
     endif
     return "\<Tab>"
   endfunction
-  inoremap <silent> <Plug>(adjust-indent) <Esc>==I
   imap <silent> <expr> <Tab> TabWrapper()
 
   " Start editing with any key in the select mode.
