@@ -1023,7 +1023,7 @@ nnoremap <Esc> <Nop>
 
 " Control search highlight.
 if dein#is_sourced('asterisk')
-  noremap <silent> <Plug>(vimrc-searchafter) zz
+  noremap <Plug>(vimrc-searchafter) zz
   map * <Plug>(asterisk-z*)<Plug>(vimrc-searchafter)
   map # <Plug>(asterisk-z#)<Plug>(vimrc-searchafter)
   map g* <Plug>(asterisk-gz*)<Plug>(vimrc-searchafter)
@@ -1797,7 +1797,7 @@ if dein#is_sourced('unite')
 
   nnoremap <Leader>z <Cmd>Unite -buffer-name=file
   \ window:all:no-current proj_mru file buffer<CR>
-  nnoremap <silent> <Leader>a <Nop>
+  nnoremap <Leader>a <Nop>
   nnoremap <Leader>ab <Cmd>Unite -buffer-name=file buffer<CR>
   nnoremap <Leader>af <Cmd>Unite -buffer-name=file file file/new<CR>
   nnoremap <Leader>aF     <Cmd>UniteWithBufferDir -buffer-name=file file<CR>
@@ -1835,8 +1835,8 @@ if dein#is_sourced('unite')
   nnoremap <Leader>ag <Cmd>Unite -no-quit grep:**<CR>
   " nnoremap <Leader>as <Cmd>Unite session<CR>
 
-  nnoremap <silent> <Leader>a<Leader> <Nop>
-  nnoremap <silent> <Leader>a<Leader>r <Nop>
+  nnoremap <Leader>a<Leader> <Nop>
+  nnoremap <Leader>a<Leader>r <Nop>
   nnoremap <Leader>a<Leader>rc <Cmd>Unite rails/controller<CR>
   nnoremap <Leader>a<Leader>rm <Cmd>Unite rails/model<CR>
   nnoremap <Leader>a<Leader>rv <Cmd>Unite rails/view<CR>
@@ -2340,8 +2340,8 @@ if dein#is_sourced('altr')
   " Go
   call altr#define('%.go', '%_test.go')
 
-  nmap <silent> <C-Space> <Plug>(altr-forward)
-  nmap <silent> <C-S-Space> <Plug>(altr-back)
+  nmap <C-Space> <Plug>(altr-forward)
+  nmap <C-S-Space> <Plug>(altr-back)
   nnoremap <C-w><C-Space> <Cmd>split<CR><Cmd>call altr#forward()<CR>
   nnoremap <C-w><C-S-Space> <Cmd>split<CR><Cmd>call altr#back()<CR>
 endif
@@ -3146,9 +3146,9 @@ nnoremap <Plug>(vimrc-show-current-syntax)
 \ <Cmd>echo join(map(synstack(line('.'), col('.')),
 \ 'synIDattr(v:val, "name")
 \ .. "(" .. synIDattr(synIDtrans(v:val), "name") .. ")"'), ',')<CR>
-nmap <silent> <C-CR> <Plug>(vimrc-show-current-syntax)
-nmap <silent> mx <Plug>(vimrc-show-current-syntax)
-imap <silent> <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
+nmap <C-CR> <Plug>(vimrc-show-current-syntax)
+nmap mx <Plug>(vimrc-show-current-syntax)
+imap <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
 
 
 command! -nargs=1 -complete=command -bang Time
