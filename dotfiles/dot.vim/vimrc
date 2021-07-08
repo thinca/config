@@ -1036,7 +1036,7 @@ elseif dein#is_sourced('visualstar')
   map g* <Plug>(visualstar-g*)<Plug>(vimrc-searchafter)
   map g# <Plug>(visualstar-g#)<Plug>(vimrc-searchafter)
 endif
-nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
+nnoremap <Esc><Esc> <Cmd>nohlsearch<CR>
 
 " Search the word nearest to the cursor in new window.
 nnoremap <C-w>*  <C-w>s*
@@ -1067,10 +1067,10 @@ unlet! s:n
 nnoremap <C-j> <C-e>gj
 nnoremap <C-k> <C-y>gk
 
-nnoremap <expr> <silent> [c &diff ? '[c' : ':cprevious<CR>'
-nnoremap <expr> <silent> ]c &diff ? ']c' : ':cnext<CR>'
-nnoremap <silent> [l :lprevious<CR>
-nnoremap <silent> ]l :lnext<CR>
+nnoremap <expr> [c &diff ? '[c' : '<Cmd>cprevious<CR>'
+nnoremap <expr> ]c &diff ? ']c' : '<Cmd>cnext<CR>'
+nnoremap [l <Cmd>lprevious<CR>
+nnoremap ]l <Cmd>lnext<CR>
 
 " Swap ; and :
 noremap ; :
@@ -1083,7 +1083,7 @@ nnoremap <expr> <C-h> <SID>good_feeling_prefix() .. 'h '
 nnoremap <expr> <Space>tm <SID>good_feeling_prefix() .. 'terminal<CR>'
 
 " Show :messages quickly.
-nnoremap <expr> <lt> v:count ? ':<C-u>' .. v:count .. 'messages<CR>' : '<lt>'
+nnoremap <expr> <lt> v:count ? '<Cmd>' .. v:count .. 'messages<CR>' : '<lt>'
 
 nnoremap <silent> <expr> ]p <SID>paste_with_indent()
 function s:paste_with_indent() abort
@@ -1121,8 +1121,8 @@ imap <C-v>U <Plug>(vimrc-input-char-by-code)
 
 " Select the last changed.
 nnoremap <expr> gc '`[' .. getregtype()[0] .. '`]'
-onoremap <silent> gc :normal gc<CR>
-onoremap <silent> gv :normal gv<CR>
+onoremap gc <Cmd>normal gc<CR>
+onoremap gv <Cmd>normal gv<CR>
 
 onoremap q /["',.{}()[\]<>]<CR>
 
@@ -1181,27 +1181,27 @@ cnoremap <Down> <C-n>
 
 nnoremap <Space> <Nop>
 " Quick save and quit.
-nnoremap <silent> <Space>w :<C-u>update<CR>
-nnoremap <silent> <Space>W :<C-u>update!<CR>
-nnoremap <silent> <Space>q :<C-u>quit<CR>
-nnoremap <silent> <Space>Q :<C-u>quit!<CR>
+nnoremap <Space>w <Cmd>update<CR>
+nnoremap <Space>W <Cmd>update!<CR>
+nnoremap <Space>q <Cmd>quit<CR>
+nnoremap <Space>Q <Cmd>quit!<CR>
 
 " Change encodings and formats.
 nnoremap <Space>e <Nop>
-nnoremap <silent> <Space>es :<C-u>setlocal fenc=cp932<CR>
-nnoremap <silent> <Space>ee :<C-u>setlocal fenc=euc-jp<CR>
-nnoremap <silent> <Space>eu :<C-u>setlocal fenc=utf-8<CR>
-nnoremap <silent> <Space>ej :<C-u>setlocal fenc=iso-2022-jp<CR>
-nnoremap <silent> <Space>ed :<C-u>setlocal ff=dos<CR>
-nnoremap <silent> <Space>ex :<C-u>setlocal ff=unix<CR>
+nnoremap <Space>es <Cmd>setlocal fenc=cp932<CR>
+nnoremap <Space>ee <Cmd>setlocal fenc=euc-jp<CR>
+nnoremap <Space>eu <Cmd>setlocal fenc=utf-8<CR>
+nnoremap <Space>ej <Cmd>setlocal fenc=iso-2022-jp<CR>
+nnoremap <Space>ed <Cmd>setlocal ff=dos<CR>
+nnoremap <Space>ex <Cmd>setlocal ff=unix<CR>
 
 " Change statusline.
 nnoremap <Space>s <Nop>
 for [s:key, s:var] in [['n', 'bufnr'], ['c', 'char'],
 \                      ['s', 'filesize'], ['h', 'highlight']]
   for [s:prefix, s:scope] in [['', 'g'], ['b', 'b'], ['w', 'w']]
-    execute printf('nnoremap <silent> <Space>s%s%s '
-    \            .. ':<C-u>call <SID>toggle_flag(%s:, "statusline_%s")<CR>'
+    execute printf('nnoremap <Space>s%s%s '
+    \            .. '<Cmd>call <SID>toggle_flag(%s:, "statusline_%s")<CR>'
     \            .. ':redrawstatus!<CR>',
     \              s:prefix, s:key, s:scope, s:var)
   endfor
@@ -1210,25 +1210,25 @@ unlet! s:key s:var s:prefix s:scope
 
 " Quick toggle options.
 nnoremap <Space>o <Nop>
-nnoremap <silent> <Space>oe :<C-u>setlocal expandtab! expandtab?<CR>
-nnoremap <silent> <Space>of
-\ :<C-u>let &l:foldcolumn=1-&l:foldcolumn<CR>:setlocal foldcolumn?<CR>
-nnoremap <silent> <Space>on :<C-u>setlocal number! number?<CR>
-nnoremap <silent> <Space>ol :<C-u>setlocal list! list?<CR>
-nnoremap <silent> <Space>ow :<C-u>setlocal wrap! wrap?<CR>
-nnoremap <silent> <Space>os :<C-u>setlocal spell! spell?<CR>
-nnoremap <silent> <Space>op :<C-u>set paste! paste?<CR>
+nnoremap <Space>oe <Cmd>setlocal expandtab! expandtab?<CR>
+nnoremap <Space>of
+\ <Cmd>let &l:foldcolumn=1-&l:foldcolumn<CR>:setlocal foldcolumn?<CR>
+nnoremap <Space>on <Cmd>setlocal number! number?<CR>
+nnoremap <Space>ol <Cmd>setlocal list! list?<CR>
+nnoremap <Space>ow <Cmd>setlocal wrap! wrap?<CR>
+nnoremap <Space>os <Cmd>setlocal spell! spell?<CR>
+nnoremap <Space>op <Cmd>set paste! paste?<CR>
 
 " Tabpage operation.
 nnoremap <Space>t <Nop>
-nnoremap <silent> <Space>tn :<C-u>tabnew<CR>
-nnoremap <silent> <Space>tc :<C-u><C-r>=v:count?v:count:''<CR>tabclose<CR>
+nnoremap <Space>tn <Cmd>tabnew<CR>
+nnoremap <Space>tc <Cmd><C-r>=v:count?v:count:''<CR>tabclose<CR>
 
 " q as prefix
 nnoremap <script> <expr> q reg_recording() is# '' ? '<SID>(q)' : 'q'
 
 nnoremap <silent> <SID>(q) q
-nnoremap <silent> <SID>(q)<Space> :<C-u>quit<CR>
+nnoremap <SID>(q)<Space> <Cmd>quit<CR>
 nnoremap <silent> <SID>(q)@
 \ <Cmd>call <SID>make_macro_recursive(nr2char(getchar()))<CR>
 
@@ -1254,8 +1254,8 @@ if exists(':tmap')
   call s:meta_map('L', '<C-w>L', 't')
 endif
 
-nnoremap <silent> <Space>.
-\      :if expand('%:p:h:gs?\\?/?') ==# resolve($VIM_USERDIR)
+nnoremap <Space>.
+\  <Cmd>if expand('%:p:h:gs?\\?/?') ==# resolve($VIM_USERDIR)
 \ <Bar>   source %
 \ <Bar> else
 \ <Bar>   tabnew $VIM_USERDIR/vimrc
@@ -1269,9 +1269,9 @@ function s:grep_same_ext(pat) abort
   let files = join(map(exts, '"**/*." .. v:val'), ' ')
   silent! execute 'vimgrep /' .. a:pat .. '/j ' .. files
 endfunction
-nnoremap <silent> <Space>grep :<C-u>call <SID>grep_same_ext('\C' .. @/)<CR>
-nnoremap <silent> <Space>Grep :<C-u>call <SID>grep_same_ext('\c' .. @/)<CR>
-nnoremap <silent> <Space><C-g> :<C-u>vimgrep /<C-r>//gj %<CR>
+nnoremap <Space>grep <Cmd>call <SID>grep_same_ext('\C' .. @/)<CR>
+nnoremap <Space>Grep <Cmd>call <SID>grep_same_ext('\c' .. @/)<CR>
+nnoremap <Space><C-g> <Cmd>vimgrep /<C-r>//gj %<CR>
 
 noremap! <expr> <C-r>/  <SID>strip_magic()
 function s:strip_magic() abort
@@ -1284,8 +1284,8 @@ endfunction
 command! -nargs=+ G call vimrc#grep(<f-args>)
 
 " <Space><C-n>, <Space><C-p>: Move window position {{{
-nnoremap <silent> <Space><C-n> :<C-u>call <SID>swap_window(v:count1)<CR>
-nnoremap <silent> <Space><C-p> :<C-u>call <SID>swap_window(-v:count1)<CR>
+nnoremap <Space><C-n> <Cmd>call <SID>swap_window(v:count1)<CR>
+nnoremap <Space><C-p> <Cmd>call <SID>swap_window(-v:count1)<CR>
 
 function s:swap_window(n) abort
   let curbuf = bufnr('%')
@@ -1298,7 +1298,7 @@ function s:swap_window(n) abort
 endfunction
 " }}}
 
-nnoremap <silent> <Leader><CR> :<C-u>%s/\r$//ge<CR><C-o>
+nnoremap <Leader><CR> <Cmd>%s/\r$//ge<CR><C-o>
 
 " Shortcut enc and ff.
 cnoreabbrev ++u ++enc=utf8
@@ -1353,7 +1353,7 @@ function s:diff_original() abort
   diffthis
   let b:diff_original = bufnr
 endfunction
-nnoremap <silent> <Space>diff :call <SID>diff_original()<CR>
+nnoremap <Space>diff <Cmd>call <SID>diff_original()<CR>
 " }}}
 
 " -- Commands.  {{{2
@@ -1376,7 +1376,7 @@ command! -bar Diff if &diff | diffoff! | else
 if executable('ctags')
   " Execute ctags command. And echo for error.
   command! -nargs=? -complete=file -bar CtagsR call vimrc#ctags([<f-args>])
-  nnoremap <silent> <Space>tr :<C-u>CtagsR<CR>
+  nnoremap <Space>tr <Cmd>CtagsR<CR>
 endif
 
 command! -bar Tasks execute 'vimgrep /\C\v<(TODO|FIXME|XXX)>/ **/*.'
@@ -1767,8 +1767,8 @@ if dein#is_sourced('vimfiler')
   let g:vimfiler_safe_mode_by_default = 0
   let g:vimfiler_data_directory = s:plugin_info_dir('vimfiler')
   let g:vimfiler_split_rule = 'botright'
-  nnoremap <silent> <Leader>sf :<C-u>VimFilerSplit<CR>
-  nnoremap <silent> <Leader>sF :<C-u>VimFilerBufferDir -split<CR>
+  nnoremap <Leader>sf <Cmd>VimFilerSplit<CR>
+  nnoremap <Leader>sF <Cmd>VimFilerBufferDir -split<CR>
 endif
 
 " deoplete.nvim  {{{2
@@ -1895,14 +1895,14 @@ if dein#is_sourced('unite')
 
   call unite#filters#sorter_default#use(['sorter_selecta'])
 
-  nnoremap <silent> <Leader>z :<C-u>Unite -buffer-name=file
+  nnoremap <Leader>z <Cmd>Unite -buffer-name=file
   \ window:all:no-current proj_mru file buffer<CR>
   nnoremap <silent> <Leader>a <Nop>
-  nnoremap <silent> <Leader>ab :<C-u>Unite -buffer-name=file buffer<CR>
-  nnoremap <silent> <Leader>af :<C-u>Unite -buffer-name=file file file/new<CR>
-  nnoremap <silent> <Leader>aF     :<C-u>UniteWithBufferDir -buffer-name=file file<CR>
-  nnoremap <silent> <Leader>a<C-f> :<C-u>UniteWithBufferDir -buffer-name=file file<CR>
-  nnoremap <silent> <Leader>am :<C-u>Unite -buffer-name=file file_mru<CR>
+  nnoremap <Leader>ab <Cmd>Unite -buffer-name=file buffer<CR>
+  nnoremap <Leader>af <Cmd>Unite -buffer-name=file file file/new<CR>
+  nnoremap <Leader>aF     <Cmd>UniteWithBufferDir -buffer-name=file file<CR>
+  nnoremap <Leader>a<C-f> <Cmd>UniteWithBufferDir -buffer-name=file file<CR>
+  nnoremap <Leader>am <Cmd>Unite -buffer-name=file file_mru<CR>
 
   let s:cmds = [
   \   ['fd', '--hidden', '--no-ignore', '--type', 'file', '--color', 'never', '.'],
@@ -1911,40 +1911,40 @@ if dein#is_sourced('unite')
   let s:rec_cmd = get(filter(s:cmds, 'executable(v:val[0])'), 0, [])
   if !empty(s:rec_cmd)
     let g:unite_source_rec_async_command = s:rec_cmd
-    nnoremap <silent> <Leader>ar :<C-u>Unite -buffer-name=file file_rec/async<CR>
-    nnoremap <silent> <Leader>aR :<C-u>Unite -buffer-name=file file_rec/async:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
+    nnoremap <Leader>ar <Cmd>Unite -buffer-name=file file_rec/async<CR>
+    nnoremap <Leader>aR <Cmd>Unite -buffer-name=file file_rec/async:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
   else
-    nnoremap <silent> <Leader>ar :<C-u>Unite -buffer-name=file file_rec<CR>
-    nnoremap <silent> <Leader>aR :<C-u>Unite -buffer-name=file file_rec:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
+    nnoremap <Leader>ar <Cmd>Unite -buffer-name=file file_rec<CR>
+    nnoremap <Leader>aR <Cmd>Unite -buffer-name=file file_rec:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
   endif
 
-  nnoremap <silent> <Leader>a<Tab> :<C-u>Unite -vertical tab<CR>
-  nnoremap <silent> <Leader>ah :<C-u>Unite help<CR>
-  nnoremap <silent> <Leader>al :<C-u>Unite line<CR>
-  nnoremap <silent> <Leader>ao :<C-u>Unite -buffer-name=outline -vertical -no-start-insert -create outline<CR>
-  nnoremap <silent> <Leader>aw :<C-u>Unite window:all<CR>
-  nnoremap <silent> <Leader>ap :<C-u>Unite tab<CR>
-  nnoremap <silent> <Leader>aP :<C-u>Unite process<CR>
-  nnoremap <silent> <Leader>at :<C-u>Unite tag<CR>
-  nnoremap <silent> <Leader>aT :<C-u>Unite tag/file<CR>
-  nnoremap <silent> <Leader>a<C-t> :<C-u>Unite tag/file<CR>
-  nnoremap <silent> <Leader>a: :<C-u>Unite history/command<CR>
-  nnoremap <silent> <Leader>a; :<C-u>Unite history/command<CR>
-  nnoremap <silent> <Leader>a/ :<C-u>Unite history/search<CR>
-  nnoremap <silent> <Leader>aq :<C-u>Unite qf<CR>
-  nnoremap <silent> <Leader>ag :<C-u>Unite -no-quit grep:**<CR>
-  " nnoremap <silent> <Leader>as :<C-u>Unite session<CR>
+  nnoremap <Leader>a<Tab> <Cmd>Unite -vertical tab<CR>
+  nnoremap <Leader>ah <Cmd>Unite help<CR>
+  nnoremap <Leader>al <Cmd>Unite line<CR>
+  nnoremap <Leader>ao <Cmd>Unite -buffer-name=outline -vertical -no-start-insert -create outline<CR>
+  nnoremap <Leader>aw <Cmd>Unite window:all<CR>
+  nnoremap <Leader>ap <Cmd>Unite tab<CR>
+  nnoremap <Leader>aP <Cmd>Unite process<CR>
+  nnoremap <Leader>at <Cmd>Unite tag<CR>
+  nnoremap <Leader>aT <Cmd>Unite tag/file<CR>
+  nnoremap <Leader>a<C-t> <Cmd>Unite tag/file<CR>
+  nnoremap <Leader>a: <Cmd>Unite history/command<CR>
+  nnoremap <Leader>a; <Cmd>Unite history/command<CR>
+  nnoremap <Leader>a/ <Cmd>Unite history/search<CR>
+  nnoremap <Leader>aq <Cmd>Unite qf<CR>
+  nnoremap <Leader>ag <Cmd>Unite -no-quit grep:**<CR>
+  " nnoremap <Leader>as <Cmd>Unite session<CR>
 
   nnoremap <silent> <Leader>a<Leader> <Nop>
   nnoremap <silent> <Leader>a<Leader>r <Nop>
-  nnoremap <silent> <Leader>a<Leader>rc :<C-u>Unite rails/controller<CR>
-  nnoremap <silent> <Leader>a<Leader>rm :<C-u>Unite rails/model<CR>
-  nnoremap <silent> <Leader>a<Leader>rv :<C-u>Unite rails/view<CR>
+  nnoremap <Leader>a<Leader>rc <Cmd>Unite rails/controller<CR>
+  nnoremap <Leader>a<Leader>rm <Cmd>Unite rails/model<CR>
+  nnoremap <Leader>a<Leader>rv <Cmd>Unite rails/view<CR>
 
-  nnoremap <silent> <C-]>      :<C-u>Unite -immediately -no-start-insert tag:<C-r>=expand('<cword>')<CR><CR>
-  vnoremap <silent> <C-]>      :<C-u>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> tag<CR>
-  nnoremap <silent> <C-w><C-]> :<C-u>Unite -immediately -no-start-insert -default-action=split tag:<C-r>=expand('<cword>')<CR><CR>
-  vnoremap <silent> <C-w><C-]> :<C-u>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> -default-action=split tag<CR>
+  nnoremap <C-]>      <Cmd>Unite -immediately -no-start-insert tag:<C-r>=expand('<cword>')<CR><CR>
+  vnoremap <C-]>      <Cmd>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> tag<CR>
+  nnoremap <C-w><C-]> <Cmd>Unite -immediately -no-start-insert -default-action=split tag:<C-r>=expand('<cword>')<CR><CR>
+  vnoremap <C-w><C-]> <Cmd>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> -default-action=split tag<CR>
 
   call g:V.Dict.clear(unite#custom#get_profile('file', 'substitute_patterns'))
 
@@ -2130,7 +2130,7 @@ let g:neomru#file_mru_limit = 10000
 let g:neomru#file_mru_ignore_pattern = s:temp_file_pat
 
 " alignta.vim  {{{2
-vnoremap <silent> <C-h> :Alignta<CR>
+vnoremap <C-h> <Cmd>Alignta<CR>
 let g:alignta_default_arguments = '\S\+'
 
 " rsense.vim  {{{2
@@ -2322,7 +2322,7 @@ endif
 " restart.vim  {{{2
 let g:restart_sessionoptions =
 \     'blank,curdir,folds,help,localoptions,tabpages,unix'
-nnoremap <silent> <Leader><Leader>res :<C-u>Restart<CR>
+nnoremap <Leader><Leader>res <Cmd>Restart<CR>
 
 " nextfile.vim  {{{2
 let g:nf_ignore_ext = ['meta']
@@ -2369,7 +2369,7 @@ if dein#is_sourced('submode')
     let pos += tabpagenr() <= pos ? 1 : 0
     execute 'tabmove' pos
   endfunction
-  let s:movetab = ':<C-u>call ' .. s:SIDP() .. 'movetab(%d)<CR>'
+  let s:movetab = '<Cmd>call ' .. s:SIDP() .. 'movetab(%d)<CR>'
   call submode#enter_with('movetab', 'n', '', '<Space>gt', printf(s:movetab, 1))
   call submode#enter_with('movetab', 'n', '', '<Space>gT', printf(s:movetab, -1))
   call submode#map('movetab', 'n', '', 't', printf(s:movetab, 1))
@@ -2446,8 +2446,8 @@ if dein#is_sourced('altr')
 
   nmap <silent> <C-Space> <Plug>(altr-forward)
   nmap <silent> <C-S-Space> <Plug>(altr-back)
-  nnoremap <silent> <C-w><C-Space> :<C-u>split<CR>:call altr#forward()<CR>
-  nnoremap <silent> <C-w><C-S-Space> :<C-u>split<CR>:call altr#back()<CR>
+  nnoremap <C-w><C-Space> <Cmd>split<CR><Cmd>call altr#forward()<CR>
+  nnoremap <C-w><C-S-Space> <Cmd>split<CR><Cmd>call altr#back()<CR>
 endif
 
 " smartword.vim  {{{2
@@ -2594,7 +2594,7 @@ if dein#is_sourced('yankround')
     call submode#map('yankround', 'n', 'r', 'p', '<Plug>(yankround-prev)')
     call submode#map('yankround', 'n', 'r', 'n', '<Plug>(yankround-next)')
   endif
-  nnoremap <silent> <Leader>a<C-p> :<C-u>Unite yankround<CR>
+  nnoremap <Leader>a<C-p> <Cmd>Unite yankround<CR>
 endif
 
 " smalls.vim  {{{2
@@ -2683,8 +2683,8 @@ if dein#is_sourced('reanimate')
   call reanimate#hook(s:event)
   unlet s:event
 
-  nnoremap <silent> <Leader>as
-  \                 :<C-u>Unite reanimate:session -default-action=reanimate_switch<CR>
+  nnoremap <Leader>as
+  \        <Cmd>Unite reanimate:session -default-action=reanimate_switch<CR>
 endif
 
 " hitspop.vim  {{{2
@@ -2701,7 +2701,7 @@ let g:tweetvim_expand_t_co = 1
 if has('gui_running')
   let g:tweetvim_original_hi = 1
 endif
-nnoremap <silent> <Leader><Leader>v :<C-u>TweetVimSay<CR>
+nnoremap <Leader><Leader>v <Cmd>TweetVimSay<CR>
 
 " J6uil.vim  {{{2
 let g:J6uil_config_dir = s:plugin_info_dir('J6uil')
@@ -3019,7 +3019,7 @@ if dein#is_sourced('quickrun')
     let &l:filetype = ft
     call template#load('Scratch.' .. ft)
   endfunction
-  nnoremap <silent> <Leader><Leader>s :<C-u>call <SID>open_scratch()<CR>
+  nnoremap <Leader><Leader>s <Cmd>call <SID>open_scratch()<CR>
 endif
 
 " ref.vim  {{{2
@@ -3069,8 +3069,7 @@ if !exists('g:ref_source_webdict_cmd') &&
   let g:ref_source_webdict_cmd = [s:lynx_cmd, '-dump', '-nonumbers', '%s']
   let g:ref_phpmanual_cmd = g:ref_source_webdict_cmd
 endif
-nnoremap <silent> <Space>K
-\ :<C-u>call ref#jump('normal', 'webdict', {'noenter': 1})<CR>
+nnoremap <Space>K <Cmd>call ref#jump('normal', 'webdict', {'noenter': 1})<CR>
 vnoremap <silent> <Space>K
 \ :<C-u>call ref#jump('visual', 'webdict', {'noenter': 1})<CR>
 nnoremap <Space><C-k> :<C-u>Ref webdict alc<Space>
@@ -3132,18 +3131,18 @@ let g:threes#start_with_higher_tile = 1
 " vcs.vim  {{{2
 let g:vcs#debug = 1
 let g:vcs#buffer#opener = 'new'
-nnoremap <silent> <Leader>va  :<C-u>Vcs add<CR>
-nnoremap <silent> <Leader>vb  :<C-u>Vcs blame<CR>
-nnoremap <silent> <Leader>vc  :<C-u>Vcs commit<CR>
-nnoremap <silent> <Leader>vd  :<C-u>Vcs diff<CR>
-nnoremap <silent> <Leader>vD  :<C-u>Vcs delete<CR>
-nnoremap <silent> <Leader>vs  :<C-u>Vcs status<CR>
-nnoremap <silent> <Leader>vl  :<C-u>Vcs log<CR>
-nnoremap <silent> <Leader>vzl :<C-u>Vcs log %<CR>
-nnoremap <silent> <Leader>vzc :<C-u>Vcs commit %<CR>
-nnoremap <silent> <Leader>vzd :<C-u>Vcs diff %<CR>
-nnoremap <silent> <Leader>vg
-\        :<C-u>Vcs grep '<C-r>=<SID>convert_pattern(@/)<CR>'<CR>
+nnoremap <Leader>va  <Cmd>Vcs add<CR>
+nnoremap <Leader>vb  <Cmd>Vcs blame<CR>
+nnoremap <Leader>vc  <Cmd>Vcs commit<CR>
+nnoremap <Leader>vd  <Cmd>Vcs diff<CR>
+nnoremap <Leader>vD  <Cmd>Vcs delete<CR>
+nnoremap <Leader>vs  <Cmd>Vcs status<CR>
+nnoremap <Leader>vl  <Cmd>Vcs log<CR>
+nnoremap <Leader>vzl <Cmd>Vcs log %<CR>
+nnoremap <Leader>vzc <Cmd>Vcs commit %<CR>
+nnoremap <Leader>vzd <Cmd>Vcs diff %<CR>
+nnoremap <Leader>vg
+\        <Cmd>Vcs grep '<C-r>=<SID>convert_pattern(@/)<CR>'<CR>
 function s:convert_pattern(pat) abort
   let chars = split(a:pat, '\zs')
   let len = len(chars)
@@ -3226,7 +3225,7 @@ function s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
   nmap <buffer> gd <plug>(lsp-definition)
-  nnoremap <buffer> <silent> <C-w>d :<C-u>rightbelow LspDefinition<CR>
+  nnoremap <buffer> <C-w>d <Cmd>rightbelow LspDefinition<CR>
   nmap <buffer> <f2> <plug>(lsp-rename)
   nmap <buffer> [q <Plug>(lsp-previous-diagnostic)
   nmap <buffer> ]q <Plug>(lsp-next-diagnostic)
@@ -3278,8 +3277,8 @@ function CurrentSyntax() abort
   let syntax = synstack(line('.'), col('.'))
   return empty(syntax) ? '' : synIDattr(syntax[-1], 'name')
 endfunction
-nnoremap <silent> <Plug>(vimrc-show-current-syntax)
-\ :<C-u>echo join(map(synstack(line('.'), col('.')),
+nnoremap <Plug>(vimrc-show-current-syntax)
+\ <Cmd>echo join(map(synstack(line('.'), col('.')),
 \ 'synIDattr(v:val, "name")
 \ .. "(" .. synIDattr(synIDtrans(v:val), "name") .. ")"'), ',')<CR>
 nmap <silent> <C-CR> <Plug>(vimrc-show-current-syntax)
