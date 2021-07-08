@@ -1721,38 +1721,6 @@ if dein#is_sourced('deoplete')
   inoremap <expr> <C-f> deoplete#manual_complete('file')
   inoremap <expr> <C-y> pumvisible() ? deoplete#close_popup()  : '<C-y>'
   inoremap <expr> <C-e> pumvisible() ? deoplete#cancel_popup() : '<C-e>'
-
-elseif dein#is_sourced('neocomplete')  " neocomplete.vim  {{{2
-  let g:neocomplete#enable_at_startup = 1
-  " let g:neocomplete_enable_camel_case_completion = 1
-  let g:neocomplete#data_directory = s:plugin_info_dir('neocomplete')
-  let g:neocomplete_disable_caching_file_path_pattern =
-  \   s:temp_file_pat .. '\m\|\[.*\]$'
-
-  call g:V.set_default('g:neocomplete#keyword_patterns', {})
-  let g:neocomplete#keyword_patterns.javascript = '\v\k+'
-
-  call g:V.set_default('g:neocomplete#force_omni_input_patterns', {})
-  let g:neocomplete#force_omni_input_patterns.cs = '[^.]\.\%(\u\{2,}\)\?'
-  let g:neocomplete#force_omni_input_patterns.csharp = '[^.]\.\%(\u\{2,}\)\?'
-  let g:neocomplete#force_omni_input_patterns.typescript = '[^.]\.\%(\u\{2,}\)\?'
-
-  let g:neocomplete#auto_completion_start_length = 2
-  call neocomplete#custom#source('_', 'sorters',  [])
-
-  let g:neocomplete#text_mode_filetypes = g:V.Dict.make_index([
-  \   'gitcommit', 'help', 'hybrid', 'markdown', 'tex', 'text',
-  \   'vcs-commit',
-  \ ])
-
-  if !exists('g:neocomplete#same_filetypes')
-    let g:neocomplete#same_filetypes = {}
-  endif
-  let g:neocomplete#same_filetypes.vimspec = 'vim'
-
-  inoremap <expr> <C-f> neocomplete#start_manual_complete('file')
-  inoremap <expr> <C-y> pumvisible() ? neocomplete#close_popup()  : '<C-y>'
-  inoremap <expr> <C-e> pumvisible() ? neocomplete#cancel_popup() : '<C-e>'
 endif
 
 " context_filetype.vim
