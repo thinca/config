@@ -2034,10 +2034,6 @@ let g:neomru#file_mru_ignore_pattern = s:temp_file_pat
 vnoremap <C-h> <Cmd>Alignta<CR>
 let g:alignta_default_arguments = '\S\+'
 
-" rsense.vim  {{{2
-" let g:rsenseHome = expand("~/app/rsense")
-" let g:rsenseUseOmniFunc = 1
-
 " OmniSharp.vim  {{{2
 let g:OmniSharp_timeout = 10
 let g:OmniSharp_quickFixLength = 1000
