@@ -1694,67 +1694,6 @@ endif
 " netrw.vim  {{{2
 let g:netrw_home = s:plugin_info_dir('netrw')
 
-" vimshell.vim  {{{2
-if dein#is_sourced('vimshell')
-  let g:vimshell_vimshrc_path = $VIM_USERDIR .. '/vimshrc'
-  let g:vimshell_enable_interactive = 1
-  let g:vimshell_temporary_directory = s:plugin_info_dir('vimshell')
-  let g:vimshell_scrollback_limit = 100000
-  let g:vimshell_editor_command = $EDITOR
-  let g:vimshell_prompt = '% '
-  let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-  " let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~") .. " " .' .
-  " \                            'vimshell#vcs#info("(%s)-[%b]", "(%s)-[%b|%a]")'
-  let g:vimshell_ignore_case = 1
-  let g:vimshell_smart_case = 1
-  if !exists('g:vimshell_execute_file_list')
-    let g:vimshell_execute_file_list = {
-    \   'rb': 'ruby',
-    \   'pl': 'perl',
-    \   'py': 'python',
-    \   'scm': 'gosh',
-    \   'hs': 'runghc',
-    \   'scala': 'scala',
-    \   'lua': 'lua',
-    \   'jar': 'java -jar',
-    \ }
-  endif
-  nmap <Leader>sh <Plug>(vimshell_split_switch)
-  nmap <Leader>sH <Plug>(vimshell_split_create)
-
-  augroup vimrc-plugin-vimshell
-    autocmd!
-    autocmd FileType int-* call s:init_vimshell_int()
-    autocmd FileType term-* call s:init_vimshell_term()
-  augroup END
-
-  function s:vimshell_complete_history() abort
-    if exists('b:interactive') && has_key(b:interactive, 'command_history')
-      call complete(len(vimshell#get_prompt()) + 1, b:interactive.command_history)
-    endif
-    return ''
-  endfunction
-
-  function s:init_vimshell_int() abort
-    silent! iunmap <buffer> <C-l>
-    inoremap <silent> <buffer> <SID>(vimshell_complete_history)
-    \                          <C-r>=<SID>vimshell_complete_history()<CR><C-p>
-
-    imap <buffer> <silent> <C-q> <SID>(vimshell_complete_history)
-    inoremap <buffer> <expr>
-    \        <C-k> unite#sources#vimshell_history#start_complete(1)
-    nnoremap <buffer> <expr>
-    \        <C-k> unite#sources#vimshell_history#start_complete(0)
-    nnoremap <buffer> <C-n> gt
-    nnoremap <buffer> <C-p> gT
-  endfunction
-
-  function s:init_vimshell_term() abort
-    imap <buffer> <Esc> <Plug>(vimshell_term_send_escape)
-    inoremap <buffer> <Esc><Esc> <Esc>
-  endfunction
-endif
-
 " vimfiler.vim  {{{2
 if dein#is_sourced('vimfiler')
   let g:vimfiler_as_default_explorer = 1

@@ -70,7 +70,6 @@ call dein#add('mattn/vim-lsp-settings')
 call dein#add('Shougo/context_filetype.vim')
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
-call dein#add('Shougo/vimshell.vim')
 call dein#add('Shougo/vimproc.vim', {
 \ 'build':
 \   has('mac') ? 'make -f make_mac.mak' :
@@ -259,7 +258,6 @@ call dein#add('ujihisa/shadow.vim')
 call dein#add('ujihisa/unite-colorscheme')
 call dein#add('ujihisa/unite-font')
 call dein#add('ujihisa/unite-locate')
-call dein#add('ujihisa/vimshell-ssh')
 call dein#add('vim-scripts/uptime.vim')
 call dein#add('vim-jp/autofmt')
 call dein#add('vim-jp/vimdoc-ja')
