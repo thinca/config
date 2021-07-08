@@ -1029,12 +1029,6 @@ if dein#is_sourced('asterisk')
   map g* <Plug>(asterisk-gz*)<Plug>(vimrc-searchafter)
   map g# <Plug>(asterisk-gz#)<Plug>(vimrc-searchafter)
   let g:asterisk#keeppos = 1
-elseif dein#is_sourced('visualstar')
-  noremap <silent> <Plug>(vimrc-searchafter) Nzz
-  map * <Plug>(visualstar-*)<Plug>(vimrc-searchafter)
-  map # <Plug>(visualstar-#)<Plug>(vimrc-searchafter)
-  map g* <Plug>(visualstar-g*)<Plug>(vimrc-searchafter)
-  map g# <Plug>(visualstar-g#)<Plug>(vimrc-searchafter)
 endif
 nnoremap <Esc><Esc> <Cmd>nohlsearch<CR>
 
