@@ -2574,19 +2574,6 @@ endif
 " hitspop.vim  {{{2
 let g:hitspop_line = 'winbot'
 
-" tweetvim.vim  {{{2
-let g:tweetvim_config_dir = s:plugin_info_dir('tweetvim')
-let g:tweetvim_open_buffer_cmd = ' split'
-let g:tweetvim_display_username = 1
-let g:tweetvim_display_separator = 1
-let g:tweetvim_display_icon = 1
-let g:tweetvim_async_post = 1
-let g:tweetvim_expand_t_co = 1
-if has('gui_running')
-  let g:tweetvim_original_hi = 1
-endif
-nnoremap <Leader><Leader>v <Cmd>TweetVimSay<CR>
-
 " colorv.vim  {{{2
 let g:colorv_no_global_map = 1
 let g:colorv_cache_file = s:plugin_info_dir('colorv') .. 'cache'
