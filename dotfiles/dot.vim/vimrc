@@ -2488,9 +2488,6 @@ if dein#is_sourced('yankround')
   nnoremap <Leader>a<C-p> <Cmd>Unite yankround<CR>
 endif
 
-" smalls.vim  {{{2
-map mv <Plug>(smalls)
-
 " reanimate.vim  {{{2
 if dein#is_sourced('reanimate')
   let g:reanimate_default_save_name = ''
