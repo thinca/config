@@ -1,7 +1,7 @@
-clojure 1.10.2.774 system
-deno 1.10.3 system
-elixir 1.12.1-otp-24 system
-erlang 24.0.2 system
+clojure 1.10.3.855 system
+deno 1.11.5 system
+elixir 1.12.2-otp-24 system
+erlang 24.0.3 system
 gauche 0.9.10 system
 golang 1.16.5 system
 groovy 3.0.8 system
@@ -11,14 +11,14 @@ julia 1.6.1 system
 kotlin 1.5.20-M1 system
 lua 5.4.3 system
 luaJIT 2.0.5--2.4.4 system
-nodejs 16.3.0 system
+nodejs 16.4.2 system
 ocaml 4.12.0 system
 perl 5.32.0 system
 php 8.0.6 system
-python 3.9.5 2.7.18 system
+python 3.9.6 2.7.18 system
 racket 8.1 system
 rclone 1.55.1 system
-ruby 3.0.1 system
-rust 1.52.1 system
+ruby 3.0.2 system
+rust 1.53.0 system
 scala 3.0.0 system
 zig 0.8.0 system
