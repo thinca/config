@@ -2465,16 +2465,6 @@ let g:projecteuler_problem_lang = 'ja'
 " onlinejadge.vim  {{{2
 let g:onlinejudge_account = {'aoj': {'user': 'thinca'}}
 
-" textmanip.vim  {{{2
-if dein#is_sourced('submode')
-  call submode#enter_with('textmanip', 'v', 'r', 'mv')
-  call submode#map('textmanip', 'v', 'r', 'h', '<Plug>(textmanip-move-left)')
-  call submode#map('textmanip', 'v', 'r', 'j', '<Plug>(textmanip-move-down)')
-  call submode#map('textmanip', 'v', 'r', 'k', '<Plug>(textmanip-move-up)')
-  call submode#map('textmanip', 'v', 'r', 'l', '<Plug>(textmanip-move-right)')
-  call submode#map('textmanip', 'v', 'rx', '<Esc>', '<Esc><Esc>')
-endif
-
 " quickhl.vim  {{{2
 map mh <Plug>(quickhl-manual-this)
 map mH <Plug>(quickhl-manual-reset)
