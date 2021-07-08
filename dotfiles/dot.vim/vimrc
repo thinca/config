@@ -3226,6 +3226,7 @@ function s:on_lsp_buffer_enabled() abort
   setlocal signcolumn=yes
   nmap <buffer> gd <plug>(lsp-definition)
   nnoremap <buffer> <C-w>d <Cmd>rightbelow LspDefinition<CR>
+  nnoremap <buffer> <C-w><C-d> <Cmd>rightbelow LspDefinition<CR>
   nmap <buffer> <f2> <plug>(lsp-rename)
   nmap <buffer> [q <Plug>(lsp-previous-diagnostic)
   nmap <buffer> ]q <Plug>(lsp-next-diagnostic)
