@@ -1216,7 +1216,7 @@ nnoremap <Space>op <Cmd>set paste! paste?<CR>
 " Tabpage operation.
 nnoremap <Space>t <Nop>
 nnoremap <Space>tn <Cmd>tabnew<CR>
-nnoremap <Space>tc <Cmd><C-r>=v:count?v:count:''<CR>tabclose<CR>
+nnoremap <silent> <Space>tc :<C-u><C-r>=v:count?v:count:''<CR>tabclose<CR>
 
 " q as prefix
 nnoremap <script> <expr> q reg_recording() is# '' ? '<SID>(q)' : 'q'
@@ -1812,10 +1812,10 @@ if dein#is_sourced('unite')
   if !empty(s:rec_cmd)
     let g:unite_source_rec_async_command = s:rec_cmd
     nnoremap <Leader>ar <Cmd>Unite -buffer-name=file file_rec/async<CR>
-    nnoremap <Leader>aR <Cmd>Unite -buffer-name=file file_rec/async:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
+    nnoremap <silent> <Leader>aR :<C-u>Unite -buffer-name=file file_rec/async:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
   else
     nnoremap <Leader>ar <Cmd>Unite -buffer-name=file file_rec<CR>
-    nnoremap <Leader>aR <Cmd>Unite -buffer-name=file file_rec:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
+    nnoremap <silent> <Leader>aR :<C-u>Unite -buffer-name=file file_rec:<C-r>=expand('%:p:h:gs?[ :]?\\\0?')<CR><CR>
   endif
 
   nnoremap <Leader>a<Tab> <Cmd>Unite -vertical tab<CR>
@@ -1841,10 +1841,10 @@ if dein#is_sourced('unite')
   nnoremap <Leader>a<Leader>rm <Cmd>Unite rails/model<CR>
   nnoremap <Leader>a<Leader>rv <Cmd>Unite rails/view<CR>
 
-  nnoremap <C-]>      <Cmd>Unite -immediately -no-start-insert tag:<C-r>=expand('<cword>')<CR><CR>
-  vnoremap <C-]>      <Cmd>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> tag<CR>
-  nnoremap <C-w><C-]> <Cmd>Unite -immediately -no-start-insert -default-action=split tag:<C-r>=expand('<cword>')<CR><CR>
-  vnoremap <C-w><C-]> <Cmd>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> -default-action=split tag<CR>
+  nnoremap <silent> <C-]>      :<C-u>Unite -immediately -no-start-insert tag:<C-r>=expand('<cword>')<CR><CR>
+  vnoremap <silent> <C-]>      :<C-u>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> tag<CR>
+  nnoremap <silent> <C-w><C-]> :<C-u>Unite -immediately -no-start-insert -default-action=split tag:<C-r>=expand('<cword>')<CR><CR>
+  vnoremap <silent> <C-w><C-]> :<C-u>Unite -immediately -no-start-insert -input=<C-r>=escape(<SID>get_range(visualmode(), 'v'), '\ ')<CR> -default-action=split tag<CR>
 
   call g:V.Dict.clear(unite#custom#get_profile('file', 'substitute_patterns'))
 
@@ -3005,8 +3005,8 @@ nnoremap <Leader>vl  <Cmd>Vcs log<CR>
 nnoremap <Leader>vzl <Cmd>Vcs log %<CR>
 nnoremap <Leader>vzc <Cmd>Vcs commit %<CR>
 nnoremap <Leader>vzd <Cmd>Vcs diff %<CR>
-nnoremap <Leader>vg
-\        <Cmd>Vcs grep '<C-r>=<SID>convert_pattern(@/)<CR>'<CR>
+nnoremap <silent> <Leader>vg
+\        :<C-u>Vcs grep '<C-r>=<SID>convert_pattern(@/)<CR>'<CR>
 function s:convert_pattern(pat) abort
   let chars = split(a:pat, '\zs')
   let len = len(chars)
