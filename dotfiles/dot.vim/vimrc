@@ -2948,6 +2948,13 @@ endfunction
 " scall.vim  {{{2
 let g:scall_function_name = 'S'
 
+" breadcrumbs.vim  {{{2
+augroup vimrc-breadcrumbs-auto
+  autocmd!
+  autocmd BufReadPost *_spec.rb BreadcrumbsOn
+  autocmd FileType json,yaml BreadcrumbsOn
+augroup END
+
 " template.vim  {{{2
 augroup vimrc-plugin-template
   autocmd!
