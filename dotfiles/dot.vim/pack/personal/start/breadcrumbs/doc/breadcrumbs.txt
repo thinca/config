@@ -1,0 +1,70 @@
+*breadcrumbs.txt*	**Summary**
+
+Version: 0.1.0
+Author : thinca <thinca+vim@gmail.com>
+License: zlib License
+
+==============================================================================
+CONTENTS					*breadcrumbs-contents*
+
+INTRODUCTION			|breadcrumbs-introduction|
+USAGE				|breadcrumbs-usage|
+INTERFACE			|breadcrumbs-interface|
+  COMMANDS			  |breadcrumbs-commands|
+  FUNCTIONS			  |breadcrumbs-functions|
+  KEY MAPPINGS			  |breadcrumbs-key-mappings|
+CUSTOMIZING			|breadcrumbs-customizing|
+CHANGELOG			|breadcrumbs-changelog|
+
+
+
+==============================================================================
+INTRODUCTION					*breadcrumbs-introduction*
+
+*breadcrumbs.vim* is a Vim plugin ...
+
+Requirements:
+- Vim 8.2 or later
+
+Latest version:
+https://github.com/thinca/vim-breadcrumbs
+
+
+
+==============================================================================
+USAGE						*breadcrumbs-usage*
+
+
+
+
+
+==============================================================================
+INTERFACE					*breadcrumbs-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*breadcrumbs-commands*
+
+
+------------------------------------------------------------------------------
+FUNCTIONS					*breadcrumbs-functions*
+
+
+------------------------------------------------------------------------------
+KEY MAPPINGS					*breadcrumbs-key-mappings*
+
+
+
+==============================================================================
+CUSTOMIZING					*breadcrumbs-customizing*
+
+
+
+==============================================================================
+CHANGELOG					*breadcrumbs-changelog*
+
+1.0.0	xxxx-xx-xx
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl
