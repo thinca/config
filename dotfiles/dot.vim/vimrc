@@ -1196,7 +1196,7 @@ for [s:key, s:var] in [['n', 'bufnr'], ['c', 'char'],
   for [s:prefix, s:scope] in [['', 'g'], ['b', 'b'], ['w', 'w']]
     execute printf('nnoremap <Space>s%s%s '
     \            .. '<Cmd>call <SID>toggle_flag(%s:, "statusline_%s")<CR>'
-    \            .. ':redrawstatus!<CR>',
+    \            .. '<Cmd>redrawstatus!<CR>',
     \              s:prefix, s:key, s:scope, s:var)
   endfor
 endfor
