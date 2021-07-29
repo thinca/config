@@ -41,7 +41,15 @@ if !dein#load_state($DEIN_BASE)
   finish
 endif
 
-call dein#begin($DEIN_BASE, [expand('<sfile>')])
+let s:vimrcs = [expand('<sfile>')]
+
+let s:local_dein = expand('~/.config/vim/local.dein.vim')
+let s:local_dein_exists = filereadable(s:local_dein)
+if s:local_dein_exists
+  let s:vimrcs += [s:local_dein]
+endif
+
+call dein#begin($DEIN_BASE, s:vimrcs)
 
 if $DROPBOX_HOME !=# ''
   call dein#local($DROPBOX_HOME . '/work/vim-plugins/labs', {'frozen': 1})
@@ -338,8 +346,7 @@ call dein#add('haya14busa/vital-power-assert')
 " Trial use
 call dein#add('machakann/vim-vimhelplint')
 
-let s:local_dein = expand('~/.config/vim/local.dein.vim')
-if filereadable(s:local_dein)
+if s:local_dein_exists
   execute 'source' fnameescape(s:local_dein)
 endif
 
