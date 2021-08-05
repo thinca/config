@@ -121,8 +121,8 @@
 	rbi = rebase -i
 	rbc = rebase --continue
 	rba = rebase --abort
-	df = !git diff "$(git base-commit)..HEAD"
-	bf = ![[ -z "${GIT_PREFIX}" ]] || cd "${GIT_PREFIX}" && git diff --name-only "$(git base-commit)..HEAD" --relative
+	df = !git diff "$(git base-commit)"
+	bf = ![[ -z "${GIT_PREFIX}" ]] || cd "${GIT_PREFIX}" && git diff --name-only "$(git base-commit)" --relative
 	conflicts = diff --name-only --diff-filter=U
 	upst = rebase origin/master
 	gene = log --graph --date=iso --pretty=gene
