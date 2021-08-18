@@ -40,8 +40,6 @@ if [[ -d ~/share/Dropbox ]]; then
 	path=("${DROPBOX_HOME}"/bin(N-/) $path)
 fi
 
-path=(~/.local/bin(N-/) $path)
-
 if [[ "${TERM}" == "rxvt-unicode" ]]; then
 	TERM=xterm-256color
 fi
@@ -303,6 +301,8 @@ fi
 		[[ -r "${f}" ]] && source "${f}"
 	done
 }
+
+path=(~/.local/bin(N-/) $path)
 
 [[ -r ~/.zsh/"${SYSTEM_NAME}".zsh ]] && source ~/.zsh/"${SYSTEM_NAME}".zsh
 [[ -r ~/.config/zsh/local.zsh ]] && source ~/.config/zsh/local.zsh
