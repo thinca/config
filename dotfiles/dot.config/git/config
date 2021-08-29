@@ -153,7 +153,7 @@
 	merged-branches = for-each-ref refs/heads/ --format='%(refname:short)' --merged
 	spent-branches = "!f() { \
 		git merged-branches ${1} | \
-			grep -Ev \"^${1}\\$|$(git worktree-bases | sed 's/.*/^&$/' | paste -s -d'|' -)\"; \
+			grep -Ev \"^(${1}|master|main|develop|$(git worktree-bases | sed 's/.*/^&$/' | paste -s -d'|' -))\\$\"; \
 	}; f ${1:-$(git current-branch)}"
 	worktree-bases = "!git worktree list --porcelain | grep '^worktree' | sed 's/^worktree //' | xargs -IX basename X"
 	current-branch = branch --show-current
