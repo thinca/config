@@ -351,7 +351,7 @@ call dein#add('romainl/Apprentice')
 call dein#add('rhysd/vim-color-splatoon')
 call dein#add('gruvbox-community/gruvbox')
 
-" libray
+" library
 call dein#add('haya14busa/vital-vimlcompiler')
 call dein#add('haya14busa/vital-power-assert')
 
