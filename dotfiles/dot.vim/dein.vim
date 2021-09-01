@@ -66,12 +66,12 @@ function s:try(cmd) abort
   endtry
 endfunction
 
-let s:use_deoplete = has('python3') && s:try('python3 import neovim')
+" let s:use_deoplete = has('python3') && s:try('python3 import neovim')
 " call dein#add('Shougo/deoplete.nvim', {'if': s:use_deoplete})
 " call dein#add('roxma/nvim-yarp', {'if': s:use_deoplete})
 " call dein#add('roxma/vim-hug-neovim-rpc', {'if': s:use_deoplete})
-call dein#add('prabirshrestha/asyncomplete.vim')
-call dein#add('prabirshrestha/asyncomplete-lsp.vim')
+" call dein#add('prabirshrestha/asyncomplete.vim')
+" call dein#add('prabirshrestha/asyncomplete-lsp.vim')
 call dein#add('prabirshrestha/vim-lsp')
 call dein#add('mattn/vim-lsp-settings')
 call dein#add('Shougo/context_filetype.vim')
@@ -241,7 +241,7 @@ call dein#add('tyru/capture.vim')
 call dein#add('tyru/caw.vim')
 call dein#add('tyru/current-func-info.vim', {'lazy': 1})
 call dein#add('tyru/emap.vim')
-call dein#add('tyru/eskk.vim')
+" call dein#add('tyru/eskk.vim')
 call dein#add('tyru/nextfile.vim')
 call dein#add('tyru/open-browser.vim')
 call dein#add('tyru/open-browser-github.vim')
@@ -277,6 +277,17 @@ call dein#add('junegunn/vim-easy-align', {'on_cmd': 'EasyAlign'})
 call dein#add('tweekmonster/helpful.vim')
 
 call dein#add('itchyny/calendar.vim', {'lazy': 1, 'name': 'itchyny-calendar'})
+
+" denops
+call dein#add('vim-denops/denops.vim')
+call dein#add('kuuote/denops-skkeleton.vim')
+
+call dein#add('Shougo/ddc.vim')
+call dein#add('Shougo/ddc-around')
+call dein#add('shun/ddc-vim-lsp')
+call dein#add('Shougo/ddc-matcher_head')
+call dein#add('Shougo/ddc-sorter_rank')
+
 
 " For OmniSharp
 call dein#add('tpope/vim-dispatch', {'lazy': 1})

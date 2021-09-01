@@ -1723,6 +1723,18 @@ if dein#is_sourced('deoplete')
   inoremap <expr> <C-e> pumvisible() ? deoplete#cancel_popup() : '<C-e>'
 endif
 
+" ddc.vim  {{{2
+if dein#is_sourced('ddc')
+  call ddc#custom#patch_global('sources', ['around'])
+  call ddc#custom#patch_global('sourceOptions', {
+  \   '_': {
+  \     'matchers': ['matcher_head'],
+  \     'sorters': ['sorter_rank'],
+  \   },
+  \ })
+  call ddc#enable()
+endif
+
 " context_filetype.vim
 if !exists('g:context_filetype#same_filetypes')
   let g:context_filetype#same_filetypes = {}
@@ -2193,6 +2205,18 @@ function s:eskk_disable_pre() abort
   endif
 endfunction
 
+
+" denops-skkeleton  {{{2
+if dein#is_sourced('denops-skkeleton')
+  imap <C-j> <Plug>(skkeleton-enable)
+  cmap <C-j> <Plug>(skkeleton-enable)
+  " let g:skkeleton#debug = v:true
+  call skkeleton#config(#{
+  \   globalJisyo: expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'),
+  \   globalJisyoEncoding: 'utf-8',
+  \   eggLikeNewline: v:true,
+  \ })
+endif
 
 " caw.vim  {{{2
 nmap <Leader>c <Plug>(caw:prefix)
@@ -3109,6 +3133,10 @@ function s:on_lsp_buffer_enabled() abort
       autocmd! * <buffer>
       autocmd BufWritePre <buffer> call s:lsp_format()
     augroup END
+  endif
+
+  if dein#is_sourced('ddc')
+    call ddc#custom#patch_buffer('sources', ['ddc-vim-lsp', 'around'])
   endif
 endfunction
 
