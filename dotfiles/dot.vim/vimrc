@@ -1731,6 +1731,9 @@ if dein#is_sourced('ddc')
   \     'matchers': ['matcher_head'],
   \     'sorters': ['sorter_rank'],
   \   },
+  \   'around': {'mark': 'around'},
+  \   'look': {'mark': 'look'},
+  \   'ddc-vim-lsp': {'mark': 'lsp'},
   \ })
   call ddc#enable()
 endif
