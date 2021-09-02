@@ -1725,7 +1725,7 @@ endif
 
 " ddc.vim  {{{2
 if dein#is_sourced('ddc')
-  call ddc#custom#patch_global('sources', ['around'])
+  call ddc#custom#patch_global('sources', ['around', 'look'])
   call ddc#custom#patch_global('sourceOptions', {
   \   '_': {
   \     'matchers': ['matcher_head'],
@@ -3136,7 +3136,8 @@ function s:on_lsp_buffer_enabled() abort
   endif
 
   if dein#is_sourced('ddc')
-    call ddc#custom#patch_buffer('sources', ['ddc-vim-lsp', 'around'])
+    let sources = ddc#custom#get_global().sources
+    call ddc#custom#patch_buffer('sources', ['ddc-vim-lsp'] + sources)
   endif
 endfunction
 

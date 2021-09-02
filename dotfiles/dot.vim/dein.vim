@@ -284,6 +284,7 @@ call dein#add('kuuote/denops-skkeleton.vim')
 
 call dein#add('Shougo/ddc.vim')
 call dein#add('Shougo/ddc-around')
+call dein#add('octaltree/cmp-look')
 call dein#add('shun/ddc-vim-lsp')
 call dein#add('Shougo/ddc-matcher_head')
 call dein#add('Shougo/ddc-sorter_rank')
