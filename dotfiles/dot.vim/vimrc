@@ -1725,15 +1725,17 @@ endif
 
 " ddc.vim  {{{2
 if dein#is_sourced('ddc')
-  call ddc#custom#patch_global('sources', ['around', 'look'])
-  call ddc#custom#patch_global('sourceOptions', {
-  \   '_': {
-  \     'matchers': ['matcher_head'],
-  \     'sorters': ['sorter_rank'],
+  call ddc#custom#patch_global(#{
+  \   sources: ['around', 'look'],
+  \   sourceOptions: #{
+  \     _: #{
+  \       matchers: ['matcher_head'],
+  \       sorters: ['sorter_rank'],
+  \     },
+  \     around: #{mark: 'around'},
+  \     look: #{mark: 'look'},
+  \     ddc-vim-lsp: #{mark: 'lsp'},
   \   },
-  \   'around': {'mark': 'around'},
-  \   'look': {'mark': 'look'},
-  \   'ddc-vim-lsp': {'mark': 'lsp'},
   \ })
   call ddc#enable()
 endif
