@@ -1726,15 +1726,19 @@ endif
 " ddc.vim  {{{2
 if dein#is_sourced('ddc')
   call ddc#custom#patch_global(#{
-  \   sources: ['around', 'look'],
+  \   sources: ['around', 'buffer', 'look'],
   \   sourceOptions: #{
   \     _: #{
   \       matchers: ['matcher_head'],
   \       sorters: ['sorter_rank'],
   \     },
   \     around: #{mark: 'around'},
+  \     buffer: #{mark: 'buffer'},
   \     look: #{mark: 'look'},
   \     ddc-vim-lsp: #{mark: 'lsp'},
+  \   },
+  \   sourceParams: #{
+  \     buffer: #{fromAltBuf: v:true},
   \   },
   \ })
   call ddc#enable()
