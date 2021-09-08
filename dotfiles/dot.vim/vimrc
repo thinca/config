@@ -1734,7 +1734,7 @@ if dein#is_sourced('ddc')
   \     },
   \     around: #{mark: 'around'},
   \     buffer: #{mark: 'buffer'},
-  \     look: #{mark: 'look'},
+  \     look: #{mark: 'look', maxCandidates: 5},
   \     ddc-vim-lsp: #{mark: 'lsp'},
   \   },
   \   sourceParams: #{
