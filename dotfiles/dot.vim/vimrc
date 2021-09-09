@@ -2217,8 +2217,8 @@ endfunction
 
 " denops-skkeleton  {{{2
 if dein#is_sourced('denops-skkeleton')
-  imap <C-j> <Plug>(skkeleton-enable)
-  cmap <C-j> <Plug>(skkeleton-enable)
+  imap <C-j> <Plug>(skkeleton-toggle)
+  cmap <C-j> <Plug>(skkeleton-toggle)
   " let g:skkeleton#debug = v:true
   call skkeleton#config(#{
   \   globalJisyo: expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'),
