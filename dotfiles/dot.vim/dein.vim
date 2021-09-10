@@ -16,6 +16,7 @@ endif
 set runtimepath^=$DEIN_REPOS_DIR
 
 let g:dein#enable_name_conversion = 1
+let g:dein#install_check_diff = 1
 
 function s:update_cmpl(lead, line, pos) abort
   return filter(keys(dein#get()), 'v:val =~# "^" . a:lead')
