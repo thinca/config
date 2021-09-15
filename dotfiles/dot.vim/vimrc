@@ -1743,6 +1743,12 @@ if dein#is_sourced('ddc')
   \   },
   \ })
   call ddc#enable()
+  augroup vimrc-plugin-ddc
+    autocmd!
+    autocmd User plugin-quickmemo-opened call ddc#custom#patch_buffer(#{
+    \   specialBufferCompletion: v:true,
+    \ })
+  augroup END
 endif
 
 " context_filetype.vim
