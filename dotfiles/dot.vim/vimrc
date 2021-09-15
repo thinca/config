@@ -2232,6 +2232,9 @@ if dein#is_sourced('denops-skkeleton')
   \   globalJisyoEncoding: 'utf-8',
   \   eggLikeNewline: v:true,
   \ })
+  call skkeleton#register_kanatable('rom', {
+  \   'z ': ['　', ''],
+  \ })
 endif
 
 " caw.vim  {{{2
