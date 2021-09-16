@@ -4,10 +4,17 @@ cargo:fd-find
 cargo:git-delta
 cargo:procs
 cargo:ripgrep
+cargo:wasm-pack
+cargo:cargo-generate
+cargo:typos-cli
 go:github.com/client9/misspell/cmd/misspell
 go:github.com/junegunn/fzf
 go:github.com/lemonade-command/lemonade
 go:github.com/mattn/jvgrep/v5
+go:github.com/rhysd/actionlint/cmd/actionlint
 npm:fixpack
 npm:wtrans
 npm:npm-check-updates
+npm:yarn
+npm:npm
+npm:sql-formatter
