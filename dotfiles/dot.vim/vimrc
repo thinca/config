@@ -2199,7 +2199,6 @@ function s:init_eskk() abort
   call t.add_map('h(', '(')
   call t.add_map('h)', ')')
   call eskk#register_mode_table('hira', t)
-  unlet t
 endfunction
 
 function s:eskk_enable_pre() abort
