@@ -2229,14 +2229,22 @@ if dein#is_sourced('denops-skkeleton')
   imap <C-j> <Plug>(skkeleton-toggle)
   cmap <C-j> <Plug>(skkeleton-toggle)
   " let g:skkeleton#debug = v:true
-  call skkeleton#config(#{
-  \   globalJisyo: expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'),
-  \   globalJisyoEncoding: 'utf-8',
-  \   eggLikeNewline: v:true,
-  \ })
-  call skkeleton#register_kanatable('rom', {
-  \   'z ': ['　', ''],
-  \ })
+
+  function s:skkeleton_init() abort
+    call skkeleton#config(#{
+    \   globalJisyo: expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'),
+    \   globalJisyoEncoding: 'utf-8',
+    \   eggLikeNewline: v:true,
+    \ })
+    call skkeleton#register_kanatable('rom', {
+    \   'z ': ['　', ''],
+    \ })
+  endfunction
+
+  augroup vimrc-plugin-skkeleton
+    autocmd!
+    autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+  augroup END
 endif
 
 " caw.vim  {{{2
