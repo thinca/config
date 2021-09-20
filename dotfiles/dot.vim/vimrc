@@ -438,6 +438,9 @@ function MakeStatusLine(...) abort
   if exists('*eskk#statusline')
     let line ..= '%{eskk#statusline()}'
   endif
+  if exists('*Skkeleton_statusline')
+    let line ..= '%{Skkeleton_statusline()}'
+  endif
   if exists('*SyntasticStatuslineFlag')
     let line ..= '%{SyntasticStatuslineFlag()}'
   endif
@@ -2231,6 +2234,17 @@ if dein#is_sourced('denops-skkeleton')
   cmap <C-j> <Plug>(skkeleton-toggle)
   " let g:skkeleton#debug = v:true
 
+  let s:skkeleton_modes = #{
+  \   hira: 'あ',
+  \   kata: 'ア',
+  \ }
+  function Skkeleton_statusline() abort
+    if !skkeleton#is_enabled()
+      return ''
+    endif
+    return '[' .. get(s:skkeleton_modes, skkeleton#mode(), '') .. ']'
+  endfunction
+
   function s:skkeleton_init() abort
     call skkeleton#config(#{
     \   globalJisyo: expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'),
@@ -2273,6 +2287,7 @@ if dein#is_sourced('denops-skkeleton')
       autocmd User skkeleton-enable-pre call s:skkeleton_enable_pre_ddc()
       autocmd User skkeleton-disable-pre call s:skkeleton_disable_pre_ddc()
     endif
+    autocmd User skkeleton-mode-changed redrawstatus
   augroup END
 endif
 
