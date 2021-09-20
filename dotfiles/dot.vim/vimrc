@@ -2242,6 +2242,14 @@ if dein#is_sourced('denops-skkeleton')
     \ })
   endfunction
 
+  function s:skkeleton_enable_pre_unix() abort
+    silent !echo -ne '\e]12;\#FFA500\a'
+  endfunction
+
+  function s:skkeleton_disable_pre_unix() abort
+    silent !echo -ne '\e]12;\#00FF00\a'
+  endfunction
+
   function s:skkeleton_enable_pre_ddc() abort
     let b:_ddc_save_config_for_skkeleton = ddc#custom#get_buffer()
     call ddc#custom#patch_buffer(#{sources: ['skkeleton']})
@@ -2257,6 +2265,10 @@ if dein#is_sourced('denops-skkeleton')
   augroup vimrc-plugin-skkeleton
     autocmd!
     autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+    if !has('gui_running') && has('unix')
+      autocmd User skkeleton-enable-pre call s:skkeleton_enable_pre_unix()
+      autocmd User skkeleton-disable-post call s:skkeleton_disable_pre_unix()
+    endif
     if dein#is_sourced('ddc')
       autocmd User skkeleton-enable-pre call s:skkeleton_enable_pre_ddc()
       autocmd User skkeleton-disable-pre call s:skkeleton_disable_pre_ddc()
