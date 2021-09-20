@@ -1737,6 +1737,7 @@ if dein#is_sourced('ddc')
   \     file: #{mark: 'file', forceCompletionPattern: '/'},
   \     look: #{mark: 'look', maxCandidates: 5},
   \     ddc-vim-lsp: #{mark: 'lsp'},
+  \     skkeleton: #{mark: 'skkeleton', matchers: ['skkeleton']},
   \   },
   \   sourceParams: #{
   \     buffer: #{fromAltBuf: v:true, forceCollect: v:true},
@@ -2241,9 +2242,25 @@ if dein#is_sourced('denops-skkeleton')
     \ })
   endfunction
 
+  function s:skkeleton_enable_pre_ddc() abort
+    let b:_ddc_save_config_for_skkeleton = ddc#custom#get_buffer()
+    call ddc#custom#patch_buffer(#{sources: ['skkeleton']})
+  endfunction
+
+  function s:skkeleton_disable_pre_ddc() abort
+    if exists('b:_ddc_save_config_for_skkeleton')
+      call ddc#custom#set_buffer(b:_ddc_save_config_for_skkeleton)
+      unlet b:_ddc_save_config_for_skkeleton
+    endif
+  endfunction
+
   augroup vimrc-plugin-skkeleton
     autocmd!
     autocmd User skkeleton-initialize-pre call s:skkeleton_init()
+    if dein#is_sourced('ddc')
+      autocmd User skkeleton-enable-pre call s:skkeleton_enable_pre_ddc()
+      autocmd User skkeleton-disable-pre call s:skkeleton_disable_pre_ddc()
+    endif
   augroup END
 endif
 
