@@ -2168,8 +2168,8 @@ let g:eskk#directory = s:plugin_info_dir('eskk')
 let g:eskk#log_cmdline_level = 2
 let g:eskk#log_file_level = 4
 
-imap <C-b> <Plug>(eskk:toggle)
-cmap <C-b> <Plug>(eskk:toggle)
+imap <C-k> <Plug>(eskk:toggle)
+cmap <C-k> <Plug>(eskk:toggle)
 
 if dein#is_sourced('eskk')
   augroup vimrc-plugin-eskk
