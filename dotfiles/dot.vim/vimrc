@@ -2250,6 +2250,7 @@ if dein#is_sourced('denops-skkeleton')
     \   globalJisyo: expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'),
     \   globalJisyoEncoding: 'utf-8',
     \   eggLikeNewline: v:true,
+    \   registerConvertResult: v:true,
     \ })
     call skkeleton#register_kanatable('rom', {
     \   'z ': ['　', ''],
