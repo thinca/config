@@ -1739,7 +1739,7 @@ if dein#is_sourced('ddc')
   \     buffer: #{mark: 'buffer'},
   \     file: #{mark: 'file', forceCompletionPattern: '/'},
   \     look: #{mark: 'look', maxCandidates: 5},
-  \     ddc-vim-lsp: #{mark: 'lsp'},
+  \     vim-lsp: #{mark: 'lsp'},
   \     skkeleton: #{mark: 'skkeleton', matchers: ['skkeleton']},
   \   },
   \   sourceParams: #{
@@ -3211,7 +3211,7 @@ function s:on_lsp_buffer_enabled() abort
 
   if dein#is_sourced('ddc')
     let sources = ddc#custom#get_global().sources
-    call ddc#custom#patch_buffer('sources', ['ddc-vim-lsp'] + sources)
+    call ddc#custom#patch_buffer('sources', ['vim-lsp'] + sources)
   endif
 endfunction
 
