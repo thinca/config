@@ -1752,6 +1752,9 @@ if dein#is_sourced('ddc')
     autocmd User plugin-quickmemo-opened call ddc#custom#patch_buffer(#{
     \   specialBufferCompletion: v:true,
     \ })
+    autocmd FileType unite call ddc#custom#patch_buffer(#{
+    \   specialBufferCompletion: v:false,
+    \ })
   augroup END
 endif
 
