@@ -1729,7 +1729,7 @@ endif
 " ddc.vim  {{{2
 if dein#is_sourced('ddc')
   call ddc#custom#patch_global(#{
-  \   sources: ['around', 'buffer', 'file', 'look'],
+  \   sources: ['neosnippet', 'around', 'buffer', 'file', 'look'],
   \   sourceOptions: #{
   \     _: #{
   \       matchers: ['matcher_head'],
@@ -1740,6 +1740,7 @@ if dein#is_sourced('ddc')
   \     file: #{mark: 'file', forceCompletionPattern: '/'},
   \     look: #{mark: 'look', maxCandidates: 5},
   \     vim-lsp: #{mark: 'lsp'},
+  \     neosnippet: #{mark: 'snip'},
   \     skkeleton: #{mark: 'skkeleton', matchers: ['skkeleton']},
   \   },
   \   sourceParams: #{
