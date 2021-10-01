@@ -282,7 +282,7 @@ call dein#add('vim-skk/skkdict.vim')
 
 " denops
 call dein#add('vim-denops/denops.vim')
-call dein#add('vim-skk/denops-skkeleton.vim')
+call dein#add('vim-skk/skkeleton')
 
 call dein#add('Shougo/ddc.vim')
 call dein#add('Shougo/ddc-around')
