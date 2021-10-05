@@ -1741,7 +1741,11 @@ if dein#is_sourced('ddc')
   \     look: #{mark: 'look', maxCandidates: 5},
   \     vim-lsp: #{mark: 'lsp'},
   \     neosnippet: #{mark: 'snip'},
-  \     skkeleton: #{mark: 'skkeleton', matchers: ['skkeleton']},
+  \     skkeleton: #{
+  \       mark: 'skkeleton',
+  \       matchers: ['skkeleton'],
+  \       sorters: [],
+  \     },
   \   },
   \   sourceParams: #{
   \     buffer: #{fromAltBuf: v:true, forceCollect: v:true},
