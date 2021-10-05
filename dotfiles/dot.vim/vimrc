@@ -1734,6 +1734,7 @@ if dein#is_sourced('ddc')
   \     _: #{
   \       matchers: ['matcher_head'],
   \       sorters: ['sorter_rank'],
+  \       converters: ['converter_remove_overlap'],
   \     },
   \     around: #{mark: 'around'},
   \     buffer: #{mark: 'buffer'},

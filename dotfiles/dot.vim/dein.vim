@@ -292,6 +292,7 @@ call dein#add('octaltree/cmp-look')
 call dein#add('shun/ddc-vim-lsp')
 call dein#add('Shougo/ddc-matcher_head')
 call dein#add('Shougo/ddc-sorter_rank')
+call dein#add('Shougo/ddc-converter_remove_overlap')
 
 
 " For OmniSharp
