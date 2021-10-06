@@ -3219,8 +3219,10 @@ function s:on_lsp_buffer_enabled() abort
   endif
 
   if dein#is_sourced('ddc')
-    let sources = ddc#custom#get_global().sources
-    call ddc#custom#patch_buffer('sources', ['vim-lsp'] + sources)
+    let sources = get(ddc#custom#get_global(), 'sources', v:null)
+    if sources isnot v:null
+      call ddc#custom#patch_buffer('sources', ['vim-lsp'] + sources)
+    endif
   endif
 endfunction
 
