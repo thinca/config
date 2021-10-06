@@ -1752,6 +1752,17 @@ if dein#is_sourced('ddc')
   \     buffer: #{fromAltBuf: v:true, forceCollect: v:true},
   \   },
   \ })
+  if dein#is_sourced('pum')
+    call ddc#custom#patch_global('completionMenu', 'pum.vim')
+    inoremap <expr> <C-n> pum#visible() ?
+    \   '<Cmd>call pum#map#insert_relative(+1)<CR>' : '<C-n>'
+    inoremap <expr> <C-p> pum#visible() ?
+    \   '<Cmd>call pum#map#insert_relative(-1)<CR>' : '<C-p>'
+    inoremap <expr> <C-y> pum#visible() ?
+    \   '<Cmd>call pum#map#confirm()<CR>' : '<C-y>'
+    inoremap <expr> <C-e> pum#visible() ?
+    \   '<Cmd>call pum#map#cancel()<CR>' : '<C-e>'
+  endif
   call ddc#enable()
   augroup vimrc-plugin-ddc
     autocmd!
@@ -2278,7 +2289,13 @@ if dein#is_sourced('skkeleton')
 
   function s:skkeleton_enable_pre_ddc() abort
     let b:_ddc_save_config_for_skkeleton = ddc#custom#get_buffer()
-    call ddc#custom#patch_buffer(#{sources: ['skkeleton']})
+    call ddc#custom#patch_buffer(#{
+    \   sources: ['skkeleton'],
+    \   completionMenu: 'native',
+    \ })
+    if exists('*pum#close')
+      call pum#close()
+    endif
   endfunction
 
   function s:skkeleton_disable_pre_ddc() abort

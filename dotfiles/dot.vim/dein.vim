@@ -285,6 +285,7 @@ call dein#add('vim-denops/denops.vim')
 call dein#add('vim-skk/skkeleton')
 
 call dein#add('Shougo/ddc.vim')
+call dein#add('Shougo/pum.vim')
 call dein#add('Shougo/ddc-around')
 call dein#add('matsui54/ddc-buffer')
 call dein#add('LumaKernel/ddc-file')
