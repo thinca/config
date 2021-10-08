@@ -1762,6 +1762,10 @@ if dein#is_sourced('ddc')
     \   '<Cmd>call pum#map#confirm()<CR>' : '<C-y>'
     inoremap <expr> <C-e> pum#visible() ?
     \   '<Cmd>call pum#map#cancel()<CR>' : '<C-e>'
+
+    if dein#is_sourced('denops-popup-preview')
+      call popup_preview#enable()
+    endif
   endif
   call ddc#enable()
   augroup vimrc-plugin-ddc
