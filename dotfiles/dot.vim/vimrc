@@ -1732,9 +1732,9 @@ if dein#is_sourced('ddc')
   \   sources: ['neosnippet', 'around', 'buffer', 'file', 'look'],
   \   sourceOptions: #{
   \     _: #{
-  \       matchers: ['matcher_head'],
-  \       sorters: ['sorter_rank'],
-  \       converters: ['converter_remove_overlap'],
+  \       matchers: ['matcher_fuzzy'],
+  \       sorters: ['sorter_fuzzy'],
+  \       converters: ['converter_fuzzy', 'converter_remove_overlap'],
   \     },
   \     around: #{mark: 'around'},
   \     buffer: #{mark: 'buffer'},
