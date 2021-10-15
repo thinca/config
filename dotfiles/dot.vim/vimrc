@@ -2679,6 +2679,7 @@ endif
 
 " hitspop.vim  {{{2
 let g:hitspop_line = 'winbot'
+let g:hitspop_timeout = 500
 
 " colorv.vim  {{{2
 let g:colorv_no_global_map = 1
