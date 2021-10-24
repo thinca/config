@@ -2252,7 +2252,8 @@ if dein#is_sourced('skkeleton')
     if !skkeleton#is_enabled()
       return ''
     endif
-    return '[' .. get(s:skkeleton_modes, skkeleton#mode(), '') .. ']'
+    let mode = skkeleton#mode()
+    return '[' .. get(s:skkeleton_modes, mode, mode) .. ']'
   endfunction
 
   function s:skkeleton_init() abort
