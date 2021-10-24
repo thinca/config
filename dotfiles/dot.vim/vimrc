@@ -2246,6 +2246,7 @@ if dein#is_sourced('skkeleton')
   let s:skkeleton_modes = #{
   \   hira: 'あ',
   \   kata: 'ア',
+  \   hankata: 'ｧｱ',
   \ }
   function Skkeleton_statusline() abort
     if !skkeleton#is_enabled()
