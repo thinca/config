@@ -2264,6 +2264,7 @@ if dein#is_sourced('skkeleton')
   \   hira: 'あ',
   \   kata: 'ア',
   \   hankata: 'ｧｱ',
+  \   zenkaku: 'ａ',
   \ }
   function Skkeleton_statusline() abort
     if !skkeleton#is_enabled()
