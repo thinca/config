@@ -1,5 +1,5 @@
 clojure 1.10.3.1040 system
-deno 1.17.0 system
+deno 1.17.1 system
 elixir 1.13.1-otp-24 system
 erlang 24.2 system
 gauche 0.9.10 system
@@ -7,7 +7,7 @@ golang 1.17.5 system
 groovy 3.0.9 system
 haskell 9.2.1 system
 java openjdk-17.0.1 system
-julia 1.7.0 system
+julia 1.7.1 system
 kotlin 1.6.0-M1 system
 lua 5.4.3 system
 luaJIT 2.0.5--2.4.4 system
