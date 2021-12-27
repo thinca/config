@@ -8,7 +8,7 @@ groovy 3.0.9 system
 haskell 9.2.1 system
 java openjdk-17.0.1 system
 julia 1.7.1 system
-kotlin 1.6.0-M1 system
+kotlin 1.6.10 system
 lua 5.4.3 system
 luaJIT 2.0.5--2.4.4 system
 nodejs 17.3.0 system
@@ -18,7 +18,7 @@ php 8.0.6 system
 python 3.10.1 2.7.18 system
 racket 8.3 system
 rclone 1.57.0 system
-ruby 3.0.2 system
+ruby 3.1.0 system
 rust 1.57.0 system
 scala 3.1.0 system
 zig 0.9.0 system
