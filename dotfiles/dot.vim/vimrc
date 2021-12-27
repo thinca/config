@@ -2286,13 +2286,28 @@ if dein#is_sourced('skkeleton')
     \ })
   endfunction
 
-  function s:skkeleton_enable_pre_unix() abort
-    silent !echo -ne '\e]12;\#FFA500\a'
-  endfunction
-
-  function s:skkeleton_disable_pre_unix() abort
-    silent !echo -ne '\e]12;\#00FF00\a'
-  endfunction
+  let s:skkeleton_cursor_colors = {
+  \   '': '#00FF00',
+  \   'hira': '#FFA500',
+  \   'kata': '#8B3E2F',
+  \   'hankata': '#BEBEBE',
+  \   'zenkaku': '#FFD700',
+  \ }
+  if has('gui_running')
+    function s:skkeleton_update_cursor() abort
+      let color = get(s:skkeleton_cursor_colors, skkeleton#mode(), '')
+      if color isnot# ''
+        execute printf('highlight lCursor guifg=bg guibg=%s', color)
+      endif
+    endfunction
+  elseif has('unix')
+    function s:skkeleton_update_cursor() abort
+      let color = get(s:skkeleton_cursor_colors, skkeleton#mode(), '')
+      if color isnot# ''
+        execute printf('silent !echo -ne ''\e]12;\%s\a''', color)
+      endif
+    endfunction
+  endif
 
   function s:skkeleton_enable_pre_ddc() abort
     let b:_ddc_save_config_for_skkeleton = ddc#custom#get_buffer()
@@ -2315,15 +2330,14 @@ if dein#is_sourced('skkeleton')
   augroup vimrc-plugin-skkeleton
     autocmd!
     autocmd User skkeleton-initialize-pre call s:skkeleton_init()
-    if !has('gui_running') && has('unix')
-      autocmd User skkeleton-enable-pre call s:skkeleton_enable_pre_unix()
-      autocmd User skkeleton-disable-post call s:skkeleton_disable_pre_unix()
-    endif
     if dein#is_sourced('ddc')
       autocmd User skkeleton-enable-pre call s:skkeleton_enable_pre_ddc()
       autocmd User skkeleton-disable-pre call s:skkeleton_disable_pre_ddc()
     endif
     autocmd User skkeleton-mode-changed redrawstatus
+    if exists('*s:skkeleton_update_cursor')
+      autocmd User skkeleton-mode-changed call s:skkeleton_update_cursor()
+    endif
   augroup END
 endif
 
