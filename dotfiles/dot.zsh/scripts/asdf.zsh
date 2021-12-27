@@ -18,7 +18,7 @@ export ASDF_SKIP_RESHIM=1
 asdf-update-global() {
 	local plugin_name current_ver latest_ver
 	for plugin_name in $(asdf plugin list); do
-		if [[ ${plugin_name} == "perl" ]]; then
+		if [[ ${plugin_name} == "perl" || ${plugin_name} == "java" ]]; then
 			continue
 		fi
 		latest_ver=$(asdf latest "${plugin_name}")
