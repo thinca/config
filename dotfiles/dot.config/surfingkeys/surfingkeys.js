@@ -1,3 +1,11 @@
+const {
+  mapkey,
+  map,
+  iunmap,
+  Front,
+  Hints,
+} = api;
+
 //Hints.characters = "asdfgqwertzxcvb";  // Default
 Hints.characters = "jklfdsahguiorewtymnpbvcxz";
 // Hints.numericHints = true;
