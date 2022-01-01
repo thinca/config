@@ -1737,6 +1737,7 @@ if dein#is_sourced('ddc')
   \       matchers: ['matcher_fuzzy'],
   \       sorters: ['sorter_fuzzy'],
   \       converters: ['converter_fuzzy', 'converter_remove_overlap'],
+  \       ignoreCase: v:true,
   \     },
   \     around: #{mark: 'around'},
   \     buffer: #{mark: 'buffer'},
