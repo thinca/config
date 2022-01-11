@@ -1743,7 +1743,7 @@ if dein#is_sourced('ddc')
   \     buffer: #{mark: 'buffer'},
   \     file: #{mark: 'file', forceCompletionPattern: '/\S*'},
   \     look: #{mark: 'look', maxCandidates: 5},
-  \     vim-lsp: #{mark: 'lsp'},
+  \     vim-lsp: #{mark: 'lsp', forceCompletionPattern: '(?:\.|:|->)\w*'},
   \     neosnippet: #{mark: 'snip'},
   \     skkeleton: #{
   \       mark: 'skkeleton',
