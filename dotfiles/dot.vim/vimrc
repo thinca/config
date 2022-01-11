@@ -2430,7 +2430,7 @@ if dein#is_sourced('submode')
   call submode#map('winsize', 'n', '', '-', '<C-w>-')
   call submode#map('winsize', 'n', '', '=', '<C-w>=')
 
-  call submode#enter_with('diff', 'n', '', '<Space><Space>diff')
+  call submode#enter_with('diff', 'n', '', '<Space>D')
   call submode#map('diff', 'n', '', 'j', ']c') " next diff
   call submode#map('diff', 'n', '', 'k', '[c') " prev diff
   call submode#map('diff', 'n', '', 'h', 'do') " get diff
@@ -3272,6 +3272,9 @@ augroup vimrc-plugin-lsp
   autocmd!
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+" emphasiscursor.vim  {{{2
+nnoremap <Space><Space> <Cmd>EmphasisCursor<CR>
 
 " plasticboy/vim-markdown  {{{2
 let g:vim_markdown_no_default_key_mappings = 1
