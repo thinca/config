@@ -151,7 +151,7 @@ PROMPT="
 %# "
 
 if [[ ! -f ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme ]] && type git >/dev/null; then
-	git clone git@github.com:romkatv/powerlevel10k ~/.local/share/powerlevel10k
+	git clone https://github.com/romkatv/powerlevel10k ~/.local/share/powerlevel10k
 fi
 if [[ -f ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
 	[[ ! -f ~/.zsh/p10k.zsh ]] || source ~/.zsh/p10k.zsh
