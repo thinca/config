@@ -2,7 +2,7 @@
 	autocrlf = false
 	quotepath = false
 	hooksPath = ~/.config/git/hooks
-	pager = (type delta &>/dev/null && delta || (type diff-highlight &>/dev/null && diff-highlight || cat) | less)
+	pager = (type delta >/dev/null 2>&1 && delta || (type diff-highlight >/dev/null 2>&1 && diff-highlight || cat) | less)
 [user]
 	name = thinca
 	email = thinca@gmail.com
