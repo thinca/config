@@ -212,11 +212,19 @@
 	remote-fork = "!f() { \
 		git remote rename origin upstream && \
 		git remote add origin \"$(git config remote.upstream.url | sed 's;^\\(git@\\|https://\\)github\\.com[/:][^/]\\+/;git@github.com:thinca/;')\" && \
+		git config pr.remote upstream && \
 		git fetch origin; \
 	}; f"
-	gh-repo = "!git remote get-url origin | sed 's/git@\\(.*\\):\\([^.]*\\).*/\\1\\/\\2/'"
+	gh-repo = "!f() { \
+		local r=${1:-$(git config pr.remote)}; \
+		git remote get-url \"${r:-origin}\" | sed 's;\\(git@\\|https://\\)\\(.*\\)[/:]\\([^.]*\\).*;\\2\\/\\3;'; \
+	}; f"
 	open-cmd = "!(type open >/dev/null 2>&1) && echo open || (type lemonade >/dev/null 2>&1) && echo 'lemonade open' || (type xdg-open >/dev/null 2>&1) && echo xdg-open || echo echo"
-	mkpr = "!$(git open-cmd) \"https://$(git gh-repo)/compare/$(git base-branch)...$(git current-branch)?expand=1\""
+	mkpr = "!f() { \
+		local r=${1:-$(git config pr.remote)} o; \
+		[[ ${r:-origin} == \"origin\" ]] || o=$(git remote get-url origin | sed 's;.*github\\.com[/:]\\([^/]*\\)/.*;\\1:;'); \
+		$(git open-cmd) \"https://$(git gh-repo ${r})/compare/$(git base-branch)...${o}$(git current-branch)?expand=1\"; \
+	}; f"
 [pretty]
 	gene = format:%C(yellow)%h%Creset %ad %an: %s%C(yellow)%d%Creset
 	genegr = format:%h %ad %an: %s%d
