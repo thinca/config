@@ -3149,20 +3149,6 @@ let g:threes#data_directory = s:plugin_info_dir('threes')
 let g:threes#start_with_higher_tile = 1
 
 " vcs.vim  {{{2
-let g:vcs#debug = 1
-let g:vcs#buffer#opener = 'new'
-nnoremap <Leader>va  <Cmd>Vcs add<CR>
-nnoremap <Leader>vb  <Cmd>Vcs blame<CR>
-nnoremap <Leader>vc  <Cmd>Vcs commit<CR>
-nnoremap <Leader>vd  <Cmd>Vcs diff<CR>
-nnoremap <Leader>vD  <Cmd>Vcs delete<CR>
-nnoremap <Leader>vs  <Cmd>Vcs status<CR>
-nnoremap <Leader>vl  <Cmd>Vcs log<CR>
-nnoremap <Leader>vzl <Cmd>Vcs log %<CR>
-nnoremap <Leader>vzc <Cmd>Vcs commit %<CR>
-nnoremap <Leader>vzd <Cmd>Vcs diff %<CR>
-nnoremap <silent> <Leader>vg
-\        :<C-u>Vcs grep '<C-r>=<SID>convert_pattern(@/)<CR>'<CR>
 function s:convert_pattern(pat) abort
   let chars = split(a:pat, '\zs')
   let len = len(chars)
@@ -3189,6 +3175,40 @@ function s:convert_pattern(pat) abort
   endwhile
   return escape(pat, '\ ')
 endfunction
+
+if dein#is_sourced('vcs')
+  let g:vcs#debug = 1
+  let g:vcs#buffer#opener = 'new'
+  nnoremap <Leader>va  <Cmd>Vcs add<CR>
+  nnoremap <Leader>vb  <Cmd>Vcs blame<CR>
+  nnoremap <Leader>vc  <Cmd>Vcs commit<CR>
+  nnoremap <Leader>vd  <Cmd>Vcs diff<CR>
+  nnoremap <Leader>vD  <Cmd>Vcs delete<CR>
+  nnoremap <Leader>vs  <Cmd>Vcs status<CR>
+  nnoremap <Leader>vl  <Cmd>Vcs log<CR>
+  nnoremap <Leader>vzl <Cmd>Vcs log %<CR>
+  nnoremap <Leader>vzc <Cmd>Vcs commit %<CR>
+  nnoremap <Leader>vzd <Cmd>Vcs diff %<CR>
+  nnoremap <silent> <Leader>vg
+  \        :<C-u>Vcs grep '<C-r>=<SID>convert_pattern(@/)<CR>'<CR>
+
+elseif dein#is_sourced('gina')  " gina.vim {{{2
+  call gina#custom#command#option('diff', '--opener', 'split')
+
+  nnoremap <silent> <Leader>va  :<C-u>Gina add %:p<CR>
+  nnoremap <silent> <Leader>vb  :<C-u>Gina blame %:p<CR>
+  nnoremap <silent> <Leader>vc  :<C-u>Gina commit<CR>
+  nnoremap <silent> <Leader>vd  :<C-u>Gina diff<CR>
+  nnoremap <silent> <Leader>vD  :<C-u>Gina rm %:p<CR>
+  nnoremap <silent> <Leader>vs  :<C-u>Gina status<CR>
+  nnoremap <silent> <Leader>vl  :<C-u>Gina log<CR>
+  nnoremap <silent> <Leader>vzl :<C-u>Gina log :%:p<CR>
+  nnoremap <silent> <Leader>vzc :<C-u>Gina commit :%:p<CR>
+  nnoremap <silent> <Leader>vzd :<C-u>Gina diff :%:p<CR>
+  nnoremap <silent> <Leader>vg
+  \        :<C-u>Gina qrep! '<C-r>=<SID>convert_pattern(@/)<CR>' -- <C-r>=getcwd()<CR><CR>
+endif
+
 
 " gita.vim  {{{2
 let g:gita#command#diff#default_options = {
