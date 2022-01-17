@@ -33,7 +33,7 @@
 [commit]
 	verbose = true
 [interactive]
-	diffFilter = (type delta &>/dev/null && delta || (type diff-highlight &>/dev/null && diff-highlight || cat))
+	diffFilter = (type diff-highlight &>/dev/null && diff-highlight || cat)
 [alias]
 	h = help
 	a = add --update
