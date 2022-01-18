@@ -1730,8 +1730,12 @@ endif
 
 " ddc.vim  {{{2
 if dein#is_sourced('ddc')
+  let g:ddc_sources = ['neosnippet', 'around', 'buffer', 'file']
+  if executable('look')
+    let g:ddc_sources += ['look']
+  endif
   call ddc#custom#patch_global(#{
-  \   sources: ['neosnippet', 'around', 'buffer', 'file', 'look'],
+  \   sources: g:ddc_sources,
   \   sourceOptions: #{
   \     _: #{
   \       matchers: ['matcher_fuzzy'],
