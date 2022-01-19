@@ -219,7 +219,7 @@
 		local r=${1:-$(git config pr.remote)}; \
 		git remote get-url \"${r:-origin}\" | sed 's;\\(git@\\|https://\\)\\(.[^/:]*\\)[/:]\\([^.]*\\).*;\\2\\/\\3;'; \
 	}; f"
-	open-cmd = "!(type open >/dev/null 2>&1) && echo open || (type lemonade >/dev/null 2>&1) && echo 'lemonade open' || (type xdg-open >/dev/null 2>&1) && echo xdg-open || echo echo"
+	open-cmd = "!((type open >/dev/null 2>&1) && echo open) || ((type lemonade >/dev/null 2>&1) && echo 'lemonade open') || ((type xdg-open >/dev/null 2>&1) && echo xdg-open) || echo echo"
 	mkpr = "!f() { \
 		local r=${1:-$(git config pr.remote)} o; \
 		[[ ${r:-origin} == \"origin\" ]] || o=$(git remote get-url origin | sed 's;.*github\\.com[/:]\\([^/]*\\)/.*;\\1:;'); \
