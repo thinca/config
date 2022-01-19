@@ -3320,6 +3320,9 @@ let g:loaded_matchparen = 1
 function SetUndoFtplugin(com) abort
   let command = 'execute ' .. string(a:com)
   if exists('b:undo_ftplugin')
+    if 0 <= stridx(b:undo_ftplugin, command)
+      return
+    endif
     let command ..= ' | ' .. b:undo_ftplugin
   endif
   let b:undo_ftplugin = command
