@@ -3298,7 +3298,8 @@ augroup vimrc-plugin-lsp
 augroup END
 
 " emphasiscursor.vim  {{{2
-nnoremap <Space><Space> <Cmd>EmphasisCursor<CR>
+nnoremap <Space><Space> <Nop>
+nnoremap <Space><Space><Space> <Cmd>EmphasisCursor<CR>
 
 " plasticboy/vim-markdown  {{{2
 let g:vim_markdown_no_default_key_mappings = 1
