@@ -955,7 +955,7 @@ augroup vimrc-misc
   \ | endif
 
   " Check timestamp more for 'autoread'.
-  autocmd WinEnter,FocusGained * checktime
+  autocmd WinEnter,FocusGained * checktime %
 
   autocmd BufReadPost bzr_log.* let &l:fileencoding = &termencoding
   " Edit something to avoid the confirmation when aborting.
