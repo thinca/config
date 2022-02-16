@@ -3244,10 +3244,11 @@ endif
 let g:ctrlp_map = ''
 
 " lsp.vim  {{{2
-let s:lsp_log_dir = s:plugin_info_dir('lsp') .. 'log/'
-call mkdir(s:lsp_log_dir, 'p')
-let g:lsp_log_file = s:lsp_log_dir .. strftime('%Y-%m-%d.log')
-let g:lsp_log_verbose = 1
+" To troubleshoot
+" let s:lsp_log_dir = s:plugin_info_dir('lsp') .. 'log/'
+" call mkdir(s:lsp_log_dir, 'p')
+" let g:lsp_log_file = s:lsp_log_dir .. strftime('%Y-%m-%d.log')
+" let g:lsp_log_verbose = 1
 
 let g:lsp_diagnostics_float_cursor = 1
 
