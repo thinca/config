@@ -174,6 +174,9 @@ else
 	alias tree='tree -F --dirsfirst'
 fi
 
+# Enable alias on sudo
+alias sudo='sudo '
+
 # Usage: etime vim
 alias etime='ps -o cmd,etime -C'
 
