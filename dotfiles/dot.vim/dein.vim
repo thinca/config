@@ -301,6 +301,12 @@ call dein#add('Shougo/ddc-matcher_head')
 call dein#add('Shougo/ddc-sorter_rank')
 call dein#add('Shougo/ddc-converter_remove_overlap')
 
+call dein#add('Shougo/ddu.vim')
+call dein#add('Shougo/ddu-ui-ff')
+call dein#add('Shougo/ddu-kind-file')
+call dein#add('yuki-yano/ddu-filter-fzf')
+call dein#add('Shougo/ddu-source-file_rec')
+
 
 " For OmniSharp
 call dein#add('tpope/vim-dispatch', {'lazy': 1})

@@ -2086,6 +2086,106 @@ if g:V.is_windows() && executable('es')
   let g:unite_locate_command = 'es -i -r -n %d %s'
 endif
 
+" ddu.vim  {{{2
+call ddu#custom#patch_global(#{
+\   ui: 'ff',
+\   kindOptions: #{
+\     file: #{
+\       defaultAction: 'open',
+\     },
+\   },
+\   sourceOptions: #{
+\     _: #{
+\       matchers: ['matcher_fzf'],
+\     },
+\   },
+\ })
+
+call ddu#custom#patch_local('file_rec', #{
+\   uiParams: #{
+\     ff: #{
+\       startFilter: v:true,
+\     },
+\   },
+\   sources: [
+\     #{name: 'file_rec', params: {}},
+\   ],
+\ })
+
+command! -bar DduFilerec call ddu#start({'name': 'file_rec'})
+
+augroup plugin-ddu-ui-ff
+  autocmd!
+  autocmd FileType ddu-ff call s:ddu_setup_ui_ff_buffer()
+  autocmd FileType ddu-ff-filter call s:ddu_setup_ui_ff_filter_buffer()
+augroup END
+
+function! s:ddu_setup_ui_ff_buffer() abort
+  let b:cursorline_disable = v:true
+  nnoremap <buffer> <CR>
+  \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  nnoremap <buffer> <nowait> s
+  \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+  nnoremap <buffer> i
+  \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+  nnoremap <buffer> q
+  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+
+  if b:ddu_ui_name is# 'file_rec'
+    call s:ddu_setup_keymappings_for_file()
+  endif
+endfunction
+
+function! s:ddu_setup_ui_ff_filter_buffer() abort
+  inoremap <buffer> <C-c> <Esc><Cmd>close<CR>
+  nnoremap <buffer> q <Cmd>close<CR>
+  inoremap <buffer> <CR> <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  nnoremap <buffer> <CR> <Cmd>close<CR><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+
+  inoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('normal! j')<CR>
+  inoremap <buffer> <C-p> <Cmd>call ddu#ui#ff#execute('normal! k')<CR>
+  nnoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('normal! j')<CR>
+  nnoremap <buffer> <C-p> <Cmd>call ddu#ui#ff#execute('normal! k')<CR>
+
+  if b:ddu_ui_name is# 'file_rec'
+    call s:ddu_setup_keymappings_for_file()
+  endif
+endfunction
+
+function s:ddu_setup_keymappings_for_file() abort
+  nnoremap <buffer> <C-j>
+  \ <Cmd>call ddu#ui#ff#do_action(
+  \   'itemAction',
+  \   #{name: 'open', params: #{command: 'botright split'}}
+  \ )<CR>
+  nnoremap <buffer> <C-k>
+  \ <Cmd>call ddu#ui#ff#do_action(
+  \   'itemAction',
+  \   #{name: 'open', params: #{command: 'botright vsplit'}}
+  \ )<CR>
+  nnoremap <buffer> <C-l>
+  \ <Cmd>call ddu#ui#ff#do_action(
+  \   'itemAction',
+  \   #{name: 'open', params: #{command: 'tabnew'}}
+  \ )<CR>
+
+  inoremap <buffer> <C-j>
+  \ <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action(
+  \   'itemAction',
+  \   #{name: 'open', params: #{command: 'botright split'}}
+  \ )<CR>
+  inoremap <buffer> <C-k>
+  \ <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action(
+  \   'itemAction',
+  \   #{name: 'open', params: #{command: 'botright vsplit'}}
+  \ )<CR>
+  inoremap <buffer> <C-l>
+  \ <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action(
+  \   'itemAction',
+  \   #{name: 'open', params: #{command: 'tabnew'}}
+  \ )<CR>
+endfunction
+
 " neomru.vim  {{{2
 let g:neomru#file_mru_path = s:plugin_info_dir('neomru') .. 'file'
 let g:neomru#directory_mru_path = s:plugin_info_dir('neomru') .. 'directory'
