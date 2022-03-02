@@ -2113,11 +2113,37 @@ call ddu#custom#patch_local('file_rec', #{
 \     },
 \   },
 \   sources: [
-\     #{name: 'file_rec', params: {}},
+\     #{name: 'file_external', params: {}},
 \   ],
 \ })
 
-command! -bar DduFilerec call ddu#start({'name': 'file_rec'})
+function s:ddu_file_external_cmd(path) abort
+  let path = fnamemodify(a:path, ':p')
+  if finddir('.git', path .. ';') isnot# '' ||
+  \   findfile('.git', path .. ';') isnot# ''
+    return ['git', 'ls-files']
+  endif
+  if executable('fd')
+    return [
+    \   'fd', '--type', 'file', '--color', 'never', '--hidden',
+    \ ]
+  endif
+  if executable('find')
+    return ['find']
+  endif
+  return []
+endfunction
+
+command! -bar -nargs=* -complete=dir DduFilerec
+\   call ddu#start(#{
+\     name: 'file_rec',
+\     sourceParams: #{
+\       file_external: #{
+\         cmd: s:ddu_file_external_cmd(<q-args> ?? getcwd()),
+\         path: len(<q-args>) ? fnamemodify(<q-args>, ':p') : getcwd(),
+\       },
+\     },
+\   })
 
 augroup plugin-ddu-ui-ff
   autocmd!

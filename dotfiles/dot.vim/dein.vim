@@ -306,6 +306,7 @@ call dein#add('Shougo/ddu-ui-ff')
 call dein#add('Shougo/ddu-kind-file')
 call dein#add('yuki-yano/ddu-filter-fzf')
 call dein#add('Shougo/ddu-source-file_rec')
+call dein#add('matsui54/ddu-source-file_external')
 
 
 " For OmniSharp
