@@ -2221,6 +2221,9 @@ function s:ddu_setup_keymappings_for_file() abort
   \ )<CR>
 endfunction
 
+" Overwrite unite.vim's mappings
+nnoremap <Leader>ar <Cmd>DduFilerec<CR>
+
 " neomru.vim  {{{2
 let g:neomru#file_mru_path = s:plugin_info_dir('neomru') .. 'file'
 let g:neomru#directory_mru_path = s:plugin_info_dir('neomru') .. 'directory'
