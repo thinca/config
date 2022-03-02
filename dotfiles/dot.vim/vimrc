@@ -2099,6 +2099,11 @@ call ddu#custom#patch_global(#{
 \       matchers: ['matcher_fzf'],
 \     },
 \   },
+\   filterParams: #{
+\     matcher_fzf: #{
+\       highlightMatched: 'Search',
+\     },
+\   },
 \ })
 
 call ddu#custom#patch_local('file_rec', #{
