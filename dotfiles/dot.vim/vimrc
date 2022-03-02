@@ -2125,7 +2125,11 @@ function s:ddu_file_external_cmd(path) abort
   endif
   if executable('fd')
     return [
-    \   'fd', '--type', 'file', '--color', 'never', '--hidden',
+    \   'fd',
+    \   '--hidden',
+    \   '--type', 'file',
+    \   '--exclude', '.git',
+    \   '--color', 'never',
     \ ]
   endif
   if executable('find')
