@@ -2128,6 +2128,7 @@ function s:ddu_file_external_cmd(path) abort
     \   'fd',
     \   '--hidden',
     \   '--type', 'file',
+    \   '--type', 'symlink',
     \   '--exclude', '.git',
     \   '--color', 'never',
     \ ]
