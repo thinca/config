@@ -2178,6 +2178,8 @@ function! s:ddu_setup_ui_ff_filter_buffer() abort
   inoremap <buffer> <CR> <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <buffer> <CR> <Cmd>close<CR><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 
+  inoremap <buffer> <expr> <C-h> getline('.') is# '' ? '<Esc><Cmd>close<CR>' : '<C-h>'
+
   inoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('normal! j')<CR>
   inoremap <buffer> <C-p> <Cmd>call ddu#ui#ff#execute('normal! k')<CR>
   nnoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('normal! j')<CR>
