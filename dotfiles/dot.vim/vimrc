@@ -2121,7 +2121,7 @@ function s:ddu_file_external_cmd(path) abort
   let path = fnamemodify(a:path, ':p')
   if finddir('.git', path .. ';') isnot# '' ||
   \   findfile('.git', path .. ';') isnot# ''
-    return ['git', 'ls-files']
+    return ['git', 'ls-files', '--cached', '--others', '--exclude-standard']
   endif
   if executable('fd')
     return [
