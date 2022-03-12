@@ -1022,6 +1022,8 @@ cnoremap v// v//
 
 nnoremap gA A<C-g>U<Left>
 
+nnoremap <Esc> <Nop>
+
 " Control search highlight.
 if dein#is_sourced('asterisk')
   noremap <Plug>(vimrc-searchafter) zz
@@ -1031,7 +1033,7 @@ if dein#is_sourced('asterisk')
   map g# <Plug>(asterisk-gz#)<Plug>(vimrc-searchafter)
   let g:asterisk#keeppos = 1
 endif
-nnoremap <Space>l <Cmd>nohlsearch<CR>
+nnoremap <Esc><Esc> <Cmd>nohlsearch<CR>
 
 " Search the word nearest to the cursor in new window.
 nnoremap <C-w>*  <C-w>s*
@@ -2903,7 +2905,6 @@ endfunction
 function s:setup_lexima() abort
   let g:lexima_no_default_rules = 1
   let g:lexima_enable_basic_rules = 0
-  let g:lexima_map_escape = ''
   call lexima#set_default_rules()
   call lexima#add_rule({
   \   'char': '<CR>', 'at': '(\%([^()]\|([^)]*)\)*{\%#$',
