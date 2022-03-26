@@ -2426,10 +2426,12 @@ if dein#is_sourced('skkeleton')
     \   globalJisyoEncoding: 'utf-8',
     \   eggLikeNewline: v:true,
     \   registerConvertResult: v:true,
+    \   immediatelyCancel: v:false,
     \ })
     call skkeleton#register_kanatable('rom', {
     \   'z ': ['　', ''],
     \ })
+    call skkeleton#register_keymap('henkan', "\<C-h>", 'henkanBackward')
   endfunction
 
   let s:skkeleton_cursor_colors = {
