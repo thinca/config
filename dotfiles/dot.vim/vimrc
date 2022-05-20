@@ -594,7 +594,12 @@ if has('migemo')
   Set nomigemo migemodict=$VIM_USERDIR/dict/migemo/migemo-dict
 endif
 if executable('rg')
-  Set grepprg=rg\ --no-heading\ --column\ --color\ never
+  if executable('jq')
+    let &grepprg = 'rg --json $* \| jq -r ''select(.type=="match")\|.data as $data\|$data.submatches[]\|"\($data.path.text):\($data.line_number):\(.start+1):\(.end+1):\($data.lines.text//""\|sub("\n$";""))"'''
+    Set grepformat=%f:%l:%c:%k:%m
+  else
+    Set grepprg=rg\ --no-heading\ --column\ --color\ never
+  endif
 elseif executable('jvgrep')
   Set grepprg=jvgrep\ -RC
 elseif executable('ag')
