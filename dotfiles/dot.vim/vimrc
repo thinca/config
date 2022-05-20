@@ -593,7 +593,9 @@ if has('migemo')
   " NOTE: 'migemo' option is local to buffer.
   Set nomigemo migemodict=$VIM_USERDIR/dict/migemo/migemo-dict
 endif
-if executable('jvgrep')
+if executable('rg')
+  Set grepprg=rg\ --no-heading\ --column\ --color\ never
+elseif executable('jvgrep')
   Set grepprg=jvgrep\ -RC
 elseif executable('ag')
   Set grepprg=ag\ --nogroup\ --column\ --nocolor
