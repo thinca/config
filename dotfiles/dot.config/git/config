@@ -220,10 +220,13 @@
 		git remote get-url \"${r:-origin}\" | perl -pe 's;^(?:git@|https://)([^/:]*)[:/](.*?)(?:\\.git)?$;\\1/\\2;'; \
 	}; f"
 	open-cmd = "!((type open >/dev/null 2>&1) && echo open) || ((type lemonade >/dev/null 2>&1) && echo 'lemonade open') || ((type xdg-open >/dev/null 2>&1) && echo xdg-open) || echo echo"
-	mkpr = "!f() { \
+	pr-url = "!f() { \
 		local r=${1:-$(git config pr.remote)} o; \
 		[[ ${r:-origin} == \"origin\" ]] || o=$(git remote get-url origin | sed 's;.*github\\.com[/:]\\([^/]*\\)/.*;\\1:;'); \
-		$(git open-cmd) \"https://$(git gh-repo ${r})/compare/$(git base-branch)...${o}$(git current-branch)?expand=1\"; \
+		echo \"https://$(git gh-repo ${r})/compare/$(git base-branch)...${o}$(git current-branch)?expand=1\"; \
+	}; f"
+	mkpr = "!f() { \
+		$(git open-cmd) \"$(git pr-url \"$*\")\"; \
 	}; f"
 [pretty]
 	gene = format:%C(yellow)%h%Creset %ad %an: %s%C(yellow)%d%Creset
