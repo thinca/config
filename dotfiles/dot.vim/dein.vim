@@ -358,6 +358,7 @@ call dein#add('udalov/kotlin-vim')
 call dein#add('rhysd/vim-gfm-syntax')
 call dein#add('jparise/vim-graphql')
 call dein#add('slim-template/vim-slim')
+call dein#add('pocke/rbs.vim')
 call dein#add('pocke/iro.vim', {
 \   'build': 'bundle install',
 \   'if': has('ruby'),
