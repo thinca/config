@@ -359,11 +359,6 @@ call dein#add('rhysd/vim-gfm-syntax')
 call dein#add('jparise/vim-graphql')
 call dein#add('slim-template/vim-slim')
 call dein#add('pocke/rbs.vim')
-call dein#add('pocke/iro.vim', {
-\   'build': 'bundle install',
-\   'if': has('ruby'),
-\   'rev': 'iro-with-vim-syntax',
-\ })
 call dein#add('chr4/nginx.vim')
 call dein#add('nfnty/vim-nftables')
 call dein#add('rbtnn/vim-vimscript_indentexpr')
