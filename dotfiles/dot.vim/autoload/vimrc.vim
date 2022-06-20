@@ -15,7 +15,7 @@ function vimrc#grep(...) abort
     if !g:V.Compat.has_version('7.4.122')
       let pat = iconv(pat, &encoding, &termencoding)
     endif
-    execute 'grep!' '"' .. escape(pat, ' /%#') .. '"' files
+    execute 'grep!' '"' .. escape(pat, ' %#') .. '"' files
   endif
 endfunction
 

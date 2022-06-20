@@ -3327,7 +3327,7 @@ function s:convert_pattern(pat) abort
     endif
     let i += 1
   endwhile
-  return escape(pat, '\ ')
+  return escape(pat, ' ')
 endfunction
 
 if dein#is_sourced('vcs')
