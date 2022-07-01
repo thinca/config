@@ -2180,8 +2180,8 @@ function! s:ddu_setup_ui_ff_buffer() abort
 endfunction
 
 function! s:ddu_setup_ui_ff_filter_buffer() abort
-  inoremap <buffer> <C-c> <Esc><Cmd>close<CR>
-  nnoremap <buffer> q <Cmd>close<CR>
+  inoremap <buffer> <C-c> <Esc><Cmd>call ddu#ui#ff#close()<CR>
+  nnoremap <buffer> q <Cmd>call ddu#ui#ff#close()<CR>
   inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <buffer> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 
