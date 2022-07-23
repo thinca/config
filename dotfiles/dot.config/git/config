@@ -176,6 +176,13 @@
 		(git merge-base --is-ancestor \"${b}\" \"${r}\" && \
 			echo \"${r}\" || echo \"${b}\"); \
 	}; f"
+	default-branch = "!f() { \
+		local r=\"${1:-$(git current-remote)}\"; \
+		local b=$(git symbolic-ref --short \"refs/remotes/${r}/HEAD\" 2>/dev/null || \
+				{ git remote set-head \"${r}\" --auto >/dev/null && \
+					git symbolic-ref --short \"refs/remotes/${r}/HEAD\"; }); \
+		echo \"${b#*/}\"; \
+	}; f"
 	base-branch = "!f() { \
 		git config \"branch.${1:-$(git current-branch)}.base\" || git config branch.default; \
 	}; f"
