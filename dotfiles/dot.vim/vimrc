@@ -2439,6 +2439,7 @@ if dein#is_sourced('skkeleton')
     \   'z ': ['　', ''],
     \ })
     call skkeleton#register_keymap('henkan', "\<C-h>", 'henkanBackward')
+    call skkeleton#register_keymap('input', ';', 'henkanPoint')
   endfunction
 
   let s:skkeleton_cursor_colors = {
