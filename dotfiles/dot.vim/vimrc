@@ -3351,7 +3351,7 @@ elseif dein#is_sourced('gina')  " gina.vim {{{2
   call gina#custom#command#option('diff', '--opener', 'split')
 
   nnoremap <silent> <Leader>va  :<C-u>Gina add %:p<CR>
-  nnoremap <silent> <Leader>vb  :<C-u>Gina blame %:p<CR>
+  nnoremap <silent> <Leader>vb  :<C-u>Gina blame<CR>
   nnoremap <silent> <Leader>vc  :<C-u>Gina commit<CR>
   nnoremap <silent> <Leader>vd  :<C-u>Gina diff<CR>
   nnoremap <silent> <Leader>vD  :<C-u>Gina rm %:p<CR>
