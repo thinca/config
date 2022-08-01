@@ -3354,16 +3354,16 @@ elseif dein#is_sourced('gina')  " gina.vim {{{2
   call gina#custom#command#option('status', '--group', 'status')
   call gina#custom#command#option('status', '--opener', 'new')
 
-  nnoremap <silent> <Leader>va  :<C-u>Gina add %:p<CR>
-  nnoremap <silent> <Leader>vb  :<C-u>Gina blame<CR>
-  nnoremap <silent> <Leader>vc  :<C-u>Gina commit<CR>
-  nnoremap <silent> <Leader>vd  :<C-u>Gina diff<CR>
-  nnoremap <silent> <Leader>vD  :<C-u>Gina rm %:p<CR>
-  nnoremap <silent> <Leader>vs  :<C-u>Gina status<CR>
-  nnoremap <silent> <Leader>vl  :<C-u>Gina log<CR>
-  nnoremap <silent> <Leader>vzl :<C-u>Gina log :%:p<CR>
-  nnoremap <silent> <Leader>vzc :<C-u>Gina commit :%:p<CR>
-  nnoremap <silent> <Leader>vzd :<C-u>Gina diff :%:p<CR>
+  nnoremap <silent> <Leader>va  <Cmd>Gina add %:p<CR>
+  nnoremap <silent> <Leader>vb  <Cmd>Gina blame<CR>
+  nnoremap <silent> <Leader>vc  <Cmd>Gina commit<CR>
+  nnoremap <silent> <Leader>vd  <Cmd>Gina diff<CR>
+  nnoremap <silent> <Leader>vD  <Cmd>Gina rm %:p<CR>
+  nnoremap <silent> <Leader>vs  <Cmd>Gina status<CR>
+  nnoremap <silent> <Leader>vl  <Cmd>Gina log<CR>
+  nnoremap <silent> <Leader>vzl <Cmd>Gina log :%:p<CR>
+  nnoremap <silent> <Leader>vzc <Cmd>Gina commit :%:p<CR>
+  nnoremap <silent> <Leader>vzd <Cmd>Gina diff :%:p<CR>
   nnoremap <silent> <Leader>vg
   \        :<C-u>Gina qrep! '<C-r>=<SID>convert_pattern(@/)<CR>' -- <C-r>=getcwd()<CR><CR>
 endif
