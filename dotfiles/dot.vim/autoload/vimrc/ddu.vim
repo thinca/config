@@ -1,27 +1,27 @@
-function vimrc#ddu#file_external_cmd(path) abort
-  let path = fnamemodify(a:path, ':p')
-  if finddir('.git', path .. ';') isnot# '' ||
-  \   findfile('.git', path .. ';') isnot# ''
+def vimrc#ddu#file_external_cmd(path: string): list<string>
+  var full_path = fnamemodify(path, ':p')
+  if finddir('.git', full_path .. ';') !=# '' ||
+      findfile('.git', full_path .. ';') !=# ''
     return ['git', 'ls-files', '--cached', '--others', '--exclude-standard']
   endif
   if executable('fd')
     return [
-    \   'fd',
-    \   '--hidden',
-    \   '--type', 'file',
-    \   '--type', 'symlink',
-    \   '--exclude', '.git',
-    \   '--color', 'never',
-    \ ]
+      'fd',
+      '--hidden',
+      '--type', 'file',
+      '--type', 'symlink',
+      '--exclude', '.git',
+      '--color', 'never',
+    ]
   endif
   if executable('find')
     return ['find']
   endif
   return []
-endfunction
+enddef
 
-function vimrc#ddu#setup_ui_ff_buffer() abort
-  let b:cursorline_disable = v:true
+def vimrc#ddu#setup_ui_ff_buffer()
+  b:cursorline_disable = v:true
   nnoremap <buffer> <CR>
   \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <buffer> <nowait> s
@@ -31,12 +31,12 @@ function vimrc#ddu#setup_ui_ff_buffer() abort
   nnoremap <buffer> q
   \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 
-  if b:ddu_ui_name is# 'file_rec'
-    call s:ddu_setup_keymappings_for_file()
+  if b:ddu_ui_name ==# 'file_rec'
+    s:ddu_setup_keymappings_for_file()
   endif
-endfunction
+enddef
 
-function vimrc#ddu#setup_ui_ff_filter_buffer() abort
+def vimrc#ddu#setup_ui_ff_filter_buffer()
   inoremap <buffer> <C-c> <Esc><Cmd>call ddu#ui#ff#close()<CR>
   nnoremap <buffer> q <Cmd>call ddu#ui#ff#close()<CR>
   inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
@@ -49,12 +49,12 @@ function vimrc#ddu#setup_ui_ff_filter_buffer() abort
   nnoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") + 1, 0)')<CR>
   nnoremap <buffer> <C-p> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") - 1, 0)')<CR>
 
-  if b:ddu_ui_name is# 'file_rec'
-    call s:ddu_setup_keymappings_for_file()
+  if b:ddu_ui_name ==# 'file_rec'
+    s:ddu_setup_keymappings_for_file()
   endif
-endfunction
+enddef
 
-function s:ddu_setup_keymappings_for_file() abort
+def s:ddu_setup_keymappings_for_file()
   nnoremap <buffer> <C-j>
   \ <Cmd>call ddu#ui#ff#do_action(
   \   'itemAction',
@@ -86,4 +86,4 @@ function s:ddu_setup_keymappings_for_file() abort
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'tabnew'}}
   \ )<CR>
-endfunction
+enddef
