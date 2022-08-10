@@ -42,7 +42,7 @@ def vimrc#ddu#setup_ui_ff_filter_buffer()
   inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <buffer> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 
-  inoremap <buffer> <expr> <C-h> getline('.') is# '' ? '<Esc><Cmd>close<CR>' : '<C-h>'
+  inoremap <buffer> <expr> <C-h> getline('.') ==# '' ? '<Esc><Cmd>close<CR>' : '<C-h>'
 
   inoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") + 1, 0)')<CR>
   inoremap <buffer> <C-p> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") - 1, 0)')<CR>
