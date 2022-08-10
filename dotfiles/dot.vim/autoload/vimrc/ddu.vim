@@ -44,14 +44,19 @@ def vimrc#ddu#setup_ui_ff_filter_buffer()
 
   inoremap <buffer> <expr> <C-h> getline('.') ==# '' ? '<Esc><Cmd>close<CR>' : '<C-h>'
 
-  inoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") + 1, 0)')<CR>
-  inoremap <buffer> <C-p> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") - 1, 0)')<CR>
-  nnoremap <buffer> <C-n> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") + 1, 0)')<CR>
-  nnoremap <buffer> <C-p> <Cmd>call ddu#ui#ff#execute('call cursor(line(".") - 1, 0)')<CR>
+  inoremap <buffer> <C-n> <Cmd>call <SID>cursor(+1)<CR>
+  inoremap <buffer> <C-p> <Cmd>call <SID>cursor(-1)<CR>
+  nnoremap <buffer> <C-n> <Cmd>call <SID>cursor(+1)<CR>
+  nnoremap <buffer> <C-p> <Cmd>call <SID>cursor(-1)<CR>
 
   if b:ddu_ui_name ==# 'file_rec'
     s:setup_keymappings_for_file()
   endif
+enddef
+
+def s:cursor(n: number)
+  final cmd = $'call cursor(g:V.modulo(line(".") + {n} - 1, line("$")) + 1, 0)'
+  ddu#ui#ff#execute(cmd)
 enddef
 
 def s:setup_keymappings_for_file()
