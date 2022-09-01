@@ -42,7 +42,7 @@ def vimrc#ddu#setup_ui_ff_filter_buffer()
   inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <buffer> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 
-  inoremap <buffer> <expr> <C-h> getline('.') ==# '' ? '<Esc><Cmd>close<CR>' : '<C-h>'
+  inoremap <buffer> <expr> <C-h> getline('.') ==# '' ? '<Esc><Cmd>call ddu#ui#ff#close()<CR>' : '<C-h>'
 
   inoremap <buffer> <C-n> <Cmd>call <SID>cursor(+1)<CR>
   inoremap <buffer> <C-p> <Cmd>call <SID>cursor(-1)<CR>
@@ -77,17 +77,17 @@ def s:setup_keymappings_for_file()
   \ )<CR>
 
   inoremap <buffer> <C-j>
-  \ <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action(
+  \ <Esc><Cmd>call ddu#ui#ff#close()<CR><Cmd>call ddu#ui#ff#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'botright split'}}
   \ )<CR>
   inoremap <buffer> <C-k>
-  \ <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action(
+  \ <Esc><Cmd>call ddu#ui#ff#close()<CR><Cmd>call ddu#ui#ff#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'botright vsplit'}}
   \ )<CR>
   inoremap <buffer> <C-l>
-  \ <Esc><Cmd>close<CR><Cmd>call ddu#ui#ff#do_action(
+  \ <Esc><Cmd>call ddu#ui#ff#close()<CR><Cmd>call ddu#ui#ff#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'tabnew'}}
   \ )<CR>
