@@ -148,6 +148,7 @@ call dein#add('lambdalisue/gina.vim')
 call dein#add('lambdalisue/vim-gista')
 call dein#add('lambdalisue/vim-gista-unite')
 call dein#add('lambdalisue/suda.vim')
+call dein#add('lambdalisue/mr.vim')
 call dein#add('andymass/vim-matchup')
 call dein#add('machakann/vim-sandwich')
 call dein#add('mattn/calendar-vim')
@@ -306,6 +307,7 @@ call dein#add('Shougo/ddu-kind-file')
 call dein#add('yuki-yano/ddu-filter-fzf')
 call dein#add('Shougo/ddu-source-file_rec')
 call dein#add('matsui54/ddu-source-file_external')
+call dein#add('kuuote/ddu-source-mr')
 
 
 " For OmniSharp

@@ -2111,28 +2111,30 @@ call ddu#custom#patch_global(#{
 \       highlightMatched: 'Search',
 \     },
 \   },
-\ })
-
-call ddu#custom#patch_local('file_rec', #{
 \   uiParams: #{
 \     ff: #{
 \       startFilter: v:true,
 \     },
 \   },
-\   sources: [
-\     #{name: 'file_external', params: {}},
-\   ],
 \ })
 
 command! -bar -nargs=* -complete=dir DduFilerec
 \   call ddu#start(#{
-\     name: 'file_rec',
+\     name: 'file',
+\     sources: [
+\       #{name: 'file_external', params: {}},
+\     ],
 \     sourceParams: #{
 \       file_external: #{
 \         cmd: vimrc#ddu#file_external_cmd(<q-args> ?? getcwd()),
 \         path: len(<q-args>) ? fnamemodify(<q-args>, ':p') : getcwd(),
 \       },
 \     },
+\   })
+command! -bar -nargs=* -complete=dir DduMru
+\   call ddu#start(#{
+\     name: 'file',
+\     sources: [#{name: 'mr'}],
 \   })
 
 augroup plugin-ddu-ui-ff
@@ -2143,12 +2145,20 @@ augroup END
 
 " Overwrite unite.vim's mappings
 nnoremap <Leader>ar <Cmd>DduFilerec<CR>
+nnoremap <Leader>am <Cmd>DduMru<CR>
 
 " neomru.vim  {{{2
 let g:neomru#file_mru_path = s:plugin_info_dir('neomru') .. 'file'
 let g:neomru#directory_mru_path = s:plugin_info_dir('neomru') .. 'directory'
 let g:neomru#file_mru_limit = 10000
 let g:neomru#file_mru_ignore_pattern = s:temp_file_pat
+
+" mr.vim  {{{2
+def s:mru_predicate(filename: string): bool
+  return filename !~ '\.git/COMMIT_EDITMSG$' &&
+  \   getbufvar(filename, '&buftype', '') == ''
+enddef
+let g:mr#mru#predicates = [function('s:mru_predicate')]
 
 " alignta.vim  {{{2
 vnoremap <C-h> <Cmd>Alignta<CR>

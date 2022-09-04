@@ -31,7 +31,7 @@ def vimrc#ddu#setup_ui_ff_buffer()
   nnoremap <buffer> q
   \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 
-  if b:ddu_ui_name ==# 'file_rec'
+  if b:ddu_ui_name ==# 'file'
     s:setup_keymappings_for_file()
   endif
 enddef
@@ -49,7 +49,7 @@ def vimrc#ddu#setup_ui_ff_filter_buffer()
   nnoremap <buffer> <C-n> <Cmd>call <SID>cursor(+1)<CR>
   nnoremap <buffer> <C-p> <Cmd>call <SID>cursor(-1)<CR>
 
-  if b:ddu_ui_name ==# 'file_rec'
+  if b:ddu_ui_name ==# 'file'
     s:setup_keymappings_for_file()
   endif
 enddef
