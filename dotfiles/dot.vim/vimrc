@@ -1034,10 +1034,10 @@ nnoremap <Esc> <Nop>
 " Control search highlight.
 if dein#is_sourced('asterisk')
   noremap <Plug>(vimrc-searchafter) zz
-  map * <Plug>(asterisk-z*)<Plug>(vimrc-searchafter)
-  map # <Plug>(asterisk-z#)<Plug>(vimrc-searchafter)
-  map g* <Plug>(asterisk-gz*)<Plug>(vimrc-searchafter)
-  map g# <Plug>(asterisk-gz#)<Plug>(vimrc-searchafter)
+  noremap * <Plug>(asterisk-z*)<Plug>(vimrc-searchafter)
+  noremap # <Plug>(asterisk-z#)<Plug>(vimrc-searchafter)
+  noremap g* <Plug>(asterisk-gz*)<Plug>(vimrc-searchafter)
+  noremap g# <Plug>(asterisk-gz#)<Plug>(vimrc-searchafter)
   let g:asterisk#keeppos = 1
 endif
 nnoremap <Esc><Esc> <Cmd>nohlsearch<CR>
@@ -1119,9 +1119,9 @@ inoremap <C-g><C-l> <Esc>guvbgi
 " Make inputting a character by code easily.
 inoremap <Plug>(vimrc-input-char-by-code)
 \ <C-r>=nr2char(eval(input('char? ', '0x')))<CR>
-imap <C-v>x <Plug>(vimrc-input-char-by-code)
-imap <C-v>u <Plug>(vimrc-input-char-by-code)
-imap <C-v>U <Plug>(vimrc-input-char-by-code)
+inoremap <C-v>x <Plug>(vimrc-input-char-by-code)
+inoremap <C-v>u <Plug>(vimrc-input-char-by-code)
+inoremap <C-v>U <Plug>(vimrc-input-char-by-code)
 
 " Select the last changed.
 nnoremap <expr> gc '`[' .. getregtype()[0] .. '`]'
@@ -1814,7 +1814,7 @@ if dein#is_sourced('neosnippet')
     endif
     return "\<Tab>"
   endfunction
-  imap <silent> <expr> <Tab> TabWrapper()
+  inoremap <silent> <expr> <Tab> TabWrapper()
 
   " Start editing with any key in the select mode.
   " This overwrites :vmap.
@@ -1826,7 +1826,7 @@ if dein#is_sourced('neosnippet')
   function s:snippets_remap() abort
     smapclear
     smapclear <buffer>
-    smap <silent> <Tab> <C-\><C-n>a<Plug>(neosnippet_jump_or_expand)
+    snoremap <silent> <Tab> <C-\><C-n>a<Plug>(neosnippet_jump_or_expand)
     snoremap <C-h> _<C-h>
   endfunction
 endif
@@ -2220,8 +2220,8 @@ let g:calendar_navi_label = '前月,今月,次月'
 let g:calendar_mruler =
 \ '睦月,如月,弥生,卯月,皐月,水無月,文月,葉月,長月,神無月,霜月,師走'
 let g:calendar_wruler = '日 月 火 水 木 金 土'
-nmap cal <Plug>CalendarV
-nmap caL <Plug>CalendarH
+nnoremap cal <Plug>CalendarV
+nnoremap caL <Plug>CalendarH
 
 " itchyny-calendar.vim  {{{2
 let g:calendar_google_calendar = 1
@@ -2270,8 +2270,8 @@ let g:eskk#directory = s:plugin_info_dir('eskk')
 let g:eskk#log_cmdline_level = 2
 let g:eskk#log_file_level = 4
 
-imap <C-k> <Plug>(eskk:toggle)
-cmap <C-k> <Plug>(eskk:toggle)
+inoremap <C-k> <Plug>(eskk:toggle)
+cnoremap <C-k> <Plug>(eskk:toggle)
 
 if dein#is_sourced('eskk')
   augroup vimrc-plugin-eskk
@@ -2329,8 +2329,8 @@ endfunction
 
 " skkeleton  {{{2
 if dein#is_sourced('skkeleton')
-  imap <C-j> <Plug>(skkeleton-toggle)
-  cmap <C-j> <Plug>(skkeleton-toggle)
+  inoremap <C-j> <Plug>(skkeleton-toggle)
+  cnoremap <C-j> <Plug>(skkeleton-toggle)
   " let g:skkeleton#debug = v:true
 
   let s:skkeleton_modes = #{
@@ -2418,17 +2418,17 @@ if dein#is_sourced('skkeleton')
 endif
 
 " caw.vim  {{{2
-nmap <Leader>c <Plug>(caw:prefix)
-vmap <Leader>c <Plug>(caw:prefix)
-nmap <Plug>(caw:prefix)<Space> <Plug>(caw:hatpos:toggle)
-vmap <Plug>(caw:prefix)<Space> <Plug>(caw:hatpos:toggle)
-nmap <Plug>(caw:prefix)w <Plug>(caw:wrap:toggle)
-vmap <Plug>(caw:prefix)w <Plug>(caw:wrap:toggle)
-nmap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle:operator)
+nnoremap <Leader>c <Plug>(caw:prefix)
+vnoremap <Leader>c <Plug>(caw:prefix)
+nnoremap <Plug>(caw:prefix)<Space> <Plug>(caw:hatpos:toggle)
+vnoremap <Plug>(caw:prefix)<Space> <Plug>(caw:hatpos:toggle)
+nnoremap <Plug>(caw:prefix)w <Plug>(caw:wrap:toggle)
+vnoremap <Plug>(caw:prefix)w <Plug>(caw:wrap:toggle)
+nnoremap <Plug>(caw:prefix)c <Plug>(caw:hatpos:toggle:operator)
 
 " open-browser.vim  {{{2
-nmap m<CR> <Plug>(openbrowser-smart-search)
-vmap m<CR> <Plug>(openbrowser-smart-search)
+nnoremap m<CR> <Plug>(openbrowser-smart-search)
+vnoremap m<CR> <Plug>(openbrowser-smart-search)
 if !has('gui_running') && executable('lemonade')
   let g:openbrowser_browser_commands = [
   \   {
@@ -2454,10 +2454,10 @@ function NextFileLoop(file) abort
   return g:V.input_safe('nextfile: loop?[Y/n]: ', 'y') =~? '^y\%[es]$'
 endfunction
 if dein#is_sourced('submode')
-  call submode#enter_with('nextfile', 'n', 'r', '<Leader>j', '<Plug>(nextfile-next)')
-  call submode#enter_with('nextfile', 'n', 'r', '<Leader>k', '<Plug>(nextfile-previous)')
-  call submode#map('nextfile', 'n', 'r', 'j', '<Plug>(nextfile-next)')
-  call submode#map('nextfile', 'n', 'r', 'k', '<Plug>(nextfile-previous)')
+  call submode#enter_with('nextfile', 'n', '', '<Leader>j', '<Plug>(nextfile-next)')
+  call submode#enter_with('nextfile', 'n', '', '<Leader>k', '<Plug>(nextfile-previous)')
+  call submode#map('nextfile', 'n', '', 'j', '<Plug>(nextfile-next)')
+  call submode#map('nextfile', 'n', '', 'k', '<Plug>(nextfile-previous)')
 endif
 
 " submode.vim  {{{2
@@ -2563,36 +2563,36 @@ if dein#is_sourced('altr')
   " Go
   call altr#define('%.go', '%_test.go')
 
-  nmap <C-Space> <Plug>(altr-forward)
-  nmap <C-S-Space> <Plug>(altr-back)
-  nnoremap <C-w><C-Space> <Cmd>split<CR><Cmd>call altr#forward()<CR>
-  nnoremap <C-w><C-S-Space> <Cmd>split<CR><Cmd>call altr#back()<CR>
+  nnoremap <C-Space> <Plug>(altr-forward)
+  nnoremap <C-S-Space> <Plug>(altr-back)
+  nnoremap <C-w><C-Space> <C-w>s<Plug>(altr-forward)
+  nnoremap <C-w><C-S-Space> <C-w>s<Plug>(altr-back)
 endif
 
 " smartword.vim  {{{2
 if dein#is_sourced('smartword')
-  nmap w  <Plug>(smartword-w)
-  nmap b  <Plug>(smartword-b)
-  nmap e  <Plug>(smartword-e)
-  nmap ge <Plug>(smartword-ge)
-  vmap w  <Plug>(smartword-w)
-  vmap b  <Plug>(smartword-b)
-  vmap e  <Plug>(smartword-e)
-  vmap ge <Plug>(smartword-ge)
-  omap <Leader>w <Plug>(smartword-w)
-  omap <Leader>b <Plug>(smartword-b)
-  omap <Leader>e <Plug>(smartword-e)
-  omap <Leader>ge <Plug>(smartword-ge)
+  nnoremap w  <Plug>(smartword-w)
+  nnoremap b  <Plug>(smartword-b)
+  nnoremap e  <Plug>(smartword-e)
+  nnoremap ge <Plug>(smartword-ge)
+  vnoremap w  <Plug>(smartword-w)
+  vnoremap b  <Plug>(smartword-b)
+  vnoremap e  <Plug>(smartword-e)
+  vnoremap ge <Plug>(smartword-ge)
+  onoremap <Leader>w <Plug>(smartword-w)
+  onoremap <Leader>b <Plug>(smartword-b)
+  onoremap <Leader>e <Plug>(smartword-e)
+  onoremap <Leader>ge <Plug>(smartword-ge)
 endif
 
 " textobj-user.vim  {{{2
 if dein#is_sourced('textobj-user')
   "   textobj-function  {{{3
   let g:textobj_function_no_default_key_mappings = 1
-  omap iF <Plug>(textobj-function-i)
-  omap aF <Plug>(textobj-function-a)
-  vmap iF <Plug>(textobj-function-i)
-  vmap aF <Plug>(textobj-function-a)
+  onoremap iF <Plug>(textobj-function-i)
+  onoremap aF <Plug>(textobj-function-a)
+  vnoremap iF <Plug>(textobj-function-i)
+  vnoremap aF <Plug>(textobj-function-a)
   call textobj#user#plugin('camelcase', {
   \   '-': {
   \   '*pattern*': '\C\a[a-z0-9]\+',
@@ -2611,29 +2611,29 @@ if dein#is_sourced('textobj-user')
   \     ['i(', 'i[', 'i{', 'i<', 'i"', "i'", '`i']
   \   ],
   \ }
-  omap ab <Plug>(textobj-multitextobj-A-a)
-  omap ib <Plug>(textobj-multitextobj-A-i)
-  vmap ab <Plug>(textobj-multitextobj-A-a)
-  vmap ib <Plug>(textobj-multitextobj-A-i)
+  onoremap ab <Plug>(textobj-multitextobj-A-a)
+  onoremap ib <Plug>(textobj-multitextobj-A-i)
+  vnoremap ab <Plug>(textobj-multitextobj-A-a)
+  vnoremap ib <Plug>(textobj-multitextobj-A-i)
 endif
 
 "   textobj-fold
-omap iz <Plug>(textobj-fold-i)
-omap az <Plug>(textobj-fold-a)
-vmap iz <Plug>(textobj-fold-i)
-vmap az <Plug>(textobj-fold-a)
+onoremap iz <Plug>(textobj-fold-i)
+onoremap az <Plug>(textobj-fold-a)
+vnoremap iz <Plug>(textobj-fold-i)
+vnoremap az <Plug>(textobj-fold-a)
 
 " operator-user.vim  {{{2
 if dein#is_sourced('operator-user')
   "   operator-replace  {{{3
-  map mp <Plug>(operator-replace)
-  vmap p <Plug>(operator-replace)
+  noremap mp <Plug>(operator-replace)
+  vnoremap p <Plug>(operator-replace)
 
   "   operator-camelize  {{{3
-  nmap <Leader>oc <Plug>(operator-camelize)iw
-  vmap <Leader>oc <Plug>(operator-camelize)
-  nmap <Leader>oC <Plug>(operator-decamelize)iw
-  vmap <Leader>oC <Plug>(operator-decamelize)
+  nnoremap <Leader>oc <Plug>(operator-camelize)iw
+  vnoremap <Leader>oc <Plug>(operator-camelize)
+  nnoremap <Leader>oC <Plug>(operator-decamelize)iw
+  vnoremap <Leader>oC <Plug>(operator-decamelize)
 
   "   operator-sequence  {{{3
   noremap <expr> <Leader>oU
@@ -2644,11 +2644,11 @@ if dein#is_sourced('operator-user')
   \       operator#sequence#map('<Plug>(operator-decamelize)', 'gU')
 
   "   operator-suddendeath  {{{3
-  map X <Plug>(operator-suddendeath)
+  noremap X <Plug>(operator-suddendeath)
 
   "   operator-insert  {{{3
-  map mi <Plug>(operator-insert-i)
-  map ma <Plug>(operator-insert-a)
+  noremap mi <Plug>(operator-insert-i)
+  noremap ma <Plug>(operator-insert-a)
 endif
 
 " gf-user.vim  {{{2
@@ -2684,24 +2684,24 @@ let g:projecteuler_problem_lang = 'ja'
 let g:onlinejudge_account = {'aoj': {'user': 'thinca'}}
 
 " quickhl.vim  {{{2
-map mh <Plug>(quickhl-manual-this)
-map mH <Plug>(quickhl-manual-reset)
+noremap mh <Plug>(quickhl-manual-this)
+noremap mH <Plug>(quickhl-manual-reset)
 
 " yankround.vim  {{{2
 if dein#is_sourced('yankround')
   let g:yankround_dir = s:plugin_info_dir('yankround')
   let g:yankround_max_history = 100
   let g:yankround_use_region_hl = 1
-  nmap <expr> p yankround#is_active() ?
+  nnoremap <expr> p yankround#is_active() ?
   \             '<Plug>(my-yankround-start)' : '<Plug>(yankround-p)'
-  nmap P <Plug>(yankround-P)
-  nmap gp <Plug>(yankround-gp)
-  nmap gP <Plug>(yankround-gP)
+  nnoremap P <Plug>(yankround-P)
+  nnoremap gp <Plug>(yankround-gp)
+  nnoremap gP <Plug>(yankround-gP)
   if dein#is_sourced('submode')
-    call submode#enter_with('yankround', 'n', 'r',
+    call submode#enter_with('yankround', 'n', '',
     \               '<Plug>(my-yankround-start)', '<Plug>(yankround-prev)')
-    call submode#map('yankround', 'n', 'r', 'p', '<Plug>(yankround-prev)')
-    call submode#map('yankround', 'n', 'r', 'n', '<Plug>(yankround-next)')
+    call submode#map('yankround', 'n', '', 'p', '<Plug>(yankround-prev)')
+    call submode#map('yankround', 'n', '', 'n', '<Plug>(yankround-next)')
   endif
   nnoremap <Leader>a<C-p> <Cmd>Unite yankround<CR>
 endif
@@ -2809,12 +2809,12 @@ let g:clever_f_use_migemo = 1
 
 " operator-surround.vim  {{{2
 if dein#is_sourced('operator-surround')
-  nmap ys <Plug>(operator-surround-append)
-  nmap ds <Plug>(operator-surround-delete)a
-  nmap cs <Plug>(operator-surround-replace)a
-  nmap msa <Plug>(operator-surround-append)
-  nmap msd <Plug>(operator-surround-delete)
-  nmap msr <Plug>(operator-surround-replace)
+  nnoremap ys <Plug>(operator-surround-append)
+  nnoremap ds <Plug>(operator-surround-delete)a
+  nnoremap cs <Plug>(operator-surround-replace)a
+  nnoremap msa <Plug>(operator-surround-append)
+  nnoremap msd <Plug>(operator-surround-delete)
+  nnoremap msr <Plug>(operator-surround-replace)
   " let g:operator#surround#ignore_space = 0
 endif
 
@@ -2823,8 +2823,8 @@ let g:committia_hooks = {}
 function g:committia_hooks.edit_open(info) abort
   setlocal spell
 
-  imap <buffer> <C-e> <Plug>(committia-scroll-diff-down-half)
-  imap <buffer> <C-y> <Plug>(committia-scroll-diff-up-half)
+  inoremap <buffer> <C-e> <Plug>(committia-scroll-diff-down-half)
+  inoremap <buffer> <C-y> <Plug>(committia-scroll-diff-up-half)
 
   if getline(1) ==# ''
     startinsert
@@ -2882,16 +2882,16 @@ endfunction
 call dein#set_hook('lexima', 'hook_post_source', function('s:setup_lexima'))
 
 " sideways.vim  {{{2
-nmap <Leader>< <Plug>SidewaysLeft
-nmap <Leader>> <Plug>SidewaysRight
+nnoremap <Leader>< <Plug>SidewaysLeft
+nnoremap <Leader>> <Plug>SidewaysRight
 
 " previm.vim  {{{2
 let g:previm_enable_realtime = 1
 
 " operator-insert.vim  {{{2
 if dein#is_sourced('operator-insert')
-  nmap <Leader>I <Plug>(operator-insert-i)
-  nmap <Leader>A <Plug>(operator-insert-a)
+  nnoremap <Leader>I <Plug>(operator-insert-i)
+  nnoremap <Leader>A <Plug>(operator-insert-a)
 endif
 
 " rogue.vim  {{{2
@@ -2932,12 +2932,12 @@ let g:github#debug_file = s:plugin_info_dir('github') .. 'log/debug-%Y-%m-%d.log
 " poslist.vim  {{{2
 if dein#is_sourced('poslist')
   let g:poslist_histsize = 1000
-  map <C-o> <Plug>(poslist-prev-pos)
-  map <C-i> <Plug>(poslist-next-pos)
-  map <Leader><C-o> <Plug>(poslist-prev-line)
-  map <Leader><C-i> <Plug>(poslist-next-line)
-  map <Space><C-o> <Plug>(poslist-prev-buf)
-  map <Space><C-i> <Plug>(poslist-next-buf)
+  noremap <C-o> <Plug>(poslist-prev-pos)
+  noremap <C-i> <Plug>(poslist-next-pos)
+  noremap <Leader><C-o> <Plug>(poslist-prev-line)
+  noremap <Leader><C-i> <Plug>(poslist-next-line)
+  noremap <Space><C-o> <Plug>(poslist-prev-buf)
+  noremap <Space><C-i> <Plug>(poslist-next-buf)
 endif
 
 " quickrun.vim  {{{2
@@ -2958,7 +2958,7 @@ if dein#is_sourced('quickrun')
       execute 'nnoremap <silent>' key ':QuickRun' c '-mode n<CR>'
       execute 'vnoremap <silent>' key ':QuickRun' c '-mode v<CR>'
     endfor
-    nmap <Leader>r <Plug>(quickrun-op)
+    nnoremap <Leader>r <Plug>(quickrun-op)
 
     let g:quickrun_config = {
     \   '_': {
@@ -3078,7 +3078,7 @@ if dein#is_sourced('quickrun')
     endfunction
     call quickrun#module#register(rust_cargo_hook, 1)
 
-    map <Leader>or <Plug>(quickrun-op)
+    noremap <Leader>or <Plug>(quickrun-op)
   endfunction
   call s:init_quickrun()
 
@@ -3216,8 +3216,8 @@ let g:wtrans#source_filters = [
 \   'wtrans#filter#split_a_word',
 \   'wtrans#filter#shrink_whitespace',
 \ ]
-map <Space>tt <Plug>(operator-wtrans-echomsg)
-map <Space>ts <Plug>(operator-wtrans-replace)
+noremap <Space>tt <Plug>(operator-wtrans-echomsg)
+noremap <Space>ts <Plug>(operator-wtrans-replace)
 
 " threes.vim  {{{2
 let g:threes#data_directory = s:plugin_info_dir('threes')
@@ -3301,11 +3301,11 @@ let g:EasyMotion_use_migemo = 1
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_skipfoldedline = 0
 let g:EasyMotion_use_upper = 1
-map <Leader>f <Plug>(easymotion-overwin-f2)
+noremap <Leader>f <Plug>(easymotion-overwin-f2)
 
 " edgemotion.vim  {{{2
-map [d <Plug>(edgemotion-k)
-map ]d <Plug>(edgemotion-j)
+noremap [d <Plug>(edgemotion-k)
+noremap ]d <Plug>(edgemotion-j)
 
 " matchit.vim  {{{2
 let g:matchup_matchparen_status_offscreen = 0
@@ -3344,14 +3344,14 @@ function s:on_lsp_buffer_enabled() abort
   endif
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
-  nmap <buffer> gd <Plug>(lsp-definition)
+  nnoremap <buffer> gd <Plug>(lsp-definition)
   nnoremap <buffer> <C-w>d <Cmd>rightbelow LspDefinition<CR>
   nnoremap <buffer> <C-w><C-d> <Cmd>rightbelow LspDefinition<CR>
-  nmap <buffer> <f2> <Plug>(lsp-rename)
-  nmap <buffer> [q <Plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]q <Plug>(lsp-next-diagnostic)
-  nmap <buffer> mt <Plug>(lsp-hover)
-  nmap <buffer> mz <Plug>(lsp-code-action)
+  nnoremap <buffer> <f2> <Plug>(lsp-rename)
+  nnoremap <buffer> [q <Plug>(lsp-previous-diagnostic)
+  nnoremap <buffer> ]q <Plug>(lsp-next-diagnostic)
+  nnoremap <buffer> mt <Plug>(lsp-hover)
+  nnoremap <buffer> mz <Plug>(lsp-code-action)
 
   if &filetype is# 'go'
     augroup vimrc-plugin-lsp-ft-go
@@ -3416,9 +3416,9 @@ nnoremap <Plug>(vimrc-show-current-syntax)
 \ <Cmd>echo join(map(synstack(line('.'), col('.')),
 \ 'synIDattr(v:val, "name")
 \ .. "(" .. synIDattr(synIDtrans(v:val), "name") .. ")"'), ',')<CR>
-nmap <C-CR> <Plug>(vimrc-show-current-syntax)
-nmap mx <Plug>(vimrc-show-current-syntax)
-imap <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
+nnoremap <C-CR> <Plug>(vimrc-show-current-syntax)
+nnoremap mx <Plug>(vimrc-show-current-syntax)
+inoremap <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
 
 
 command! -nargs=1 -complete=command -bang Time
