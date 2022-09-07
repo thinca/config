@@ -57,6 +57,7 @@ enddef
 def s:cursor(n: number)
   final cmd = $'call cursor(g:V.modulo(line(".") + {n} - 1, line("$")) + 1, 0)'
   ddu#ui#ff#execute(cmd)
+  redraw!
 enddef
 
 def s:setup_keymappings_for_file()
