@@ -3344,14 +3344,14 @@ function s:on_lsp_buffer_enabled() abort
   endif
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=yes
-  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gd <Plug>(lsp-definition)
   nnoremap <buffer> <C-w>d <Cmd>rightbelow LspDefinition<CR>
   nnoremap <buffer> <C-w><C-d> <Cmd>rightbelow LspDefinition<CR>
-  nmap <buffer> <f2> <plug>(lsp-rename)
+  nmap <buffer> <f2> <Plug>(lsp-rename)
   nmap <buffer> [q <Plug>(lsp-previous-diagnostic)
   nmap <buffer> ]q <Plug>(lsp-next-diagnostic)
-  nmap <buffer> mt <plug>(lsp-hover)
-  nmap <buffer> mz <plug>(lsp-code-action)
+  nmap <buffer> mt <Plug>(lsp-hover)
+  nmap <buffer> mz <Plug>(lsp-code-action)
 
   if &filetype is# 'go'
     augroup vimrc-plugin-lsp-ft-go
