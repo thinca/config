@@ -996,7 +996,7 @@ endif
 
 function s:meta_map(key, rhs, ...) abort
   let mode = a:0 ? a:1 : 'n'
-  let modifier = g:V.is_mac() ? 'D' : 'M'
+  let modifier = has('mac') ? 'D' : 'M'
   execute printf('%snoremap <%s-%s> %s', mode, modifier, a:key, a:rhs)
 endfunction
 
