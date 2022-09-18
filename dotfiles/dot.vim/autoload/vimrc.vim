@@ -273,3 +273,8 @@ function vimrc#time(cmd, log) abort
     echo result
   endif
 endfunction
+
+def vimrc#modulo(m: number, n: number): number
+  const d = m * n < 0 ? 1 : 0
+  return m + (-(m + (0 < n ? d : -d)) / n + d) * n
+enddef

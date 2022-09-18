@@ -19,10 +19,10 @@ function s:jk(motion)
   let max = line('$')
   let list = s:getlist()
   let cur = line('.') - 1
-  let pos = g:V.modulo(cur + a:motion, max)
+  let pos = vimrc#modulo(cur + a:motion, max)
   let m = 0 < a:motion ? 1 : -1
   while cur != pos && list[pos].bufnr == 0
-    let pos = g:V.modulo(pos + m, max)
+    let pos = vimrc#modulo(pos + m, max)
   endwhile
   return (pos + 1) . 'G'
 endfunction

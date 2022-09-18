@@ -1295,7 +1295,7 @@ nnoremap <Space><C-p> <Cmd>call <SID>swap_window(-v:count1)<CR>
 
 function s:swap_window(n) abort
   let curbuf = bufnr('%')
-  let target = g:V.modulo(winnr() + a:n - 1, winnr('$')) + 1
+  let target = vimrc#modulo(winnr() + a:n - 1, winnr('$')) + 1
 
   " 'hide' is necessary to keep the undo history.
   execute 'hide' winbufnr(target) .. 'buffer'
@@ -2486,7 +2486,7 @@ if dein#is_sourced('submode')
   call submode#map('changetab', 'n', '', 'T', 'gT')
 
   function s:movetab(nr) abort
-    let pos = g:V.modulo(tabpagenr() - 1 + a:nr, tabpagenr('$'))
+    let pos = vimrc#modulo(tabpagenr() - 1 + a:nr, tabpagenr('$'))
     let pos += tabpagenr() <= pos ? 1 : 0
     execute 'tabmove' pos
   endfunction
