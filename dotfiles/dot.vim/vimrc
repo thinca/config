@@ -2095,58 +2095,60 @@ if s:is_win && executable('es')
 endif
 
 " ddu.vim  {{{2
-call ddu#custom#patch_global(#{
-\   ui: 'ff',
-\   kindOptions: #{
-\     file: #{
-\       defaultAction: 'open',
-\     },
-\   },
-\   sourceOptions: #{
-\     _: #{
-\       matchers: ['matcher_fzf'],
-\     },
-\   },
-\   filterParams: #{
-\     matcher_fzf: #{
-\       highlightMatched: 'Search',
-\     },
-\   },
-\   uiParams: #{
-\     ff: #{
-\       startFilter: v:true,
-\     },
-\   },
-\ })
+if dein#is_sourced('ddu')
+  call ddu#custom#patch_global(#{
+  \   ui: 'ff',
+  \   kindOptions: #{
+  \     file: #{
+  \       defaultAction: 'open',
+  \     },
+  \   },
+  \   sourceOptions: #{
+  \     _: #{
+  \       matchers: ['matcher_fzf'],
+  \     },
+  \   },
+  \   filterParams: #{
+  \     matcher_fzf: #{
+  \       highlightMatched: 'Search',
+  \     },
+  \   },
+  \   uiParams: #{
+  \     ff: #{
+  \       startFilter: v:true,
+  \     },
+  \   },
+  \ })
 
-command! -bar -nargs=* -complete=dir DduFilerec
-\   call ddu#start(#{
-\     name: 'file',
-\     sources: [
-\       #{name: 'file_external', params: {}},
-\     ],
-\     sourceParams: #{
-\       file_external: #{
-\         cmd: vimrc#ddu#file_external_cmd(<q-args> ?? getcwd()),
-\         path: len(<q-args>) ? fnamemodify(<q-args>, ':p') : getcwd(),
-\       },
-\     },
-\   })
-command! -bar -nargs=* -complete=dir DduMru
-\   call ddu#start(#{
-\     name: 'file',
-\     sources: [#{name: 'mr'}],
-\   })
+  command! -bar -nargs=* -complete=dir DduFilerec
+  \   call ddu#start(#{
+  \     name: 'file',
+  \     sources: [
+  \       #{name: 'file_external', params: {}},
+  \     ],
+  \     sourceParams: #{
+  \       file_external: #{
+  \         cmd: vimrc#ddu#file_external_cmd(<q-args> ?? getcwd()),
+  \         path: len(<q-args>) ? fnamemodify(<q-args>, ':p') : getcwd(),
+  \       },
+  \     },
+  \   })
+  command! -bar -nargs=* -complete=dir DduMru
+  \   call ddu#start(#{
+  \     name: 'file',
+  \     sources: [#{name: 'mr'}],
+  \   })
 
-augroup plugin-ddu-ui-ff
-  autocmd!
-  autocmd FileType ddu-ff call vimrc#ddu#setup_ui_ff_buffer()
-  autocmd FileType ddu-ff-filter call vimrc#ddu#setup_ui_ff_filter_buffer()
-augroup END
+  augroup plugin-ddu-ui-ff
+    autocmd!
+    autocmd FileType ddu-ff call vimrc#ddu#setup_ui_ff_buffer()
+    autocmd FileType ddu-ff-filter call vimrc#ddu#setup_ui_ff_filter_buffer()
+  augroup END
 
-" Overwrite unite.vim's mappings
-nnoremap <Leader>ar <Cmd>DduFilerec<CR>
-nnoremap <Leader>am <Cmd>DduMru<CR>
+  " Overwrite unite.vim's mappings
+  nnoremap <Leader>ar <Cmd>DduFilerec<CR>
+  nnoremap <Leader>am <Cmd>DduMru<CR>
+endif
 
 " neomru.vim  {{{2
 let g:neomru#file_mru_path = s:plugin_info_dir('neomru') .. 'file'
