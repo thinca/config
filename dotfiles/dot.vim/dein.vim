@@ -39,6 +39,12 @@ command! -nargs=* -complete=customlist,s:source_cmpl DeinSource
 \   call s:call_with_non_empty('dein#source', [<f-args>])
 command! DeinRecache call dein#recache_runtimepath()
 
+if $DEIN_NO_PLUGINS
+  call dein#begin($DEIN_BASE .. '.disable', [])
+  call dein#end()
+  finish
+endif
+
 if !dein#load_state($DEIN_BASE)
   finish
 endif
