@@ -2173,7 +2173,7 @@ let g:Omnisharp_start_server = 0
 let g:OmniSharp_server_type = 'roslyn'
 let g:OmniSharp_autoselect_existing_sln = 0
 command! -nargs=1 -complete=customlist,s:omnisharp_api OmniSharpAPI
-\     PP g:V.J.decode(pyeval(printf('getResponse("/%s")', <q-args>)))
+\     PP json_decode(pyeval(printf('getResponse("/%s")', <q-args>)))
 function s:omnisharp_api(lead, line, pos) abort
   let cand = [
   \   'gotodefinition',
