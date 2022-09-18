@@ -2882,7 +2882,9 @@ function s:setup_lexima() abort
   " Also use <CR> rule via o
   nmap o A<CR>
 endfunction
-call dein#set_hook('lexima', 'hook_post_source', function('s:setup_lexima'))
+if dein#is_sourced('lexima')
+  call dein#set_hook('lexima', 'hook_post_source', function('s:setup_lexima'))
+endif
 
 " sideways.vim  {{{2
 nnoremap <Leader>< <Plug>SidewaysLeft
