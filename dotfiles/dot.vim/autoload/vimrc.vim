@@ -84,7 +84,7 @@ function vimrc#ctags(args) abort
     let args += ['-f', tagfile]
   endif
 
-  if g:V.is_windows()
+  if has('win32')
     let enc = get({
     \   'utf-8': 'utf8',
     \   'cp932': 'sjis',
@@ -106,7 +106,7 @@ function vimrc#ctags(args) abort
   call map(add(args, dir), 'shellescape(v:val)')
 
   let cmd = printf('ctags -R --tag-relative=yes %s', join(args))
-  if g:V.is_windows()
+  if has('win32')
     let cmd = 'start /b ' .. cmd
   else
     let cmd ..= ' &'

@@ -171,6 +171,8 @@ endif
 
 
 " == Utilities for vimrc. == {{{1
+let s:is_win = has('win32')
+
 function s:SID() abort
   return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
 endfunction
@@ -253,7 +255,7 @@ endfunction
 if !exists('g:colors_name')
   Set background=dark
   let g:gruvbox_contrast_dark = 'hard'
-  if !g:V.is_windows() || has('gui_running')
+  if !s:is_win || has('gui_running')
     " ['candycode', 'wuye', 'freya', 'leo']
     colorscheme gruvbox
   else  "CUI win32
@@ -284,7 +286,7 @@ Set showtabline=2 tabline=%!MakeTabLine()
 " Don't show :intro when startup.
 Set shortmess& shortmess+=I
 
-if has('kaoriya') && g:V.is_windows() && has('gui_running')
+if has('kaoriya') && s:is_win && has('gui_running')
   Set ambiwidth=auto
 else
   Set ambiwidth=double
@@ -696,7 +698,7 @@ if has('persistent_undo')
   augroup vimrc-undofile
     autocmd!
     autocmd BufReadPre ~/* setlocal undofile
-    if has('win32')
+    if s:is_win
       autocmd BufReadPre D:/* setlocal undofile
     endif
   augroup END
@@ -1453,7 +1455,7 @@ endif
 Set mouse=a
 
 " MS Windows  {{{2
-if g:V.is_windows()
+if s:is_win
   " Vim starts on $VIM or $VIMRUNTIME,
   " but I want to start on $HOME.
   if getcwd() ==? $VIM || getcwd() ==? $VIMRUNTIME
@@ -1471,12 +1473,12 @@ if has('gui_running')
     Set guioptions-=T guioptions-=m guioptions-=e
     " Hide any scrollbar.
     Set guioptions-=l guioptions-=r guioptions-=L guioptions-=R
-    if has('kaoriya') && g:V.is_windows()
+    if has('kaoriya') && s:is_win
       " Remove caption (title) bar. Support Windows only.
       Set guioptions+=C
     endif
 
-    if g:V.is_windows()
+    if s:is_win
       Set guifont=Migu_1M:h11:cSHIFTJIS,MS_Gothic:h9:cDEFAULT
     elseif has('x11')
       Set guifont=
@@ -1936,7 +1938,7 @@ if dein#is_sourced('unite')
   call unite#custom#substitute('file', '^;i', s:plugin_info .. '/*')
   call unite#custom#substitute('file', '^;s', '$VIM_USERDIR/pack/personal/start/default/after/syntax/*')
   call unite#custom#substitute('file', '^;f', '$VIM_USERDIR/pack/personal/start/default/after/ftplugin/*')
-  if has('win32')
+  if s:is_win
     call unite#custom#substitute('file', '^;p', 'C:/Program Files/*')
   endif
 
@@ -2089,7 +2091,7 @@ if dein#is_sourced('unite')
 endif
 
 " unite-locate.vim  {{{2
-if g:V.is_windows() && executable('es')
+if s:is_win && executable('es')
   let g:unite_locate_command = 'es -i -r -n %d %s'
 endif
 
@@ -2263,7 +2265,7 @@ let g:eskk#rom_input_style = 'msime'
 let g:eskk#keep_state = 0
 " let g:eskk#keep_state = 1
 " let g:eskk#keep_state_beyond_buffer = 1
-if g:V.is_windows() && !has('gui_running')
+if s:is_win && !has('gui_running')
   let g:eskk#enable_completion = 0
 endif
 let g:eskk#directory = s:plugin_info_dir('eskk')
@@ -3152,7 +3154,7 @@ if executable('w3m')
 endif
 let s:lynx_cmd = 'C:\Program Files\Lynx for Win32\lynx.exe'
 if !exists('g:ref_source_webdict_cmd') &&
-\  g:V.is_windows() &&
+\  s:is_win &&
 \  executable(s:lynx_cmd)
   let g:ref_source_webdict_cmd = [s:lynx_cmd, '-dump', '-nonumbers', '%s']
   let g:ref_phpmanual_cmd = g:ref_source_webdict_cmd
