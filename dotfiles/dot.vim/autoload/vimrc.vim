@@ -12,9 +12,6 @@ function vimrc#grep(...) abort
   if &grepprg ==# 'internal'
     execute 'vimgrep' '/' .. escape(pat, '/') .. '/j' files
   else
-    if !g:V.Compat.has_version('7.4.122')
-      let pat = iconv(pat, &encoding, &termencoding)
-    endif
     execute 'grep!' '"' .. escape(pat, ' %#') .. '"' files
   endif
 endfunction
