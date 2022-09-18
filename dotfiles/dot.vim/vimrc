@@ -372,7 +372,7 @@ function GetBufname(...) abort
     let head = matchstr(bufname, '^[[:alnum:].+-]\+://[^/]\+')
     let file = matchstr(bufname, '[^/]\+$')
     let short_path = head .. '/../' .. file
-    return g:V.min_by([bufname, short_path], 'strwidth(v:val)')
+    return strwidth(bufname) < strwidth(short_path) ? bufnr : short_path
   endif
   if buftype ==# 'nofile' || buftype ==# 'acwrite'
     return bufname
