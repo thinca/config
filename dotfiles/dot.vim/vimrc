@@ -952,7 +952,6 @@ augroup vimrc-misc
   \ | endif
 
   " Auto open/close Quickfix/location window.
-  autocmd QuickFixCmdPost [^l]* call setqflist(g:V.uniq(getqflist()), 'r')
   autocmd QuickFixCmdPost [^l]* leftabove cwindow | redraw!
   autocmd QuickFixCmdPost l* silent! lwindow | redraw!
 
