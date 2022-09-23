@@ -2886,7 +2886,7 @@ function s:setup_lexima() abort
   " Also use <CR> rule via o
   nmap o A<CR>
 endfunction
-if dein#is_sourced('lexima')
+if dein#is_available('lexima')
   call dein#set_hook('lexima', 'hook_post_source', function('s:setup_lexima'))
 endif
 
