@@ -295,6 +295,7 @@ call dein#add('vim-denops/denops.vim')
 call dein#add('vim-skk/skkeleton')
 
 call dein#add('Shougo/ddc.vim')
+call dein#add('Shougo/ddc-ui-pum')
 call dein#add('Shougo/pum.vim')
 call dein#add('matsui54/denops-popup-preview.vim')
 call dein#add('Shougo/ddc-around')

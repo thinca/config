@@ -1747,6 +1747,7 @@ if dein#is_sourced('ddc')
     let g:ddc_sources += ['look']
   endif
   call ddc#custom#patch_global(#{
+  \   ui: 'pum',
   \   sources: g:ddc_sources,
   \   sourceOptions: #{
   \     _: #{
