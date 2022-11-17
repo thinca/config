@@ -371,6 +371,7 @@ call dein#add('pocke/rbs.vim')
 call dein#add('chr4/nginx.vim')
 call dein#add('nfnty/vim-nftables')
 call dein#add('rbtnn/vim-vimscript_indentexpr')
+call dein#add('hashivim/vim-terraform')
 
 " colorscheme
 call dein#add('romainl/Apprentice')
