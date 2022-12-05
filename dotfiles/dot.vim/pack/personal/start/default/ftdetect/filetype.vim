@@ -2,7 +2,7 @@ autocmd BufReadPost,BufNewFile /etc/httpd/conf.d/*.conf setfiletype apache
 autocmd BufReadPost,BufNewFile /etc/apache{2,}/*.d/*.conf setfiletype apache
 autocmd BufReadPost,BufNewFile */dot.zsh/* setfiletype zsh
 
-autocmd BufReadPost,BufNewFile Guardfile,*.god       setlocal filetype=ruby
+autocmd BufReadPost,BufNewFile Guardfile,*.god,*.rbi setlocal filetype=ruby
 autocmd BufReadPost,BufNewFile *.jam,Jamroot,Jamfile setlocal filetype=jam
 autocmd BufReadPost,BufNewFile *.scala               setlocal filetype=scala
 autocmd BufReadPost,BufNewFile *.noop                setlocal filetype=noop
