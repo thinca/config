@@ -1,6 +1,6 @@
-SetUndoFtplugin setl et< ts<
+SetUndoFtplugin setl et< ts< sw<
 
-setlocal expandtab tabstop=2
+setlocal expandtab tabstop=2 shiftwidth=2
 
 command! -bar -buffer MarkdownToggleCheck
 \ keeppattern substitute/^\s*- \[\zs.\ze\]/\=[' ','x'][submatch(0)==' ']/
