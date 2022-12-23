@@ -1060,6 +1060,10 @@ noremap <silent> & :&&<CR>
 vnoremap <silent> z/ <Esc>/\v%V
 vnoremap <silent> z? <Esc>?\v%V
 
+" Do not change unnamed register with p in Visual-mode.
+vnoremap p P
+vnoremap P p
+
 " Repeat on Visual-mode.
 vnoremap <silent> . :normal .<CR>
 vnoremap <silent> @q :normal @q<CR>
@@ -2635,7 +2639,6 @@ vnoremap az <Plug>(textobj-fold-a)
 if dein#is_sourced('operator-user')
   "   operator-replace  {{{3
   noremap mp <Plug>(operator-replace)
-  vnoremap p <Plug>(operator-replace)
 
   "   operator-camelize  {{{3
   nnoremap <Leader>oc <Plug>(operator-camelize)iw
