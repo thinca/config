@@ -1763,13 +1763,14 @@ if dein#is_sourced('ddc')
   \     around: #{mark: 'around'},
   \     buffer: #{mark: 'buffer'},
   \     file: #{mark: 'file', forceCompletionPattern: '/\S*'},
-  \     look: #{mark: 'look', maxCandidates: 5},
+  \     look: #{mark: 'look', maxItems: 5},
   \     vim-lsp: #{mark: 'lsp', forceCompletionPattern: '(?:\.|:|->)\w*'},
   \     neosnippet: #{mark: 'snip'},
   \     skkeleton: #{
   \       mark: 'skkeleton',
   \       matchers: ['skkeleton'],
   \       sorters: [],
+  \       isVolatile: v:true,
   \     },
   \   },
   \   sourceParams: #{
@@ -1777,7 +1778,7 @@ if dein#is_sourced('ddc')
   \   },
   \ })
   if dein#is_sourced('pum')
-    call ddc#custom#patch_global('completionMenu', 'pum.vim')
+    call ddc#custom#patch_global('ui', 'pum')
     inoremap <expr> <C-n> pum#visible() ?
     \   '<Cmd>call pum#map#insert_relative(+1)<CR>' : '<C-n>'
     inoremap <expr> <C-p> pum#visible() ?
@@ -2401,7 +2402,6 @@ if dein#is_sourced('skkeleton')
     let b:_ddc_save_config_for_skkeleton = ddc#custom#get_buffer()
     call ddc#custom#patch_buffer(#{
     \   sources: ['skkeleton'],
-    \   completionMenu: 'native',
     \ })
     if exists('*pum#close')
       call pum#close()
