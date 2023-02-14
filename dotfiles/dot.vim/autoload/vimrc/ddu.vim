@@ -22,6 +22,7 @@ enddef
 
 def vimrc#ddu#setup_ui_ff_buffer()
   b:cursorline_disable = v:true
+  setlocal cursorline
   nnoremap <buffer> <CR>
   \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <buffer> <nowait> s
