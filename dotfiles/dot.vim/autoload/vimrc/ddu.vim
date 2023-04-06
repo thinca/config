@@ -24,13 +24,13 @@ def vimrc#ddu#setup_ui_ff_buffer()
   b:cursorline_disable = v:true
   setlocal cursorline
   nnoremap <buffer> <CR>
-  \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  \ <Cmd>call ddu#ui#do_action('itemAction')<CR>
   nnoremap <buffer> <nowait> s
-  \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+  \ <Cmd>call ddu#ui#do_action('toggleSelectItem')<CR>
   nnoremap <buffer> i
-  \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+  \ <Cmd>call ddu#ui#do_action('openFilterWindow')<CR>
   nnoremap <buffer> q
-  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  \ <Cmd>call ddu#ui#do_action('quit')<CR>
 
   if b:ddu_ui_name ==# 'file'
     s:setup_keymappings_for_file()
@@ -38,12 +38,12 @@ def vimrc#ddu#setup_ui_ff_buffer()
 enddef
 
 def vimrc#ddu#setup_ui_ff_filter_buffer()
-  inoremap <buffer> <C-c> <Esc><Cmd>call ddu#ui#ff#close()<CR>
-  nnoremap <buffer> q <Cmd>call ddu#ui#ff#close()<CR>
-  inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-  nnoremap <buffer> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  inoremap <buffer> <C-c> <Esc><Cmd>call ddu#ui#do_action('closeFilterWindow')<CR>
+  nnoremap <buffer> q <Cmd>call ddu#ui#do_action('closeFilterWindow')<CR>
+  inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#do_action('itemAction')<CR>
+  nnoremap <buffer> <CR> <Cmd>call ddu#ui#do_action('itemAction')<CR>
 
-  inoremap <buffer> <expr> <C-h> getline('.') ==# '' ? '<Esc><Cmd>call ddu#ui#ff#do_action("quit")<CR>' : '<C-h>'
+  inoremap <buffer> <expr> <C-h> getline('.') ==# '' ? '<Esc><Cmd>call ddu#ui#do_action("quit")<CR>' : '<C-h>'
 
   inoremap <buffer> <C-n> <Cmd>call <SID>cursor(+1)<CR>
   inoremap <buffer> <C-p> <Cmd>call <SID>cursor(-1)<CR>
@@ -63,33 +63,33 @@ enddef
 
 def s:setup_keymappings_for_file()
   nnoremap <buffer> <C-j>
-  \ <Cmd>call ddu#ui#ff#do_action(
+  \ <Cmd>call ddu#ui#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'botright split'}}
   \ )<CR>
   nnoremap <buffer> <C-k>
-  \ <Cmd>call ddu#ui#ff#do_action(
+  \ <Cmd>call ddu#ui#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'botright vsplit'}}
   \ )<CR>
   nnoremap <buffer> <C-l>
-  \ <Cmd>call ddu#ui#ff#do_action(
+  \ <Cmd>call ddu#ui#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'tabnew'}}
   \ )<CR>
 
   inoremap <buffer> <C-j>
-  \ <Esc><Cmd>call ddu#ui#ff#close()<CR><Cmd>call ddu#ui#ff#do_action(
+  \ <Esc><Cmd>call ddu#ui#do_action('closeFilterWindow')<CR><Cmd>call ddu#ui#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'botright split'}}
   \ )<CR>
   inoremap <buffer> <C-k>
-  \ <Esc><Cmd>call ddu#ui#ff#close()<CR><Cmd>call ddu#ui#ff#do_action(
+  \ <Esc><Cmd>call ddu#ui#do_action('closeFilterWindow')<CR><Cmd>call ddu#ui#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'botright vsplit'}}
   \ )<CR>
   inoremap <buffer> <C-l>
-  \ <Esc><Cmd>call ddu#ui#ff#close()<CR><Cmd>call ddu#ui#ff#do_action(
+  \ <Esc><Cmd>call ddu#ui#do_action('closeFilterWindow')<CR><Cmd>call ddu#ui#do_action(
   \   'itemAction',
   \   #{name: 'open', params: #{command: 'tabnew'}}
   \ )<CR>
