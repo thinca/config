@@ -3369,8 +3369,8 @@ function s:on_lsp_buffer_enabled() abort
   nnoremap <buffer> mt <Plug>(lsp-hover)
   nnoremap <buffer> mz <Plug>(lsp-code-action)
 
-  if &filetype is# 'go'
-    augroup vimrc-plugin-lsp-ft-go
+  if 0 <= ['go', 'scala']->index(&filetype)
+    augroup vimrc-plugin-lsp-format
       autocmd! * <buffer>
       autocmd BufWritePre <buffer> call s:lsp_format()
     augroup END
