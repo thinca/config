@@ -181,15 +181,15 @@ function s:SIDP() abort
   return '<SNR>' .. s:SID() .. '_'
 endfunction
 
-function s:check_flag(flag) abort
+def s:check_flag(flag: string): bool
   for scope in [w:, b:, g:]
-    let f = get(scope, a:flag, v:null)
-    if f isnot v:null
+    const f = get(scope, flag, null)
+    if f != null
       return f
     endif
   endfor
-  return 0
-endfunction
+  return false
+enddef
 
 function s:toggle_flag(scope, name) abort
   let a:scope[a:name] = !get(a:scope, a:name, 0)
@@ -299,264 +299,266 @@ endif
 Set helplang=ja,en
 
 " Get character code on cursor with 'fileencoding'.
-function GetCharacterCode() abort
-  let str = matchstr(getline('.'), '.', col('.') - 1)
-  let str = iconv(str, &encoding, &fileencoding)
-  let out = '0x'
-  if str ==# ''
+def s:GetCharacterCode(): string
+  var str = matchstr(getline('.'), '.', col('.') - 1)
+  str = iconv(str, &encoding, &fileencoding)
+  var out = '0x'
+  if str == ''
     return out .. '00'
   endif
   for i in range(strlen(str))
-    let out ..= printf('%02X', char2nr(str[i]))
+    out ..= printf('%02X', char2nr(str[i]))
   endfor
   return out
-endfunction
+enddef
 
 " Return the current file size in human readable format.
-function GetFileSize() abort
-  if &encoding ==# &fileencoding || &fileencoding ==# ''
-    let size = line2byte(line('$') + 1) - 1
+def s:GetFileSize(): string
+  var size = 0
+  if &encoding == &fileencoding || &fileencoding == ''
+    size = line2byte(line('$') + 1) - 1
   else
-    let size = getfsize(expand('%'))
+    size = getfsize(expand('%'))
   endif
 
   if size < 0
-    let size = 0
+    size = 0
   endif
   for unit in ['B', 'KB', 'MB']
     if size < 1024
       return size .. unit
     endif
-    let size = size / 1024
+    size = size / 1024
   endfor
   return size .. 'GB'
-endfunction
+enddef
 
-function GetSyntaxInfo() abort
-  let line = synstack(line('.'), col('.'))->map(
-  \  'printf("%s (%s)", synIDattr(v:val, "name"), synIDattr(synIDtrans(v:val), "name"))'
-  \ )->join(',')
-endfunction
+def s:GetSyntaxInfo(): string
+  return synstack(line('.'), col('.'))->map(
+    (_, val) => printf(
+      '%s(%s)',
+      synIDattr(val, 'name'),
+      synIDattr(synIDtrans(val), 'name')
+    )
+  )->join(', ')
+enddef
 
-function STLBufnr() abort
+def STLBufnr(): string
   return s:check_flag('statusline_bufnr')
-  \   ? printf('[%d] ', bufnr('%')) : ''
-endfunction
+    ? printf('[%d] ', bufnr('%')) : ''
+enddef
 
-function STLHighLight() abort
+def STLHighLight(): string
   return s:check_flag('statusline_highlight')
-  \   ? printf('[%s]', GetSyntaxInfo()) : ''
-endfunction
+    ? printf('[%s]', s:GetSyntaxInfo()) : ''
+enddef
 
-function STLCharacterCode() abort
+def STLCharacterCode(): string
   return s:check_flag('statusline_char')
-  \   ? printf('[%s]', GetCharacterCode()) : ''
-endfunction
+    ? printf('[%s]', s:GetCharacterCode()) : ''
+enddef
 
-function STLFileSize() abort
+def STLFileSize(): string
   return s:check_flag('statusline_filesize')
-  \   ? printf('[%s]', GetFileSize()) : ''
-endfunction
+    ? printf('[%s]', s:GetFileSize()) : ''
+enddef
 
-function GetBufname(...) abort
-  let bufnr = get(a:000, 0, '')
-  let tail = get(a:000, 1, 0)
-  let bufname = bufname(bufnr)
-  let buftype = getbufvar(bufnr, '&buftype')
-  if bufname ==# ''
-    if buftype ==# ''
+def GetBufname(bufnr: any = '', tail = false): string
+  var bufname = bufname(bufnr)
+  const buftype = getbufvar(bufnr, '&buftype')
+  if bufname == ''
+    if buftype == ''
       return '[No Name]'
-    elseif buftype ==# 'quickfix'
+    elseif buftype == 'quickfix'
       return '[Quickfix List]'
-    elseif buftype ==# 'nofile' || buftype ==# 'acwrite'
+    elseif buftype == 'nofile' || buftype == 'acwrite'
       return '[Scratch]'
     endif
   endif
   if tail && bufname =~# '^[[:alnum:].+-]\+://'
-    let head = matchstr(bufname, '^[[:alnum:].+-]\+://[^/]\+')
-    let file = matchstr(bufname, '[^/]\+$')
-    let short_path = head .. '/../' .. file
+    const head = matchstr(bufname, '^[[:alnum:].+-]\+://[^/]\+')
+    const file = matchstr(bufname, '[^/]\+$')
+    const short_path = head .. '/../' .. file
     return strwidth(bufname) < strwidth(short_path) ? bufname : short_path
   endif
-  if buftype ==# 'nofile' || buftype ==# 'acwrite'
+  if buftype == 'nofile' || buftype == 'acwrite'
     return bufname
   endif
   if tail
     return fnamemodify(bufname, ':t')
   endif
-  if exists('b:lcd') && b:lcd !=# ''
-    let fullpath = fnamemodify(bufname, ':p')
-    let bufname = matchstr(fullpath, '^\V\(' .. escape(b:lcd, '\')
+  if exists('b:lcd') && b:lcd != ''
+    const fullpath = fnamemodify(bufname, ':p')
+    bufname = matchstr(fullpath, '^\V\(' .. escape(b:lcd, '\')
     \ .. '\v)?[/\\]?\zs.*')
     if exists('g:actual_curbuf')
-      let actual_lcd = getbufvar(g:actual_curbuf - 0, 'lcd', '')
-      if actual_lcd !=# '' && actual_lcd !=# b:lcd
-        let bufname = '*' .. bufname
+      const actual_lcd = getbufvar(str2nr(g:actual_curbuf), 'lcd', '')
+      if actual_lcd != '' && actual_lcd != b:lcd
+        bufname = '*' .. bufname
       endif
     endif
   endif
   return bufname
-endfunction
+enddef
 
-function StatusLineExtra() abort
-  let extra = ''
-  for scope in ['w:', 'b:', 't:', 'g:']
-    if exists(scope .. 'statusline_extra')
-      let e = {scope .. 'statusline_extra'}
-      if e[0] ==# '='
-        let r = eval(e[1 :])
-        let e = type(r) == v:t_string ? r : string(r)
+def StatusLineExtra(): string
+  var extra = ''
+  for scope in [w:, b:, t:, g:]
+    if has_key(scope, 'statusline_extra')
+      var e = scope['statusline_extra']
+      if e[0] == '='
+        const r = eval(e[1 :])
+        e = type(r) == v:t_string ? r : string(r)
       endif
-      let extra ..= e
+      extra ..= e
     endif
   endfor
   return extra
-endfunction
+enddef
 
-function MakeStatusLine(...) abort
-  let multi = a:0 && a:1
-  let line = ''
-  let line ..= '%{STLBufnr()}'  " Buffer number.
-  let line ..= '%<'       " Truncate point.
-  " Buffer name.
-  let line ..= '%{GetBufname()}'
+def MakeStatusLine(multi = false): string
+  var line = ''
+  line ..= '%{STLBufnr()}'  # Buffer number.
+  line ..= '%<'       # Truncate point.
+  # Buffer name.
+  line ..= '%{GetBufname()}'
   if multi
-    let line ..= '%@'
+    line ..= '%@'
   else
-    let line ..= ' '
+    line ..= ' '
   endif
-  " Character encoding
-  let line ..= '[%{(&fenc!=#"" ? &fenc : &enc) .. (&bomb ? "(BOM)" : "")}:'
-  " File format (+ &binary and &endofline)
+  # Character encoding
+  line ..= '[%{(&fenc!=#"" ? &fenc : &enc) .. (&bomb ? "(BOM)" : "")}:'
+  # File format (+ &binary and &endofline)
   if exists('+fixendofline')
-    let line ..= '%{&ff .. (&bin?":bin":"") .. (&eol?"":":noeol")}]'
+    line ..= '%{&ff .. (&bin?":bin":"") .. (&eol?"":":noeol")}]'
   else
-    let line ..= '%{&ff .. (&bin?"(BIN" .. (&eol?"":"-noeol") .. ")":"")}]'
+    line ..= '%{&ff .. (&bin?"(BIN" .. (&eol?"":"-noeol") .. ")":"")}]'
   endif
-  let line ..= '%y'       " Filetype.
-  let line ..= '%m'       " Modified flag.
-  let line ..= '%r'       " Readonly flag.
-  let line ..= '%{get(b:, "swapfile_exists", 0) ? "[swp]" : ""}'
-  let line ..= '%h'       " Help buffer hlag.
-  let line ..= '%w'       " Preview window flag.
-  " The state of SKK.
-  let line ..= '%{get(b:, "skk_on", 0) ? SkkGetModeStr() : ""}'
+  line ..= '%y'       # Filetype.
+  line ..= '%m'       # Modified flag.
+  line ..= '%r'       # Readonly flag.
+  line ..= '%{get(b:, "swapfile_exists", 0) ? "[swp]" : ""}'
+  line ..= '%h'       # Help buffer hlag.
+  line ..= '%w'       # Preview window flag.
+  # The state of SKK.
+  line ..= '%{get(b:, "skk_on", 0) ? SkkGetModeStr() : ""}'
   if exists('*eskk#statusline')
-    let line ..= '%{eskk#statusline()}'
+    line ..= '%{eskk#statusline()}'
   endif
   if exists('*Skkeleton_statusline')
-    let line ..= '%{Skkeleton_statusline()}'
+    line ..= '%{Skkeleton_statusline()}'
   endif
   if exists('*SyntasticStatuslineFlag')
-    let line ..= '%{SyntasticStatuslineFlag()}'
+    line ..= '%{SyntasticStatuslineFlag()}'
   endif
-  let line ..= '%{STLHighLight()}'
-  let line ..= '%{StatusLineExtra()}'
-  " let line ..= StatusLineExtra()
-  let line ..= '%='       " Separation point.
-  let line ..= '%{STLFileSize()}' " Rough file size.
-  let line ..= '%{STLCharacterCode()}' " Character code under the cursor.
-  let line ..= $LANG =~# '^ja' ? ' %l/%L行 %3v桁'
-  \                            : ' %l/%LL %2vC'   " Line and column.
-  let line ..= ' %3p%%'         " Percentage through file in lines.
+  line ..= '%{STLHighLight()}'
+  line ..= '%{StatusLineExtra()}'
+  # line ..= StatusLineExtra()
+  line ..= '%='       # Separation point.
+  line ..= '%{STLFileSize()}' # Rough file size.
+  line ..= '%{STLCharacterCode()}' # Character code under the cursor.
+  line ..= $LANG =~# '^ja' ? ' %l/%L行 %3v桁'
+                           : ' %l/%LL %2vC'   # Line and column.
+  line ..= ' %3p%%'         # Percentage through file in lines.
 
   return line
-endfunction
+enddef
 
-function s:buf_label(bufnr, i, is_cur) abort
-  let label = GetBufname(a:bufnr, 1)
-  if getbufvar(a:bufnr, '&modified')
-    let label ..= '+'
+def s:buf_label(bufnr: number, i: number, is_cur: bool): string
+  var label = g:GetBufname(bufnr, 1)
+  if getbufvar(bufnr, '&modified')
+    label ..= '+'
   endif
-  let curmark = a:is_cur ? '>' : ' '
-  return printf(' %s%d) %s', curmark, a:i, label)
-endfunction
+  const curmark = is_cur ? '>' : ' '
+  return printf(' %s%d) %s', curmark, i, label)
+enddef
 
-function s:tabpage_label(n, ...) abort
-  let is_sidebar = a:0 && a:1
-  let n = a:n
-  let bufnrs = tabpagebuflist(n)
-  let curwinnr = tabpagewinnr(n)
-  let curbufnr = bufnrs[curwinnr - 1]  " first window, first appears
+def s:tabpage_label(n: number, is_sidebar = false): string
+  const bufnrs = tabpagebuflist(n)
+  const curwinnr = tabpagewinnr(n)
+  const curbufnr = bufnrs[curwinnr - 1]  # first window, first appears
 
-  let hi = n == tabpagenr() ? 'TabLineSel' : 'TabLine'
+  const hi = n == tabpagenr() ? 'TabLineSel' : 'TabLine'
 
-  let label = printf('%%#%sTabNumber#%d:%%#%s# ', hi, n, hi)
-  let label ..= '%<'
-  let title = gettabvar(n, 'title')
-  if is_sidebar && get(g:, 'tabsidebar_show_all_window', 0)
-    let cwd = getcwd(curwinnr, n)
-    let label ..= title !=# '' ? title : fnamemodify(cwd, ':t') .. '/'
-    let labels = map(copy(bufnrs), { i, v ->
-    \   s:buf_label(v, i + 1, curwinnr == i + 1)
-    \ })
-    let label ..= "\n" .. join(labels, "\n")
+  var label = printf('%%#%sTabNumber#%d:%%#%s# ', hi, n, hi)
+  label ..= '%<'
+  const title = gettabvar(n, 'title')
+  if is_sidebar && get(g:, 'tabsidebar_show_all_window', false)
+    const cwd = getcwd(curwinnr, n)
+    label ..= title !=# '' ? title : fnamemodify(cwd, ':t') .. '/'
+    const labels = map(copy(bufnrs), (i, v) =>
+      s:buf_label(v, i + 1, curwinnr == i + 1)
+    )
+    label ..= "\n" .. join(labels, "\n")
   elseif title !=# ''
-    let label ..= title
+    label ..= title
   else
-    let text = GetBufname(curbufnr, 1)
-    let mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
-    let mod = len(mod_bufs) ? '+' : ''
+    const text = g:GetBufname(curbufnr, 1)
+    const mod_bufs = filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')
+    const mod = len(mod_bufs) ? '+' : ''
 
-    let label ..= text .. mod
-    let no = len(bufnrs)
+    label ..= text .. mod
+    const no = len(bufnrs)
     if 2 <= no
-      let label ..= ' %#' .. hi .. 'Number#' .. no
-      let label ..= '%#' .. hi .. '#'
+      label ..= ' %#' .. hi .. 'Number#' .. no
+      label ..= '%#' .. hi .. '#'
     endif
   endif
 
   return label
-endfunction
+enddef
 
-function MakeTabLine() abort
-  let sep = ' | '
-  let has_tabsidebar = has('tabsidebar') &&
-  \   (&g:showtabsidebar == 2 ||
-  \    &g:showtabsidebar == 1 && 2 <= tabpagenr('$'))
+def MakeTabLine(): string
+  const sep = ' | '
+  const has_tabsidebar = has('tabsidebar') &&
+    (&g:showtabsidebar == 2 ||
+     &g:showtabsidebar == 1 && 2 <= tabpagenr('$'))
+
+  var tabs: string
 
   if has_tabsidebar
-    let tabs = '%{GetBufname()}'
+    tabs = '%{GetBufname()}'
   else
-    let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-    let titles = map(titles, function('printf', ['%%%dT%s%%T%%#TabLineFill#']))
-    let tabs = join(titles, sep) .. sep .. '%#TabLineFill#%T'
+    final titles = map(range(1, tabpagenr('$')), (_, n) => s:tabpage_label(n))
+    map(titles, function('printf', ['%%%dT%s%%T%%#TabLineFill#']))
+    tabs = join(titles, sep) .. sep .. '%#TabLineFill#%T'
   endif
-  let info = '%#TabLine#'
+  var info = '%#TabLine#'
   if exists('t:tabline_extra')
-    let info ..= t:tabline_extra .. sep
+    info ..= t:tabline_extra .. sep
   endif
   if dein#is_sourced('current-func-info')
-    let info ..= cfi#format('%s()' .. sep, '')
+    info ..= cfi#format('%s()' .. sep, '')
   endif
   if exists('*Uptime') && has_tabsidebar
-    let info ..= Uptime(2) .. sep
+    info ..= g:Uptime(2) .. sep
   endif
   if dein#is_sourced('reanimate')
-    let last_point = reanimate#last_point()
+    const last_point = reanimate#last_point()
     if last_point =~# '^session/'
-      let info ..= matchstr(last_point, '/\zs.*') .. sep
+      info ..= matchstr(last_point, '/\zs.*') .. sep
     endif
   endif
   if dein#is_sourced('gina')
-    let branch = gina#component#repo#branch()
+    const branch = gina#component#repo#branch()
     if branch !=# ''
-      let info ..= branch .. sep
+      info ..= branch .. sep
     endif
   endif
-  let cwd = fnamemodify(getcwd(), ':~')
-  " TODO: vcs#root() occurs an error by unknown reason, and can not catch it
-  let vcs_root = exists('*vcs#root') ? vcs#root(cwd) : ''
+  var cwd = fnamemodify(getcwd(), ':~')
+  # TODO: vcs#root() occurs an error by unknown reason, and cannot catch it
+  var vcs_root = exists('*vcs#root') ? vcs#root(cwd) : ''
   if vcs_root !=# ''
-    let vcs_root = fnamemodify(vcs_root, ':~')
+    vcs_root = fnamemodify(vcs_root, ':~')
     if len(vcs_root) < len(cwd)
-      let cwd = substitute(vcs_root, '\([/\\][^/\\]\)[^/\\]*', '\1', 'g')
-      \         .. cwd[len(vcs_root) :]
+      cwd = substitute(vcs_root, '\([/\\][^/\\]\)[^/\\]*', '\1', 'g')
+        .. cwd[len(vcs_root) :]
     endif
   endif
-  let info ..= cwd .. ' '
+  info ..= cwd .. ' '
   return tabs .. '%=' .. info
-endfunction
+enddef
 
 if has('tabsidebar')
   function s:update_showtabsidebar() abort
@@ -770,7 +772,7 @@ if has('multi_statusline')
   augroup vimrc-multi-statusline
     autocmd! BufEnter
     \ * if 80 < len(GetBufname())
-    \ |   setlocal statusline=%!MakeStatusLine(1) statuslineheight=2
+    \ |   setlocal statusline=%!MakeStatusLine(true) statuslineheight=2
     \ | else
     \ |   setlocal statusline< statuslineheight<
     \ | endif
