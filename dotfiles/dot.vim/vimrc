@@ -446,7 +446,7 @@ def MakeStatusLine(multi = false): string
   if exists('*eskk#statusline')
     line ..= '%{eskk#statusline()}'
   endif
-  if exists('*Skkeleton_statusline')
+  if exists('*g:Skkeleton_statusline')
     line ..= '%{Skkeleton_statusline()}'
   endif
   line ..= '%{STLHighLight()}'
@@ -528,7 +528,7 @@ def MakeTabLine(): string
   if dein#is_sourced('current-func-info')
     info ..= cfi#format('%s()' .. sep, '')
   endif
-  if exists('*Uptime') && has_tabsidebar
+  if exists('*g:Uptime') && has_tabsidebar
     info ..= g:Uptime(2) .. sep
   endif
   if dein#is_sourced('reanimate')
