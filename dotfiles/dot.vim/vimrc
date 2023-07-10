@@ -449,9 +449,6 @@ def MakeStatusLine(multi = false): string
   if exists('*Skkeleton_statusline')
     line ..= '%{Skkeleton_statusline()}'
   endif
-  if exists('*SyntasticStatuslineFlag')
-    line ..= '%{SyntasticStatuslineFlag()}'
-  endif
   line ..= '%{STLHighLight()}'
   line ..= '%{StatusLineExtra()}'
   # line ..= StatusLineExtra()
