@@ -2114,11 +2114,11 @@ if dein#is_sourced('ddu')
   \   },
   \   sourceOptions: #{
   \     _: #{
-  \       matchers: ['matcher_fzf'],
+  \       matchers: ['matcher_substring'],
   \     },
   \   },
   \   filterParams: #{
-  \     matcher_fzf: #{
+  \     matcher_substring: #{
   \       highlightMatched: 'Search',
   \     },
   \   },
