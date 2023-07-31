@@ -27,6 +27,9 @@
 	compactionHeuristic = true
 	colorMoved = dimmed-zebra
 	colorMovedWS = allow-indentation-change
+	tool = vimdiff
+[difftool]
+	prompt = false
 [grep]
 	lineNumber = true
 [commit]
