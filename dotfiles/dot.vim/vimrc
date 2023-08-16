@@ -2375,7 +2375,7 @@ if dein#is_sourced('skkeleton')
   endfunction
 
   let s:skkeleton_cursor_colors = {
-  \   '': '#00FF00',
+  \   '': 'NONE',
   \   'hira': '#FFA500',
   \   'kata': '#8B3E2F',
   \   'hankata': '#BEBEBE',
@@ -2385,13 +2385,16 @@ if dein#is_sourced('skkeleton')
     function s:skkeleton_update_cursor() abort
       let color = get(s:skkeleton_cursor_colors, skkeleton#mode(), '')
       if color isnot# ''
-        execute printf('highlight lCursor guifg=bg guibg=%s', color)
+        call hlset([#{name: 'Cursor', guifg: color}])
       endif
     endfunction
   elseif has('unix')
     function s:skkeleton_update_cursor() abort
       let color = get(s:skkeleton_cursor_colors, skkeleton#mode(), '')
       if color isnot# ''
+        if color is# 'NONE'
+          let color = '#00FF00'
+        endif
         execute printf('silent !echo -ne ''\e]12;\%s\a''', color)
       endif
     endfunction
