@@ -3441,6 +3441,8 @@ inoremap <C-CR> <C-o><Plug>(vimrc-show-current-syntax)
 
 command! -nargs=1 -complete=command -bang Time
 \         call vimrc#time(<q-args>, <bang>0)
+command! -nargs=1 -complete=command Profile
+\         call vimrc#profile(<q-args>)
 
 command! -range=% Tsv2csv
 \   if getline(<line1>) =~# '\t'

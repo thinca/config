@@ -274,6 +274,18 @@ function vimrc#time(cmd, log) abort
   endif
 endfunction
 
+def vimrc#profile(cmd: string): void
+  const dir = expand('~/.local/log/vim/')
+  mkdir(dir, 'p')
+  const filename = dir ..  strftime('profile_%Y-%m-%d_%H-%M-%S.log')
+  execute $'profile start {filename}'
+  profile! file *
+  profile func *
+  execute cmd
+  profile stop
+  new `=filename`
+enddef
+
 def vimrc#modulo(m: number, n: number): number
   const d = m * n < 0 ? 1 : 0
   return m + (-(m + (0 < n ? d : -d)) / n + d) * n
