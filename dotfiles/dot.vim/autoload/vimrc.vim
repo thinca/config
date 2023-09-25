@@ -12,7 +12,7 @@ function vimrc#grep(...) abort
   if &grepprg ==# 'internal'
     execute 'vimgrep' '/' .. escape(pat, '/') .. '/j' files
   else
-    execute 'grep!' '"' .. escape(pat, ' %#') .. '"' files
+    execute 'grep!' '"' .. escape(pat, '%#') .. '"' files
   endif
 endfunction
 
