@@ -161,7 +161,13 @@ fi
 
 ###########################################################################
 # aliases.
-if type exa >/dev/null; then
+if type eza >/dev/null; then
+	alias ls='eza -F   --group-directories-first --git'
+	alias ll='eza -Fl  --group-directories-first --git'
+	alias la='eza -Fla --group-directories-first --git'
+	alias tree='eza -F --group-directories-first --tree --git'
+	alias treel='eza -Fl --group-directories-first --tree --git'
+elif type exa >/dev/null; then
 	alias ls='exa -F   --group-directories-first --git'
 	alias ll='exa -Fl  --group-directories-first --git'
 	alias la='exa -Fla --group-directories-first --git'
