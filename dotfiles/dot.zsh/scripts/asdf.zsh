@@ -5,6 +5,7 @@ source ~/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 export RUBY_CONFIGURE_OPTS="--enable-shared"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
+export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 # Need patch to asdf-perl
 export PERL_CONFIGURE_OPTS="-Duseshrplib"
 export ASDF_RACKET_CONFIG_FLAGS="--enable-bcdefault --disable-futures --disable-places --disable-gracket --disable-docs"
