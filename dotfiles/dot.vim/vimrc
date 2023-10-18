@@ -2282,9 +2282,6 @@ let g:eskk#directory = s:plugin_info_dir('eskk')
 let g:eskk#log_cmdline_level = 2
 let g:eskk#log_file_level = 4
 
-inoremap <C-k> <Plug>(eskk:toggle)
-cnoremap <C-k> <Plug>(eskk:toggle)
-
 if dein#is_sourced('eskk')
   augroup vimrc-plugin-eskk
     autocmd!
