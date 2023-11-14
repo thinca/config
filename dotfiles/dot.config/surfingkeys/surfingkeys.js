@@ -15,9 +15,6 @@ settings.hintAlign = "left";
 // settings.focusFirstCandidate = true;
 settings.scrollStepSize = 140;  // Default: 70
 
-map("<Ctrl-p>", "E");
-map("<Ctrl-n>", "R");
-
 map("gt", "R");
 map("gT", "E");
 
