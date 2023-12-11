@@ -2363,6 +2363,7 @@ if dein#is_sourced('skkeleton')
     \   eggLikeNewline: v:true,
     \   registerConvertResult: v:true,
     \   immediatelyCancel: v:false,
+    \   keepMode: v:true,
     \ })
     call skkeleton#register_kanatable('rom', {
     \   'z ': ['　', ''],
