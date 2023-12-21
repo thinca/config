@@ -2115,6 +2115,8 @@ if dein#is_sourced('ddu')
   \   sourceOptions: #{
   \     _: #{
   \       matchers: ['matcher_substring'],
+  \       ignoreCase: v:true,
+  \       smartCase: v:true,
   \     },
   \   },
   \   filterParams: #{
