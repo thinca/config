@@ -18,6 +18,8 @@ set runtimepath^=$DEIN_REPOS_DIR
 let g:dein#enable_name_conversion = 1
 let g:dein#install_progress_type = 'floating'
 let g:dein#install_check_diff = 1
+" Existing of 'rsync' should be checked but skip because it is slow.
+let g:dein#install_copy_vim = has('win32')
 
 function s:update_cmpl(lead, line, pos) abort
   return filter(keys(dein#get()), 'v:val =~# "^" . a:lead')
