@@ -337,7 +337,7 @@ call dein#add('othree/html5.vim')
 call dein#add('kana/vim-filetype-haskell')
 call dein#add('ujihisa/neco-ghc', {'on_ft': 'haskell'})
 call dein#add('derekwyatt/vim-scala', {'on_ft': 'scala'})
-call dein#add('vim-scripts/groovyindent')
+call dein#add('vim-scripts/groovyindent-unix')
 call dein#add('OmniSharp/omnisharp-vim', {
 \   'on_ft': ['cs', 'csharp'],
 \   'build':
