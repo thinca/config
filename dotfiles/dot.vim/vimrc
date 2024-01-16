@@ -2360,8 +2360,9 @@ if dein#is_sourced('skkeleton')
 
   function s:skkeleton_init() abort
     call skkeleton#config(#{
-    \   globalJisyo: expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'),
-    \   globalJisyoEncoding: 'utf-8',
+    \   globalDictionaries: [
+    \     [expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'), 'utf-8'],
+    \   ],
     \   eggLikeNewline: v:true,
     \   registerConvertResult: v:true,
     \   immediatelyCancel: v:false,
