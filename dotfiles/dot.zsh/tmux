@@ -1,8 +1,8 @@
 if type tmux &>/dev/null && \
 	[[ -z "${NOTMUX}" && "${EUID}" != "0" && "${USER}" != "root" && \
-	-z "${WINDOW}" && -z "${TMUX}" && -n "${SSH_CLIENT}" ]] then
+	-z "${WINDOW}" && -z "${TMUX}" && (-n "${SSH_CLIENT}" || -n "${TMUX_INIT_SESSION}") ]] then
 	# session=${SSH_CLIENT%% *}
-	session=main
+	session="${TMUX_INIT_SESSION:-main}"
 
 	exec tmux -2 -u new-session -s "${session}" -A
 fi
