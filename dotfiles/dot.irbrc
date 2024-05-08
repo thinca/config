@@ -12,21 +12,4 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 
 alias q exit
 
-begin
-  # load libraries
-  require 'irb/completion'
-  require 'pp'
-  require 'rubygems'
-  require 'wirble'
-
-  # start wirble
-  Wirble.init
-  # Can't use color in windows.
-  unless RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|bccwin/
-    # with color
-    Wirble.colorize
-  end
-rescue
-end
-
 # vim: ft=ruby
