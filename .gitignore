@@ -7,3 +7,6 @@
 /dotfiles/dot.w3m/cookie
 /dotfiles/dot.vim/pack/*
 !/dotfiles/dot.vim/pack/personal/
+
+# This is automatically generated
+dotfiles/dot.zsh/functions/Completion/_mise

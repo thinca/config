@@ -75,10 +75,11 @@ if !v:vim_did_enter
 endif
 
 " Interface dll  {{{2
-if isdirectory($ASDF_DIR)
+let s:mise_dir = expand('~/.local/share/mise')
+if isdirectory(s:mise_dir)
   let s:ext = has('mac') ? 'dylib' : 'so'
   let s:tool_versions = {}
-  eval '~/.tool-versions'->expand()->readfile()
+  eval system('mise current')->split('\n')
   \   ->map({ _, v -> split(v, '\s\+')->filter({ _, v -> v isnot# 'system' }) })
   \   ->map({ _, v -> extend(s:tool_versions, {v[0]: v[1 :]}) })
 
@@ -88,7 +89,7 @@ if isdirectory($ASDF_DIR)
     if s:perl_ver isnot# ''
       let &perldll =
       \   printf('%s/installs/perl/%s/lib/%s/x86_64-linux/CORE/libperl.%s',
-      \     $ASDF_DIR, s:perl_ver, s:perl_ver, s:ext)
+      \     s:mise_dir, s:perl_ver, s:perl_ver, s:ext)
     endif
     unlet s:perl_ver
   endif
@@ -99,7 +100,7 @@ if isdirectory($ASDF_DIR)
     if s:ruby_ver isnot# ''
       let &rubydll =
       \   printf('%s/installs/ruby/%s/lib/libruby.%s',
-      \     $ASDF_DIR, s:ruby_ver, s:ext)
+      \     s:mise_dir, s:ruby_ver, s:ext)
     endif
     unlet s:ruby_ver
   endif
@@ -111,7 +112,7 @@ if isdirectory($ASDF_DIR)
     if s:py_v2 isnot# ''
       let &pythondll =
       \   printf('%s/installs/python/%s/lib/libpython%s.%s',
-      \     $ASDF_DIR, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
+      \     s:mise_dir, s:py_v2, matchstr(s:py_v2, '^\d\+\.\d\+'), s:ext)
     endif
     unlet s:py_v2
   endif
@@ -120,7 +121,7 @@ if isdirectory($ASDF_DIR)
     if s:py_v3 isnot# ''
       let &pythonthreedll =
       \   printf('%s/installs/python/%s/lib/libpython%s.%s',
-      \     $ASDF_DIR, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
+      \     s:mise_dir, s:py_v3, matchstr(s:py_v3, '^\d\+\.\d\+'), s:ext)
     endif
     unlet s:py_v3
   endif

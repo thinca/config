@@ -1,7 +1,0 @@
-lua     https://github.com/Stratus3D/asdf-lua.git
-luaJIT  https://github.com/smashedtoatoms/asdf-luaJIT.git
-nodejs  https://github.com/asdf-vm/asdf-nodejs.git
-perl    https://github.com/BeijingPM/asdf-perl
-python  https://github.com/tuvistavie/asdf-python.git
-racket  https://github.com/vic/asdf-racket
-ruby    https://github.com/asdf-vm/asdf-ruby.git

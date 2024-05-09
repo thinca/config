@@ -1,0 +1,29 @@
+[tools]
+usage = "latest"
+clojure = "latest"
+deno = "latest"
+elixir = "latest"
+erlang = "latest"
+gauche = "latest"
+golang = "latest"
+groovy = "latest"
+haskell = "latest"
+java = "prefix:openjdk-17"
+julia = "latest"
+kotlin = "latest"
+lua = "latest"
+luaJIT = "latest"
+nodejs = "latest"
+ocaml = "latest"
+perl = "latest"
+php = "latest"
+python = ["3", "2"]
+racket = "latest"
+rclone = "latest"
+ruby = "latest"
+rust = "latest"
+scala = "latest"
+zig = "latest"
+
+[settings]
+experimental = true

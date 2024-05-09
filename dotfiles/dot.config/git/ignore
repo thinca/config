@@ -16,6 +16,11 @@ GTAGS
 .*.vimrc
 ,
 
+# Mise
+.mise.local.toml
+.mise.*.local.toml
+.mise/
+
 # Ruby
 Gemfile.private
 Gemfile.private.lock
