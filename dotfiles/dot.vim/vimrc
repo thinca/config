@@ -1695,7 +1695,7 @@ let g:riv_global_leader = '<LocalLeader>t'
 
 
 " == Plugin settings. == {{{1
-let s:plugin_info = expand('~/.local/share/vim/info')
+let s:plugin_info = expand('~/.local/state/vim/info')
 function s:plugin_info_dir(plugin_name) abort
   let dir = s:plugin_info .. '/' .. a:plugin_name
   if !isdirectory(dir)
