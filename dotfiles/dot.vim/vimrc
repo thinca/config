@@ -2368,6 +2368,7 @@ if dein#is_sourced('skkeleton')
     \   globalDictionaries: [
     \     [expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'), 'utf-8'],
     \   ],
+    \   userDictionary: s:plugin_info_dir('skkeleton') .. 'user-dictionary',
     \   eggLikeNewline: v:true,
     \   registerConvertResult: v:true,
     \   immediatelyCancel: v:false,
