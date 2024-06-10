@@ -679,8 +679,8 @@ endif
 " spelling
 Set spelllang& spelllang+=cjk
 Set spelloptions& spelloptions+=camel
-Set spellfile=~/.local/share/vim/spell/en.utf-8.add
-call mkdir(expand('~/.local/share/vim/spell'), 'p')
+Set spellfile=~/.local/state/vim/spell/en.utf-8.add
+call mkdir(expand('~/.local/state/vim/spell'), 'p')
 
 " encryption
 if has('crypt-blowfish2')
