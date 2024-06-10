@@ -689,16 +689,16 @@ endif
 
 " backup.
 Set backup
-Set backupdir=~/.cache/vim/backup//
+Set backupdir=~/.local/state/vim/backup//
 " Paths of swap file and backup file.
 if $TMP !=# ''
   execute 'Set backupdir+=' .. escape(expand($TMP), ' \')
 elseif has('unix')
   Set backupdir+=/tmp
 endif
-Set directory=~/.cache/vim/swap//
+Set directory=~/.local/state/vim/swap//
 if has('persistent_undo')
-  Set undodir=~/.cache/vim/undo
+  Set undodir=~/.local/state/vim/undo
   augroup vimrc-undofile
     autocmd!
     autocmd BufReadPre ~/* setlocal undofile
@@ -708,11 +708,12 @@ if has('persistent_undo')
   augroup END
 endif
 Set backupcopy=yes
-Set viewdir=~/.cache/vim/view
+Set viewdir=~/.local/state/vim/view
 
-call mkdir(expand('~/.cache/vim/backup'), 'p')
-call mkdir(expand('~/.cache/vim/swap'), 'p')
-call mkdir(expand('~/.cache/vim/undo'), 'p')
+call mkdir(expand('~/.local/state/vim/backup'), 'p')
+call mkdir(expand('~/.local/state/vim/swap'), 'p')
+call mkdir(expand('~/.local/state/vim/undo'), 'p')
+call mkdir(expand('~/.local/state/vim/view'), 'p')
 
 " Swap
 Set swapfile
