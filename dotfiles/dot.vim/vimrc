@@ -756,6 +756,9 @@ endfunction
 if has('viminfo')
   " TELLME: The history is not saved in specified number.
   Set viminfo='500,<500,s50,h,rA:,rB:
+  if &viminfofile ==# ''
+    Set viminfofile=~/.local/state/vim/viminfo
+  endif
 end
 
 " Free move in Visual mode blockwise.
