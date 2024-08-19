@@ -162,11 +162,11 @@ fi
 ###########################################################################
 # aliases.
 if type eza >/dev/null; then
-	alias ls='eza --classify=auto --group-directories-first --git'
-	alias ll='eza --classify=auto --group-directories-first --git --long'
-	alias la='eza --classify=auto --group-directories-first --git --long --all'
-	alias tree='eza --classify=auto --group-directories-first --git --tree'
-	alias treel='eza --classify=auto --group-directories-first --git --tree --long'
+	alias ls='eza --classify=auto --group-directories-first'
+	alias ll='eza --classify=auto --group-directories-first --long'
+	alias la='eza --classify=auto --group-directories-first --long --all'
+	alias tree='eza --classify=auto --group-directories-first --tree'
+	alias treel='eza --classify=auto --group-directories-first --tree --long'
 elif type exa >/dev/null; then
 	alias ls='exa -F   --group-directories-first --git'
 	alias ll='exa -Fl  --group-directories-first --git'
