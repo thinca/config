@@ -16,6 +16,9 @@ GTAGS
 .*.vimrc
 ,
 
+# Vim
+.vim-lsp-settings/
+
 # Mise
 .mise.local.toml
 .mise.*.local.toml
