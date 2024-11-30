@@ -1772,7 +1772,7 @@ if dein#is_sourced('ddc')
   \     neosnippet: #{mark: 'snip'},
   \     skkeleton: #{
   \       mark: 'skkeleton',
-  \       matchers: ['skkeleton'],
+  \       matchers: [],
   \       sorters: [],
   \       isVolatile: v:true,
   \     },
