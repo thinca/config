@@ -2563,7 +2563,7 @@ if dein#is_sourced('altr')
   \   'spec/controllers/%_controller_spec.rb',
   \   'app/views/%/*.*',
   \   'spec/requests/%_spec.rb')
-  call altr#define('app/%/%.rb', 'spec/%/%_spec.rb')
+  call altr#define('app/%/%.rb', 'spec/%/%_spec.rb', 'test/%/%_test.rb')
   call altr#define('lib/%.rb', 'spec/lib/%_spec.rb')
   call altr#define('lib/tasks/%.rake', 'spec/rake/%_spec.rb')
 
