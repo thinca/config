@@ -565,8 +565,8 @@ if has('tabsidebar')
   call s:update_showtabsidebar()
   Set tabsidebarcolumns=32
   Set tabsidebarwrap
+  Set fillchars+=tabsidebar:\|
   let g:tabsidebar_show_all_window = 1
-  let g:tabsidebar_vertsplit = 1
   let &g:tabsidebar =
   \   '%!' .. get(function('s:tabpage_label'), 'name') ..
   \   '(g:actual_curtabpage, 1)'
