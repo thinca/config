@@ -28,9 +28,9 @@ if !v:vim_did_enter && has('reltime')
 endif
 
 if v:vim_did_enter
-  command! -nargs=+ -bar Set setglobal <args>
+  command! -nargs=+ Set setglobal <args>
 else
-  command! -nargs=+ -bar Set set <args>
+  command! -nargs=+ Set set <args>
 endif
 
 " == Encoding settings. == {{{1
