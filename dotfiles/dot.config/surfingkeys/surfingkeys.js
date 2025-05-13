@@ -37,3 +37,6 @@ mapkey("b", 'Choose a tab with omnibar', () => {
 });
 
 iunmap(":");
+
+// https://github.com/brookhong/Surfingkeys/issues/2285#issuecomment-2868207432
+iunmap("<Ctrl-a>");
