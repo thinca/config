@@ -472,7 +472,7 @@ def s:buf_label(bufnr: number, i: number, is_cur: bool): string
   return printf(' %s%d) %s', curmark, i, label)
 enddef
 
-def s:tabpage_label(n: number, is_sidebar = false): string
+def s:tabpage_label(n: number, is_tabpanel = false): string
   const bufnrs = tabpagebuflist(n)
   const curwinnr = tabpagewinnr(n)
   const curbufnr = bufnrs[curwinnr - 1]  # first window, first appears
@@ -482,7 +482,7 @@ def s:tabpage_label(n: number, is_sidebar = false): string
   var label = printf('%%#%sTabNumber#%d:%%#%s# ', hi, n, hi)
   label ..= '%<'
   const title = gettabvar(n, 'title')
-  if is_sidebar && get(g:, 'tabsidebar_show_all_window', false)
+  if is_tabpanel && get(g:, 'tabpanel_show_all_window', false)
     const cwd = getcwd(curwinnr, n)
     label ..= title !=# '' ? title : fnamemodify(cwd, ':t') .. '/'
     const labels = map(copy(bufnrs), (i, v) =>
@@ -509,13 +509,13 @@ enddef
 
 def MakeTabLine(): string
   const sep = ' | '
-  const has_tabsidebar = has('tabsidebar') &&
-    (&g:showtabsidebar == 2 ||
-     &g:showtabsidebar == 1 && 2 <= tabpagenr('$'))
+  const has_tabpanel = has('tabpanel') &&
+    (&g:showtabpanel == 2 ||
+     &g:showtabpanel == 1 && 2 <= tabpagenr('$'))
 
   var tabs: string
 
-  if has_tabsidebar
+  if has_tabpanel
     tabs = '%{GetBufname()}'
   else
     final titles = map(range(1, tabpagenr('$')), (_, n) => s:tabpage_label(n))
@@ -529,7 +529,7 @@ def MakeTabLine(): string
   if dein#is_sourced('current-func-info')
     info ..= cfi#format('%s()' .. sep, '')
   endif
-  if exists('*g:Uptime') && has_tabsidebar
+  if exists('*g:Uptime') && has_tabpanel
     info ..= g:Uptime(2) .. sep
   endif
   if dein#is_sourced('reanimate')
@@ -558,29 +558,27 @@ def MakeTabLine(): string
   return tabs .. '%=' .. info
 enddef
 
-if has('tabsidebar')
-  function s:update_showtabsidebar() abort
-    let &g:showtabsidebar = 80 * 2 + &g:tabsidebarcolumns <= &columns
+if has('tabpanel')
+  function s:update_showtabpanel() abort
+    let &g:showtabpanel = 80 * 2 + 32 <= &columns
   endfunction
-  call s:update_showtabsidebar()
-  Set tabsidebarcolumns=32
-  Set tabsidebarwrap
-  Set fillchars+=tabsidebar:\|
-  let g:tabsidebar_show_all_window = 1
-  let &g:tabsidebar =
+  call s:update_showtabpanel()
+  Set tabpanelopt=columns:32,vert
+  let g:tabpanel_show_all_window = 1
+  let &g:tabpanel =
   \   '%!' .. get(function('s:tabpage_label'), 'name') ..
   \   '(g:actual_curtabpage, 1)'
-  augroup tabsidebar-highlight
+  augroup tabpanel-highlight
     autocmd!
-    autocmd ColorScheme * highlight! link TabSideBar TabLine
-    autocmd ColorScheme * highlight! link TabSideBarSel TabLineSel
-    autocmd ColorScheme * highlight! link TabSideBarFill TabLineFill
+    autocmd ColorScheme * highlight! link TabPanel TabLine
+    autocmd ColorScheme * highlight! link TabPanelSel TabLineSel
+    autocmd ColorScheme * highlight! link TabPanelFill TabLineFill
   augroup END
-  augroup tabsidebar-size
+  augroup tabpanel-size
     autocmd!
-    autocmd VimResized * call s:update_showtabsidebar()
+    autocmd VimResized * call s:update_showtabpanel()
   augroup END
-  doautocmd tabsidebar-highlight ColorScheme
+  doautocmd tabpanel-highlight ColorScheme
 endif
 
 
