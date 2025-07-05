@@ -375,6 +375,7 @@ call dein#add('nfnty/vim-nftables')
 call dein#add('rbtnn/vim-vimscript_indentexpr')
 call dein#add('hashivim/vim-terraform')
 call dein#add('gutenye/json5.vim')
+call dein#add('evanleck/vim-svelte')
 
 " colorscheme
 call dein#add('romainl/Apprentice')
