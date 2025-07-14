@@ -33,3 +33,6 @@ vendor/bundle
 
 # Node.js
 .nyc_output/
+
+# Claude Code
+.claude/
