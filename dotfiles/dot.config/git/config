@@ -124,7 +124,9 @@
 	rbc = rebase --continue
 	rba = rebase --abort
 	df = !git diff "$(git base-commit)"
-	bf = ![[ -z "${GIT_PREFIX}" ]] || cd "${GIT_PREFIX}" && git diff --name-only "$(git base-commit)" --relative
+	bf = "!f() { \
+		[[ -z \"${GIT_PREFIX}\" ]] || cd \"${GIT_PREFIX}\" && git diff --name-only \"$(git base-commit \"${1}\")\" --relative; \
+	}; f"
 	conflicts = diff --name-only --diff-filter=U
 	upst = rebase origin/master
 	gene = log --graph --date=iso --pretty=gene
@@ -200,7 +202,9 @@
 	base-head = "!f() { \
 		git branch-head \"$(git base-branch \"${1}\")\"; \
 	}; f"
-	base-commit = !git merge-base "$(git base-head)" HEAD
+	base-commit = "!f() { \
+		git merge-base \"$(git base-head \"${1}\")\" HEAD; \
+	}; f"
 	features = "!f() { \
 		git branch | \
 			cut -c3- | \
