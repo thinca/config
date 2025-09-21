@@ -943,6 +943,14 @@ if !v:vim_did_enter && &binary  " launched with -b option
   augroup END
 endif
 
+augroup vimrc-large-file
+  autocmd!
+  autocmd BufReadPre
+  \ && * if 1000000 < getfsize(expand('<afile>'))
+  \ |   setlocal eventignorewin=FileType
+  \ | endif
+augroup END
+
 augroup vimrc-misc
   autocmd!
 
