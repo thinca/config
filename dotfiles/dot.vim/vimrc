@@ -1619,6 +1619,12 @@ else
 endif
 
 " :terminal  {{{2
+" Go to Terminal-Normal mode by <Esc>.
+tnoremap <Esc> <C-\><C-n><Plug>(vimrc-terminal-escape)
+nnoremap <Plug>(vimrc-terminal-escape) <Nop>
+" Send ESC to terminal by <Esc><Esc>.
+nnoremap <Plug>(vimrc-terminal-escape)<Esc> i<Esc>
+
 function s:on_terminal_win_open() abort
   augroup vimrc-terminal-window
     autocmd! * <buffer>
