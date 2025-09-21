@@ -15,6 +15,12 @@
 "    In other custom files, start with "custom"
 "     - custom-{unique-name}
 
+if $VIM_PROFILE_ENABLE ==# 'true'
+  profile start profile.log
+  profile func *
+  profile file *
+endif
+
 " == Initial process. == {{{1
 " Startup time.
 if !v:vim_did_enter && has('reltime')
