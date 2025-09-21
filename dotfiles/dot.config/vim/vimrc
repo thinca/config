@@ -64,7 +64,7 @@ if $VIM_USERDIR ==# ''
   \ substitute(
   \   get(
   \     filter(
-  \       map(['~/vimfiles', '~/.vim'], 'expand(v:val)'),
+  \       map(['~/vimfiles', '~/.config/vim', '~/.vim'], 'expand(v:val)'),
   \       'isdirectory(v:val)'
   \     ),
   \   0, ''),

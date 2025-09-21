@@ -5,8 +5,8 @@
 /dotfiles/dot.config/vim/local.vim
 /dotfiles/dot.w3m/history
 /dotfiles/dot.w3m/cookie
-/dotfiles/dot.vim/pack/*
-!/dotfiles/dot.vim/pack/personal/
+/dotfiles/dot.config/vim/pack/*
+!/dotfiles/dot.config/vim/pack/personal/
 
 # This is automatically generated
 dotfiles/dot.zsh/functions/Completion/_mise
