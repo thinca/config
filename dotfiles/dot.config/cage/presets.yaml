@@ -1,0 +1,22 @@
+presets:
+  project:
+    allow:
+      - "."
+    allow-git: true
+  claude-code:
+    allow:
+      - "$CLAUDE_CONFIG_DIR/"
+  cache:
+    allow:
+      - "$HOME/.cache/"
+  tmp:
+    allow:
+      - "/tmp/"
+
+auto-presets:
+  - command: claude
+    presets:
+      - project
+      - claude-code
+      - cache
+      - tmp
