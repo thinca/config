@@ -6,6 +6,9 @@ presets:
   claude-code:
     allow:
       - "$CLAUDE_CONFIG_DIR/"
+  npm:
+    allow:
+      - "$HOME/.npm/"
   cache:
     allow:
       - "$HOME/.cache/"
@@ -18,5 +21,6 @@ auto-presets:
     presets:
       - project
       - claude-code
+      - npm
       - cache
       - tmp
