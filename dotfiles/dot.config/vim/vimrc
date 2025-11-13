@@ -2599,6 +2599,15 @@ if dein#is_sourced('altr')
   \   'test/%.test.ts',
   \ )
 
+  " Jest
+  call altr#define(
+  \   '%/%.ts',
+  \   '%/%.tsx',
+  \   '%/%.scss',
+  \   '%/__tests__/%.test.ts',
+  \   '%/__tests__/%.test.tsx',
+  \ )
+
   " Go
   call altr#define('%.go', '%_test.go')
 
