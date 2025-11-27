@@ -293,6 +293,8 @@ call dein#add('vim-skk/skkdict.vim')
 " denops
 call dein#add('vim-denops/denops.vim')
 call dein#add('vim-skk/skkeleton')
+call dein#add('NI57721/skkeleton-henkan-highlight')
+call dein#add('NI57721/skkeleton-state-popup')
 
 call dein#add('Shougo/ddc.vim')
 call dein#add('Shougo/ddc-ui-pum')

@@ -2381,17 +2381,19 @@ if dein#is_sourced('skkeleton')
     return '[' .. get(s:skkeleton_modes, mode, mode) .. ']'
   endfunction
 
+  let s:skkeleton_init_config = #{
+  \   globalDictionaries: [
+  \     [expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'), 'utf-8'],
+  \   ],
+  \   userDictionary: s:plugin_info_dir('skkeleton') .. 'user-dictionary',
+  \   eggLikeNewline: v:true,
+  \   registerConvertResult: v:true,
+  \   immediatelyCancel: v:false,
+  \   keepMode: v:true,
+  \ }
+
   function s:skkeleton_init() abort
-    call skkeleton#config(#{
-    \   globalDictionaries: [
-    \     [expand('$VIM_USERDIR/dict/skk/SKK-JISYO.utf-8.L'), 'utf-8'],
-    \   ],
-    \   userDictionary: s:plugin_info_dir('skkeleton') .. 'user-dictionary',
-    \   eggLikeNewline: v:true,
-    \   registerConvertResult: v:true,
-    \   immediatelyCancel: v:false,
-    \   keepMode: v:true,
-    \ })
+    call skkeleton#config(s:skkeleton_init_config)
     call skkeleton#register_kanatable('rom', {
     \   'z ': ['　', ''],
     \ })
@@ -2454,6 +2456,33 @@ if dein#is_sourced('skkeleton')
       autocmd User skkeleton-mode-changed call s:skkeleton_update_cursor()
     endif
   augroup END
+endif
+
+if dein#is_sourced('skkeleton-state-popup')
+  let s:skkeleton_init_config.markerHenkan = ''
+  let s:skkeleton_init_config.markerHenkanSelect = ''
+  call skkeleton_state_popup#config(#{
+  \   labels: {
+  \     'input': #{hira: 'あ', kata: 'ア', hankata: 'ｶﾅ', zenkaku: 'Ａ'},
+  \     'input:okurinasi': #{hira: '▽', kata: '▽', hankata: '▽', abbrev: 'ab'},
+  \     'input:okuriari': #{hira: '▽', kata: '▽', hankata: '▽'},
+  \     'henkan': #{hira: '▼', kata: '▼', hankata: '▼', abbrev: 'ab'},
+  \     'latin': '',
+  \   },
+  \   opts: #{
+  \     pos: 'botleft',
+  \     line: 'cursor+1',
+  \     col: 'cursor',
+  \     highlight: 'WildMenu',
+  \   },
+  \ })
+  call skkeleton_state_popup#run()
+endif
+
+if dein#is_sourced('skkeleton-henkan-highlight')
+  highlight SkkeletonHenkan gui=underline term=underline cterm=underline
+  highlight SkkeletonHenkanSelect
+  \ gui=underline,reverse term=underline,reverse cterm=underline,reverse
 endif
 
 " caw.vim  {{{2
