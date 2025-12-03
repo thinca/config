@@ -1,1 +1,1 @@
-export CLAUDE_CONFIG_DIR="$HOME/.config/claude"
+export CLAUDE_CONFIG_DIR="$HOME/.config/claude/config"

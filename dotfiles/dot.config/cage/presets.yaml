@@ -5,7 +5,7 @@ presets:
     allow-git: true
   claude-code:
     allow:
-      - "$CLAUDE_CONFIG_DIR/"
+      - "$CLAUDE_CONFIG_DIR/.."
   npm:
     allow:
       - "$HOME/.npm/"
