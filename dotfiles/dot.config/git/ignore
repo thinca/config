@@ -15,6 +15,7 @@ GRTAGS
 GTAGS
 .*.vimrc
 ,
+.tmp/
 
 # Vim
 .vim-lsp-settings/
