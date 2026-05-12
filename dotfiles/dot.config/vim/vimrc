@@ -851,6 +851,7 @@ augroup vimrc-lcd
   \     'Gemfile',
   \     'package.json',
   \     'Cargo.toml',
+  \     'go.mod',
   \   ],
   \   [
   \     '.svn/',
