@@ -6,6 +6,10 @@ presets:
   claude-code:
     allow:
       - "$CLAUDE_CONFIG_DIR/.."
+  cursor-cli:
+    allow:
+      - "$CURSOR_CONFIG_DIR"
+      - "$CURSOR_DATA_DIR"
   npm:
     allow:
       - "$HOME/.npm/"
@@ -21,6 +25,13 @@ auto-presets:
     presets:
       - project
       - claude-code
+      - npm
+      - cache
+      - tmp
+  - command: agent
+    presets:
+      - project
+      - cursor-cli
       - npm
       - cache
       - tmp
