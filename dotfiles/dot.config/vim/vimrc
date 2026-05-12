@@ -265,7 +265,7 @@ if !exists('g:colors_name')
   try
     if !s:is_win || has('gui_running')
       " ['candycode', 'wuye', 'freya', 'leo']
-      colorscheme gruvbox
+      colorscheme apprentice
     else  "CUI win32
       " ['oceandeep']
       colorscheme default
