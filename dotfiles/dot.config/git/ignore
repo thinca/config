@@ -20,6 +20,9 @@ GTAGS
 # Vim
 .vim-lsp-settings/
 
+# Git
+/.worktree/
+
 # Mise
 .mise.local.toml
 .mise.*.local.toml
