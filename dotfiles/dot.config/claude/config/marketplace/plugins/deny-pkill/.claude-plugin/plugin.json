@@ -1,0 +1,5 @@
+{
+  "name": "deny-pkill",
+  "description": "pkill/killall を禁止し、pid 指定の kill に誘導する",
+  "version": "1.0.0"
+}

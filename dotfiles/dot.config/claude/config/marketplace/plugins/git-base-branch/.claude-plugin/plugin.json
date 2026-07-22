@@ -1,0 +1,5 @@
+{
+  "name": "git-base-branch",
+  "description": "ブランチ作成時に作成元を branch.<name>.base に自動記録する",
+  "version": "1.0.0"
+}

@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/bin/settings-sync\" apply >/dev/null",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline.sh\"",
+    "refreshInterval": 2
+  },
+  "extraKnownMarketplaces": {
+    "thinca-config": {
+      "source": {
+        "source": "directory",
+        "path": "${CLAUDE_CONFIG_DIR}/marketplace"
+      },
+      "autoUpdate": true
+    }
+  },
+  "language": "japanese",
+  "enabledPlugins": {
+    "git-base-branch@thinca-config": true,
+    "deny-pkill@thinca-config": true,
+    "session-status@thinca-config": true
+  }
+}

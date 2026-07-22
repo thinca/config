@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+set -eu
+
+config_dir=$(cd "$(dirname "$0")/.." && pwd)
+live=$config_dir/settings.json
+shared=$config_dir/settings.shared.json
+
+# Whole keys / nested paths that are shared across machines.
+shared_paths='[
+  ["hooks"],
+  ["statusLine"],
+  ["extraKnownMarketplaces"],
+  ["attribution"],
+  ["language"],
+  ["includeGitInstructions"],
+  ["claudeMdExcludes"]
+]'
+
+# enabledPlugins entries with this suffix (own plugins) are shared; others
+# (third-party / official) stay as per-machine local choices.
+plugin_suffix='@thinca-config'
+
+usage() {
+  echo "usage: settings-sync <apply|absorb>" >&2
+  echo "  apply  - update settings.json from settings.shared.json (non-shared keys preserved)" >&2
+  echo "  absorb - extract shared keys from settings.json into settings.shared.json" >&2
+  exit 1
+}
+
+case ${1:-} in
+  apply)
+    [[ -f $shared ]] || { echo "settings-sync: $shared not found" >&2; exit 1; }
+    live_json='{}'
+    [[ -f $live ]] && live_json=$(cat "$live")
+    result=$(jq -n \
+      --argjson paths "$shared_paths" \
+      --arg suffix "$plugin_suffix" \
+      --argjson live "$live_json" \
+      --argjson shared "$(cat "$shared")" '
+      # 1) shared paths: shared is authoritative (delete if absent in shared)
+      reduce $paths[] as $p ($live;
+        ($shared | getpath($p)) as $v
+        | if $v == null then delpaths([$p]) else setpath($p; $v) end)
+      # 2) enabledPlugins: suffix-matching keys from shared, others kept local
+      | .enabledPlugins = (
+          ((.enabledPlugins // {}) | with_entries(select(.key | endswith($suffix) | not)))
+          + (($shared.enabledPlugins // {}) | with_entries(select(.key | endswith($suffix))))
+        )
+      | if (.enabledPlugins == {}) then del(.enabledPlugins) else . end
+    ')
+    if [[ $result != "$live_json" ]]; then
+      printf '%s\n' "$result" >"$live.tmp"
+      jq -e . "$live.tmp" >/dev/null
+      mv "$live.tmp" "$live"
+      echo "settings-sync: applied shared settings to settings.json"
+    fi
+    ;;
+  absorb)
+    [[ -f $live ]] || { echo "settings-sync: $live not found" >&2; exit 1; }
+    jq -n \
+      --argjson paths "$shared_paths" \
+      --arg suffix "$plugin_suffix" \
+      --argjson live "$(cat "$live")" '
+      (reduce $paths[] as $p ({};
+        ($live | getpath($p)) as $v
+        | if $v == null then . else setpath($p; $v) end))
+      | ( ($live.enabledPlugins // {}) | with_entries(select(.key | endswith($suffix))) ) as $mine
+      | if ($mine | length) > 0 then .enabledPlugins = $mine else . end
+    ' >"$shared.tmp"
+    jq -e . "$shared.tmp" >/dev/null
+    mv "$shared.tmp" "$shared"
+    echo "settings-sync: absorbed shared keys into settings.shared.json"
+    ;;
+  *)
+    usage
+    ;;
+esac

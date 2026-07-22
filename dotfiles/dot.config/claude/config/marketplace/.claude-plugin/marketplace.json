@@ -1,0 +1,23 @@
+{
+  "name": "thinca-config",
+  "owner": {
+    "name": "thinca"
+  },
+  "plugins": [
+    {
+      "name": "git-base-branch",
+      "source": "./plugins/git-base-branch",
+      "description": "ブランチ作成時に作成元を branch.<name>.base に自動記録する"
+    },
+    {
+      "name": "deny-pkill",
+      "source": "./plugins/deny-pkill",
+      "description": "pkill/killall を禁止し、pid 指定の kill に誘導する"
+    },
+    {
+      "name": "session-status",
+      "source": "./plugins/session-status",
+      "description": "セッションの実行状態を記録し、statusline 表示・tmux 未読マーク・ntfy 通知を提供する"
+    }
+  ]
+}
