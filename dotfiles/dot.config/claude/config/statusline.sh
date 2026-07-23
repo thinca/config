@@ -21,6 +21,33 @@ week=$(j '.rate_limits.seven_day.used_percentage')
 week_reset=$(j '.rate_limits.seven_day.resets_at')
 cost=$(j '.cost.total_cost_usd')
 
+# Cross-session usage cache: an idle session's rate_limits only refresh on its own
+# API responses, so they go stale while other sessions consume quota. rate_limits is
+# statusLine-only (not available to hooks), so publish from here. Publish only when
+# our reading CHANGED from the previous render (a change == a fresh API response), and
+# never on the first render of a session (a resumed session's first value may be old).
+# This handles both increases and Anthropic's mid-window resets to 0%, and keeps a
+# stale idle value from overwriting a fresh one. Display the shared (freshest) value.
+usage_state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
+usage_file=$usage_state_dir/usage.json
+rl_file=$usage_state_dir/${sid}.rl
+if [[ -n $five || -n $week ]]; then
+  rl_now="${five}|${five_reset}|${week}|${week_reset}"
+  if [[ -f $rl_file ]]; then
+    if [[ $rl_now != "$(cat "$rl_file" 2>/dev/null)" ]]; then
+      printf '%s' "$rl_now" >"$rl_file"
+      printf '%s' "$rl_now" >"${usage_file}.tmp" 2>/dev/null && mv "${usage_file}.tmp" "$usage_file" 2>/dev/null || true
+    fi
+  else
+    mkdir -p "$usage_state_dir"
+    printf '%s' "$rl_now" >"$rl_file"
+  fi
+fi
+shared_rl=$(cat "$usage_file" 2>/dev/null || true)
+if [[ -n $shared_rl ]]; then
+  IFS='|' read -r five five_reset week week_reset <<<"$shared_rl"
+fi
+
 fmt_reset() {
   local ts=$1
   if [[ $(date -d "@${ts}" +%Y%m%d) == "$(date +%Y%m%d)" ]]; then

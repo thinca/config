@@ -12,6 +12,7 @@ state_file=$dir/$sid.state
 subs_file=$dir/$sid.subs
 bg_file=$dir/$sid.bg
 start_file=$dir/$sid.start
+rl_file=$dir/$sid.rl
 
 with_lock() {
   (
@@ -130,7 +131,7 @@ case $event in
     [[ -n $agent_id ]] && with_lock remove_sub "$agent_id"
     ;;
   SessionEnd)
-    rm -f "$state_file" "$subs_file" "$subs_file.lock" "$bg_file" "$start_file"
+    rm -f "$state_file" "$subs_file" "$subs_file.lock" "$bg_file" "$start_file" "$rl_file"
     ;;
 esac
 exit 0
