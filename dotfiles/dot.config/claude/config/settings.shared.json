@@ -17,15 +17,6 @@
     "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/statusline.sh\"",
     "refreshInterval": 2
   },
-  "extraKnownMarketplaces": {
-    "thinca-config": {
-      "source": {
-        "source": "directory",
-        "path": "${CLAUDE_CONFIG_DIR}/marketplace"
-      },
-      "autoUpdate": true
-    }
-  },
   "language": "japanese",
   "enabledPlugins": {
     "git-base-branch@thinca-config": true,

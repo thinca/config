@@ -6,10 +6,13 @@ live=$config_dir/settings.json
 shared=$config_dir/settings.shared.json
 
 # Whole keys / nested paths that are shared across machines.
+# extraKnownMarketplaces is NOT shared verbatim: its directory path must be an
+# absolute machine-local path (Claude Code does not expand ${CLAUDE_CONFIG_DIR}
+# in that field), and we do not want a hardcoded path committed to the repo.
+# Instead, `apply` injects it with a path resolved on this machine.
 shared_paths='[
   ["hooks"],
   ["statusLine"],
-  ["extraKnownMarketplaces"],
   ["attribution"],
   ["language"],
   ["includeGitInstructions"],
@@ -32,9 +35,11 @@ case ${1:-} in
     [[ -f $shared ]] || { echo "settings-sync: $shared not found" >&2; exit 1; }
     live_json='{}'
     [[ -f $live ]] && live_json=$(cat "$live")
+    mp_path=${CLAUDE_CONFIG_DIR:-$config_dir}/marketplace
     result=$(jq -n \
       --argjson paths "$shared_paths" \
       --arg suffix "$plugin_suffix" \
+      --arg mp "$mp_path" \
       --argjson live "$live_json" \
       --argjson shared "$(cat "$shared")" '
       # 1) shared paths: shared is authoritative (delete if absent in shared)
@@ -47,6 +52,12 @@ case ${1:-} in
           + (($shared.enabledPlugins // {}) | with_entries(select(.key | endswith($suffix))))
         )
       | if (.enabledPlugins == {}) then del(.enabledPlugins) else . end
+      # 3) inject the marketplace with this machine`s resolved absolute path
+      #    (kept out of the repo; not expandable in-field by Claude Code)
+      | .extraKnownMarketplaces["thinca-config"] = {
+          "source": { "source": "directory", "path": $mp },
+          "autoUpdate": true
+        }
     ')
     if [[ $result != "$live_json" ]]; then
       printf '%s\n' "$result" >"$live.tmp"
