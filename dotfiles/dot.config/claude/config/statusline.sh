@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -u
-export LC_ALL=C
+# C.UTF-8: keep C's numeric/date formatting but make string ops (e.g. the window
+# title truncation below) count characters, not bytes, so multibyte session names
+# are not cut mid-character.
+export LC_ALL=C.UTF-8
 
 input=$(cat)
 
@@ -13,6 +16,39 @@ sid=$(j '.session_id')
 cur_dir=$(j '.workspace.current_dir')
 dir=${cur_dir##*/}
 branch=$(git -C "${cur_dir:-.}" symbolic-ref --short -q HEAD 2>/dev/null || true)
+
+# tmux window title. When more than one live session shares this directory, append
+# the session name to tell them apart; when this is the only one, keep it short as
+# `claude:<dir>`. Liveness is by PID ($PPID is the claude process), so crashed and
+# detached sessions are handled correctly. session_name is only in the statusLine
+# JSON (not hook inputs), so this must live here rather than in a plugin hook.
+if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
+  title="claude:${dir}"
+  if [[ -n $cur_dir ]]; then
+    st=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
+    # write our marker only when it changed (PID/cwd are stable), so a steady
+    # session does no per-render disk writes. Reads below hit the page cache.
+    sess_line="${PPID}"$'\t'"${cur_dir}"
+    if [[ $(cat "${st}/${sid}.sess" 2>/dev/null) != "$sess_line" ]]; then
+      mkdir -p "$st"
+      printf '%s\n' "$sess_line" >"${st}/${sid}.sess"
+    fi
+    n=0
+    for f in "$st"/*.sess; do
+      [[ -e $f ]] || continue
+      IFS=$'\t' read -r spid sdir <"$f" || true
+      [[ -n $spid && -n $sdir ]] || continue
+      [[ $sdir == "$cur_dir" ]] || continue
+      kill -0 "$spid" 2>/dev/null && n=$((n + 1))
+    done
+    if ((n >= 2)); then
+      wlabel=${sname:-${sid:0:6}}
+      wlabel=${wlabel:0:28}
+      title="claude:${dir}:${wlabel}"
+    fi
+  fi
+  tmux rename-window -t "$TMUX_PANE" "$title" 2>/dev/null || true
+fi
 
 ctx=$(j '.context_window.used_percentage')
 five=$(j '.rate_limits.five_hour.used_percentage')

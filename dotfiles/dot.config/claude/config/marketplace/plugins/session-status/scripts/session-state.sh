@@ -52,14 +52,6 @@ tmux_clear_unread() {
   tmux set-option -uw -t "$TMUX_PANE" @notified 2>/dev/null || true
 }
 
-tmux_set_title() {
-  [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]] || return 0
-  local cwd
-  cwd=$(jq -r '.cwd // empty' <<<"$input" 2>/dev/null)
-  [[ -n $cwd ]] || return 0
-  tmux rename-window -t "$TMUX_PANE" "claude:${cwd##*/}" 2>/dev/null || true
-}
-
 fmt_dur() {
   local s=$1
   if ((s >= 60)); then
@@ -91,7 +83,6 @@ session_label() {
 case $event in
   SessionStart)
     find "$dir" -maxdepth 1 -type f -mtime +30 -delete 2>/dev/null || true
-    tmux_set_title
     ;;
   UserPromptSubmit)
     echo running >"$state_file"
@@ -100,7 +91,6 @@ case $event in
     echo 0 >"$bg_file"
     date +%s >"$start_file"
     tmux_clear_unread
-    tmux_set_title
     ;;
   Stop | StopFailure)
     echo idle >"$state_file"
