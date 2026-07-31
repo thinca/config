@@ -55,7 +55,6 @@ five=$(j '.rate_limits.five_hour.used_percentage')
 five_reset=$(j '.rate_limits.five_hour.resets_at')
 week=$(j '.rate_limits.seven_day.used_percentage')
 week_reset=$(j '.rate_limits.seven_day.resets_at')
-cost=$(j '.cost.total_cost_usd')
 
 # Cross-session usage cache: an idle session's rate_limits only refresh on its own
 # API responses, so they go stale while other sessions consume quota. rate_limits is
@@ -146,6 +145,5 @@ if [[ -n $week ]]; then
   [[ -n $week_reset ]] && r=" ${dim}@$(fmt_reset "$week_reset")${reset}"
   out+="${sep}7d $(pct_color "$week")${week%%.*}%${reset}${r}"
 fi
-[[ -n $cost ]] && out+="${sep}\$$(printf '%.2f' "$cost")"
 
 printf '%s\n' "$out"
