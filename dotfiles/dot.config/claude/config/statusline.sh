@@ -113,20 +113,22 @@ sep=" ${dim}|${reset} "
 state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
 state=$(cat "${state_dir}/${sid}.state" 2>/dev/null || true)
 subs=$(grep -c . "${state_dir}/${sid}.subs" 2>/dev/null || true)
-wf=$(cat "${state_dir}/${sid}.bg" 2>/dev/null || true)
+bg=$(cat "${state_dir}/${sid}.bg" 2>/dev/null || true)
 
 subs_active=0
 [[ -n $subs && $subs != 0 ]] && subs_active=1
-wf_active=0
-[[ -n $wf && $wf != 0 ]] && wf_active=1
+bg_active=0
+[[ -n $bg && $bg != 0 ]] && bg_active=1
 
-if [[ $state == running || $subs_active == 1 || $wf_active == 1 ]]; then
+if [[ $state == running || $subs_active == 1 || $bg_active == 1 ]]; then
   ind="${green}*${reset}"
 else
   ind="${dim}-${reset}"
 fi
+# sub: live subagents (sync + workflow agents, via SubagentStart/Stop)
+# bg:  background tasks running at last turn-end (workflows + background subagents)
 ((subs_active)) && ind+=" ${cyan}sub:${subs}${reset}"
-((wf_active)) && ind+=" ${cyan}wf:${wf}${reset}"
+((bg_active)) && ind+=" ${cyan}bg:${bg}${reset}"
 
 out="${ind} ${model:-Claude}"
 [[ -n $effort ]] && out+=" ${dim}${effort}${reset}"

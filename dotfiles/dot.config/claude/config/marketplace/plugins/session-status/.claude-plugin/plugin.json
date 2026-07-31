@@ -1,5 +1,5 @@
 {
   "name": "session-status",
   "description": "セッションの実行状態を記録し、statusline 表示・tmux 未読マーク・ntfy 通知を提供する",
-  "version": "1.2.0"
+  "version": "1.3.0"
 }

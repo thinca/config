@@ -94,9 +94,12 @@ case $event in
     ;;
   Stop | StopFailure)
     echo idle >"$state_file"
-    running_wf=$(jq '[.background_tasks[]? | select(.status == "running" and .type == "workflow")] | length' <<<"$input" 2>/dev/null)
-    [[ $running_wf =~ ^[0-9]+$ ]] || running_wf=0
-    echo "$running_wf" >"$bg_file"
+    # Background subagents (Agent run_in_background) do NOT fire SubagentStart/Stop,
+    # so they never reach $subs_file. They do appear in background_tasks (like
+    # workflows), which is only present on this turn-end snapshot. Count both types.
+    running_bg=$(jq '[.background_tasks[]? | select(.status == "running" and (.type == "workflow" or .type == "subagent"))] | length' <<<"$input" 2>/dev/null)
+    [[ $running_bg =~ ^[0-9]+$ ]] || running_bg=0
+    echo "$running_bg" >"$bg_file"
     tmux_viewing || tmux_mark_unread
     start=$(cat "$start_file" 2>/dev/null || true)
     if [[ $start =~ ^[0-9]+$ ]]; then
