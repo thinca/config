@@ -17,6 +17,8 @@ cur_dir=$(j '.workspace.current_dir')
 dir=${cur_dir##*/}
 branch=$(git -C "${cur_dir:-.}" symbolic-ref --short -q HEAD 2>/dev/null || true)
 
+state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
+
 # tmux window title. When more than one live session shares this directory, append
 # the session name to tell them apart; when this is the only one, keep it short as
 # `claude:<dir>`. Liveness is by PID ($PPID is the claude process), so crashed and
@@ -25,16 +27,15 @@ branch=$(git -C "${cur_dir:-.}" symbolic-ref --short -q HEAD 2>/dev/null || true
 if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
   title="claude:${dir}"
   if [[ -n $cur_dir ]]; then
-    st=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
     # write our marker only when it changed (PID/cwd are stable), so a steady
     # session does no per-render disk writes. Reads below hit the page cache.
     sess_line="${PPID}"$'\t'"${cur_dir}"
-    if [[ $(cat "${st}/${sid}.sess" 2>/dev/null) != "$sess_line" ]]; then
-      mkdir -p "$st"
-      printf '%s\n' "$sess_line" >"${st}/${sid}.sess"
+    if [[ $(cat "${state_dir}/${sid}.sess" 2>/dev/null) != "$sess_line" ]]; then
+      mkdir -p "$state_dir"
+      printf '%s\n' "$sess_line" >"${state_dir}/${sid}.sess"
     fi
     n=0
-    for f in "$st"/*.sess; do
+    for f in "$state_dir"/*.sess; do
       [[ -e $f ]] || continue
       IFS=$'\t' read -r spid sdir <"$f" || true
       [[ -n $spid && -n $sdir ]] || continue
@@ -63,14 +64,13 @@ week_reset=$(j '.rate_limits.seven_day.resets_at')
 # never on the first render of a session (a resumed session's first value may be old).
 # This handles both increases and Anthropic's mid-window resets to 0%, and keeps a
 # stale idle value from overwriting a fresh one. Display the shared (freshest) value.
-usage_state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
 # Scope the shared file per account: the same config dir is reused across accounts
 # (switched via /login), so an unscoped usage.json leaks one account's limits into
 # another's display — and billing tiers differ, so the numbers aren't comparable.
 acct_file=${CLAUDE_CONFIG_DIR:+$CLAUDE_CONFIG_DIR/.claude.json}
 acct=$(jq -r '.oauthAccount.accountUuid // empty' "${acct_file:-$HOME/.claude.json}" 2>/dev/null || true)
-usage_file=$usage_state_dir/usage${acct:+-$acct}.json
-rl_file=$usage_state_dir/${sid}.rl
+usage_file=$state_dir/usage${acct:+-$acct}.json
+rl_file=$state_dir/${sid}.rl
 if [[ -n $five || -n $week ]]; then
   rl_now="${five}|${five_reset}|${week}|${week_reset}"
   if [[ -f $rl_file ]]; then
@@ -79,7 +79,7 @@ if [[ -n $five || -n $week ]]; then
       printf '%s' "$rl_now" >"${usage_file}.tmp" 2>/dev/null && mv "${usage_file}.tmp" "$usage_file" 2>/dev/null || true
     fi
   else
-    mkdir -p "$usage_state_dir"
+    mkdir -p "$state_dir"
     printf '%s' "$rl_now" >"$rl_file"
   fi
 fi
@@ -114,7 +114,6 @@ green=$'\033[32m'
 cyan=$'\033[36m'
 sep=" ${dim}|${reset} "
 
-state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
 state=$(cat "${state_dir}/${sid}.state" 2>/dev/null || true)
 subs=$(grep -c . "${state_dir}/${sid}.subs" 2>/dev/null || true)
 bg=$(cat "${state_dir}/${sid}.bg" 2>/dev/null || true)
@@ -140,15 +139,13 @@ out="${ind} ${model:-Claude}"
 [[ -n $dir ]] && out+="${sep}${dir}"
 [[ -n $branch ]] && out+=" ${dim}(${branch})${reset}"
 [[ -n $ctx ]] && out+="${sep}Ctx $(pct_color "$ctx")${ctx%%.*}%${reset}"
-if [[ -n $five ]]; then
-  r=''
-  [[ -n $five_reset ]] && r=" ${dim}@$(fmt_reset "$five_reset")${reset}"
-  out+="${sep}5h $(pct_color "$five")${five%%.*}%${reset}${r}"
-fi
-if [[ -n $week ]]; then
-  r=''
-  [[ -n $week_reset ]] && r=" ${dim}@$(fmt_reset "$week_reset")${reset}"
-  out+="${sep}7d $(pct_color "$week")${week%%.*}%${reset}${r}"
-fi
+render_win() { # label pct reset_ts
+  [[ -n $2 ]] || return 0
+  local r=''
+  [[ -n $3 ]] && r=" ${dim}@$(fmt_reset "$3")${reset}"
+  out+="${sep}$1 $(pct_color "$2")${2%%.*}%${reset}${r}"
+}
+render_win 5h "$five" "$five_reset"
+render_win 7d "$week" "$week_reset"
 
 printf '%s\n' "$out"
