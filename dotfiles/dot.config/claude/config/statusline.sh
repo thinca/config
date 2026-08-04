@@ -64,7 +64,12 @@ week_reset=$(j '.rate_limits.seven_day.resets_at')
 # This handles both increases and Anthropic's mid-window resets to 0%, and keeps a
 # stale idle value from overwriting a fresh one. Display the shared (freshest) value.
 usage_state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
-usage_file=$usage_state_dir/usage.json
+# Scope the shared file per account: the same config dir is reused across accounts
+# (switched via /login), so an unscoped usage.json leaks one account's limits into
+# another's display — and billing tiers differ, so the numbers aren't comparable.
+acct_file=${CLAUDE_CONFIG_DIR:+$CLAUDE_CONFIG_DIR/.claude.json}
+acct=$(jq -r '.oauthAccount.accountUuid // empty' "${acct_file:-$HOME/.claude.json}" 2>/dev/null || true)
+usage_file=$usage_state_dir/usage${acct:+-$acct}.json
 rl_file=$usage_state_dir/${sid}.rl
 if [[ -n $five || -n $week ]]; then
   rl_now="${five}|${five_reset}|${week}|${week_reset}"
