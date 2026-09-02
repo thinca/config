@@ -94,6 +94,12 @@ if [[ -f $rl_file ]]; then
   fi
 fi
 
+# A cached percentage is only meaningful until its window rolls over, and resets_at says
+# when that is — so it expires itself without an arbitrary TTL.
+now=$(date +%s)
+if [[ $five_reset =~ ^[0-9]+$ ]] && ((five_reset <= now)); then five='' five_reset=''; fi
+if [[ $week_reset =~ ^[0-9]+$ ]] && ((week_reset <= now)); then week='' week_reset=''; fi
+
 fmt_reset() {
   local ts=$1
   if [[ $(date -d "@${ts}" +%Y%m%d) == "$(date +%Y%m%d)" ]]; then
