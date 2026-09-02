@@ -13,6 +13,7 @@ subs_file=$dir/$sid.subs
 bg_file=$dir/$sid.bg
 start_file=$dir/$sid.start
 rl_file=$dir/$sid.rl
+acct_file=$dir/$sid.acct
 
 with_lock() {
   (
@@ -83,6 +84,12 @@ session_label() {
 case $event in
   SessionStart)
     find "$dir" -maxdepth 1 -type f -mtime +30 -delete 2>/dev/null || true
+    # Pin the account this session runs as. statusLine shares rate limits between
+    # sessions through a per-account file, but .claude.json only ever holds the LAST
+    # /login, so a session still running under the previous account would publish its
+    # numbers under the new account's name. This fires on resume too, so it re-pins.
+    jq -r '.oauthAccount.accountUuid // empty' \
+      "${CLAUDE_CONFIG_DIR:-$HOME}/.claude.json" >"$acct_file" 2>/dev/null || true
     ;;
   UserPromptSubmit)
     echo running >"$state_file"
@@ -124,7 +131,7 @@ case $event in
     [[ -n $agent_id ]] && with_lock remove_sub "$agent_id"
     ;;
   SessionEnd)
-    rm -f "$state_file" "$subs_file" "$subs_file.lock" "$bg_file" "$start_file" "$rl_file"
+    rm -f "$state_file" "$subs_file" "$subs_file.lock" "$bg_file" "$start_file" "$rl_file" "$acct_file"
     ;;
 esac
 exit 0

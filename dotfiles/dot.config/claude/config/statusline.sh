@@ -64,11 +64,12 @@ week_reset=$(j '.rate_limits.seven_day.resets_at')
 # never on the first render of a session (a resumed session's first value may be old).
 # This handles both increases and Anthropic's mid-window resets to 0%, and keeps a
 # stale idle value from overwriting a fresh one. Display the shared (freshest) value.
-# Scope the shared file per account: the same config dir is reused across accounts
-# (switched via /login), so an unscoped usage.json leaks one account's limits into
-# another's display — and billing tiers differ, so the numbers aren't comparable.
-acct_file=${CLAUDE_CONFIG_DIR:+$CLAUDE_CONFIG_DIR/.claude.json}
-acct=$(jq -r '.oauthAccount.accountUuid // empty' "${acct_file:-$HOME/.claude.json}" 2>/dev/null || true)
+# Scope the shared file per account: one config dir is reused across accounts (switched
+# via /login) and their billing differs, so an unscoped file shows one account's limits
+# under another. Prefer the uuid the SessionStart hook pinned for us; .claude.json holds
+# only the last /login, which is not necessarily the account this session runs as.
+acct=$(cat "$state_dir/${sid}.acct" 2>/dev/null || true)
+[[ -n $acct ]] || acct=$(jq -r '.oauthAccount.accountUuid // empty' "${CLAUDE_CONFIG_DIR:-$HOME}/.claude.json" 2>/dev/null || true)
 usage_file=$state_dir/usage${acct:+-$acct}.json
 rl_file=$state_dir/${sid}.rl
 if [[ -n $five || -n $week ]]; then
