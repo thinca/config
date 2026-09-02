@@ -84,9 +84,14 @@ if [[ -n $five || -n $week ]]; then
     printf '%s' "$rl_now" >"$rl_file"
   fi
 fi
-shared_rl=$(cat "$usage_file" 2>/dev/null || true)
-if [[ -n $shared_rl ]]; then
-  IFS='|' read -r five five_reset week week_reset <<<"$shared_rl"
+# Trust the shared value only once this session has had a reading of its own: a plan
+# that reports no rate_limits at all (team seats) must not show another account's
+# numbers, and $rl_file is the record that we ever received any.
+if [[ -f $rl_file ]]; then
+  shared_rl=$(cat "$usage_file" 2>/dev/null || true)
+  if [[ -n $shared_rl ]]; then
+    IFS='|' read -r five five_reset week week_reset <<<"$shared_rl"
+  fi
 fi
 
 fmt_reset() {
