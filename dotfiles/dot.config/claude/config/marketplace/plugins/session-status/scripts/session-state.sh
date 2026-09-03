@@ -14,6 +14,11 @@ bg_file=$dir/$sid.bg
 start_file=$dir/$sid.start
 rl_file=$dir/$sid.rl
 acct_file=$dir/$sid.acct
+# Transcript path, pane, and the cwd the session started in. <sid>.sess (written by
+# statusline) only carries pid and cwd, which tells you WHICH session but not where to
+# read its transcript from. That cwd is the CURRENT one and moves whenever the session
+# cd's, so deriving the transcript path from it would miss; keep what the hook hands us.
+where_file=$dir/$sid.where
 
 with_lock() {
   (
@@ -90,6 +95,11 @@ case $event in
     # numbers under the new account's name. This fires on resume too, so it re-pins.
     jq -r '.oauthAccount.accountUuid // empty' \
       "${CLAUDE_CONFIG_DIR:-$HOME}/.claude.json" >"$acct_file" 2>/dev/null || true
+    transcript=$(jq -r '.transcript_path // empty' <<<"$input" 2>/dev/null)
+    if [[ -n $transcript ]]; then
+      started_in=$(jq -r '.cwd // empty' <<<"$input" 2>/dev/null)
+      printf '%s\t%s\t%s\n' "$transcript" "${TMUX_PANE:-}" "$started_in" >"$where_file"
+    fi
     ;;
   UserPromptSubmit)
     echo running >"$state_file"
@@ -131,7 +141,8 @@ case $event in
     [[ -n $agent_id ]] && with_lock remove_sub "$agent_id"
     ;;
   SessionEnd)
-    rm -f "$state_file" "$subs_file" "$subs_file.lock" "$bg_file" "$start_file" "$rl_file" "$acct_file"
+    rm -f "$state_file" "$subs_file" "$subs_file.lock" "$bg_file" "$start_file" "$rl_file" \
+      "$acct_file" "$where_file"
     ;;
 esac
 exit 0
