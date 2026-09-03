@@ -19,6 +19,11 @@ acct_file=$dir/$sid.acct
 # read its transcript from. That cwd is the CURRENT one and moves whenever the session
 # cd's, so deriving the transcript path from it would miss; keep what the hook hands us.
 where_file=$dir/$sid.where
+# Whether the session is stopped waiting for input: the same condition that already
+# sends ntfy and marks the tmux pane unread on Notification, exposed for outside readers.
+# Kept out of <sid>.state because statusline only tests that against "running", so a new
+# value there would change what it renders. Waiting is a third state, so it lives apart.
+waiting_file=$dir/$sid.waiting
 
 with_lock() {
   (
@@ -107,10 +112,13 @@ case $event in
     : >"$subs_file"
     echo 0 >"$bg_file"
     date +%s >"$start_file"
+    rm -f "$waiting_file"
     tmux_clear_unread
     ;;
   Stop | StopFailure)
     echo idle >"$state_file"
+    # Whatever it was waiting on is resolved; the turn is back to the user, not a wait.
+    rm -f "$waiting_file"
     # Background subagents (Agent run_in_background) do NOT fire SubagentStart/Stop,
     # so they never reach $subs_file. They do appear in background_tasks (like
     # workflows), which is only present on this turn-end snapshot. Count both types.
@@ -131,6 +139,7 @@ case $event in
     matcher=$(jq -r '.matcher // .notification_type // empty' <<<"$input" 2>/dev/null)
     if [[ -z $matcher || $matcher == permission_prompt ]]; then
       ntfy_send "Claude needs input" 4 warning "$(session_label)"
+      date +%s >"$waiting_file"
       tmux_viewing || tmux_mark_unread
     fi
     ;;
@@ -142,7 +151,7 @@ case $event in
     ;;
   SessionEnd)
     rm -f "$state_file" "$subs_file" "$subs_file.lock" "$bg_file" "$start_file" "$rl_file" \
-      "$acct_file" "$where_file"
+      "$acct_file" "$where_file" "$waiting_file"
     ;;
 esac
 exit 0
