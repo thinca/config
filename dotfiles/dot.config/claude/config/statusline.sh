@@ -7,7 +7,7 @@ export LC_ALL=C.UTF-8
 
 input=$(cat)
 
-j() { jq -r "$1 // empty" <<<"$input"; }
+j() { jq -r "$1 // empty" <<<"${input}"; }
 
 model=$(j '.model.display_name')
 effort=$(j '.effort.level')
@@ -17,7 +17,7 @@ cur_dir=$(j '.workspace.current_dir')
 dir=${cur_dir##*/}
 branch=$(git -C "${cur_dir:-.}" symbolic-ref --short -q HEAD 2>/dev/null || true)
 
-state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
+state_dir=${CLAUDE_CONFIG_DIR:-${HOME}/.claude}/session-state
 
 # tmux window title. When more than one live session shares this directory, append
 # the session name to tell them apart; when this is the only one, keep it short as
@@ -26,21 +26,22 @@ state_dir=${CLAUDE_CONFIG_DIR:-$HOME/.claude}/session-state
 # JSON (not hook inputs), so this must live here rather than in a plugin hook.
 if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
   title="claude:${dir}"
-  if [[ -n $cur_dir ]]; then
+  if [[ -n ${cur_dir} ]]; then
     # write our marker only when it changed (PID/cwd are stable), so a steady
     # session does no per-render disk writes. Reads below hit the page cache.
     sess_line="${PPID}"$'\t'"${cur_dir}"
-    if [[ $(cat "${state_dir}/${sid}.sess" 2>/dev/null) != "$sess_line" ]]; then
-      mkdir -p "$state_dir"
-      printf '%s\n' "$sess_line" >"${state_dir}/${sid}.sess"
+    prev_sess=$(cat "${state_dir}/${sid}.sess" 2>/dev/null || true)
+    if [[ ${prev_sess} != "${sess_line}" ]]; then
+      mkdir -p "${state_dir}"
+      printf '%s\n' "${sess_line}" >"${state_dir}/${sid}.sess"
     fi
     n=0
-    for f in "$state_dir"/*.sess; do
-      [[ -e $f ]] || continue
-      IFS=$'\t' read -r spid sdir <"$f" || true
-      [[ -n $spid && -n $sdir ]] || continue
-      [[ $sdir == "$cur_dir" ]] || continue
-      kill -0 "$spid" 2>/dev/null && n=$((n + 1))
+    for f in "${state_dir}"/*.sess; do
+      [[ -e ${f} ]] || continue
+      IFS=$'\t' read -r spid sdir <"${f}" || true
+      [[ -n ${spid} && -n ${sdir} ]] || continue
+      [[ ${sdir} == "${cur_dir}" ]] || continue
+      kill -0 "${spid}" 2>/dev/null && n=$((n + 1))
     done
     if ((n >= 2)); then
       wlabel=${sname:-${sid:0:6}}
@@ -48,7 +49,7 @@ if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
       title="claude:${dir}:${wlabel}"
     fi
   fi
-  tmux rename-window -t "$TMUX_PANE" "$title" 2>/dev/null || true
+  tmux rename-window -t "${TMUX_PANE}" "${title}" 2>/dev/null || true
 fi
 
 ctx=$(j '.context_window.used_percentage')
@@ -68,41 +69,44 @@ week_reset=$(j '.rate_limits.seven_day.resets_at')
 # via /login) and their billing differs, so an unscoped file shows one account's limits
 # under another. Prefer the uuid the SessionStart hook pinned for us; .claude.json holds
 # only the last /login, which is not necessarily the account this session runs as.
-acct=$(cat "$state_dir/${sid}.acct" 2>/dev/null || true)
-[[ -n $acct ]] || acct=$(jq -r '.oauthAccount.accountUuid // empty' "${CLAUDE_CONFIG_DIR:-$HOME}/.claude.json" 2>/dev/null || true)
-usage_file=$state_dir/usage${acct:+-$acct}.json
-rl_file=$state_dir/${sid}.rl
-if [[ -n $five || -n $week ]]; then
+acct=$(cat "${state_dir}/${sid}.acct" 2>/dev/null || true)
+[[ -n ${acct} ]] || acct=$(jq -r '.oauthAccount.accountUuid // empty' "${CLAUDE_CONFIG_DIR:-${HOME}}/.claude.json" 2>/dev/null || true)
+usage_file=${state_dir}/usage${acct:+-${acct}}.json
+rl_file=${state_dir}/${sid}.rl
+if [[ -n ${five} || -n ${week} ]]; then
   rl_now="${five}|${five_reset}|${week}|${week_reset}"
-  if [[ -f $rl_file ]]; then
-    if [[ $rl_now != "$(cat "$rl_file" 2>/dev/null)" ]]; then
-      printf '%s' "$rl_now" >"$rl_file"
-      printf '%s' "$rl_now" >"${usage_file}.tmp" 2>/dev/null && mv "${usage_file}.tmp" "$usage_file" 2>/dev/null || true
+  if [[ -f ${rl_file} ]]; then
+    rl_prev=$(cat "${rl_file}" 2>/dev/null || true)
+    if [[ ${rl_now} != "${rl_prev}" ]]; then
+      printf '%s' "${rl_now}" >"${rl_file}"
+      printf '%s' "${rl_now}" >"${usage_file}.tmp" 2>/dev/null && mv "${usage_file}.tmp" "${usage_file}" 2>/dev/null || true
     fi
   else
-    mkdir -p "$state_dir"
-    printf '%s' "$rl_now" >"$rl_file"
+    mkdir -p "${state_dir}"
+    printf '%s' "${rl_now}" >"${rl_file}"
   fi
 fi
 # Trust the shared value only once this session has had a reading of its own: a plan
 # that reports no rate_limits at all (team seats) must not show another account's
 # numbers, and $rl_file is the record that we ever received any.
-if [[ -f $rl_file ]]; then
-  shared_rl=$(cat "$usage_file" 2>/dev/null || true)
-  if [[ -n $shared_rl ]]; then
-    IFS='|' read -r five five_reset week week_reset <<<"$shared_rl"
+if [[ -f ${rl_file} ]]; then
+  shared_rl=$(cat "${usage_file}" 2>/dev/null || true)
+  if [[ -n ${shared_rl} ]]; then
+    IFS='|' read -r five five_reset week week_reset <<<"${shared_rl}"
   fi
 fi
 
 # A cached percentage is only meaningful until its window rolls over, and resets_at says
 # when that is — so it expires itself without an arbitrary TTL.
 now=$(date +%s)
-if [[ $five_reset =~ ^[0-9]+$ ]] && ((five_reset <= now)); then five='' five_reset=''; fi
-if [[ $week_reset =~ ^[0-9]+$ ]] && ((week_reset <= now)); then week='' week_reset=''; fi
+if [[ ${five_reset} =~ ^[0-9]+$ ]] && ((five_reset <= now)); then five='' five_reset=''; fi
+if [[ ${week_reset} =~ ^[0-9]+$ ]] && ((week_reset <= now)); then week='' week_reset=''; fi
 
 fmt_reset() {
-  local ts=$1
-  if [[ $(date -d "@${ts}" +%Y%m%d) == "$(date +%Y%m%d)" ]]; then
+  local ts=$1 day today
+  day=$(date -d "@${ts}" +%Y%m%d 2>/dev/null || true)
+  today=$(date +%Y%m%d)
+  if [[ ${day} == "${today}" ]]; then
     date -d "@${ts}" +%H:%M
   else
     date -d "@${ts}" '+%m/%d %H:%M'
@@ -131,11 +135,11 @@ subs=$(grep -c . "${state_dir}/${sid}.subs" 2>/dev/null || true)
 bg=$(cat "${state_dir}/${sid}.bg" 2>/dev/null || true)
 
 subs_active=0
-[[ -n $subs && $subs != 0 ]] && subs_active=1
+[[ -n ${subs} && ${subs} != 0 ]] && subs_active=1
 bg_active=0
-[[ -n $bg && $bg != 0 ]] && bg_active=1
+[[ -n ${bg} && ${bg} != 0 ]] && bg_active=1
 
-if [[ $state == running || $subs_active == 1 || $bg_active == 1 ]]; then
+if [[ ${state} == running || ${subs_active} == 1 || ${bg_active} == 1 ]]; then
   ind="${green}*${reset}"
 else
   ind="${dim}-${reset}"
@@ -146,18 +150,18 @@ fi
 ((bg_active)) && ind+=" ${cyan}bg:${bg}${reset}"
 
 out="${ind} ${model:-Claude}"
-[[ -n $effort ]] && out+=" ${dim}${effort}${reset}"
-[[ -n $sname ]] && out+="${sep}${cyan}${sname}${reset}"
-[[ -n $dir ]] && out+="${sep}${dir}"
-[[ -n $branch ]] && out+=" ${dim}(${branch})${reset}"
-[[ -n $ctx ]] && out+="${sep}Ctx $(pct_color "$ctx")${ctx%%.*}%${reset}"
+[[ -n ${effort} ]] && out+=" ${dim}${effort}${reset}"
+[[ -n ${sname} ]] && out+="${sep}${cyan}${sname}${reset}"
+[[ -n ${dir} ]] && out+="${sep}${dir}"
+[[ -n ${branch} ]] && out+=" ${dim}(${branch})${reset}"
+[[ -n ${ctx} ]] && out+="${sep}Ctx $(pct_color "${ctx}")${ctx%%.*}%${reset}"
 render_win() { # label pct reset_ts
   [[ -n $2 ]] || return 0
   local r=''
   [[ -n $3 ]] && r=" ${dim}@$(fmt_reset "$3")${reset}"
   out+="${sep}$1 $(pct_color "$2")${2%%.*}%${reset}${r}"
 }
-render_win 5h "$five" "$five_reset"
-render_win 7d "$week" "$week_reset"
+render_win 5h "${five}" "${five_reset}"
+render_win 7d "${week}" "${week_reset}"
 
-printf '%s\n' "$out"
+printf '%s\n' "${out}"
