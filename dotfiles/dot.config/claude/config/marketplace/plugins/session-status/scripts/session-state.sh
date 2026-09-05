@@ -104,7 +104,12 @@ case ${event} in
       "${CLAUDE_CONFIG_DIR:-${HOME}}/.claude.json" >"${acct_file}" 2>/dev/null || true
     transcript=$(jq -r '.transcript_path // empty' <<<"${input}" 2>/dev/null)
     if [[ -n ${transcript} ]]; then
-      started_in=$(jq -r '.cwd // empty' <<<"${input}" 2>/dev/null)
+      # The transcript and the pane can both move, so they are re-read. Where the
+      # session began cannot: this fires on resume and compact too, and Claude Code
+      # moves its working directory around while it works, so re-reading it renames
+      # the session to wherever it happened to be at the time. Keep the first answer.
+      started_in=$(cut -f3 "${where_file}" 2>/dev/null)
+      [[ -n ${started_in} ]] || started_in=$(jq -r '.cwd // empty' <<<"${input}" 2>/dev/null)
       printf '%s\t%s\t%s\n' "${transcript}" "${TMUX_PANE:-}" "${started_in}" >"${where_file}"
     fi
     ;;

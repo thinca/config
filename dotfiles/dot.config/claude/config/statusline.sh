@@ -19,13 +19,33 @@ branch=$(git -C "${cur_dir:-.}" symbolic-ref --short -q HEAD 2>/dev/null || true
 
 state_dir=${CLAUDE_CONFIG_DIR:-${HOME}/.claude}/session-state
 
+# Where a session began, which the SessionStart hook pins in <sid>.where. Answers in
+# $started.
+# ⚠️ Not the current directory: Claude Code moves that around while it works, so a
+# name built from it renames itself mid-task. Falls back to the given directory only
+# when nothing was recorded.
+# ⚠️ Sets a variable rather than printing: this runs once per live session on every
+# render, and command substitution would fork each time.
+started=''
+read_started() { # sid fallback
+  local line='' recorded=''
+  # ⚠️ 2>/dev/null comes first: redirections are applied left to right, and a
+  # missing file complains through whatever stderr is at that point.
+  { read -r line || true; } 2>/dev/null <"${state_dir}/$1.where" || true
+  IFS=$'\t' read -r _ _ recorded <<<"${line}"
+  started=${recorded:-$2}
+}
+
+read_started "${sid}" "${cur_dir}"
+start_dir=${started}
+
 # tmux window title. When more than one live session shares this directory, append
 # the session name to tell them apart; when this is the only one, keep it short as
 # `claude:<dir>`. Liveness is by PID ($PPID is the claude process), so crashed and
 # detached sessions are handled correctly. session_name is only in the statusLine
 # JSON (not hook inputs), so this must live here rather than in a plugin hook.
 if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
-  title="claude:${dir}"
+  title="claude:${start_dir##*/}"
   if [[ -n ${cur_dir} ]]; then
     # write our marker only when it changed (PID/cwd are stable), so a steady
     # session does no per-render disk writes. Reads below hit the page cache.
@@ -40,13 +60,18 @@ if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
       [[ -e ${f} ]] || continue
       IFS=$'\t' read -r spid sdir <"${f}" || true
       [[ -n ${spid} && -n ${sdir} ]] || continue
-      [[ ${sdir} == "${cur_dir}" ]] || continue
+      # ⚠️ Compare where each session began, not where it currently is. Two sessions
+      # started in the same place drift apart as they work, and would stop looking
+      # like a pair exactly when telling them apart still matters.
+      other=${f##*/}
+      read_started "${other%.sess}" "${sdir}"
+      [[ ${started} == "${start_dir}" ]] || continue
       kill -0 "${spid}" 2>/dev/null && n=$((n + 1))
     done
     if ((n >= 2)); then
       wlabel=${sname:-${sid:0:6}}
       wlabel=${wlabel:0:28}
-      title="claude:${dir}:${wlabel}"
+      title="claude:${start_dir##*/}:${wlabel}"
     fi
   fi
   tmux rename-window -t "${TMUX_PANE}" "${title}" 2>/dev/null || true
