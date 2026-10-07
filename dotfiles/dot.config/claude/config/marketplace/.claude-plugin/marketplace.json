@@ -12,7 +12,7 @@
     {
       "name": "deny-pkill",
       "source": "./plugins/deny-pkill",
-      "description": "pkill/killall を禁止し、pid 指定の kill に誘導する"
+      "description": "pkill/killall や動的に組み立てた PID への kill を禁止し、確認済みのリテラル PID 指定の kill に誘導する"
     },
     {
       "name": "session-status",

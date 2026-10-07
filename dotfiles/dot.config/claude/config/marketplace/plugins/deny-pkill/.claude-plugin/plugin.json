@@ -1,5 +1,5 @@
 {
   "name": "deny-pkill",
-  "description": "pkill/killall を禁止し、pid 指定の kill に誘導する",
-  "version": "1.1.0"
+  "description": "pkill/killall や動的に組み立てた PID への kill を禁止し、確認済みのリテラル PID 指定の kill に誘導する",
+  "version": "1.2.0"
 }
