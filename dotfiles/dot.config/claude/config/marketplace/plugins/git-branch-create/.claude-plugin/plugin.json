@@ -1,0 +1,5 @@
+{
+  "name": "git-branch-create",
+  "description": "ブランチを安全に作成し、作成元を branch.<name>.base に記録する",
+  "version": "2.0.0"
+}

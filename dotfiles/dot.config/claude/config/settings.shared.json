@@ -23,7 +23,7 @@
   },
   "language": "japanese",
   "enabledPlugins": {
-    "git-base-branch@thinca-config": true,
+    "git-branch-create@thinca-config": true,
     "deny-pkill@thinca-config": true,
     "session-status@thinca-config": true
   }

@@ -5,9 +5,9 @@
   },
   "plugins": [
     {
-      "name": "git-base-branch",
-      "source": "./plugins/git-base-branch",
-      "description": "ブランチ作成時に作成元を branch.<name>.base に自動記録する"
+      "name": "git-branch-create",
+      "source": "./plugins/git-branch-create",
+      "description": "ブランチを安全に作成し、作成元を branch.<name>.base に記録する"
     },
     {
       "name": "deny-pkill",
