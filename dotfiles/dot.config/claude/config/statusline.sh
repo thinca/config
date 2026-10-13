@@ -188,5 +188,9 @@ render_win() { # label pct reset_ts
 }
 render_win 5h "${five}" "${five_reset}"
 render_win 7d "${week}" "${week_reset}"
+# A wrapper that runs this script may add extra segments of its own under _extra
+# in the JSON input, appended verbatim. Absent for a plain `claude` session.
+extra=$(j '._extra')
+[[ -n ${extra} ]] && out+="${sep}${extra}"
 
 printf '%s\n' "${out}"
